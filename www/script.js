@@ -1,7 +1,7 @@
 var scrollTopStack = [];
 function changeURL(url, noAnime){
     scrollTopStack.push(document.getElementsByTagName('body')[0].scrollTop);
-    window.history.pushState({},0,'http://'+window.location.host+'/'+url);
+    window.history.pushState({},0,'//'+window.location.host+'/'+url);
     $("html, body").animate({ scrollTop: 0 }, "fast");
 }
 window.onpopstate = function(e){
