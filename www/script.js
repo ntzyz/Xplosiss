@@ -1,3 +1,18 @@
+var scrollTopStack = [];
+function changeURL(url, noAnime){
+    scrollTopStack.push(document.getElementsByTagName('body')[0].scrollTop);
+    window.history.pushState({},0,'http://'+window.location.host+'/'+url);
+    $("html, body").animate({ scrollTop: 0 }, "fast");
+}
+window.onpopstate = function(e){
+    $('.main').fadeOut(100, function() {
+        vm.isPopState = true;
+        vm.init();
+        vm.isPopState = false;
+        $("html, body").animate({ scrollTop: scrollTopStack.pop() }, "fast");
+    })
+};
+
 Vue.component('card', {
   props: ['content'],
   template: '<div class="card"><div class="card-content">{{{content}}}</div></div>'
@@ -13,14 +28,13 @@ var vm = new Vue({
     data: {
         blog_title: null,
         blog_subtitle: null,
-
         category: [],
         currentCategoryId: null,
         currentPage: 0,
-
         widget: [],
-
         post: [],
+        isPopState: false,
+        isFirstLoad: true
     },
     created: function () {
         this.init();
@@ -30,11 +44,17 @@ var vm = new Vue({
             var url = window.location.pathname;
             this.initCommon();
             this.initWidgets();
-            if (url == '/') {
-                this.initCategory();
-            }
-            else if (url[1] == 'p') {
-                this.viewPostById(url.substr(url.indexOf('=') + 1));
+            this.initCategory();
+            if (url !== '/') {
+                if (url[url.length - 1] == '/') {
+                    url = url.substr(0, url.length - 1);
+                }
+                if (url[6] == 'i') {
+                    this.viewPostById(url.substr(url.indexOf('=') + 1));
+                }
+                else if (url[6] == 'c') {
+                    this.getPostByCategory(url.substr(url.indexOf('=') + 1));
+                }
             }
         },
         initCommon: function() {
@@ -56,21 +76,31 @@ var vm = new Vue({
                 }
             }).done(function (data) {
                 vm.category = JSON.parse(data);
-                vm.getPostByCategory(vm.currentCategoryId);
+                if (window.location.pathname == '/')
+                    vm.getPostByCategory(null);
             });
         }, // initCategory
         getPostByCategory: function(category_id) {
+            var url;
             if (!category_id) {
-                $.ajax({
-                    url: "/api/post/all?page=" + vm.currentPage,
-                    type: "GET",
-                }).done(function (data) {
-                    vm.post = JSON.parse(data);
-                });
+                url = "/api/post/all?page=" + vm.currentPage;
             }
             else {
-                console.log('Now showing all posts under category ', category_id);
+                url = "/api/post/byCategoryId?page=" + vm.currentPage + '&category_id=' + category_id;
             }
+            $.ajax({
+                url: url,
+                type: "GET",
+                beforeSend: function() {
+                    if (category_id && !vm.isPopState) {
+                        changeURL('post/category=' + category_id);
+                    }
+                    $('.main').fadeOut(10)
+                }
+            }).done(function (data) {
+                $('.main').fadeIn(300)
+                vm.post = JSON.parse(data);
+            });
         }, // getPostByCategory
         initWidgets: function() {
             $.ajax({
@@ -81,22 +111,17 @@ var vm = new Vue({
             });
         }, // initWidgets
         viewPostById: function (id) {
-            console.log("/api/post/byPostId?post_id=" + id);
             $.ajax({
                 url: "/api/post/byPostId?post_id=" + id,
                 type: "GET",
+                beforeSend: function() {
+                    changeURL('post/id=' + id);
+                    $('.main').fadeOut(10)
+                }
             }).done(function (data) {
+                $('.main').fadeIn(300)
                 vm.post = JSON.parse(data);
-                changeURL('post/id=' + id);
             });
         }, // viewPostById
     }
 });
-
-function changeURL(url){
-    window.history.pushState({},0,'http://'+window.location.host+'/'+url);
-    $("html, body").animate({ scrollTop: 0 }, "fast");
-}
-window.onpopstate = function(e){
-    vm.init();
-};
