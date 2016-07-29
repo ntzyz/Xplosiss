@@ -31,10 +31,13 @@ var vm = new Vue({
         category: [],
         currentCategoryId: null,
         currentPage: 0,
+        currentMethod: null,
+        maxPage: 0,
         widget: [],
         post: [],
         isPopState: false,
-        isFirstLoad: true
+        isFirstLoad: true,
+        isLoading: false
     },
     created: function () {
         this.init();
@@ -80,7 +83,11 @@ var vm = new Vue({
                     vm.getPostByCategory(null);
             });
         }, // initCategory
-        getPostByCategory: function(category_id) {
+        getPostByCategory: function(category_id, append) {
+            currentCategoryId = category_id;
+            if (!append) {
+                this.currentPage = 0;
+            }
             var url;
             if (!category_id) {
                 url = "/api/post/all?page=" + this.currentPage;
@@ -92,14 +99,24 @@ var vm = new Vue({
                 url: url,
                 type: "GET",
                 beforeSend: function() {
-                    if (category_id || !vm && !vm.isPopState) {
-                        changeURL('post/category=' + category_id);
+                    if (!append) {
+                        if (category_id || !vm && !vm.isPopState) {
+                            changeURL('post/category=' + category_id);
+                        }
+                        $('.main').fadeOut(10)
                     }
-                    $('.main').fadeOut(10)
                 }
             }).done(function (data) {
-                $('.main').fadeIn(300)
-                vm.post = JSON.parse(data);
+                res = JSON.parse(data);
+                if (!append) {
+                    $('.main').fadeIn(300)
+                    vm.post = res.table;
+                    vm.maxPage = res.max_pages;
+                }
+                else {
+                    vm.isLoading = false;
+                    vm.post = vm.post.concat(res.table);
+                }
             });
         }, // getPostByCategory
         initWidgets: function() {
@@ -123,5 +140,18 @@ var vm = new Vue({
                 vm.post = JSON.parse(data);
             });
         }, // viewPostById
+        more: function() {
+            if (vm.currentPage + 1 == vm.maxPage)
+                return;
+            vm.isLoading = true;
+            vm.currentPage++;
+            vm.getPostByCategory(currentCategoryId, true);
+        }
+    }
+});
+
+$(window).scroll(function() {
+    if(!vm.isLoading && $(document).height() - $(window).height() > 0 && $(window).scrollTop() >= $(document).height() - $(window).height() * 2) {
+        vm.more();
     }
 });

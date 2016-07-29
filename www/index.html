@@ -29,7 +29,9 @@
                 <template v-for="item in post">
                     <post :post_date="item.post_date.substr(0, 10)" :post_title="item.post_title" :post_category="item.category_name" :post_content="item.post_content ? item.post_content : item.post_shot" :post_id="item.post_id" :disp="item.post_content ? 'none' : ''"></post>
                 </template>
-                <div class="fakediv"></div>
+                <div class="progress" v-bind:style="{display: isLoading ? '' : 'none'}">
+                    <div class="indeterminate"></div>
+                </div>
             </div>
             <div class="col s12 m4 right" v-for="item in widget">
                 <!-- Widgets -->
