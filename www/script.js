@@ -83,16 +83,16 @@ var vm = new Vue({
         getPostByCategory: function(category_id) {
             var url;
             if (!category_id) {
-                url = "/api/post/all?page=" + vm.currentPage;
+                url = "/api/post/all?page=" + this.currentPage;
             }
             else {
-                url = "/api/post/byCategoryId?page=" + vm.currentPage + '&category_id=' + category_id;
+                url = "/api/post/byCategoryId?page=" + this.currentPage + '&category_id=' + category_id;
             }
             $.ajax({
                 url: url,
                 type: "GET",
                 beforeSend: function() {
-                    if (category_id && !vm.isPopState) {
+                    if (category_id || !vm && !vm.isPopState) {
                         changeURL('post/category=' + category_id);
                     }
                     $('.main').fadeOut(10)
