@@ -20,7 +20,7 @@ Vue.component('card', {
 
 Vue.component('post', {
   props: ['post_title', 'post_date', 'post_category', 'post_content', 'post_id', 'disp'],
-  template: '<div style="margin-bottom: 80px;"><h3 class="post_title">{{{post_title}}}</h3><div class="meta"><img src="https://blog.dimension.moe/wp-content/themes/skymile/assets/imgs/cate.png" class="metaicon" />{{{post_category}}}</div><div class="meta"><img src="https://blog.dimension.moe/wp-content/themes/skymile/assets/imgs/date.png" class="metaicon" />{{{post_date}}}</div><div class="row"><p>{{{post_content}}}</p></div><a class="waves-effect waves-teal btn-flat right" v-bind:style="{display: disp};" onclick="vm.viewPostById({{post_id}})">Read more</a></div>'
+  template: '<div style="margin-bottom: 80px;"><h3 class="post_title">{{{post_title}}}</h3><div class="meta"><img src="/cate.png" class="metaicon" />{{{post_category}}}</div><div class="meta"><img src="/date.png" class="metaicon" />{{{post_date}}}</div><div class="row"><p>{{{post_content}}}</p></div><a class="waves-effect waves-teal btn-flat right" v-bind:style="{display: disp};" onclick="vm.viewPostById({{post_id}})">Read more</a></div>'
 });
 
 var vm = new Vue({
