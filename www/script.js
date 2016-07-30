@@ -295,7 +295,7 @@ function scrollTo(position, callback) {
 window.onpopstate = function(e) {
     e.preventDefault();
     var posts = byClass('main')[0];
-    fadeOut(posts, 100, function() {
+    fadeOut(posts, 10, function() {
         vm.isPopState = true;
         vm.init();
     });
