@@ -20,7 +20,7 @@ CREATE TABLE widget(
 INSERT INTO widget(widget_content) VALUES(
     "<div style=\"border-bottom: solid 1px black\"><a href=\"https://www.ntzyz.cn/\" target=\"_blank\">About me</a><br><a href=\"https://blog.dimension.moe/minecraft/\" target=\"_blank\">Minecraft</a><br></div><a title=\"JerryFu's Blog\" href=\"http://www.jerryfu.net/\" target=\"_black\">JerryFu's Blog</a><br><a title=\"Enrichment Center\" href=\"http://tonoko.zz.mu/\" target=\"_blank\">Enrichment Center</a><br><a title=\"春上冰月的博客\" href=\"http://haruue.moe/\" target=\"_blank\">春上冰月的博客</a><br><del><a title=\"Uiharu's Garden — 初春静流的花园\" href=\"http://uiharu.sinaapp.com\" target=\"_blank\">Uiharu's Garden</a></del><br><a title=\">Lithia's Core\" href=\"http://lithcore.cn/\" target=\"_blank\">&gt;Lithia's Core</a><br><a title=\"ZephRay\" href=\"http://zephray.com/\" target=\"_blank\">ZephRay</a><br><a title=\"kasora's blog\" href=\"https://blog.kasora.moe/\" target=\"_blank\">kasora's blog</a><br><a title=\"Test2g\" href=\"https://www.test2g.xyz/\" target=\"_blank\">Test2g</a><br><a title=\"苍崎橙子\" href=\"http://ao.acg.ac/\" target=\"_blank\">苍崎橙子</a><br><a title=\"R-C's Blog\" href=\"http://blog.r-c.im/\" target=\"_blank\">RiCE Blog</a><br><a title=\"Shell Bin\" href=\"http://shellbin.top/\" target=\"_blank\">Shell Bin</a>" -- "
 ), (
-    '<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" height=450 style="margin: -25px;" src="http://music.163.com/outchain/player?type=0&id=427549027&auto=0&height=430"></iframe>'
+    '<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" height=450 style="margin: -25px;" src="https://music.163.com/outchain/player?type=0&id=427549027&auto=0&height=430"></iframe>'
 ), (
     '上面那个网易云音乐仅供测试全站无刷（'
 );
