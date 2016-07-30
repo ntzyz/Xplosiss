@@ -192,7 +192,7 @@ var vm = new Vue({
             });
         }, // viewPostById
         more: function() {
-            if (vm.currentPage + 1 == vm.maxPage || window.location.pathname[6] == 'i')
+            if (vm.currentPage + 1 >= vm.maxPage || window.location.pathname[6] == 'i')
                 return;
 
             vm.isLoading = true;
@@ -208,10 +208,12 @@ var vm = new Vue({
         reset: function () {
             pushUrl('');
             this.currentPage = 0;
+            this.currentCategoryId = null;
             this.init();
         },
         categoryClick: function (category_id) {
             this.currentCategoryId = category_id;
+            this.currentPage = 0;
             pushUrl('post/category=' + category_id + '?page=' + (this.currentPage + 1));
             this.getPostByCategory(category_id)
         },
