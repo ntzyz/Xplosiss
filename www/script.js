@@ -4,8 +4,6 @@ function AJAX(data) {
     var xhr = new XMLHttpRequest();
     xhr.open(data.type, data.url);
 
-    if (data.before) data.before();
-
     xhr.onreadystatechange = function() {
         if(xhr.readyState === 4) {
             if (xhr.status === 200 && data.done) {
@@ -17,7 +15,13 @@ function AJAX(data) {
         }
     }
 
-    xhr.send();
+    if (data.before) {
+        data.before();
+        xhr.send();
+    }
+    else {
+        xhr.send();
+    }
 }
 
 Vue.component('card', {
@@ -41,7 +45,7 @@ Vue.component('post', {
             '<div class="row">', 
                 '<p>{{{post_content}}}</p>',
             '</div>',
-            '<a class="waves-effect waves-teal btn-flat right" v-bind:style="{display: disp};" onclick="vm.viewPostById({{post_id}})">Read more</a>',
+            '<a class="waves-effect waves-teal btn-flat right" v-bind:style="{display: disp};" onclick="vm.readMoreClick({{post_id}})">Read more</a>',
         '</div>'
     ].join('\n')
 });
@@ -66,7 +70,21 @@ var vm = new Vue({
     },
     methods: {
         init: function() {
+            if ((location.pathname + location.search).substr(1).indexOf('/?') >= 0) {
+                // fix situation like: post/category=2/?page=1
+                var href = (location.pathname + location.search).substr(1).replace(/\/\?/, '?');
+                replaceUrl(href);
+            }
+
             var url = window.location.pathname;
+            if (url[url.length - 1] == '/' && url.length != 1) {
+                url = url.substr(0, url.length - 1);
+                replaceUrl(url.substr(1));
+            }
+
+            if (_GET('page')) {
+                this.currentPage = _GET('page') - 1;
+            }
 
             if (this.isFirstLoad) {
                 this.initCommon();
@@ -115,11 +133,11 @@ var vm = new Vue({
         getPostByCategory: function(category_id, append) {
             var url;
             currentCategoryId = category_id;
-
+/*
             if (!append) {
                 this.currentPage = 0;
             }
-
+*/
             if (!category_id) {
                 url = "/api/post/all?page=" + this.currentPage;
             }
@@ -130,24 +148,23 @@ var vm = new Vue({
             AJAX({
                 url: url,
                 type: 'GET',
-                before: function() {
-                    if (!append) {
-                        if (category_id || !vm && !vm.isPopState) {
-                            changeURL('post/category=' + category_id);
-                        }
-                        //fadeOut(byClass('main')[0], 10);
-                    }
-                },
                 done: function (data) {
                     res = JSON.parse(data);
                     if (!append) {
                         fadeIn(byClass('main')[0], 300);
                         vm.post = res.table;
                         vm.maxPage = res.max_pages;
+                        console.log(res.max_pages);
                     }
                     else {
                         vm.isLoading = false;
-                        vm.post = vm.post.concat(res.table);
+                        //vm.post = vm.post.concat(res.table);
+                        vm.post = res.table;
+                    }
+                    if (vm.isPopState) {
+                        scrollTo(scrollTopStack.pop());
+                        console.log(233);
+                        vm.isPopState = false;
                     }
                 }
             });
@@ -166,7 +183,6 @@ var vm = new Vue({
                 url: '/api/post/byPostId?post_id=' + id,
                 type: 'GET',
                 before: function() {
-                    changeURL('post/id=' + id);
                     fadeOut(byClass('main')[0], 10);
                 },
                 done: function (data) {
@@ -181,11 +197,27 @@ var vm = new Vue({
 
             vm.isLoading = true;
             vm.currentPage++;
+            var newUrl = '';
+            if (vm.currentCategoryId) {
+                newUrl = newUrl + 'post/category=' + vm.currentCategoryId;
+            }
+            newUrl = newUrl + '?page=' + (this.currentPage + 1);
+            replaceUrl(newUrl);
             vm.getPostByCategory(vm.currentCategoryId, true);
         }, // more
         reset: function () {
-            changeURL('');
+            pushUrl('');
+            this.currentPage = 0;
             this.init();
+        },
+        categoryClick: function (category_id) {
+            this.currentCategoryId = category_id;
+            pushUrl('post/category=' + category_id + '?page=' + (this.currentPage + 1));
+            this.getPostByCategory(category_id)
+        },
+        readMoreClick: function(id) {
+            pushUrl('post/id=' + id);
+            this.viewPostById(id);
         }
     }
 });
@@ -198,11 +230,14 @@ window.onscroll = function() {
     }
 };
 
-function changeURL(url, noAnime){
+function pushUrl(url, noAnime){
     scrollTopStack.push(window.scrollY);
     window.history.pushState({}, 0, '//' + window.location.host + '/' + url);
-    //$("html, body").animate({ scrollTop: 0 }, "fast");
     scrollTo(0);
+}
+
+function replaceUrl(url, noAnime){
+    window.history.replaceState({}, 0, '//' + window.location.host + '/' + url);
 }
 
 function animate(time, start, end, io, callback) {
@@ -261,8 +296,15 @@ window.onpopstate = function(e) {
     fadeOut(posts, 100, function() {
         vm.isPopState = true;
         vm.init();
-        vm.isPopState = false;
-        //$("html, body").animate({ scrollTop: scrollTopStack.pop() }, "fast");
-        //scrollTo(scrollTopStack.pop());
     });
 };
+
+function _GET(name) {
+    var url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}

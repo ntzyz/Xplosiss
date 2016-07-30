@@ -19,7 +19,7 @@
             <div class="right">
                 <!-- Category -->
                 <ul>
-                    <li v-for="item in category"><a v-on:click="getPostByCategory(item.category_id)" class="waves-effect waves-teal btn-flat">{{item.category_name}}</a></li>
+                    <li v-for="item in category"><a v-on:click="categoryClick(item.category_id)" class="waves-effect waves-teal btn-flat">{{item.category_name}}</a></li>
                 </ul>
             </div>
         </header>

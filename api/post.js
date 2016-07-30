@@ -10,8 +10,8 @@ router.get('/all', (req, res) => {
     conn.query('select count(*) as cnt from post inner join category where category.category_id = post.post_category_id', (err, table) => {
         let maxPages = Math.ceil(table[0].cnt / 5);
         conn.query( {
-            sql: 'select post_id, category_name, post_date, post_title, post_shot from post inner join category where category.category_id = post.post_category_id order by post_date desc limit 5 OFFSET ?',
-            values: [(req.query.page * 5)]
+            sql: 'select post_id, category_name, post_date, post_title, post_shot from post inner join category where category.category_id = post.post_category_id order by post_date desc limit ?',
+            values: [((req.query.page + 1) * 5)]
         }, (err, table) => {
             res.send(JSON.stringify(err ? err : {
                 max_pages: maxPages,
@@ -37,8 +37,8 @@ router.get('/byCategoryId', (req, res) => {
     }, (err, table) => {
         let maxPages = Math.ceil(table[0].cnt / 5);
         conn.query({
-            sql: 'select post_id, category_name, post_date, post_title, post_shot from post inner join category where category.category_id = post.post_category_id and post.post_category_id = ? order by post_date desc limit 5 offset ?',
-            values: [req.query.category_id, (req.query.page * 5)]
+            sql: 'select post_id, category_name, post_date, post_title, post_shot from post inner join category where category.category_id = post.post_category_id and post.post_category_id = ? order by post_date desc limit ?',
+            values: [req.query.category_id, (req.query.page + 1) * 5]
         }, (err, table) => {
             res.send(JSON.stringify(err ? err : {
                 max_pages: maxPages,
