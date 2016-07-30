@@ -13,7 +13,7 @@
         <header>
             <div class="left">
                 <!-- Title -->
-                <h1><a href="/">{{blog_title}}</a></h1>
+                <h1><a v-on:click="reset" style="cursor: pointer;">{{blog_title}}</a></h1>
                 <h2>{{blog_subtitle}}</h2>
             </div>
             <div class="right">
@@ -27,23 +27,41 @@
             <div class="col s12 m8 main">
                 <!-- Posts -->
                 <template v-for="item in post">
-                    <post :post_date="item.post_date.substr(0, 10)" :post_title="item.post_title" :post_category="item.category_name" :post_content="item.post_content ? item.post_content : item.post_shot" :post_id="item.post_id" :disp="item.post_content ? 'none' : ''"></post>
+                    <post :post_date="item.post_date.substr(0, 10)" 
+                          :post_title="item.post_title" 
+                          :post_category="item.category_name" 
+                          :post_content="item.post_content ? item.post_content : item.post_shot" 
+                          :post_id="item.post_id" 
+                          :disp="item.post_content ? 'none' : ''"></post>
                 </template>
-                <div class="progress" v-bind:style="{display: isLoading ? '' : 'none'}">
+                <!--div class="progress" v-bind:style="{display: isLoading ? '' : 'none'}">
                     <div class="indeterminate"></div>
+                </div-->
+                <div v-bind:style="{display: isLoading ? '' : 'none'}">
+                    <div class="sampleContainer">
+                        <div class="loader">
+                            <span class="dot dot_1"></span>
+                            <span class="dot dot_2"></span>
+                            <span class="dot dot_3"></span>
+                            <span class="dot dot_4"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col s12 m4 right" v-for="item in widget">
+            <div class="col s12 m4 right">
                 <!-- Widgets -->
-                <card :content="item.widget_content"></card>
+                <template  v-for="item in widget">
+                    <card :content="item.widget_content"></card>
+                </template>
             </div>
         </div>
         <div class="row foot">
             Powered by @ntzyz. Built with Vue.js, Node.js and Express.js.
         </div>
-        <script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+        <!--script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script-->
         <script src="//cdn.bootcss.com/materialize/0.97.7/js/materialize.min.js"></script>
-        <script src="//cdn.bootcss.com/vue/1.0.26/vue.js"></script>
+        <!--script src="//cdn.bootcss.com/vue/1.0.26/vue.js"></script-->
+        <script src="//cdn.bootcss.com/vue/1.0.26/vue.min.js"></script>
         <script src="/script.js"></script>
     </body>
 </html>
