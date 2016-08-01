@@ -9,4 +9,4 @@ app.use('/api/post', require('./api/post'));
 app.use('/', express.static('www'));
 app.use('/post/*', express.static('www'));
 
-app.listen(80);
+app.listen(require('./config').bind_port);

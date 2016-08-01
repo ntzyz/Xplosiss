@@ -2,7 +2,12 @@ var scrollTopStack = [];
 
 function AJAX(data) {
     var xhr = new XMLHttpRequest();
-    xhr.open(data.type, data.url);
+    if (data.url.indexOf('?') >= 0) {
+        xhr.open(data.type, data.url + '&time=' + (new Date()).getTime());
+    }
+    else {
+        xhr.open(data.type, data.url + '?time=' + (new Date()).getTime());
+    }
 
     xhr.onreadystatechange = function() {
         if(xhr.readyState === 4) {
@@ -63,13 +68,15 @@ var vm = new Vue({
         post: [],
         isPopState: false,
         isFirstLoad: true,
-        isLoading: false
+        isLoading: true
     },
     created: function () {
         this.init();
     },
     methods: {
         init: function() {
+            fadeOut(byClass('main')[0], 10);
+
             if ((location.pathname + location.search).substr(1).indexOf('/?') >= 0) {
                 // fix situation like: post/category=2/?page=1
                 var href = (location.pathname + location.search).substr(1).replace(/\/\?/, '?');
@@ -133,11 +140,7 @@ var vm = new Vue({
         getPostByCategory: function(category_id, append) {
             var url;
             currentCategoryId = category_id;
-/*
-            if (!append) {
-                this.currentPage = 0;
-            }
-*/
+
             if (!category_id) {
                 url = "/api/post/all?page=" + this.currentPage;
             }
@@ -149,6 +152,7 @@ var vm = new Vue({
                 url: url,
                 type: 'GET',
                 done: function (data) {
+                    vm.isLoading = false;
                     res = JSON.parse(data);
                     if (!append) {
                         fadeIn(byClass('main')[0], 300);
@@ -182,12 +186,10 @@ var vm = new Vue({
             AJAX({
                 url: '/api/post/byPostId?post_id=' + id,
                 type: 'GET',
-                before: function() {
-                    fadeOut(byClass('main')[0], 10);
-                },
                 done: function (data) {
                     fadeIn(byClass('main')[0], 300);
                     vm.post = JSON.parse(data);
+                    vm.isLoading = false;
                 }
             });
         }, // viewPostById
@@ -195,7 +197,8 @@ var vm = new Vue({
             if (vm.currentPage + 1 >= vm.maxPage || window.location.pathname[6] == 'i')
                 return;
 
-            vm.isLoading = true;
+            this.isLoading = true;
+            vm.post = [];
             vm.currentPage++;
             var newUrl = '';
             if (vm.currentCategoryId) {
@@ -206,18 +209,26 @@ var vm = new Vue({
             vm.getPostByCategory(vm.currentCategoryId, true);
         }, // more
         reset: function () {
+            this.isLoading = true;
+            this.post = [];
             pushUrl('');
             this.currentPage = 0;
             this.currentCategoryId = null;
             this.init();
         },
         categoryClick: function (category_id) {
+            fadeOut(byClass('main')[0], 10);
+            this.isLoading = true;
+            this.post = [];
             this.currentCategoryId = category_id;
             this.currentPage = 0;
             pushUrl('post/category=' + category_id + '?page=' + (this.currentPage + 1));
             this.getPostByCategory(category_id)
         },
         readMoreClick: function(id) {
+            fadeOut(byClass('main')[0], 10);
+            this.isLoading = true;
+            this.post = [];
             pushUrl('post/id=' + id);
             this.viewPostById(id);
         }
@@ -294,6 +305,7 @@ function scrollTo(position, callback) {
 
 window.onpopstate = function(e) {
     e.preventDefault();
+    vm.isLoading = true;
     var posts = byClass('main')[0];
     fadeOut(posts, 10, function() {
         vm.isPopState = true;

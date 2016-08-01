@@ -6,5 +6,6 @@ module.exports = {
         database: 'blog',
     },
     blog_title: 'namespace ntzyz;',
-    blog_subtitle: '这里什么都没有，真的。'
+    blog_subtitle: '这里什么都没有，真的。',
+    bind_port: 8088
 }
