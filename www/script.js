@@ -227,7 +227,7 @@ var vm = new Vue({
 window.onscroll = function() {
     if(!vm.isLoading 
         && document.documentElement.scrollHeight - window.innerHeight > 0 
-        && window.scrollY >= document.documentElement.scrollHeight - window.innerHeight * 2) {
+        && document.documentElement.scrollHeight >= document.documentElement.scrollHeight - window.innerHeight * 2) {
         vm.more();
     }
 };
