@@ -7,11 +7,17 @@ header {
     height: 120px;
     overflow: hidden;
 }
-header h1 {
+h1 {
     font-size: 24px;
 }
-header h2 {
-    font-size: 16px;
+h2 {
+    font-size: 22px;
+}
+h3 {
+    font-size: 20px;
+}
+h4, h5 {
+    font-size: 18px;
 }
 header div {
     display: inline-block;
@@ -50,7 +56,7 @@ img.metaicon {
     margin-right: 5px;
 }
 a {
-    color: black;
+    color: green;
     -webkit-transition: all 0.2s ease;
     -moz-transition: all 0.2s ease;
     transition: all 0.2s ease;
