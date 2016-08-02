@@ -6,7 +6,8 @@
   "dependencies": {
     "express": "^4.14.0",
     "highlight.js": "^9.5.0",
-    "mysql": "^2.11.1"
+    "mysql": "^2.11.1",
+    "pug": "^2.0.0-beta4"
   },
   "devDependencies": {},
   "scripts": {

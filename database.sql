@@ -24,13 +24,19 @@ INSERT INTO widget(widget_content) VALUES(
 ), (
     '上面那个网易云音乐仅供测试全站无刷（'
 );
+/* render_type:
+ *     0 -> HTML
+ *     1 -> Jade(pug)
+ *     2 -> Markdown
+ */
 CREATE TABLE post(
     post_id BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     post_title TEXT,
     post_content TEXT,
     post_date DATE,
     post_category_id BIGINT,
-    post_shot TEXT
+    post_shot TEXT,
+    render_type INT DEFAULT 0
 );
 
 INSERT INTO post(post_title, post_content, post_date, post_category_id, post_shot) VALUES
@@ -414,5 +420,28 @@ INSERT INTO post(post_title, post_content, post_date, post_category_id, post_sho
 '<p class="indent">做这个纯粹是我比较想折腾折腾，毕竟 WebGL 出来这么多年了，同时也有 Three.js 这种很好用的 JavaScript 3D 库。这里的工作相当繁杂（然而逻辑很简单，都特么 UV 贴图数据要手撕）。想了解的可以直接去看下<a href="https://skin.ssl.ntzyz.cn/skin_preview.js">源码</a>。</p>\n',
     160728, 2,
     '按照以往运行 Minecraft 服务器的情况，玩家们常常需要一些游戏以外的信息 [...]'
+);
+
+INSERT INTO post(post_title, post_content, post_date, post_category_id, post_shot, render_type) VALUES
+(
+    'Jade 渲染测试',
+    'style.\n'
+    '    h1.myclass { color: #080;}\n'
+    '    p.indent {text-indent: 2em;}\n'
+	'h1.myclass 标题1\n'
+    'h2 标题2\n'
+    'p.indent 正文\n'
+    'code(lang="cpp").\n'
+    '    #include <iostream>\n'
+    '    \n'
+    '    int main(void) {\n'
+    '        std::cout << "Hello World" << std::endl;\n'
+    '        return 0;\n'
+    '    }\n'
+    'p.indent Jade 讲道理还是蛮好用的，不过改名 pug 了就感觉不萌了呢（（\n',
+    '160802',
+    '5',
+    '标题1 [...]',
+    1
 );
 

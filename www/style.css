@@ -74,9 +74,13 @@ a:hover {
         width: 110%;
     }
 }
+pre {
+    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-size: 12px;
+}
 ::-webkit-scrollbar {
-    width: 2px;
-    height: 2px;
+    width: 4px;
+    height: 4px;
 }
 ::-webkit-scrollbar-button {
     width: 0px;

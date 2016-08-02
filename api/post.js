@@ -3,6 +3,7 @@
 let express = require('express');
 let mysql = require('mysql');
 let hljs = require('highlight.js');
+let pug = require('pug');
 
 let router = express.Router();
 let conn = mysql.createConnection(require('../config').MySQL);
@@ -24,13 +25,15 @@ router.get('/all', (req, res) => {
 
 router.get('/byPostId', (req, res) => {
     conn.query({
-        sql: 'select post_id, category_name, post_date, post_title, post_content from post inner join category where category.category_id = post.post_category_id and post_id = ?',
+        sql: 'select post_id, category_name, post_date, post_title, post_content, render_type from post inner join category where category.category_id = post.post_category_id and post_id = ?',
         values: [req.query.post_id]
     }, (err, table) => {
         if (err) {
             res.send(JSON.stringify(err));
         }
-
+        if (table[0].render_type == 1) {
+            table[0].post_content = pug.render(table[0].post_content);
+        } 
         table[0].post_content = table[0].post_content.replace(/<code lang="(.+?)">([^]+?)<\/code>/g, (match, p1, p2) => {
             return '<pre>' + hljs.highlight(p1, p2).value + '</pre>';
         }).replace(/<code>([^]+?)<\/code>/g, function(match, p1) {
