@@ -7,6 +7,9 @@ header {
     height: 120px;
     overflow: hidden;
 }
+header h2 {
+    font-size: 18px;
+}
 h1 {
     font-size: 24px;
 }
@@ -46,6 +49,7 @@ div.foot:hover {
 }
 h3.post_title {
     font-size: 24px;
+    cursor: pointer;
 }
 div.meta {
     margin-right: 20px;
@@ -77,6 +81,7 @@ a:hover {
 pre {
     font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
     font-size: 12px;
+    overflow-x: scroll;
 }
 ::-webkit-scrollbar {
     width: 4px;

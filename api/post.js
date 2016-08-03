@@ -4,9 +4,31 @@ let express = require('express');
 let mysql = require('mysql');
 let hljs = require('highlight.js');
 let pug = require('pug');
+let marked = require('marked');
 
 let router = express.Router();
 let conn = mysql.createConnection(require('../config').MySQL);
+
+function decodeHTML(str) {
+    var strMap = {
+        '&lt': '<',
+        '&gt': '>',
+        '&quot': '"',
+        '&apos': '\'',
+        '&amp': '&',
+        '&lt;': '<',
+        '&gt;': '>',
+        '&quot;': '"',
+        '&apos;': '\'',
+        '&amp;': '&'
+    };
+    if (str.length === 0) {
+        return '';
+    }
+    return str.replace(/&[0-9a-zA-Z]+;?/g, function(s) {
+        return strMap[s] || s;
+    });
+}
 
 router.get('/all', (req, res) => {
     conn.query('select count(*) as cnt from post inner join category where category.category_id = post.post_category_id', (err, table) => {
@@ -33,11 +55,13 @@ router.get('/byPostId', (req, res) => {
         }
         if (table[0].render_type == 1) {
             table[0].post_content = pug.render(table[0].post_content);
-        } 
+        } else if (table[0].render_type == 2) {
+            table[0].post_content = decodeHTML(marked(table[0].post_content));
+        }
         table[0].post_content = table[0].post_content.replace(/<code lang="(.+?)">([^]+?)<\/code>/g, (match, p1, p2) => {
             return '<pre>' + hljs.highlight(p1, p2).value + '</pre>';
         }).replace(/<code>([^]+?)<\/code>/g, function(match, p1) {
-            return '<pre>' + hljs.highlightAuto(p1).value.split('\n').join('<br />') + '</pre>';
+            return '<pre>' + hljs.highlightAuto(p1).value + '</pre>';
         });
         res.send(table);
     })

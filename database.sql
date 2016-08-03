@@ -445,3 +445,32 @@ INSERT INTO post(post_title, post_content, post_date, post_category_id, post_sho
     1
 );
 
+INSERT INTO post(post_title, post_content, post_date, post_category_id, post_shot, render_type) VALUES
+(
+    'MD 渲染测试',
+    '# 模拟POS\n'
+    '\n'
+    '某自选商店需要定购一种POS终端，这个终端使用LED向顾客显示应付金额，已收金额和找零金额。顾客购买商品后，由收银员统计应付金额，并通过你的程序向顾客显示应付款。顾客给足付款后，收银员计算出找零并同时通过你的程序显示已收金额和找零金额。当然顾客也可能因为最后应付金额过大而取消购买，这样就在屏幕上显示CANCEL字样。由于商店规模不是很大，假定顾客购买的所有商品均在999元以内。因此实际一次显示金额最宽不超过7个字符(￥XXX.XX)。\n'
+    '\n'
+    '你的程序需要实现以下功能：\n'
+    '\n'
+    '1. POS开机：第一次使用POS机，需要事先清除当日已收款\n'
+    '2. 统计应付金额：收银员输入应付金额，在屏幕上用7×8点阵显示应付金额\n'
+    '3. 收款找零：收银员输入顾客付款，在屏幕上分两行显示已收款和找零款\n'
+    '4. 取消付款：收银员取消本次购买。\n'
+    '5. 日结算：收银员统计当日销售额。\n'
+    '\n'
+    '```\n'
+    '@Override\n'
+    'protected void onCreate(Bundle savedInstanceState) {\n'
+    '    super.onCreate(savedInstanceState);\n'
+    '    setContentView(R.layout.activity_main);\n'
+    '\n'
+    '    DBox.init(this, "Test.db");\n'
+    '}\n'
+    '```\n',
+    '160802',
+    '5',
+    '模拟POS [..]',
+    2
+);

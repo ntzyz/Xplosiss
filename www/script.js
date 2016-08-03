@@ -44,7 +44,7 @@ Vue.component('post', {
     props: ['post_title', 'post_date', 'post_category', 'post_content', 'post_id', 'disp'],
     template: [
         '<div style="margin-bottom: 80px;">',
-            '<h3 class="post_title">{{{post_title}}}</h3>',
+            '<h3 class="post_title" onclick="vm.readMoreClick({{post_id}})">{{{post_title}}}</h3>',
             '<div class="meta"><img src="/cate.png" class="metaicon" />{{{post_category}}}</div>', 
             '<div class="meta"><img src="/date.png" class="metaicon" />{{{post_date}}}</div>', 
             '<div class="row">', 
@@ -198,7 +198,6 @@ var vm = new Vue({
                 return;
 
             this.isLoading = true;
-            vm.post = [];
             vm.currentPage++;
             var newUrl = '';
             if (vm.currentCategoryId) {
