@@ -4,7 +4,7 @@
 
 #### Todo
 - [X] 语法高亮
-- [ ] Markdown 和 Jade 的支持
+- [X] Markdown 和 Jade 的支持
 - [ ] RSS
 - [ ] 评论
 
