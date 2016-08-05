@@ -81,6 +81,7 @@ a:hover {
 pre {
     font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
     font-size: 12px;
+    word-wrap: normal;
     overflow-x: scroll;
 }
 ::-webkit-scrollbar {
