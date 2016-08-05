@@ -1,13 +1,12 @@
 'use strict';
 
 let express = require('express');
-let mysql = require('mysql');
 let hljs = require('highlight.js');
 let pug = require('pug');
 let marked = require('marked');
+let utils = require('../utils');
 
 let router = express.Router();
-let conn = mysql.createConnection(require('../config').MySQL);
 
 function decodeHTML(str) {
     var strMap = {
@@ -31,9 +30,11 @@ function decodeHTML(str) {
 }
 
 router.get('/all', (req, res) => {
-    conn.query('select count(*) as cnt from post inner join category where category.category_id = post.post_category_id', (err, table) => {
+    utils.getConn().query('select count(*) as cnt from post inner join category where category.category_id = post.post_category_id', (err, table) => {
+        if (err)
+            throw err;
         let maxPages = Math.ceil(table[0].cnt / 5);
-        conn.query( {
+        utils.getConn().query( {
             sql: 'select post_id, category_name, post_date, post_title, post_shot from post inner join category where category.category_id = post.post_category_id order by post_date desc limit ?',
             values: [((req.query.page + 1) * 5)]
         }, (err, table) => {
@@ -46,7 +47,7 @@ router.get('/all', (req, res) => {
 });
 
 router.get('/byPostId', (req, res) => {
-    conn.query({
+    utils.getConn().query({
         sql: 'select post_id, category_name, post_date, post_title, post_content, render_type from post inner join category where category.category_id = post.post_category_id and post_id = ?',
         values: [req.query.post_id]
     }, (err, table) => {
@@ -74,12 +75,12 @@ router.get('/byPostId', (req, res) => {
 });
 
 router.get('/byCategoryId', (req, res) => {
-    conn.query({
+    utils.getConn().query({
         sql: 'select count(*) as cnt from post inner join category where category.category_id = post.post_category_id and post.post_category_id = ?',
         values: [req.query.category_id]
     }, (err, table) => {
         let maxPages = Math.ceil(table[0].cnt / 5);
-        conn.query({
+        utils.getConn().query({
             sql: 'select post_id, category_name, post_date, post_title, post_shot from post inner join category where category.category_id = post.post_category_id and post.post_category_id = ? order by post_date desc limit ?',
             values: [req.query.category_id, (req.query.page + 1) * 5]
         }, (err, table) => {
