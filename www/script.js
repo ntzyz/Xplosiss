@@ -15,7 +15,7 @@ function AJAX(data) {
                 data.done(xhr.responseText);
             }
             else {
-                console.log('Ajax Error: ', xhr.status);
+                console.error('Ajax Error: ', xhr.status);
             }
         }
     }
@@ -75,7 +75,7 @@ var vm = new Vue({
     },
     methods: {
         init: function() {
-            fadeOut(byClass('main')[0], 10);
+            $('.main').fadeOut(10);
 
             if ((location.pathname + location.search).substr(1).indexOf('/?') >= 0) {
                 // fix situation like: post/category=2/?page=1
@@ -155,10 +155,9 @@ var vm = new Vue({
                     vm.isLoading = false;
                     res = JSON.parse(data);
                     if (!append) {
-                        fadeIn(byClass('main')[0], 300);
                         vm.post = res.table;
                         vm.maxPage = res.max_pages;
-                        console.log(res.max_pages);
+                        $('.main').fadeIn(300);
                     }
                     else {
                         vm.isLoading = false;
@@ -167,7 +166,6 @@ var vm = new Vue({
                     }
                     if (vm.isPopState) {
                         scrollTo(scrollTopStack.pop());
-                        console.log(233);
                         vm.isPopState = false;
                     }
                 }
@@ -187,7 +185,7 @@ var vm = new Vue({
                 url: '/api/post/byPostId?post_id=' + id,
                 type: 'GET',
                 done: function (data) {
-                    fadeIn(byClass('main')[0], 300);
+                    $('.main').fadeIn(300);
                     vm.post = JSON.parse(data);
                     vm.isLoading = false;
                 }
@@ -216,7 +214,7 @@ var vm = new Vue({
             this.init();
         },
         categoryClick: function (category_id) {
-            fadeOut(byClass('main')[0], 10);
+            $('.main').fadeOut(10);
             this.isLoading = true;
             this.post = [];
             this.currentCategoryId = category_id;
@@ -225,7 +223,7 @@ var vm = new Vue({
             this.getPostByCategory(category_id)
         },
         readMoreClick: function(id) {
-            fadeOut(byClass('main')[0], 10);
+            $('.main').fadeOut(10);
             this.isLoading = true;
             this.post = [];
             pushUrl('post/id=' + id);
@@ -252,64 +250,19 @@ function replaceUrl(url, noAnime){
     window.history.replaceState({}, 0, '//' + window.location.host + '/' + url);
 }
 
-function animate(time, start, end, io, callback) {
-	var id;
-    id = setInterval(frame, 5);
-	io(start);
-	setTimeout(function (){
-		clearInterval(id);
-		io(end);
-		if (callback)
-			callback();
-	}, time);
-    function frame() {
-        var current = io();
-        io((end - start) / (time / 5) + current * 1);
-    }
-}
-
-function byId(name) {
-    return document.getElementById(name);
-}
-
-function byClass(name) {
-    return document.getElementsByClassName(name);
-}
-
-function fadeOut(element, duration, callback) {
-    function fadeIO(arg) {
-        if (arg == null) return element.style.opacity * 1;
-        else element.style.opacity = arg + '';
-    }
-    animate(duration, 1, 0, fadeIO, callback);
-}
-
-function fadeIn(element, duration, callback) {
-    function fadeIO(arg) {
-        if (arg == null) return element.style.opacity * 1;
-        else element.style.opacity = arg + '';
-    }
-    animate(duration, 0, 1, fadeIO, callback);
-}
-
 function scrollTo(position, callback) {
-    var body = document.getElementsByTagName('body')[0];
-    var scrollTop = body.scrollTop;
-    function scrollIO(arg) {
-        if (arg == null) return body.scrollTop;
-        else body.scrollTop = arg;
-    }
-    animate(200, scrollTop, position, scrollIO, callback);
+    $('html, body').animate({
+        scrollTop: position
+    }, '20');
 }
 
 window.onpopstate = function(e) {
     e.preventDefault();
     vm.isLoading = true;
-    var posts = byClass('main')[0];
-    fadeOut(posts, 10, function() {
+    $('.main').fadeOut(10, function() {
         vm.isPopState = true;
         vm.init();
-    });
+    })
 };
 
 function _GET(name) {
