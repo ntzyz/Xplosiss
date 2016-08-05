@@ -232,6 +232,15 @@ var vm = new Vue({
     }
 });
 
+vm.$watch('isLoading', function(arg) {
+    if (arg) {
+        $('.spinner').fadeIn(500);
+    }
+    else {
+        $('.spinner').fadeOut(10);
+    }
+});
+
 window.onscroll = function() {
     if(!vm.isLoading 
         && document.documentElement.scrollHeight - window.innerHeight > 0 
