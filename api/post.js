@@ -59,9 +59,15 @@ router.get('/byPostId', (req, res) => {
             table[0].post_content = decodeHTML(marked(table[0].post_content));
         }
         table[0].post_content = table[0].post_content.replace(/<code lang="(.+?)">([^]+?)<\/code>/g, (match, p1, p2) => {
-            return '<pre>' + hljs.highlight(p1, p2).value + '</pre>';
+            if (table[0].render_type != 2)
+                return '<pre>' + hljs.highlight(p1, p2).value + '</pre>';
+            else 
+                return hljs.highlight(p1, p2).value;
         }).replace(/<code>([^]+?)<\/code>/g, function(match, p1) {
-            return '<pre>' + hljs.highlightAuto(p1).value + '</pre>';
+            if (table[0].render_type != 2)
+                return '<pre>' + hljs.highlightAuto(p1).value + '</pre>';
+            else
+                return hljs.highlightAuto(p1).value;
         });
         res.send(table);
     })

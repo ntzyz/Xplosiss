@@ -253,7 +253,7 @@ function replaceUrl(url, noAnime){
 function scrollTo(position, callback) {
     $('html, body').animate({
         scrollTop: position
-    }, '20');
+    }, 200);
 }
 
 window.onpopstate = function(e) {
