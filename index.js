@@ -10,3 +10,4 @@ app.use('/', express.static('www'));
 app.use('/post/*', express.static('www'));
 
 app.listen(require('./config').bind_port);
+console.log('Listening on http://[::]:' + require('./config').bind_port);

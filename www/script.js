@@ -32,10 +32,8 @@ function AJAX(data) {
 Vue.component('card', {
     props: ['content'],
     template: [
-        '<div class="card">',
-            '<div class="card-content">',
-                '{{{content}}}',
-            '</div>',
+        '<div class="widget">',
+            '{{{content}}}',
         '</div>'
     ].join('\n')
 });
@@ -44,7 +42,7 @@ Vue.component('post', {
     props: ['post_title', 'post_date', 'post_category', 'post_content', 'post_id', 'disp'],
     template: [
         '<div style="margin-bottom: 80px;">',
-            '<h3 class="post_title" onclick="vm.readMoreClick({{post_id}})">{{{post_title}}}</h3>',
+            '<div><h3 class="post_title" onclick="vm.readMoreClick({{post_id}})" style="display: inline-block;">{{{post_title}}}</h3></div>',
             '<div class="meta"><img src="/cate.png" class="metaicon" />{{{post_category}}}</div>', 
             '<div class="meta"><img src="/date.png" class="metaicon" />{{{post_date}}}</div>', 
             '<div class="row">', 
