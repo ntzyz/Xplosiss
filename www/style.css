@@ -71,6 +71,9 @@ a:hover {
 .main {
     word-wrap: break-word;
 }
+p.indent {
+    text-indent: 2em;
+}
 @media only screen and (max-width: 600px) {
     .row .col.s12 {
         margin-left: -5%;
