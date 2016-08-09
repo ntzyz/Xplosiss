@@ -5,7 +5,8 @@
 #### Todo
 - [X] 语法高亮
 - [X] Markdown 和 Jade 的支持
-- [ ] Tag 支持
+- [ ] Tag
+- [ ] 更智能的 More 截断
 - [ ] RSS
 - [ ] 评论
 
