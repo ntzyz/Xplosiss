@@ -35,6 +35,7 @@
                             :post_content="item.post_content ? item.post_content : item.post_shot" 
                             :post_id="item.post_id" 
                             :show_more="!item.post_content"></post>
+                        <div id="disqus_thread" v-if="isDisqusDisplaying"></div>
                     </template>
                 </div>
                 <div v-bind:style="{display: isLoading ? '' : 'none'}">

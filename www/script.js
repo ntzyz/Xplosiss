@@ -46,17 +46,7 @@ Vue.component('disqus', {
         '<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>'
     ].join('\n'),
     created: function() {
-        var id = this.$parent.post_id;
-        var disqus_config = function () {
-            this.page.url = window.location.href;
-            this.page.identifier = id;
-        };
-        (function() { // DON'T EDIT BELOW THIS LINE
-            var d = document, s = d.createElement('script');
-            s.src = '//new-ntzyz-cn.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-        })();
+
     }
 });
 
@@ -71,9 +61,41 @@ Vue.component('post', {
                 '<p>{{{post_content}}}</p>',
             '</div>',
             '<a class="waves-effect waves-teal btn-flat right" v-if="show_more" @click="this.$parent.readMoreClick(post_id)">Read more</a>',
-            '<disqus :post_id="post_id" v-if="!show_more"></disqus>',
         '</div>'
     ].join('\n'),
+    created: function() {
+        if (!this.show_more) {
+            var id = this.post_id;
+            if (!vm.isDisqusLoaded) {
+                vm.isDisqusLoaded = true;
+                var disqus_config = function () {
+                    this.page.url = window.location.href;
+                    this.page.identifier = id;
+                };
+                (function() {
+                    var d = document, s = d.createElement('script');
+                    s.src = '//new-ntzyz-cn.disqus.com/embed.js';
+                    s.setAttribute('data-timestamp', +new Date());
+                    (d.head || d.body).appendChild(s);
+                })();
+            }
+            else {
+                window.call(() => {
+                    DISQUS.reset({
+                        reload: true,
+                        config: function () {  
+                            this.page.identifier = id;  
+                            this.page.url = window.location.href;
+                        }
+                    });
+                });
+            }
+            vm.isDisqusDisplaying = true;
+        }
+        else {
+            vm.isDisqusDisplaying = false;
+        }
+    }
 });
 
 var blogData = {
@@ -87,7 +109,9 @@ var blogData = {
     post: [],
     isPopState: false,
     isFirstLoad: true,
-    isLoading: true
+    isLoading: true,
+    isDisqusLoaded: false,
+    isDisqusDisplaying: false
 };
 
 var vm = new Vue({
