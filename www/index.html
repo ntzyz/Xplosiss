@@ -34,12 +34,9 @@
                             :post_category="item.category_name" 
                             :post_content="item.post_content ? item.post_content : item.post_shot" 
                             :post_id="item.post_id" 
-                            :disp="item.post_content ? 'none' : ''"></post>
+                            :show_more="!item.post_content"></post>
                     </template>
                 </div>
-                <!--div class="progress" v-bind:style="{display: isLoading ? '' : 'none'}">
-                    <div class="indeterminate"></div>
-                </div-->
                 <div v-bind:style="{display: isLoading ? '' : 'none'}">
                     <!-- From: https://github.com/tobiasahlin/SpinKit -->
                     <div class="spinner" style="opacity: 1;">
@@ -61,8 +58,8 @@
         </div>
         <script src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
         <script src="//cdn.bootcss.com/materialize/0.97.7/js/materialize.min.js"></script>
-        <!--script src="//cdn.bootcss.com/vue/1.0.26/vue.js"></script-->
-        <script src="//cdn.bootcss.com/vue/1.0.26/vue.min.js"></script>
+        <script src="//cdn.bootcss.com/vue/1.0.26/vue.js"></script>
+        <!--script src="//cdn.bootcss.com/vue/1.0.26/vue.min.js"></script-->
         <script src="/script.js"></script>
     </body>
 </html>

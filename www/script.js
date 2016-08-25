@@ -29,6 +29,7 @@ function AJAX(data) {
     }
 }
 
+Vue.config.devtools = true;
 Vue.component('card', {
     props: ['content'],
     template: [
@@ -38,36 +39,60 @@ Vue.component('card', {
     ].join('\n')
 });
 
+Vue.component('disqus', {
+    props: ['post_id'],
+    template: [
+        '<div id="disqus_thread"></div>',
+        '<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>'
+    ].join('\n'),
+    created: function() {
+        var id = this.$parent.post_id;
+        var disqus_config = function () {
+            this.page.url = window.location.href;
+            this.page.identifier = id;
+        };
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+            s.src = '//new-ntzyz-cn.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    }
+});
+
 Vue.component('post', {
-    props: ['post_title', 'post_date', 'post_category', 'post_content', 'post_id', 'disp'],
+    props: ['post_title', 'post_date', 'post_category', 'post_content', 'post_id', 'show_more'],
     template: [
         '<div style="margin-bottom: 80px;">',
-            '<div><h3 class="post_title" onclick="vm.readMoreClick({{post_id}})" style="display: inline-block;">{{{post_title}}}</h3></div>',
+            '<div><h3 class="post_title" @click="this.$parent.readMoreClick(post_id)" style="display: inline-block;">{{{post_title}}}</h3></div>',
             '<div class="meta"><img src="/cate.png" class="metaicon" />{{{post_category}}}</div>', 
             '<div class="meta"><img src="/date.png" class="metaicon" />{{{post_date}}}</div>', 
             '<div class="row">', 
                 '<p>{{{post_content}}}</p>',
             '</div>',
-            '<a class="waves-effect waves-teal btn-flat right" v-bind:style="{display: disp};" onclick="vm.readMoreClick({{post_id}})">Read more</a>',
+            '<a class="waves-effect waves-teal btn-flat right" v-if="show_more" @click="this.$parent.readMoreClick(post_id)">Read more</a>',
+            '<disqus :post_id="post_id" v-if="!show_more"></disqus>',
         '</div>'
-    ].join('\n')
+    ].join('\n'),
 });
+
+var blogData = {
+    blog_title: null,
+    blog_subtitle: null,
+    category: [],
+    currentCategoryId: null,
+    currentPage: 0,
+    maxPage: 0,
+    widget: [],
+    post: [],
+    isPopState: false,
+    isFirstLoad: true,
+    isLoading: true
+};
 
 var vm = new Vue({
     el: 'body',
-    data: {
-        blog_title: null,
-        blog_subtitle: null,
-        category: [],
-        currentCategoryId: null,
-        currentPage: 0,
-        maxPage: 0,
-        widget: [],
-        post: [],
-        isPopState: false,
-        isFirstLoad: true,
-        isLoading: true
-    },
+    data: blogData,
     created: function () {
         this.init();
     },
@@ -226,7 +251,7 @@ var vm = new Vue({
             this.post = [];
             pushUrl('post/id=' + id);
             this.viewPostById(id);
-        }
+        },
     }
 });
 
