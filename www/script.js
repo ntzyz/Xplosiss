@@ -80,7 +80,8 @@ Vue.component('post', {
                 })();
             }
             else {
-                window.call(() => {
+                // global this is required.
+                setTimeout(() => {
                     DISQUS.reset({
                         reload: true,
                         config: function () {  
@@ -88,7 +89,7 @@ Vue.component('post', {
                             this.page.url = window.location.href;
                         }
                     });
-                });
+                }, 0);
             }
             vm.isDisqusDisplaying = true;
         }
