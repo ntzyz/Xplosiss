@@ -80,7 +80,7 @@ Vue.component('post', {
             }
             else {
                 // global this is required.
-                setTimeout(() => {
+                setTimeout(function () {
                     DISQUS.reset({
                         reload: true,
                         config: function () {  
