@@ -70,7 +70,6 @@ Vue.component('post', {
                 vm.isDisqusLoaded = true;
                 var disqus_config = function () {
                     this.page.url = window.location.href;
-                    this.page.identifier = id;
                 };
                 (function() {
                     var d = document, s = d.createElement('script');
@@ -85,7 +84,6 @@ Vue.component('post', {
                     DISQUS.reset({
                         reload: true,
                         config: function () {  
-                            this.page.identifier = id;  
                             this.page.url = window.location.href;
                         }
                     });
