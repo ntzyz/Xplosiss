@@ -189,9 +189,16 @@ var vm = new Vue({
 
             if (!category_id) {
                 url = "/api/post/all?page=" + this.currentPage;
+                document.title = vm.blog_title;
             }
             else {
                 url = "/api/post/byCategoryId?page=" + this.currentPage + '&category_id=' + category_id;
+                document.title = 'Category: ' + (function(cid) {
+                    for (var i = 0; i != vm.category.length; ++i) {
+                        if (vm.category[i].category_id == cid)
+                            return vm.category[i].category_name;
+                    }
+                })(category_id) + ' - '+ vm.blog_title;
             }
 
             AJAX({
