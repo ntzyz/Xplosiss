@@ -37,6 +37,16 @@ INSERT INTO widget(widget_content) VALUES(
     '	<a title="Shell Bin" href="http://shellbin.top/" target="_blank">Shell Bin</a>\n'
     '</div>\n'
 );
+
+CREATE TABLE user(
+    user_id BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    user_name VARCHAR(200) NOT NULL,
+    user_pass VARCHAR(200) NOT NULL
+);
+INSERT INTO user(user_name, user_pass) VALUES (
+    'ntzyz', '24aa57a0b8614a5fb6bb7dae52695dbf'
+);
+
 /* render_type:
  *     0 -> HTML
  *     1 -> Jade(pug)

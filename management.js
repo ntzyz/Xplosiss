@@ -11,9 +11,7 @@ router.use(bodyParser.urlencoded({extended: true}));
 router.use(bodyParser.json());
 
 // use static value temporarily
-let userInfo = {
-    ntzyz: 'my_great_password_that_you_will_never_see_lol'
-};
+let userInfo = {};
 
 // let's check if remote side authorized.
 router.use((req, res, next) => {
@@ -52,16 +50,27 @@ router.get('/login', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-    console.log([req.body, userInfo[req.body.uname]]);
-    // check the login info
-    if (userInfo[req.body.uname] != req.body.passwd) {
-        // incorrect, send a message to browser.
-        res.render('login', {note: 'Wrong username or password.'});
-        return;
-    }
-    // Passwd, insert authorized key into cookies.
-    res.cookie('authorizedkey', utils.encrypt(JSON.stringify(req.body)));
-    res.redirect(301, './index');
+    utils.getConn().query('select * from user', (err, table) => {
+        if (err) throw err;
+        // save all query result to userInfo;
+        userInfo = {};
+        table.forEach((item) => {
+            userInfo[item.user_name] = item.user_pass;
+        });
+        let loginInfo = {
+            uname: req.body.uname,
+            passwd: utils.md5(req.body.passwd)
+        }
+        // check the login info
+        if (userInfo[loginInfo.uname] != loginInfo.passwd) {
+            // incorrect, send a message to browser.
+            res.render('login', {note: 'Wrong username or password.'});
+            return;
+        }
+        // Passwd, insert authorized key into cookies.
+        res.cookie('authorizedkey', utils.encrypt(JSON.stringify(loginInfo)));
+        res.redirect(301, './index');
+    });
 });
 
 router.get('/index', (req, res) => {

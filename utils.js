@@ -42,12 +42,17 @@ function decrypt(content){
     return dec;
 }
 
+function md5(content) {
+    return crypto.createHash('md5').update(content, 'utf8').digest('hex');
+}
+
 let utils = {
     getConn: function() {
         return conn;
     },
     encrypt: encrypt,
-    decrypt: decrypt
+    decrypt: decrypt,
+    md5: md5
 }
 
 module.exports = utils;
