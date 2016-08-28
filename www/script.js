@@ -233,6 +233,7 @@ var vm = new Vue({
                 done: function (data) {
                     $('.main').fadeIn(300);
                     vm.post = JSON.parse(data);
+                    document.title = vm.post[0].post_title + ' - '+ vm.blog_title;
                     vm.isLoading = false;
                 }
             });
