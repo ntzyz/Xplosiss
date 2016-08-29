@@ -1,0 +1,62 @@
+doctype html
+html
+    head
+        title Login Page
+        meta(name="language", content="zh-cn")
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+        meta(http-equiv="x-ua-compatible", content="ie=edge")
+        meta(http-equiv="cleartype", content="on")
+        link(href="//cdn.bootcss.com/materialize/0.97.7/css/materialize.min.css", rel="stylesheet")
+        link(href="//cdn.bootcss.com/highlight.js/9.5.0/styles/github.min.css", rel="stylesheet")
+        link(href="//cdn.bootcss.com/material-design-icons/3.0.0/iconfont/material-icons.css", rel="stylesheet")
+        link(href="/style.css", rel="stylesheet")
+        style.
+            .blockbutton {
+                background-color: rgba(0, 0, 0, 0.05);
+                margin: 5px;
+                display: inline-block;
+                position: relative;
+                text-align: center;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+                cursor: pointer;                
+            }
+            .blockbutton:hover {
+                background-color: rgba(0, 0, 0, 0.12);
+            }
+            .big {
+                margin: 12px 30px 12px 30px;
+                display: block;
+                font-size: 80px;
+            }
+            .blockbutton span {
+                padding-top: 5px;
+            }
+    body
+        h1.blue-text 选择一项任务，然后开始。
+        div.row
+            div.blockbutton(onclick="window.location = './common';")
+                i.material-icons.big settings_applications
+                span 一般选项
+            div.blockbutton(onclick="window.location = './post';")
+                i.material-icons.big description
+                span 文章
+            div.blockbutton(onclick="window.location = './category';")
+                i.material-icons.big view_module
+                span 分类
+            div.blockbutton(onclick="window.location = './tag';")
+                i.material-icons.big label
+                span 标签
+            div.blockbutton(onclick="window.location = './widget';")
+                i.material-icons.big code
+                span 小工具
+        script(src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js")
+        script(src="//cdn.bootcss.com/materialize/0.97.7/js/materialize.min.js")
+        script.
+            function resizeButton() {
+                var width = $('.blockbutton').width();
+                $('.blockbutton').css('height', width + 'px');
+            }
+            window.onload = window.onresize = resizeButton;

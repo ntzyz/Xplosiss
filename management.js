@@ -74,7 +74,13 @@ router.post('/login', (req, res) => {
 });
 
 router.get('/index', (req, res) => {
-    res.send('Great Success.');
+    // index of contorl panel.
+    res.render('index');
 });
+
+router.get('post', (req, res) => {
+    // manage all the posts on this page.
+    res.render('post');
+})
 
 module.exports = router;
