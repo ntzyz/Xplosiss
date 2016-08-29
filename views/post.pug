@@ -1,0 +1,160 @@
+doctype html
+html
+    head
+        title Login Page
+        meta(name="language", content="zh-cn")
+        meta(name="viewport", content="width=device-width, initial-scale=1")
+        meta(http-equiv="x-ua-compatible", content="ie=edge")
+        meta(http-equiv="cleartype", content="on")
+        link(href="//cdn.bootcss.com/materialize/0.97.7/css/materialize.min.css", rel="stylesheet")
+        link(href="//cdn.bootcss.com/highlight.js/9.5.0/styles/github.min.css", rel="stylesheet")
+        link(href="//cdn.bootcss.com/material-design-icons/3.0.0/iconfont/material-icons.css", rel="stylesheet")
+        link(href="/style.css", rel="stylesheet")
+        style.
+            #editor {
+                display: block;
+                height: 400px;
+            }
+    body
+        h1.blue-text 文章管理
+        div#app: div.row
+            div.col.m12.l4
+                div.collection
+                    a.collection-item(@click="create", style="cursor: pointer;") 撰写新文章
+                    template(v-for="item in post")
+                        a.collection-item(@click="loadPost(item.post_id)", style="cursor: pointer;") {{item.post_title}}
+            div.col.m12.l8
+                div(v-show="!selected")
+                    h2.green-text(style="text-align: center; margin-top: 100px;") 在左侧新建文章或编辑已有文章
+                div(v-else)
+                    div.row
+                        div.input-field.col.s9
+                            input.validate(id="title", type="text", placeholder="新文章")
+                            label(for="title") 文章标题
+                        div.input-field.col.s3
+                            select#render_picker
+                                // option(value="" selected disabled) 选择渲染模式
+                                option(v-for="type in render_type" value="{{$index}}") {{type}}
+                            label 渲染模式
+                    div.row
+                        div.input-field.col.s6
+                            input.validate(id="tags", type="text", placeholder="输入标签，多个标签用英文逗号隔开")
+                            label(for="tags") 标签
+                        div#date.input-field.col.s3
+                            input#datepicker.datepicker(type="date")
+                            label(for="date") 更新日期
+                        div.input-field.col.s3
+                            select#category_picker
+                                option(v-for="item in category" value="{{item.category_id}}") {{item.category_name}}
+                            label 分类
+                    div.row: div#editor.input-field.col.s12
+                    div.row: a.btn(@click="submit") 提交
+        script(src="//cdn.bootcss.com/vue/1.0.26/vue.js")
+        script(src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js")
+        script(src="//cdn.bootcss.com/materialize/0.97.7/js/materialize.min.js")
+        script(src="//cdn.bootcss.com/ace/1.2.5/ace.js")
+        script.
+            $(document).ready(function() {
+                $('select').material_select();
+                document.getElementById("datepicker").valueAsDate = new Date();
+                $('.datepicker').pickadate({
+                    selectMonths: true, // Creates a dropdown to control month
+                    selectYears: 16 // Creates a dropdown of 15 years to control year
+                });
+            })
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/xcode");
+            editor.getSession().setUseWorker(false);
+            editor.$blockScrolling = Infinity
+            editor.getSession().setMode("ace/mode/html");
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    post: [],
+                    category: [],
+                    selected: null,
+                    render_type: ['HTML', 'Jade(Pug)', 'Markdown'],
+                },
+                created: function() {
+                    this.getPostList();
+                    this.getCategoryList();
+                },
+                methods: {
+                    create: function() {
+                        this.selected = -1;
+                        $('#title').val('')
+                        $('#render_picker').val(0);
+                        $('#category_picker').val(0);
+                        $('select').material_select();
+                        editor.setValue('');
+                    },
+                    getPostList: function() {
+                        AJAX({
+                            url: '/api/post/list',
+                            type: 'GET',
+                            done: function(res) {
+                                var data = JSON.parse(res);
+                                vm.post = data.table;
+                            }
+                        });
+                    },
+                    getCategoryList: function() {
+                        AJAX({
+                            url: '/api/category/list',
+                            type: 'GET',
+                            done: function(res) {
+                                var data = JSON.parse(res);
+                                vm.category = data;
+                            }
+                        });
+                    },
+                    submit: function() {},
+                    loadPost: function(post_id) {
+                        this.selected = post_id;
+                        AJAX({
+                            url: '/api/post/byPostId?raw=true&post_id=' + post_id,
+                            type: 'GET',
+                            done: function(res) {
+                                var data = JSON.parse(res)[0];
+                                $('#title').val(data.post_title)
+                                $('#render_picker').val(data.render_type);
+                                $('#category_picker').val(data.post_category_id);
+                                $('select').material_select();
+                                editor.setValue(data.post_content);
+                            }
+                        });
+                    }
+                }
+            });
+            vm.$watch('render_type', function() {
+                $('select').material_select();
+            })
+            function AJAX(data) {
+                var xhr = new XMLHttpRequest();
+                if (data.url.indexOf('?') >= 0) {
+                    xhr.open(data.type, data.url + '&time=' + (new Date()).getTime());
+                }
+                else {
+                    xhr.open(data.type, data.url + '?time=' + (new Date()).getTime());
+                }
+
+                xhr.onreadystatechange = function() {
+                    if(xhr.readyState === 4) {
+                        if (xhr.status === 200 && data.done) {
+                            data.done(xhr.responseText);
+                        }
+                        else {
+                            console.error('Ajax Error: ', xhr.status);
+                        }
+                    }
+                }
+
+                if (data.before) {
+                    data.before();
+                    xhr.send();
+                }
+                else {
+                    xhr.send();
+                }
+            }
+            

@@ -78,7 +78,7 @@ router.get('/index', (req, res) => {
     res.render('index');
 });
 
-router.get('post', (req, res) => {
+router.get('/post', (req, res) => {
     // manage all the posts on this page.
     res.render('post');
 })

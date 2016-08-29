@@ -78,14 +78,15 @@ router.get('/all', (req, res) => {
 
 router.get('/byPostId', (req, res) => {
     utils.getConn().query({
-        sql: 'select post_id, category_name, post_date, post_title, post_content, render_type from post inner join category where category.category_id = post.post_category_id and post_id = ?',
+        sql: 'select post_id, category_name, post_date, post_title, post_content, render_type, post_category_id from post inner join category where category.category_id = post.post_category_id and post_id = ?',
         values: [req.query.post_id]
     }, (err, table) => {
         if (err) {
             res.send(JSON.stringify(err));
             return;
         }
-        table = render(table, 'post_content', false);
+        if (!req.query.raw)
+            table = render(table, 'post_content', false);
         res.send(table);
     })
 });
@@ -112,5 +113,18 @@ router.get('/byCategoryId', (req, res) => {
         })
     });
 });
+
+router.get('/list', (req, res) => {
+    utils.getConn().query( {
+        sql: 'select post_id, post_date, post_title, post_category_id from post order by post_date desc'
+    }, (err, table) => {
+        if (err) {
+            res.send(err);
+            return;
+        }
+        res.send(JSON.stringify({table}));
+    })
+});
+
 
 module.exports = router;
