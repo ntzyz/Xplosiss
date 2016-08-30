@@ -23,6 +23,7 @@ html
                     a.collection-item(@click="create", style="cursor: pointer;" v-bind:class="{'active': selected == -1}") 撰写新文章
                     template(v-for="item in post")
                         a.collection-item(@click="loadPost(item.post_id)", style="cursor: pointer;" v-bind:class="{'active': item.post_id == selected}") {{item.post_title}}
+                a.teal-text(href="./index") 返回管理面板
             div.col.m12.l8
                 div(v-show="!selected")
                     h2.green-text(style="text-align: center; margin-top: 100px;") 在左侧新建文章或编辑已有文章
