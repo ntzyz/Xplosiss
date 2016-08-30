@@ -82,5 +82,56 @@ router.get('/post', (req, res) => {
     // manage all the posts on this page.
     res.render('post');
 })
+/*
+var content = {
+    post_id: this.selected,
+    post_title: $('#title').val(),
+    post_content: editor.getSession().getValue(),
+    post_date: $('#datepicker').val(),
+    post_category_id: $('#category_picker').val(),
+    render_type: $('#render_picker').val()
+}*/
+router.post('/post', (req, res) => {
+    let content = JSON.parse(req.body.content);
+    if (req.body.operation == 'delete') {
+        utils.getConn().query({
+            sql: 'delete from post where post_id = ?',
+            values: [content.post_id]
+        }, (err, table) => {
+            if (err) {
+                res.send(err);
+            }
+            else {
+                res.render('post');
+            }
+        })
+    }
+    else if (content.post_id == -1) {
+        utils.getConn().query({
+            sql: 'INSERT INTO post(post_title, post_content, post_date, post_category_id, render_type) VALUES(?, ?, ?, ?, ?)',
+            values: [content.post_title, content.post_content, content.post_date, content.post_category_id, content.render_type]
+        }, (err, table) => {
+            if (err) {
+                res.send(err);
+            }
+            else {
+                res.render('post');
+            }
+        })
+    }
+    else {
+        utils.getConn().query({
+            sql: 'UPDATE post SET post_title = ?, post_content = ?, post_date = ?, post_category_id = ?, render_type = ? WHERE post_id = ?',
+            values: [content.post_title, content.post_content, content.post_date, content.post_category_id, content.render_type, content.post_id]
+        }, (err, table) => {
+            if (err) {
+                res.send(err);
+            }
+            else {
+                res.render('post');
+            }
+        })
+    }
+})
 
 module.exports = router;

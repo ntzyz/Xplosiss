@@ -116,7 +116,7 @@ router.get('/byCategoryId', (req, res) => {
 
 router.get('/list', (req, res) => {
     utils.getConn().query( {
-        sql: 'select post_id, post_date, post_title, post_category_id from post order by post_date desc'
+        sql: 'select post_id, post_date, post_title, post_category_id from post order by post_id desc'
     }, (err, table) => {
         if (err) {
             res.send(err);

@@ -29,7 +29,7 @@
                 <!-- Posts -->
                 <div class="main">
                     <template v-for="item in post">
-                        <post :post_date="item.post_date.substr(0, 10)" 
+                        <post :post_date="item.post_date" 
                             :post_title="item.post_title" 
                             :post_category="item.category_name" 
                             :post_content="item.post_content ? item.post_content : item.post_shot" 

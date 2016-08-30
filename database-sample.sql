@@ -56,7 +56,7 @@ CREATE TABLE post(
     post_id BIGINT PRIMARY KEY NOT NULL AUTO_INCREMENT,
     post_title TEXT,
     post_content TEXT,
-    post_date DATE,
+    post_date VARCHAR(20),
     post_category_id BIGINT,
     post_shot TEXT,
     render_type INT DEFAULT 0

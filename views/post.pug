@@ -16,7 +16,7 @@ html
                 height: 400px;
             }
     body
-        h1.blue-text 文章管理
+        h1: a.blue-text(href="./post") 文章管理
         div#app: div.row
             div.col.m12.l4
                 div.collection
@@ -26,14 +26,13 @@ html
             div.col.m12.l8
                 div(v-show="!selected")
                     h2.green-text(style="text-align: center; margin-top: 100px;") 在左侧新建文章或编辑已有文章
-                div(v-else)
+                div(v-else, display="none")
                     div.row
                         div.input-field.col.s9
                             input.validate(id="title", type="text", placeholder="新文章")
                             label(for="title") 文章标题
                         div.input-field.col.s3
                             select#render_picker
-                                // option(value="" selected disabled) 选择渲染模式
                                 option(v-for="type in render_type" value="{{$index}}") {{type}}
                             label 渲染模式
                     div.row
@@ -48,7 +47,9 @@ html
                                 option(v-for="item in category" value="{{item.category_id}}") {{item.category_name}}
                             label 分类
                     div.row: div#editor.input-field.col.s12
-                    div.row: a.btn(@click="submit") 提交
+                    div.row
+                        a.btn(@click="submit") 提交
+                        a.btn.red(@click="delete", style="float: right;" v-if="selected != -1") 删除
         script(src="//cdn.bootcss.com/vue/1.0.26/vue.js")
         script(src="//cdn.bootcss.com/jquery/3.1.0/jquery.min.js")
         script(src="//cdn.bootcss.com/materialize/0.97.7/js/materialize.min.js")
@@ -65,8 +66,7 @@ html
             var editor = ace.edit("editor");
             editor.setTheme("ace/theme/xcode");
             editor.getSession().setUseWorker(false);
-            editor.$blockScrolling = Infinity
-            editor.getSession().setMode("ace/mode/html");
+            editor.$blockScrolling = Infinity;
             var vm = new Vue({
                 el: '#app',
                 data: {
@@ -74,6 +74,7 @@ html
                     category: [],
                     selected: null,
                     render_type: ['HTML', 'Jade(Pug)', 'Markdown'],
+                    render_picked: null,
                 },
                 created: function() {
                     this.getPostList();
@@ -86,7 +87,10 @@ html
                         $('#render_picker').val(0);
                         $('#category_picker').val(0);
                         $('select').material_select();
-                        editor.setValue('');
+                        var months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
+                        var currentDate = (new Date()).toLocaleString().split(' ')[0].split('/');
+                        document.getElementById("datepicker").value = currentDate[2] + ' ' + months[currentDate[1] - 1] + ', ' + currentDate[0];
+                        editor.getSession().setValue('<p class="indent">在这里编写文章的 HTML 代码~</p>');
                     },
                     getPostList: function() {
                         AJAX({
@@ -95,6 +99,15 @@ html
                             done: function(res) {
                                 var data = JSON.parse(res);
                                 vm.post = data.table;
+                                if (_GET('id')) {
+                                    var id = _GET('id') * 1;
+                                    if (id != -1)
+                                        vm.loadPost(id);
+                                    else {
+                                        vm.loadPost(vm.post.reduce(function(a, b) { return a.post_id > b.post_id ? a : b;}).post_id);
+                                        console.log(vm.post.reduce(function(a, b) { return a.post_id > b.post_id ? a : b;}).post_id);
+                                    }
+                                }
                             }
                         });
                     },
@@ -108,7 +121,62 @@ html
                             }
                         });
                     },
-                    submit: function() {},
+                    submit: function() {
+                        if (!$('#title').val()) {
+                            Materialize.toast('标题为空！', 4000);
+                            return;
+                        }
+                        if (!$('#category_picker').val()) {
+                            Materialize.toast('请选择分类', 4000);
+                            return;
+                        }
+
+                        var form = document.createElement('FORM');
+                        form.method = 'post';
+                        form.action = './post?id=' + this.selected;
+
+                        var data = document.createElement('INPUT');
+                        data.type = 'text';
+                        data.name = 'content';
+
+                        var content = {
+                            post_id: this.selected,
+                            post_title: $('#title').val(),
+                            post_content: editor.getSession().getValue(),
+                            post_date: $('#datepicker').val(),
+                            post_category_id: $('#category_picker').val(),
+                            render_type: $('#render_picker').val()
+                        }
+
+                        data.value = JSON.stringify(content);
+                        form.appendChild(data);
+
+                        form.submit();
+                    },
+                    delete: function() {
+                        var form = document.createElement('FORM');
+                        form.method = 'post';
+                        form.action = './post';
+
+                        var operation = document.createElement('INPUT');
+                        operation.type = 'text';
+                        operation.name = 'operation';
+                        operation.value = 'delete';
+
+                        var data = document.createElement('INPUT');
+                        data.type = 'text';
+                        data.name = 'content';
+
+                        var content = {
+                            post_id: this.selected,
+                        }
+
+                        data.value = JSON.stringify(content);
+                        form.appendChild(data);
+                        form.appendChild(operation);
+
+                        form.submit();
+                    },
                     loadPost: function(post_id) {
                         this.selected = post_id;
                         AJAX({
@@ -119,8 +187,10 @@ html
                                 $('#title').val(data.post_title)
                                 $('#render_picker').val(data.render_type);
                                 $('#category_picker').val(data.post_category_id);
+                                $('#datepicker').val(data.post_date);
                                 $('select').material_select();
-                                editor.setValue(data.post_content);
+                                editor.getSession().setValue(data.post_content);
+                                editor.getSession().setMode('ace/mode/' + ['html', 'jade', 'markdown'][data.render_type]);
                             }
                         });
                     }
@@ -128,6 +198,9 @@ html
             });
             vm.$watch('render_type', function() {
                 $('select').material_select();
+            })
+            $('#render_picker').change(function () {
+                editor.getSession().setMode('ace/mode/' + ['html', 'jade', 'markdown'][this.value]);
             })
             function AJAX(data) {
                 var xhr = new XMLHttpRequest();
@@ -157,4 +230,12 @@ html
                     xhr.send();
                 }
             }
-            
+            function _GET(name) {
+                var url = window.location.href;
+                name = name.replace(/[\[\]]/g, "\\$&");
+                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
+            }
