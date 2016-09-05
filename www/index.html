@@ -37,6 +37,10 @@
                             :show_more="!item.post_content"></post>
                         <div id="disqus_thread" v-if="isDisqusDisplaying"></div>
                     </template>
+                    <div v-show="post.length == 0" style="display: none;">
+                        <h2>未找到</h2>
+                        <p>为什么不去其他分区看看呢（</p>
+                    </div>
                 </div>
                 <div v-bind:style="{display: isLoading ? '' : 'none'}">
                     <!-- From: https://github.com/tobiasahlin/SpinKit -->
