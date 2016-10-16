@@ -128,8 +128,7 @@ html
                             return;
                         }
                         if (!$('#category_picker').val()) {
-                            Materialize.toast('请选择分类', 4000);
-                            return;
+                            $('#category_picker').val(1);
                         }
 
                         var form = document.createElement('FORM');

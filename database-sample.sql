@@ -69,7 +69,7 @@ CREATE TABLE post(
     render_type INT DEFAULT 0
 );
 
-INSERT INTO post(post_title, post_content, post_date, post_category_id, post_shot) VALUES
+INSERT INTO post(post_title, post_content, post_date, post_category_id) VALUES
 (
     "[Node.js] 学校网关登陆脚本",
     '<style type="text/css">\n'
@@ -130,8 +130,7 @@ INSERT INTO post(post_title, post_content, post_date, post_category_id, post_sho
     '<p class="indent">这段代码需要一个叫 `request` 的依赖，直接输入 `npm insall request` 即可完成安装。将个人的登录信息修改好后，执行脚本：`node login.js`，如果看到输出`Login Success.`，就表明认证通过，可以开始上网啦（（</p>\n'
     '<p class="indent"><del datetime="2016-06-05T04:00:49+00:00">现在看来当时的解决方案真是智障（不）</del></p>\n',
     '160605',
-    '2',
-    '虽然现在我在的学校很辣鸡，但是偶然间发现所有的教学区设备，在通过网关认证后，就可以获得一个江苏省常州市教育网的公网 IP 地址，同时拥有 10Mbps 的上下对等带宽，还是蛮良心的 [...]'
+    '2'
 ),(
     "[ndless] ndless 4.0 环境搭建",
     '<p style="text-indent:2em;">机缘巧合之下，手里又多了个 Ti nspire CX CAS，系统版本为 3.1.0392，还是相当新的一台计算器。</p>\n'
@@ -167,23 +166,20 @@ INSERT INTO post(post_title, post_content, post_date, post_category_id, post_sho
     '\n'
     '<p style="text-indent:2em;">顺便 nNovel Freetype 项目开坑，来补偿当年的各种遗憾。权且当作自娱自乐吧（</p>\n',
     '160507',
-    '3',
-    '机缘巧合之下，手里又多了个 Ti nspire CX CAS，系统版本为 3.1.0392，还是相当新的一台计算器 ...'
+    '3'
 ),(
     "恶意满满的世界，你好！",
     "<p>手贱啊手贱，备份好了的数据库没有下载到本地就rebuild了……<br><del>打死我也不用CentOS了，还是Ubuntu好</del><br>罢了罢了，重新再来呗</p>",
     '150726',
-    '4',
-    '手贱啊手贱，备份好了的数据库没有下载到本地就rebuild了 [...]'
+    '4'
 ),(
     '[重要！]简单说明',
 	'<p>这是一个半成品 Blog，后台使用了 Node.js 和 Express.js，前台目前使用了 Vue.js, Materialize。</p>\n',
     '160729',
-    '5',
-    '这是一个半成品 Blog，后台使用了 Node.js 和 [...]'
+    '5'
 );
 
-INSERT INTO post(post_title, post_content, post_date, post_category_id, post_shot, render_type) VALUES
+INSERT INTO post(post_title, post_content, post_date, post_category_id, render_type) VALUES
 (
     'Jade 渲染测试',
     'style.\n'
@@ -202,11 +198,10 @@ INSERT INTO post(post_title, post_content, post_date, post_category_id, post_sho
     'p.indent Jade 讲道理还是蛮好用的，不过改名 pug 了就感觉不萌了呢（（\n',
     '160802',
     '5',
-    '标题1 [...]',
     1
 );
 
-INSERT INTO post(post_title, post_content, post_date, post_category_id, post_shot, render_type) VALUES
+INSERT INTO post(post_title, post_content, post_date, post_category_id, render_type) VALUES
 (
     'MD 渲染测试',
     '# 模拟POS\n'
@@ -232,6 +227,5 @@ INSERT INTO post(post_title, post_content, post_date, post_category_id, post_sho
     '```\n',
     '160802',
     '5',
-    '模拟POS [..]',
     2
-); 
+);
