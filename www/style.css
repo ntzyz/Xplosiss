@@ -8,6 +8,12 @@ body {
     background: rgba(255, 255, 255, 1);
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
+.management {
+    max-width: 1024px;
+    padding: 0 40px 20px 40px;
+    margin: auto;
+    background: rgba(255, 255, 255, 1);
+}
 header {
     height: 120px;
     overflow: hidden;
