@@ -1,6 +1,6 @@
 function startbg() {
     var canvas = document.getElementById('canvas'), ctx;
-    var trigList = (new Array(100)).fill(0);
+    var trigList = Array.apply(null, Array(100)).map(Number.prototype.valueOf,0);;
     if (canvas.getContext)
         ctx = canvas.getContext('2d');
     trigList = trigList.map(function (item) {

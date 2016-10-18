@@ -2,6 +2,7 @@ require('./style.css');
 require('./index.html');
 require('./index.html');
 require('./img/date.png');
+require('babel-polyfill');
 
 import 'materialize-css/bin/materialize.css'
 import'materialize-css/bin/materialize.js'
