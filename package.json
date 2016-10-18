@@ -25,7 +25,8 @@
     "materialize-css": "^0.97.7",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "vue": "^1.0.28"
+    "vue": "^1.0.28",
+    "webpack": "^1.13.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

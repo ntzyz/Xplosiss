@@ -4,10 +4,10 @@ require('./index.html');
 require('./img/date.png');
 require('babel-polyfill');
 
-import 'materialize-css/bin/materialize.css'
-import'materialize-css/bin/materialize.js'
+// import 'materialize-css/bin/materialize.css'
+// import'materialize-css/bin/materialize.js'
 
-import Vue from 'vue';
+// import Vue from 'vue';
 
 const bg = require('./bg');
 
