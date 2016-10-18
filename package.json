@@ -4,15 +4,30 @@
   "description": "A self-used blog framework.",
   "main": "index.js",
   "dependencies": {
+    "babel": "^6.5.2",
+    "babel-core": "^6.17.0",
+    "babel-loader": "^6.2.5",
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.14.0",
     "highlight.js": "^9.5.0",
+    "html-loader": "^0.4.4",
     "marked": "^0.3.6",
+    "materialize-css": "^0.97.7",
     "mysql": "^2.11.1",
-    "pug": "^2.0.0-beta4"
+    "pug": "^2.0.0-beta4",
+    "vue": "^1.0.28"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-core": "^6.17.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.16.0",
+    "css-loader": "^0.25.0",
+    "file-loader": "^0.9.0",
+    "font-loader": "^0.1.2",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

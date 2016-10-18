@@ -3,7 +3,6 @@ function startbg() {
     var trigList = (new Array(100)).fill(0);
     if (canvas.getContext)
         ctx = canvas.getContext('2d');
-    resize();
     trigList = trigList.map(function (item) {
         return {
             x: Math.random() * window.innerWidth,
@@ -14,7 +13,8 @@ function startbg() {
             c: 'rgba(' + (Math.floor(220 + Math.random() * 35)) + ', ' + (Math.floor(220 + Math.random() * 35)) + ', ' + (Math.floor(220 + Math.random() * 35)) + ', ' + (0.4 + 0.1 * Math.random()) + ')'
         };
     });
-    id = setInterval(render, 12);
+    resize();
+    setInterval(render, 12);
     window.onresize = resize;
     function triangle(ctx, x, y, raito, fillStyle) {
         if (!ctx) return;
@@ -33,7 +33,7 @@ function startbg() {
     }
     function render() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        for (item of trigList) {
+        for (let item of trigList) {
             triangle(ctx, item.x, item.y, item.r, item.c);
             item.y -= item.s;
             if (item.y < -150) {
@@ -49,4 +49,6 @@ function startbg() {
         render();
     }
 }
-startbg();
+
+
+module.exports = startbg;

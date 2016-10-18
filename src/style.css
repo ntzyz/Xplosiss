@@ -1,0 +1,178 @@
+body {
+    overflow-y: scroll;
+}
+.body {
+    max-width: 1024px;
+    min-height: 100vh;
+    padding: 0 40px 20px 40px;
+    margin: auto;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 0 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+.management {
+    max-width: 1024px;
+    padding: 0 40px 20px 40px;
+    margin: auto;
+    background: rgba(255, 255, 255, 1);
+}
+header {
+    height: 120px;
+    overflow: hidden;
+}
+header h2 {
+    font-size: 18px;
+}
+h1 {
+    font-size: 24px;
+}
+h2 {
+    font-size: 22px;
+}
+h3 {
+    font-size: 20px;
+}
+h4, h5 {
+    font-size: 18px;
+}
+header div {
+    display: inline-block;
+}
+header div.right {
+    float: right;
+}
+header li {
+    display: inline;
+    line-height: 80px;
+    font-size: 1.2em;
+    padding: 2px;
+}
+header a {
+    color: black;
+}
+div.foot {
+    text-align: center;
+    color: #ccc;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+div.foot:hover {
+    color: #666;
+}
+h3.post_title {
+    font-size: 24px;
+    cursor: pointer;
+}
+div.meta {
+    margin-right: 20px;
+    display: inline-block;
+    color: #aaa;
+}
+img.metaicon {
+    margin-right: 5px;
+}
+a {
+    color: green;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+a:hover {
+    text-shadow: 0px 0px 5px white;
+}
+.main {
+    word-wrap: break-word;
+}
+p.indent {
+    text-indent: 2em;
+}
+@media only screen and (max-width: 600px) {
+    .row .col.s12 {
+        margin-left: -5%;
+        margin-right: -5%;
+        width: 110%;
+    }
+}
+pre {
+    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-size: 12px;
+    word-wrap: normal;
+    overflow-x: scroll;
+    border-left: solid 3px #7c7;
+    padding-left: 5px;
+}
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+}
+::-webkit-scrollbar-thumb {
+    background: #c0c0c0;
+    border: 0px none #ffffff;
+    border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #808080;
+}
+::-webkit-scrollbar-thumb:active {
+    background: #000000;
+}
+::-webkit-scrollbar-track {
+    background: #ffffff;
+    border: 0px none #ffffff;
+    border-radius: 50px;
+}
+::-webkit-scrollbar-track:hover {
+    background: #ffffff;
+}
+::-webkit-scrollbar-track:active {
+    background: #ffffff;
+}
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+.spinner {
+  margin: 100px auto 0;
+  width: 70px;
+  text-align: center;
+}
+
+.spinner > div {
+  width: 18px;
+  height: 18px;
+  background-color: #333;
+
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+  animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes sk-bouncedelay {
+  0%, 80%, 100% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 40% { 
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+  }
+}
