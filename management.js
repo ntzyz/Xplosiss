@@ -134,4 +134,9 @@ router.post('/post', (req, res) => {
     }
 })
 
+router.get('/widget', (req, res) => {
+    // manage all the widgets in this page.
+    res.render('widget');
+});
+
 module.exports = router;

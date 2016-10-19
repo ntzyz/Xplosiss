@@ -12,7 +12,7 @@ module.exports = {
         loaders: [
             {
                 test: /\.css$/, 
-                loader: "style!css"
+                loader: 'file?name=[path][name].[ext]'
             },
             { 
                 test: /\.(woff2?|eot|ttf|otf)$/,

@@ -1,4 +1,3 @@
-require('./style.css');
 require('./index.html');
 require('./index.html');
 require('./img/date.png');
