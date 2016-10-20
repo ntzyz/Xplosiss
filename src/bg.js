@@ -1,8 +1,13 @@
 function startbg() {
-    var canvas = document.getElementById('canvas'), ctx;
-    var trigList = Array.apply(null, Array(100)).map(Number.prototype.valueOf,0);;
-    if (canvas.getContext)
+    let canvas = document.getElementById('canvas'), ctx;
+    let trigList = Array.apply(null, Array(100)).map(Number.prototype.valueOf,0);
+    let lastX = null, lastY = null;
+    if (canvas && canvas.getContext) {
         ctx = canvas.getContext('2d');
+    }
+    else {
+        return;
+    }
     trigList = trigList.map(function (item) {
         return {
             x: Math.random() * window.innerWidth,
@@ -15,15 +20,16 @@ function startbg() {
     });
     resize();
     setInterval(render, 12);
-    window.onresize = resize;
+    window.onresize = () => { resize(); render(true); };
     function triangle(ctx, x, y, raito, fillStyle) {
         if (!ctx) return;
-        var width = 80;
-        var height = 96;
+        let width = 80;
+        let height = 96;
         
         // Set up the fill style.
         ctx.fillStyle = fillStyle;
 
+        // Draw this triangle.
         ctx.beginPath();
         ctx.moveTo(x + 0.5 * width * raito, y);
         ctx.lineTo(x, y + height * raito);
@@ -31,10 +37,13 @@ function startbg() {
         ctx.lineTo(x + 0.5 * width * raito, y);
         ctx.fill();
     }
-    function render() {
+    function render(noUpdate) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         for (let item of trigList) {
             triangle(ctx, item.x, item.y, item.r, item.c);
+            if (noUpdate) {
+                continue;
+            }
             item.y -= item.s;
             if (item.y < -150) {
                 item.y = canvas.height;
@@ -43,11 +52,36 @@ function startbg() {
         }
     }
     function resize() {
-        var canvas = document.getElementById('canvas');
+        let canvas = document.getElementById('canvas');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         render();
     }
+    function adjuest(event) {
+        if (lastX === null || lastY === null) {
+            lastX = event.clientX;
+            lastY = event.clientY;
+            return;
+        }
+        let offsetX = lastX - event.clientX;
+        let offsetY = lastY - event.clientY;
+        let abs = arg => {
+            return arg < 0 ? -arg: arg;
+        }
+        if (abs(offsetX) > 100 || abs(offsetY) > 100) {
+            lastX = event.clientX;
+            lastY = event.clientY;
+            return;
+        }
+        for (let item of trigList) {
+            item.x -= offsetX / 80;
+            item.y -= offsetY / 80;
+        }
+        render(true);
+        lastX = event.clientX;
+        lastY = event.clientY;
+    }
+    document.onmousemove = adjuest;
 }
 
 
