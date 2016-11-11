@@ -74,8 +74,8 @@ function startbg() {
             return;
         }
         for (let item of trigList) {
-            item.x -= offsetX / 80;
-            item.y -= offsetY / 80;
+            item.x += offsetX / 80;
+            item.y += offsetY / 80;
         }
         render(true);
         lastX = event.clientX;
