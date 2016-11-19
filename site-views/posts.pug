@@ -11,7 +11,7 @@ html(lang="zh-hans")
         div.col.s12.m8
           div.main: each post in posts
             div(style="margin-bottom: 80px;")
-              div: h3.post_title(style="display: inline-block"): a(href=`/post/${post.post_id}`)!=post.post_title
+              div: h3.post_title(style="color: black; display: inline-block"): a(href=`/post/${post.post_id}`)!=post.post_title
               div.meta
                 img.metaicon(src="/static/02b03035f1efd93661ec7117ce892241.png")
                 span=post.category_name
