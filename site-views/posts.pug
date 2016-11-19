@@ -1,0 +1,25 @@
+doctype html
+html(lang="zh-hans")
+  head
+    include ./head
+  body
+    canvas#canvas(style="position: fixed; z-index: -100;")
+    div.body
+      header
+        include ./header
+      div.row
+        div.col.s12.m8
+          div.main: each post in posts
+            div(style="margin-bottom: 80px;")
+              div: h3.post_title(style="display: inline-block"): a(href=`/post/${post.post_id}`)!=post.post_title
+              div.meta
+                img.metaicon(src="/static/02b03035f1efd93661ec7117ce892241.png")
+                span=post.category_name
+              div.meta
+                img.metaicon(src="/static/383d3704f3fc2e030cd1cd8eee50abf8.png")
+                span=post.post_date
+              div.row: p!=post.post_content
+              a.waves-effect.waves-teal.btn-flat.right(href=`/post/${post.post_id}`) Read more
+        div.col.s12.m4.right
+          include ./widget
+

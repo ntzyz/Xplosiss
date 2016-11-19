@@ -73,9 +73,6 @@ img.metaicon {
 }
 a {
     color: green;
-    -webkit-transition: all 0.2s ease;
-    -moz-transition: all 0.2s ease;
-    transition: all 0.2s ease;
 }
 a:hover {
     text-shadow: 0px 0px 5px white;

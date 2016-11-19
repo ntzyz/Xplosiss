@@ -46,7 +46,7 @@ router.use((req, res, next) => {
 
 router.get('/login', (req, res) => {
     // render the login page.
-    res.render('login', {note: ''});
+    res.render('management-views/login', {note: ''});
 });
 
 router.post('/login', (req, res) => {
@@ -64,7 +64,7 @@ router.post('/login', (req, res) => {
         // check the login info
         if (userInfo[loginInfo.uname] != loginInfo.passwd) {
             // incorrect, send a message to browser.
-            res.render('login', {note: 'Wrong username or password.'});
+            res.render('management-views/login', {note: 'Wrong username or password.'});
             return;
         }
         // Passwd, insert authorized key into cookies.
@@ -75,12 +75,12 @@ router.post('/login', (req, res) => {
 
 router.get('/index', (req, res) => {
     // index of contorl panel.
-    res.render('index');
+    res.render('management-views/index');
 });
 
 router.get('/post', (req, res) => {
     // manage all the posts on this page.
-    res.render('post');
+    res.render('management-views/post');
 })
 /*
 var content = {
@@ -102,7 +102,7 @@ router.post('/post', (req, res) => {
                 res.send(err);
             }
             else {
-                res.render('post');
+                res.render('management-views/post');
             }
         })
     }
@@ -115,7 +115,7 @@ router.post('/post', (req, res) => {
                 res.send(err);
             }
             else {
-                res.render('post');
+                res.render('management-views/post');
             }
         })
     }
@@ -128,7 +128,7 @@ router.post('/post', (req, res) => {
                 res.send(err);
             }
             else {
-                res.render('post');
+                res.render('management-views/post');
             }
         })
     }
@@ -136,7 +136,7 @@ router.post('/post', (req, res) => {
 
 router.get('/widget', (req, res) => {
     // manage all the widgets in this page.
-    res.render('widget');
+    res.render('/management-viewswidget');
 });
 
 module.exports = router;

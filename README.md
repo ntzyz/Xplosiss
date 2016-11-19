@@ -2,6 +2,9 @@
 
 目前可以查看的页面：[namespace ntzyz;](https://new.ntzyz.cn/)
 
+#### 说明
+该分支为传统后端渲染模式。
+
 #### Todo
 - [X] 语法高亮
 - [X] Markdown 和 Jade 的支持

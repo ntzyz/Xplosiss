@@ -1,0 +1,6 @@
+div.left
+  h1: a(href="/")=siteInfo.title
+  h2=siteInfo.subtitle
+div.right
+  ul: each category in categorys
+    li: a.waves-effect.waves-teal.btn-flat(href=`/category/${category.category_id}`)=category.category_name

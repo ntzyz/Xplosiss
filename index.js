@@ -1,17 +1,20 @@
+'use strict';
+
 let express = require('express');
 let app = express();
+let config = require('./config');
 
 app.set('view engine', 'pug');
+app.set('views', './');
 
-app.use('/api/category', require('./api/category'));
-app.use('/api/common', require('./api/common'));
-app.use('/api/widget', require('./api/widget'));
-app.use('/api/post', require('./api/post'));
+app.use('/static', express.static('./www'));
 
-app.use('/', express.static('www'));
-app.use('/post/*', express.static('www'));
+app.get('/', require('./site-handler/handler-index.js'));
+app.get('/category/:cid', require('./site-handler/handler-category.js'));
+app.get('/post/:pid', require('./site-handler/handler-post.js'));
 
 app.use('/management', require('./management.js'));
 
-app.listen(require('./config').bind_port);
+app.listen(config.bind_port);
+
 console.log('Listening on http://[::]:' + require('./config').bind_port);
