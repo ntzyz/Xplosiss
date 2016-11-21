@@ -1,6 +1,4 @@
 require('./index.html');
-require('./index.html');
-require('./img/date.png');
 require('babel-polyfill');
 
 // import 'materialize-css/bin/materialize.css'
@@ -66,16 +64,16 @@ Vue.component('post', {
     props: ['post_title', 'post_date', 'post_category', 'post_content', 'post_id', 'show_more'],
     template: [
         '<div style="margin-bottom: 80px;">',
-            '<div><h3 class="post_title" @click="this.$parent.readMoreClick(post_id)" style="display: inline-block;">{{{post_title}}}</h3></div>',
+            '<div><h3 class="post_title" v-on:click.prevent="this.$parent.readMoreClick(post_id)" style="display: inline-block;"><a href="/post/id={{post_id}}" style="color: inherit;">{{{post_title}}}</a></h3></div>',
             '<div class="meta"><img src="/' + require('./img/cate.png') + '" class="metaicon" />{{{post_category}}}</div>', 
             '<div class="meta"><img src="/' + require('./img/date.png') +'" class="metaicon" />{{{post_date}}}</div>', 
             '<div class="row">', 
                 '<p>{{{post_content}}}</p>',
             '</div>',
-            '<a class="waves-effect waves-teal btn-flat right" v-if="show_more" @click="this.$parent.readMoreClick(post_id)">Read more</a>',
+            '<a href="/post/id={{post_id}}" class="waves-effect waves-teal btn-flat right" v-if="show_more" v-on:click.prevent="this.$parent.readMoreClick(post_id)">Read more</a>',
         '</div>'
     ].join('\n'),
-    created: function() {
+    ready: function() {
         if (!this.show_more) {
             var id = this.post_id;
             if (!vm.isDisqusLoaded) {
@@ -102,9 +100,43 @@ Vue.component('post', {
                 }, 0);
             }
             vm.isDisqusDisplaying = true;
+
+            let matchResult;
+            this.domAddon = [];
+            // script tag with src attribute
+            matchResult = this.post_content.match(/<script src="([^]+?)"><\/script>/ig);
+            if (matchResult) {
+                matchResult.map(item => {
+                    return item.match(/<script src="([^]+?)"><\/script>/i)[1];
+                }).forEach(src => {
+                    let node = document.createElement('SCRIPT');
+                    node.src = src;
+                    document.body.appendChild(node);
+                    this.domAddon.push(node);
+                })
+            }
+            // script tag without src attribute
+            matchResult = this.post_content.match(/<script>([^]+?)<\/script>/ig)
+            if (matchResult) {
+                matchResult.map(item => {
+                    return item.match(/<script>([^]+?)<\/script>/i)[1];
+                }).forEach(js => {
+                    let node = document.createElement('SCRIPT');
+                    node.innerHTML = js;
+                    document.body.appendChild(node);
+                    this.domAddon.push(node);
+                })
+            }
         }
         else {
             vm.isDisqusDisplaying = false;
+        }
+    },
+    destroyed: function() {
+        if (!this.show_more) {
+            for (let node of this.domAddon) {
+                node.remove();
+            }
         }
     }
 });

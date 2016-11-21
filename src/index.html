@@ -16,13 +16,13 @@
             <header>
                 <div class="left">
                     <!-- Title -->
-                    <h1><a v-on:click="reset" style="cursor: pointer;">{{blog_title}}</a></h1>
+                    <h1><a href="/" v-on:click.prevent="reset" style="color: inherit;">{{blog_title}}</a></h1>
                     <h2>{{blog_subtitle}}</h2>
                 </div>
                 <div class="right">
                     <!-- Category -->
                     <ul>
-                        <li v-for="item in category"><a v-on:click="categoryClick(item.category_id)" class="waves-effect waves-teal btn-flat">{{item.category_name}}</a></li>
+                        <li v-for="item in category"><a v-on:click.prevent="categoryClick(item.category_id)" href="/post/category={{item.category_id}}?page=1" class="waves-effect waves-teal btn-flat">{{item.category_name}}</a></li>
                     </ul>
                 </div>
             </header>
