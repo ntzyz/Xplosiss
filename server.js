@@ -2,19 +2,13 @@
 
 const express = require('express');
 const config = require('./config');
+const utils = require('./utils');
 
 let server = express();
 
-server.use((req, res, next) => {
-  console.log(`${req.method} ${req.path}`);
-  next();
-})
+server.use(utils.logTool);
 
-server.get('/api', (req, res) => {
-  res.send({
-    status: 'ok',
-  });
-})
+server.use('/api', require('./api/index'));
 
 server.use('/', express.static('static'));
 
