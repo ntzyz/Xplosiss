@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import Background from './background';
+import Title from './title';
+import Search from './search';
+import Category from './category'
+import Tags from './tags';
 
 class Blog extends Component {
   constructor() {
@@ -9,7 +14,19 @@ class Blog extends Component {
   render() {
     return (
       <div>
-        <h1 className="title"> Hello World! </h1>
+        <Background />
+        <div id="container">
+          <div id="left">
+            <Title />
+            <hr />
+            <Search />
+            <Category />
+            <Tags />
+          </div>
+          <div id="right">
+            { this.props.children }
+          </div>
+        </div>
       </div>
     )
   }

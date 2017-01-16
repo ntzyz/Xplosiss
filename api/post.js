@@ -9,11 +9,14 @@ const utils = require('../utils');
 let getHandler = (req, res) => {
   utils.getCollection('posts').then(({db, collection}) => {
     let page = 0;
-    let posts = [];
     let parttern = {};
 
     if (req.query.page) {
       page = req.query.page - 1;
+    }
+
+    if (req.query.title) {
+      parttern.title = req.query.title;
     }
 
     if (req.query.category) {
