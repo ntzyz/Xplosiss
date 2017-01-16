@@ -36,7 +36,6 @@ let render = (posts, isFull) => {
       post.content.content = pug.render(post.content.content);
 
     // Check if need full content
-    console.log(isFull);
     if (!isFull && post.content.content.indexOf('<!-- more -->') >= 0) {
       post.content.content = post.content.content.substr(0, post.content.content.indexOf('<!-- more -->'));
     }

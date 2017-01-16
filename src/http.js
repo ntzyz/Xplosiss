@@ -23,7 +23,6 @@ function common(method, url, data, options) {
           pairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
         }
       }
-      console.log(pairs);
       data = pairs.join('&');
     }
 
