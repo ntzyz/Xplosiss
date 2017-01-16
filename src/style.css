@@ -78,6 +78,7 @@ input:focus {
   -webkit-margin-after: 0;
   -webkit-padding-start: 0;
   margin-top: 0em;
+  padding-left:0;
   text-align: left;
 }
 #left ul li {
@@ -129,7 +130,6 @@ a:link, a:active, a:visited, a:hover {
   text-indent: 2em;
 }
 #right pre {
-  font-family: consolas;
   font-size: 0.85em;
 }
 #right div.eachpost:not(:first-child) {
@@ -147,7 +147,7 @@ a:link, a:active, a:visited, a:hover {
 .eachpost pre {
   border: 1px solid grey;
   padding: 0.5em;
-  overflow: scroll;
+  overflow-x: scroll;
 }
 
 ::-webkit-scrollbar {
