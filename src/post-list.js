@@ -16,9 +16,9 @@ class PostList extends Component {
   refresh(props) {
     let query = ''
     if (props.params.categoryName) {
-      query = `?category=${props.params.categoryName}`;
+      query = `?category=${encodeURIComponent(props.params.categoryName)}`;
     } else if (props.params.tagName) {
-      query = `?tag=${props.params.tagName}`;
+      query = `?tag=${encodeURIComponent(props.params.tagName)}`;
     } else {
       query = '';
     }

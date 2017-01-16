@@ -17,7 +17,7 @@ class Search extends Component {
         <div className="inputWrapper">
           <input className="search" type="text" placeholder="Search here" />
         </div>
-        <button className="search" onClick={ this.search }>Go!</button>
+        <div className="search" onClick={ this.search }>Go!</div>
       </div>
     )
   }
