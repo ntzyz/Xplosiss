@@ -5,8 +5,11 @@
   "main": "index.js",
   "dependencies": {
     "express": "^4.14.0",
+    "highlight.js": "^9.9.0",
+    "marked": "^0.3.6",
     "mongo": "^0.1.0",
-    "mongodb": "^2.2.21"
+    "mongodb": "^2.2.21",
+    "pug": "^2.0.0-beta6"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",

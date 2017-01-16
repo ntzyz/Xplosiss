@@ -49,6 +49,8 @@ class PostList extends Component {
                 分类：{post.category}　
                 标签：{post.tags.map(tag => { return <Link style={{marginRight: '0.5em'}} key={`${tag}`} to={`/tag/${tag}`}>{tag}</Link>})}
               </h2>
+              <div dangerouslySetInnerHTML={{__html: post.content.content}}></div>
+              <Link to={`/post/${post.title}`}><button className="more">MORE</button></Link>
             </div>
           )
         })

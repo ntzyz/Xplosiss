@@ -15,7 +15,7 @@ class Post extends Component {
 
   refresh(props) {
     let title = props.params.title;
-    request.get(`/api/post?title=${title}`).then((xhr) => {
+    request.get(`/api/post?title=${title}&full=true`).then((xhr) => {
       let res = JSON.parse(xhr.responseText);
       if (typeof res.dataset[0] === 'undefined') {
         this.setState({

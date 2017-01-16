@@ -3,7 +3,7 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  color: white;
+  color: lightgray;
 }
 body {
   overflow-y: scroll;
@@ -39,7 +39,7 @@ body {
 .searchWrapper {
   display: flex;
 }
-.search {
+.search, .more {
   background-color: rgba(128, 128, 128, .3);
   border: 1px solid gray;
   color: white;
@@ -58,9 +58,10 @@ input.search {
   width: 100%;
   box-sizing: border-box;
 }
-button.search {
+button.search, button.more {
   padding-left: 1.1em;
   padding-right: 1.1em;
+  cursor: pointer;
 }
 input:focus, button:focus {
   outline: none;
@@ -101,7 +102,8 @@ input:focus {
   text-align: left;
 }
 #right {
-  width: auto;
+  width: 65%;
+  /*max-width: 768px;*/
   flex: 4;
   padding-left: 2em;
 }
@@ -128,4 +130,52 @@ a:link, a:active, a:visited, a:hover {
 }
 #right div.eachpost:not(:first-child) {
   border-top: 2px solid #333;
+}
+#right div.eachpost {
+  margin-bottom: 30px;
+}
+.eachpost {
+  word-wrap: break-word
+}
+.eachpost > div > p {
+  line-height: 1.5em;
+}
+.eachpost pre {
+  border: 1px solid grey;
+  padding: 0.5em;
+  overflow: scroll;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+}
+::-webkit-scrollbar-thumb {
+    background: #c0c0c0;
+    border: 0px none #000;
+    border-radius: 50px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: darkgray;
+}
+::-webkit-scrollbar-thumb:active {
+    background: gray;
+}
+::-webkit-scrollbar-track {
+    background: #000;
+    border: 0px none #000;
+    border-radius: 50px;
+}
+::-webkit-scrollbar-track:hover {
+    background: #000;
+}
+::-webkit-scrollbar-track:active {
+    background: #000;
+}
+::-webkit-scrollbar-corner {
+    background: transparent;
 }

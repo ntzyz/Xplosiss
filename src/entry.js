@@ -4,11 +4,25 @@ import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
 import Blog from './blog';
 import PostList from './post-list';
 import Post from './post';
+import './scrollFix';
 
 import './style.css';
+import 'highlight.js/styles/dark.css';
+
+function handleUpdate() {
+  window.scrollTo(0, 0);
+  return;
+  let {
+    action
+  } = this.state.location;
+
+  if (action === 'PUSH') {
+    window.scrollTo(0, 0);
+  }
+}
 
 ReactDOM.render((
-  <Router history={browserHistory}>
+  <Router onUpdate={handleUpdate} history={browserHistory}>
     <Route path="/" component={Blog}>
       <IndexRoute component={PostList} />
       <Route path="/category/:categoryName" component={PostList} />
