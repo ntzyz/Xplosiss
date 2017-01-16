@@ -20,7 +20,7 @@ let getCollection = (name) => {
 }
 
 let logTool = (req, res, next) => {
-  console.log(`${req.ip}: ${req.method} ${req.url}`);
+  console.log(`${req.headers['x-forwarded-for'] || req.ip}: ${req.method} ${req.url}`);
   next();
 }
 
