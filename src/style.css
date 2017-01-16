@@ -4,6 +4,10 @@ html, body {
   margin: 0;
   padding: 0;
   color: lightgray;
+  font-family: Microsoft Yahei UI, Arial, Helvetica, sans-serif;
+}
+pre {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
 body {
   overflow-y: scroll;
