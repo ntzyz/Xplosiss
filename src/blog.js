@@ -27,6 +27,7 @@ class Blog extends Component {
             { this.props.children }
           </div>
         </div>
+        <div id="footer">Powered by ntzyz 2016-2017.</div>
       </div>
     )
   }

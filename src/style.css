@@ -18,16 +18,6 @@ body {
   left: 0; right: 0;
   z-index: -100;
 }
-#container {
-  max-width: 1080px;
-  margin: 5px auto 0 auto;
-  display: flex;
-}
-#left {
-  max-width: 280px;
-  text-align: center;
-  flex: 2;
-}
 #left h1, #left h2 {
   font-weight: normal;
 }
@@ -43,7 +33,7 @@ body {
 .searchWrapper {
   display: flex;
 }
-.search, .more {
+.search, button {
   background-color: rgba(128, 128, 128, .3);
   border: 1px solid gray;
   color: white;
@@ -70,12 +60,13 @@ input.search {
   border: 0;
   box-sizing: border-box;
 }
-div.search, button.more {
+div.search, button {
   padding-left: 1.1em;
   padding-right: 1.1em;
   cursor: pointer;
   line-height: 23px;
   box-sizing: content-box;
+  font-size: 0.8em;
 }
 input:focus, button:focus {
   outline: none;
@@ -116,11 +107,6 @@ input:focus {
 #tags {
   text-align: left;
 }
-#right {
-  width: 65%;
-  flex: 4;
-  padding-left: 2em;
-}
 a:link, a:active, a:visited, a:hover {
   color: white;
   text-decoration: none;
@@ -134,6 +120,7 @@ a:link, a:active, a:visited, a:hover {
   font-size: 1em;
   color: #aaa;
   font-weight: normal;
+  word-break: break-all;
 }
 #right div.preview:not(pre) {
   text-indent: 2em;
@@ -179,7 +166,7 @@ a:link, a:active, a:visited, a:hover {
     background: gray;
 }
 ::-webkit-scrollbar-track {
-    background: #rgba(0, 0, 0, 0);
+    background: rgba(0, 0, 0, 0);
     border: 0px none #000;
     border-radius: 50px;
 }
@@ -191,4 +178,69 @@ a:link, a:active, a:visited, a:hover {
 }
 ::-webkit-scrollbar-corner {
     background: transparent;
+}
+
+#left {
+  text-align: center;
+}
+
+#footer {
+  text-align: center;
+  margin: 10px;
+}
+
+button, .search {
+  transition: background ease 0.2s;
+}
+
+button:hover, .search:hover {
+  background-color: rgba(128, 128, 128, .6);
+}
+
+@media screen and (max-width: 800px) {
+  #container {
+    display: initial;
+  }
+
+  #left {
+    width: 100%;
+    max-width: initial;
+  }
+
+  #right {
+    width: initial;
+    padding: 10px;
+  }
+
+  #left > *:not(.alwaysShow) {
+    display: none;
+  }
+
+  .searchWrapper {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  #container {
+    max-width: 1080px;
+    margin: 5px auto 0 auto;
+    display: flex;
+  }
+
+  #left {
+    max-width: 280px;
+    flex: 2;
+  }
+
+  #right {
+    width: 65%;
+    flex: 4;
+    padding-left: 2em;
+  }
+}
+
+.indent {
+  text-indent: 2em;
 }

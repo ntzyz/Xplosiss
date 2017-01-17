@@ -13,7 +13,7 @@ class Search extends Component {
 
   render() {
     return (
-      <div className="searchWrapper">
+      <div className="searchWrapper alwaysShow">
         <div className="inputWrapper">
           <input className="search" type="text" placeholder="Search here" />
         </div>

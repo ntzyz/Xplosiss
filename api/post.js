@@ -92,7 +92,7 @@ let getHandler = (req, res) => {
         pages: {
           size: config.pageSize,
           current: page,
-          count: Math.floor(docs.length / config.pageSize) + docs.length % config.pageSize === 0 ? 0 : 1,
+          count: Math.floor(docs.length / config.pageSize) + (docs.length % config.pageSize === 0 ? 0 : 1),
         }
       });
       db.close();

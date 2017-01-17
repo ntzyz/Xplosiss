@@ -20,7 +20,7 @@ class Title extends Component {
 
   render() {
     return (
-      <div>
+      <div id="title" className="alwaysShow">
         <h1><Link to="/"> { this.state.blogTitle } </Link></h1>
         <h2> { this.state.blogSubtitle } </h2>
       </div>
