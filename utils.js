@@ -20,7 +20,7 @@ let getCollection = (name) => {
 }
 
 let logTool = (req, res, next) => {
-  console.log(`${req.headers['x-real-ip'] || req.ip}: ${req.method} ${req.url}`);
+  console.log(`[${new Date().toLocaleString()}] ${req.headers['x-real-ip'] || req.ip}: ${req.method} ${req.url}`);
   next();
 }
 
