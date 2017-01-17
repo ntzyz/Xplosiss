@@ -244,3 +244,7 @@ button:hover, .search:hover {
 .indent {
   text-indent: 2em;
 }
+
+.pagenation {
+  height: 30px;
+}

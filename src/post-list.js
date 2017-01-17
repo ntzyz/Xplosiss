@@ -61,16 +61,15 @@ class PostList extends Component {
           )
         })
       }
-      <div className="pagenation"></div>
-      {
+      <div className="pagenation"> {
         this.state.pages && this.state.pages.current !== 0
-         ? <button style={{float: 'left'}}><Link to={`?page=${this.state.pages.current}`}>← Newer</Link></button>
-         : null 
+        ? <button style={{float: 'left'}}><Link to={`?page=${this.state.pages.current}`}>← Newer</Link></button>
+        : null 
       } { 
         this.state.pages && this.state.pages.current + 1 !== this.state.pages.count 
         ? <button style={{float: 'right'}}><Link to={`?page=${this.state.pages.current + 2}`}>Older →</Link></button> 
         : null 
-      }
+      } </div>
       </div>
     )
   }
