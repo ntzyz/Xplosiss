@@ -248,6 +248,7 @@ button:hover, .search:hover {
     width: 65%;
     flex: 4;
     padding-left: 2em;
+    padding-top: 0.67em;
   }
   .postBody {
     padding-left: 1em;
