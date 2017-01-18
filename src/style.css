@@ -145,7 +145,7 @@ a:link, a:active, a:visited, a:hover {
   margin-bottom: 10px;
 }
 .eachpost {
-  word-wrap: break-word
+  word-wrap: break-word;
 }
 .eachpost > div > p {
   line-height: 1.5em;
@@ -155,7 +155,6 @@ a:link, a:active, a:visited, a:hover {
   padding: 0.5em;
   overflow-x: scroll;
 }
-
 ::-webkit-scrollbar {
     width: 4px;
     height: 4px;
@@ -249,6 +248,10 @@ button:hover, .search:hover {
     width: 65%;
     flex: 4;
     padding-left: 2em;
+  }
+  .postBody {
+    padding-left: 1em;
+    padding-right: 1em;
   }
 }
 
