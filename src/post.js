@@ -8,6 +8,7 @@ import request from './http';
 class Post extends Component {
   constructor() {
     super();
+    this.scriptArray = [];
     this.state = {
       post: {},
     }
@@ -44,6 +45,28 @@ class Post extends Component {
 
   componentWillReceiveProps(nextProps) {
     this.refresh(nextProps);
+  }
+
+  componentDidUpdate(/* ignore */) {
+    let externScript = /<script src="([^]+?)"><\/script>/i;
+    this.state.post.content.content.match(/<script([^]+?)\/script>/ig).map(res => {
+      if (externScript.test(res)) {
+        let node = document.createElement('SCRIPT');
+        node.src = res.match(externScript)[1];
+        document.body.appendChild(node);
+        this.scriptArray.push(node);
+      } else {
+        let node = document.createElement('SCRIPT');
+        node.innerHTML = `(function() {${res.match(/<script>([^]+?)<\/script>/i)[1]}})()`;
+        document.body.appendChild(node);
+        this.scriptArray.push(node);
+      }
+    })
+  }
+
+  componentWillUnmount() {
+    this.scriptArray.forEach(node => node.remove());
+    this.scriptArray = [];
   }
 
   render() {

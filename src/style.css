@@ -30,6 +30,15 @@ body {
 #left hr {
   border: 1px solid gray;
 }
+input {
+  display: inline-block;
+  position: relative;
+  border: 1px solid gray;
+  background: rgba(0, 0, 0, 0);
+  color: white;
+  transition: background ease 0.2s;
+  padding: 4px;
+}
 .searchWrapper {
   display: flex;
 }
@@ -128,11 +137,12 @@ a:link, a:active, a:visited, a:hover {
 #right pre {
   font-size: 0.85em;
 }
-#right div.eachpost:not(:first-child) {
-  border-top: 2px solid #333;
+#right div.eachpost:not(:nth-last-of-type(-n+2)) {
+  border-bottom: 2px solid #555;
 }
 #right div.eachpost {
-  margin-bottom: 30px;
+  padding: 0px 5px 20px 5px;
+  margin-bottom: 10px;
 }
 .eachpost {
   word-wrap: break-word
@@ -225,7 +235,8 @@ button:hover, .search:hover {
 @media screen and (min-width: 800px) {
   #container {
     max-width: 1080px;
-    margin: 5px auto 0 auto;
+    margin: 0 auto;
+    padding-top: 5px;
     display: flex;
   }
 
