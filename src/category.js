@@ -14,7 +14,7 @@ class Category extends Component {
     request.get('/api/category').then((xhr) => {
       let res = JSON.parse(xhr.responseText);
       this.setState({
-        categorys: res.dataset
+        categorys: res.dataset.sort()
       })
     })
   }

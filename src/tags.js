@@ -14,7 +14,7 @@ class Tags extends Component {
     request.get('/api/tag').then((xhr) => {
       let res = JSON.parse(xhr.responseText);
       this.setState({
-        tags: res.dataset
+        tags: res.dataset.sort()
       })
     })
   }

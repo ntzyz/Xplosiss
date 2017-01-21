@@ -49,7 +49,9 @@ class Post extends Component {
 
   componentDidUpdate(/* ignore */) {
     let externScript = /<script src="([^]+?)"><\/script>/i;
-    this.state.post.content.content.match(/<script([^]+?)\/script>/ig).map(res => {
+    let {content} = this.state.post.content;
+    
+    /<script/.test(content) && content.match(/<script([^]+?)\/script>/ig).forEach(res => {
       if (externScript.test(res)) {
         let node = document.createElement('SCRIPT');
         node.src = res.match(externScript)[1];

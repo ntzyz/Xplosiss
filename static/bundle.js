@@ -60,19 +60,19 @@
 
 	var _blog2 = _interopRequireDefault(_blog);
 
-	var _postList = __webpack_require__(240);
+	var _postList = __webpack_require__(241);
 
 	var _postList2 = _interopRequireDefault(_postList);
 
-	var _post = __webpack_require__(241);
+	var _post = __webpack_require__(242);
 
 	var _post2 = _interopRequireDefault(_post);
 
-	__webpack_require__(242);
-
 	__webpack_require__(243);
 
-	__webpack_require__(247);
+	__webpack_require__(244);
+
+	__webpack_require__(248);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26600,6 +26600,10 @@
 
 	var _tags2 = _interopRequireDefault(_tags);
 
+	var _widget = __webpack_require__(240);
+
+	var _widget2 = _interopRequireDefault(_widget);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26634,7 +26638,8 @@
 	            _react2.default.createElement('hr', null),
 	            _react2.default.createElement(_search2.default, null),
 	            _react2.default.createElement(_category2.default, null),
-	            _react2.default.createElement(_tags2.default, null)
+	            _react2.default.createElement(_tags2.default, null),
+	            _react2.default.createElement(_widget2.default, null)
 	          ),
 	          _react2.default.createElement(
 	            'div',
@@ -27052,7 +27057,7 @@
 	    _http2.default.get('/api/category').then(function (xhr) {
 	      var res = JSON.parse(xhr.responseText);
 	      _this.setState({
-	        categorys: res.dataset
+	        categorys: res.dataset.sort()
 	      });
 	    });
 	    return _this;
@@ -27143,7 +27148,7 @@
 	    _http2.default.get('/api/tag').then(function (xhr) {
 	      var res = JSON.parse(xhr.responseText);
 	      _this.setState({
-	        tags: res.dataset
+	        tags: res.dataset.sort()
 	      });
 	    });
 	    return _this;
@@ -27188,6 +27193,116 @@
 
 /***/ },
 /* 240 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(32);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	var _reactRouter = __webpack_require__(178);
+
+	var _http = __webpack_require__(236);
+
+	var _http2 = _interopRequireDefault(_http);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Widgets = function (_Component) {
+	  _inherits(Widgets, _Component);
+
+	  function Widgets() {
+	    _classCallCheck(this, Widgets);
+
+	    var _this = _possibleConstructorReturn(this, (Widgets.__proto__ || Object.getPrototypeOf(Widgets)).call(this));
+
+	    _this.state = {
+	      widgetsArray: []
+	    };
+	    _this.initialized = false;;
+	    _http2.default.get('/api/widget').then(function (xhr) {
+	      var res = JSON.parse(xhr.responseText);
+	      _this.setState({
+	        widgetsArray: res.dataset
+	      });
+	    });
+	    return _this;
+	  }
+
+	  _createClass(Widgets, [{
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      var _this2 = this;
+
+	      if (this.initialized) return;
+
+	      var externScript = /<script src="([^]+?)"><\/script>/i;
+
+	      this.state.widgetsArray.forEach(function (widget) {
+	        var content = widget.content;
+
+
+	        /<script/.test(content) && content.match(/<script([^]+?)\/script>/ig).forEach(function (res) {
+	          if (externScript.test(res)) {
+	            var node = document.createElement('SCRIPT');
+	            node.src = res.match(externScript)[1];
+	            document.body.appendChild(node);
+	          } else {
+	            var _node = document.createElement('SCRIPT');
+	            _node.innerHTML = '(function() {' + res.match(/<script>([^]+?)<\/script>/i)[1] + '})()';
+	            document.body.appendChild(_node);
+	          }
+	        });
+	        _this2.initialized = true;
+	      });
+	    }
+	  }, {
+	    key: 'componentWillUnmount',
+	    value: function componentWillUnmount() {}
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { id: 'widgets' },
+	        this.state.widgetsArray.map(function (widget, offset) {
+	          return _react2.default.createElement(
+	            'div',
+	            { className: 'eachwidget', key: offset },
+	            _react2.default.createElement(
+	              'h3',
+	              { className: 'blockTitle' },
+	              ' ',
+	              widget.title || ' ' /* keep a blank space for margin. */,
+	              ' '
+	            ),
+	            _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: widget.content } })
+	          );
+	        })
+	      );
+	    }
+	  }]);
+
+	  return Widgets;
+	}(_react.Component);
+
+	module.exports = Widgets;
+
+/***/ },
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27330,23 +27445,24 @@
 	          { className: 'pagenation' },
 	          ' ',
 	          this.state.pages && this.state.pages.current !== 0 ? _react2.default.createElement(
-	            'button',
-	            { style: { float: 'left' } },
+	            _reactRouter.Link,
+	            { to: '?page=' + this.state.pages.current },
 	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: '?page=' + this.state.pages.current },
+	              'button',
+	              { style: { float: 'left' } },
 	              'Page--'
 	            )
 	          ) : null,
 	          ' ',
 	          this.state.pages && this.state.pages.current + 1 !== this.state.pages.count ? _react2.default.createElement(
-	            'button',
-	            { style: { float: 'right' } },
+	            _reactRouter.Link,
+	            { to: '?page=' + (this.state.pages.current + 2) },
 	            _react2.default.createElement(
-	              _reactRouter.Link,
-	              { to: '?page=' + (this.state.pages.current + 2) },
+	              'button',
+	              { style: { float: 'right' } },
 	              'Page++'
-	            )
+	            ),
+	            ' '
 	          ) : null,
 	          ' '
 	        )
@@ -27360,7 +27476,7 @@
 	exports.default = PostList;
 
 /***/ },
-/* 241 */
+/* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -27451,7 +27567,10 @@
 	      var _this3 = this;
 
 	      var externScript = /<script src="([^]+?)"><\/script>/i;
-	      this.state.post.content.content.match(/<script([^]+?)\/script>/ig).map(function (res) {
+	      var content = this.state.post.content.content;
+
+
+	      /<script/.test(content) && content.match(/<script([^]+?)\/script>/ig).forEach(function (res) {
 	        if (externScript.test(res)) {
 	          var node = document.createElement('SCRIPT');
 	          node.src = res.match(externScript)[1];
@@ -27516,7 +27635,7 @@
 	exports.default = Post;
 
 /***/ },
-/* 242 */
+/* 243 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -27618,16 +27737,16 @@
 	}
 
 /***/ },
-/* 243 */
+/* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(244);
+	var content = __webpack_require__(245);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(246)(content, {});
+	var update = __webpack_require__(247)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -27644,21 +27763,21 @@
 	}
 
 /***/ },
-/* 244 */
+/* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(245)();
+	exports = module.exports = __webpack_require__(246)();
 	// imports
 
 
 	// module
-	exports.push([module.id, "html, body {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  color: #bbb;\n  font-family: Microsoft Yahei UI, Arial, Helvetica, sans-serif;\n}\npre {\n  font-family: Consolas, \"Liberation Mono\", Menlo, Courier, monospace;\n}\nbody {\n  overflow-y: scroll;\n}\n#bg {\n  position: fixed;\n  top: 0; bottom: 0;\n  left: 0; right: 0;\n  z-index: -100;\n}\n#left h1, #left h2 {\n  font-weight: normal;\n}\n#left h1 {\n  font-size: 2em;\n}\n#left h2 {\n  font-size: 1.1em;\n}\n#left hr {\n  border: 1px solid gray;\n}\ninput {\n  display: inline-block;\n  position: relative;\n  border: 1px solid gray;\n  background: rgba(0, 0, 0, 0);\n  color: white;\n  transition: background ease 0.2s;\n  padding: 4px;\n}\n.searchWrapper {\n  display: flex;\n}\n.search, button {\n  background-color: rgba(128, 128, 128, .3);\n  border: 1px solid gray;\n  color: white;\n  line-height: 23px;\n  padding-left: 0.2em;\n  padding-right: 0.2em;\n  transition: background ease 0.2s;\n}\n.inputWrapper {\n  display: inline-block;\n  position: relative;\n  width: auto;\n  flex: 1;\n  margin-left: 0.2em;\n  margin-right: 0.2em;\n  border: 1px solid gray;\n}\ninput.search {\n  position: absolute;\n  line-height: 100%;\n  width: 100%;\n  top: 0; bottom: 0;\n  left: 0; right: 0;\n  border: 0;\n  box-sizing: border-box;\n}\ndiv.search, button {\n  padding-left: 1.1em;\n  padding-right: 1.1em;\n  cursor: pointer;\n  line-height: 23px;\n  box-sizing: content-box;\n  font-size: 0.8em;\n}\ninput:focus, button:focus {\n  outline: none;\n}\ninput:focus {\n  background-color: rgba(128, 128, 128, .6);\n}\n#left ul {\n  list-style-type: none;\n  -webkit-margin-after: 0;\n  -webkit-padding-start: 0;\n  margin-top: 0em;\n  padding-left:0;\n  text-align: left;\n}\n#left ul li {\n  line-height: 2.5em;\n  cursor: pointer;\n  transition: background ease 0.2s;\n  margin-right: .5em;\n  padding-left: 1em;\n}\n#left ul li:not(:first-child) {\n  border-top: 1px solid #444;\n}\n#left ul li:hover {\n  background: rgba(128, 128, 128, .3);\n}\n#left h3.blockTitle {\n  margin: 1em 0 0.5em 0;\n  text-align: left;\n  padding-left: 0em;\n}\n#tags span {\n  margin-right: .5em;\n  cursor: pointer;\n}\n#tags {\n  text-align: left;\n}\na:link, a:active, a:visited, a:hover {\n  color: white;\n  text-decoration: none;\n}\n\n#right h1.postTitle {\n  font-size: 1.5em;\n  font-weight: normal;\n}\n#right h2.postMeta {\n  font-size: 1em;\n  color: #aaa;\n  font-weight: normal;\n  word-break: break-all;\n}\n#right div.preview:not(pre) {\n  text-indent: 2em;\n}\n#right pre {\n  font-size: 0.85em;\n}\n#right div.eachpost:not(:nth-last-of-type(-n+2)) {\n  border-bottom: 2px solid #555;\n}\n#right div.eachpost {\n  padding: 0px 5px 20px 5px;\n  margin-bottom: 10px;\n}\n.eachpost {\n  word-wrap: break-word;\n}\n.eachpost > div > p {\n  line-height: 1.5em;\n}\n.eachpost pre {\n  border: 1px solid grey;\n  padding: 0.5em;\n  overflow-x: scroll;\n}\n::-webkit-scrollbar {\n    width: 4px;\n    height: 4px;\n}\n::-webkit-scrollbar-button {\n    width: 0px;\n    height: 0px;\n}\n::-webkit-scrollbar-thumb {\n    background: #c0c0c0;\n    border: 0px none #000;\n    border-radius: 50px;\n}\n::-webkit-scrollbar-thumb:hover {\n    background: darkgray;\n}\n::-webkit-scrollbar-thumb:active {\n    background: gray;\n}\n::-webkit-scrollbar-track {\n    background: rgba(0, 0, 0, 0);\n    border: 0px none #000;\n    border-radius: 50px;\n}\n::-webkit-scrollbar-track:hover {\n    background: #000;\n}\n::-webkit-scrollbar-track:active {\n    background: #000;\n}\n::-webkit-scrollbar-corner {\n    background: transparent;\n}\n\n#left {\n  text-align: center;\n}\n\n#footer {\n  text-align: center;\n  margin: 10px;\n}\n\nbutton, .search {\n  transition: background ease 0.2s;\n}\n\nbutton:hover, .search:hover {\n  background-color: rgba(128, 128, 128, .6);\n}\n\n@media screen and (max-width: 800px) {\n  #container {\n    display: initial;\n  }\n\n  #left {\n    width: 100%;\n    max-width: initial;\n  }\n\n  #right {\n    width: initial;\n    padding: 10px;\n  }\n\n  #left > *:not(.alwaysShow) {\n    display: none;\n  }\n\n  .searchWrapper {\n    width: 80%;\n    margin: 0 auto;\n  }\n}\n\n@media screen and (min-width: 800px) {\n  #container {\n    max-width: 1080px;\n    margin: 0 auto;\n    padding-top: 5px;\n    display: flex;\n  }\n\n  #left {\n    max-width: 280px;\n    flex: 2;\n  }\n\n  #right {\n    width: 65%;\n    flex: 4;\n    padding-left: 2em;\n    padding-top: 0.67em;\n  }\n  .postBody {\n    padding-left: 1em;\n    padding-right: 1em;\n  }\n}\n\n.indent {\n  text-indent: 2em;\n}\n\n.pagenation {\n  height: 30px;\n}", ""]);
+	exports.push([module.id, "html, body {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n  color: #bbb;\n  font-family: Microsoft Yahei UI, Arial, Helvetica, sans-serif;\n}\npre {\n  font-family: Consolas, \"Liberation Mono\", Menlo, Courier, monospace;\n}\nbody {\n  overflow-y: scroll;\n}\n#bg {\n  position: fixed;\n  top: 0; bottom: 0;\n  left: 0; right: 0;\n  z-index: -100;\n}\n#left h1, #left h2 {\n  font-weight: normal;\n}\n#left h1 {\n  font-size: 2em;\n}\n#left h2 {\n  font-size: 1.1em;\n}\n#left hr {\n  border: 1px solid gray;\n}\ninput {\n  display: inline-block;\n  position: relative;\n  border: 1px solid gray;\n  background: rgba(0, 0, 0, 0);\n  color: white;\n  transition: background ease 0.2s;\n  padding: 4px;\n}\n.searchWrapper {\n  display: flex;\n}\n.search, button {\n  background-color: rgba(128, 128, 128, .3);\n  border: 1px solid gray;\n  color: white;\n  line-height: 23px;\n  padding-left: 0.2em;\n  padding-right: 0.2em;\n  transition: background ease 0.2s;\n}\n.inputWrapper {\n  display: inline-block;\n  position: relative;\n  width: auto;\n  flex: 1;\n  margin-left: 0.2em;\n  margin-right: 0.2em;\n  border: 1px solid gray;\n}\ninput.search {\n  position: absolute;\n  line-height: 100%;\n  width: 100%;\n  top: 0; bottom: 0;\n  left: 0; right: 0;\n  border: 0;\n  box-sizing: border-box;\n}\ndiv.search, button {\n  padding-left: 1.1em;\n  padding-right: 1.1em;\n  cursor: pointer;\n  line-height: 23px;\n  box-sizing: content-box;\n  font-size: 0.8em;\n}\ninput:focus, button:focus {\n  outline: none;\n}\ninput:focus {\n  background-color: rgba(128, 128, 128, .6);\n}\n#left ul {\n  list-style-type: none;\n  -webkit-margin-after: 0;\n  -webkit-padding-start: 0;\n  margin-top: 0em;\n  padding-left:0;\n  text-align: left;\n}\n#left ul li {\n  line-height: 2.5em;\n  cursor: pointer;\n  transition: background ease 0.2s;\n  margin-right: .5em;\n  padding-left: 1em;\n}\n#left ul li:not(:first-child) {\n  border-top: 1px solid #444;\n}\n#left ul li:hover {\n  background: rgba(128, 128, 128, .3);\n}\n#left h3.blockTitle {\n  margin: 1em 0 0.5em 0;\n  text-align: left;\n  padding-left: 0em;\n}\n#tags span {\n  margin-right: .5em;\n  cursor: pointer;\n}\n#tags {\n  text-align: left;\n}\na:link, a:active, a:visited, a:hover {\n  color: white;\n  text-decoration: none;\n}\n\n#right h1.postTitle {\n  font-size: 1.5em;\n  font-weight: normal;\n}\n#right h2.postMeta {\n  font-size: 1em;\n  color: #aaa;\n  font-weight: normal;\n  word-break: break-all;\n}\n#right div.preview:not(pre) {\n  text-indent: 2em;\n}\n#right pre {\n  font-size: 0.85em;\n}\n#right div.eachpost:not(:nth-last-of-type(-n+2)) {\n  border-bottom: 2px solid #555;\n}\n#right div.eachpost {\n  padding: 0px 5px 20px 5px;\n  margin-bottom: 10px;\n}\n.eachpost {\n  word-wrap: break-word;\n}\n.eachpost > div > p {\n  line-height: 1.5em;\n}\n.eachpost pre {\n  border: 1px solid grey;\n  padding: 0.5em;\n  overflow-x: scroll;\n}\n::-webkit-scrollbar {\n    width: 4px;\n    height: 4px;\n}\n::-webkit-scrollbar-button {\n    width: 0px;\n    height: 0px;\n}\n::-webkit-scrollbar-thumb {\n    background: #c0c0c0;\n    border: 0px none #000;\n    border-radius: 50px;\n}\n::-webkit-scrollbar-thumb:hover {\n    background: darkgray;\n}\n::-webkit-scrollbar-thumb:active {\n    background: gray;\n}\n::-webkit-scrollbar-track {\n    background: rgba(0, 0, 0, 0);\n    border: 0px none #000;\n    border-radius: 50px;\n}\n::-webkit-scrollbar-track:hover {\n    background: #000;\n}\n::-webkit-scrollbar-track:active {\n    background: #000;\n}\n::-webkit-scrollbar-corner {\n    background: transparent;\n}\n\n#title > h1, #title > h2{\n  text-align: center;\n}\n\n#footer {\n  text-align: center;\n  margin: 10px;\n}\n\nbutton, .search {\n  transition: background ease 0.2s;\n}\n\nbutton:hover, .search:hover {\n  background-color: rgba(128, 128, 128, .6);\n}\n\n@media screen and (max-width: 800px) {\n  #container {\n    display: initial;\n  }\n\n  #left {\n    width: 100%;\n    max-width: initial;\n  }\n\n  #right {\n    width: initial;\n    padding: 10px;\n  }\n\n  #left > *:not(.alwaysShow) {\n    display: none;\n  }\n\n  .searchWrapper {\n    width: 80%;\n    margin: 0 auto;\n  }\n}\n\n@media screen and (min-width: 800px) {\n  #container {\n    max-width: 1080px;\n    margin: 0 auto;\n    padding-top: 5px;\n    display: flex;\n  }\n\n  #left {\n    max-width: 280px;\n    flex: 2;\n  }\n\n  #right {\n    width: 65%;\n    flex: 4;\n    padding-left: 2em;\n    padding-top: 0.67em;\n  }\n  .postBody {\n    padding-left: 1em;\n    padding-right: 1em;\n  }\n}\n\n.indent {\n  text-indent: 2em;\n}\n\n.pagenation {\n  height: 30px;\n}", ""]);
 
 	// exports
 
 
 /***/ },
-/* 245 */
+/* 246 */
 /***/ function(module, exports) {
 
 	/*
@@ -27714,7 +27833,7 @@
 
 
 /***/ },
-/* 246 */
+/* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -27966,16 +28085,16 @@
 
 
 /***/ },
-/* 247 */
+/* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(248);
+	var content = __webpack_require__(249);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(246)(content, {});
+	var update = __webpack_require__(247)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -27992,10 +28111,10 @@
 	}
 
 /***/ },
-/* 248 */
+/* 249 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(245)();
+	exports = module.exports = __webpack_require__(246)();
 	// imports
 
 

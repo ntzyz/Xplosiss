@@ -189,7 +189,7 @@ a:link, a:active, a:visited, a:hover {
     background: transparent;
 }
 
-#left {
+#title > h1, #title > h2{
   text-align: center;
 }
 

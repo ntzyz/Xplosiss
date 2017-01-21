@@ -5,6 +5,7 @@ import Title from './title';
 import Search from './search';
 import Category from './category'
 import Tags from './tags';
+import Widgets from './widget';
 
 class Blog extends Component {
   constructor() {
@@ -22,6 +23,7 @@ class Blog extends Component {
             <Search />
             <Category />
             <Tags />
+            <Widgets />
           </div>
           <div id="right">
             { this.props.children }
