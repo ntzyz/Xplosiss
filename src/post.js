@@ -64,6 +64,22 @@ class Post extends Component {
         this.scriptArray.push(node);
       }
     })
+
+    /** DISQUS */
+    if (!window.disqusLoaded) {
+      window.disqusLoaded = true;
+      var d = document, s = d.createElement('script');
+      s.src = '//new-ntzyz-cn.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    } else {
+      window.DISQUS.reset({
+        reload: true,
+        config: function () {  
+          this.page.url = window.location.href;
+        }
+      });
+    }
   }
 
   componentWillUnmount() {
@@ -84,6 +100,7 @@ class Post extends Component {
             标签：{this.state.post.tags.map(tag => { return <Link style={{marginRight: '0.5em'}} key={`${tag}`} to={`/tag/${tag}`}>{tag}</Link>})}
           </h2>
           <div dangerouslySetInnerHTML={{__html: this.state.post.content.content}}></div>
+          <div id="disqus_thread" style={ {backgroundColor: 'rgba(0, 0, 0, 0.6)', marginTop: '20px'} }></div>
         </div>
       </div>
     )

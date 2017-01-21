@@ -27583,6 +27583,23 @@
 	          _this3.scriptArray.push(_node);
 	        }
 	      });
+
+	      /** DISQUS */
+	      if (!window.disqusLoaded) {
+	        window.disqusLoaded = true;
+	        var d = document,
+	            s = d.createElement('script');
+	        s.src = '//new-ntzyz-cn.disqus.com/embed.js';
+	        s.setAttribute('data-timestamp', +new Date());
+	        (d.head || d.body).appendChild(s);
+	      } else {
+	        window.DISQUS.reset({
+	          reload: true,
+	          config: function config() {
+	            this.page.url = window.location.href;
+	          }
+	        });
+	      }
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
@@ -27623,7 +27640,8 @@
 	              );
 	            })
 	          ),
-	          _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: this.state.post.content.content } })
+	          _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: this.state.post.content.content } }),
+	          _react2.default.createElement('div', { id: 'disqus_thread', style: { backgroundColor: 'rgba(0, 0, 0, 0.6)', marginTop: '20px' } })
 	        )
 	      );
 	    }
