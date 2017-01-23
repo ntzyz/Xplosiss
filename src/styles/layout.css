@@ -1,0 +1,48 @@
+@media screen and (max-width: 800px) {
+  /* Mobile layout */
+  #container {
+    display: initial;
+  }
+
+  #left {
+    width: 100%;
+    max-width: initial;
+  }
+
+  #right {
+    width: initial;
+    padding: 10px;
+  }
+
+  /* Hide everything excluding title. */
+  #left > *:not(.alwaysShow) {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  /* Desktop/tablet layout */
+  #container {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding-top: 5px;
+    display: flex;
+  }
+
+  #left {
+    max-width: 280px;
+    flex: 2;
+  }
+
+  #right {
+    width: 65%;
+    flex: 4;
+    padding-left: 2em;
+    padding-top: 0.67em;
+  }
+}
+
+#footer {
+  text-align: center;
+  margin: 10px;
+}

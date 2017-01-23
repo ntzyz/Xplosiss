@@ -3,3 +3,4 @@ node_modules/
 database.sql
 config.js
 webpack.config.js
+static/bundle.js

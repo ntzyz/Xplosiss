@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { browserHistory, Router, Route, IndexRoute, Link } from 'react-router'
-import request from './http';
+import request from '../utils/http';
 
 class Post extends Component {
   constructor() {

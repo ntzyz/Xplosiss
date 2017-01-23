@@ -1,0 +1,14 @@
+@media screen and (min-width: 800px) {
+  .postBody {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+}
+
+.indent {
+  text-indent: 2em;
+}
+
+.pagenation {
+  height: 30px;
+}

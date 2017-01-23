@@ -2,19 +2,19 @@
 
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import request from './http';
+import request from '../utils/http';
 import { browserHistory, Router, Route, IndexRoute, Link } from 'react-router'
 
-class Category extends Component {
+class Tags extends Component {
   constructor() {
     super();
     this.state = {
-      categorys: [],
+      tags: [],
     }
-    request.get('/api/category').then((xhr) => {
+    request.get('/api/tag').then((xhr) => {
       let res = JSON.parse(xhr.responseText);
       this.setState({
-        categorys: res.dataset.sort()
+        tags: res.dataset.sort()
       })
     })
   }
@@ -22,19 +22,19 @@ class Category extends Component {
   render() {
     return (
       <div>
-        <h3 className="blockTitle">Category</h3>
-        <ul>
+        <h3 className="blockTitle">Tags</h3>
+        <div id="tags">
           {
-            this.state.categorys.map((category, offset) => {
+            this.state.tags.map((tags, offset) => {
               return (
-                <Link key={offset} to={`/category/${category}`}><li> {category} </li></Link>
+                <span key={offset}><Link key={offset} to={`/tag/${tags}`}> {tags} </Link></span>
               )
             })
           }
-        </ul>
+        </div>
       </div>
     )
   }
 }
 
-export default Category;
+export default Tags;

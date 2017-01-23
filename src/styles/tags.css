@@ -1,0 +1,8 @@
+#tags span {
+  margin-right: .5em;
+  cursor: pointer;
+}
+
+#tags {
+  text-align: left;
+}

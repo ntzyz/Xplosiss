@@ -1,0 +1,65 @@
+input {
+  display: inline-block;
+  position: relative;
+  border: 1px solid gray;
+  background: rgba(0, 0, 0, 0);
+  color: white;
+  transition: background ease 0.2s;
+  padding: 4px;
+}
+
+input.search {
+  position: absolute;
+  line-height: 100%;
+  width: 100%;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+.search, button {
+  background-color: rgba(128, 128, 128, .3);
+  border: 1px solid gray;
+  color: white;
+  line-height: 23px;
+  padding-left: 0.2em;
+  padding-right: 0.2em;
+  transition: background ease 0.2s;
+}
+
+div.search, button {
+  padding-left: 1.1em;
+  padding-right: 1.1em;
+  cursor: pointer;
+  line-height: 23px;
+  box-sizing: content-box;
+  font-size: 0.8em;
+}
+
+input:focus, button:focus {
+  outline: none;
+}
+
+input:focus {
+  background-color: rgba(128, 128, 128, .3);
+  border: 1px solid gray;
+  color: white;
+  line-height: 23px;
+  padding-left: 0.2em;
+  padding-right: 0.2em;
+  transition: background ease 0.2s;
+}
+
+button, .search {
+  transition: background ease 0.2s;
+}
+
+button:hover, .search:hover {
+  background-color: rgba(128, 128, 128, .6);
+}
+
+a:link, a:active, a:visited, a:hover {
+  color: white;
+  text-decoration: none;
+}

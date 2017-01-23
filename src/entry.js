@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
-import Blog from './blog';
-import PostList from './post-list';
-import Post from './post';
-import './scrollFix';
+import Blog from './components/blog';
+import PostList from './components/post-list';
+import Post from './components/post';
+import './utils/scrollFix';
 
-import './style.css';
-import 'highlight.js/styles/dark.css';
+import './styles/index';
 
 function handleUpdate() {
   window.scrollTo(0, 0);
