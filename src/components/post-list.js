@@ -16,13 +16,18 @@ class PostList extends Component {
 
   refresh(props) {
     let query = [`page=${props.location.query.page || 1}`];
+    let title = '首页';
 
     if (props.params.categoryName) {
+      title = `分类：${props.params.categoryName}`;
       query.push(`category=${encodeURIComponent(props.params.categoryName)}`);
     } else if (props.params.tagName) {
+      title = `标签：${props.params.tagName}`;
       query.push(`tag=${encodeURIComponent(props.params.tagName)}`);
     }
-    
+
+    // TODO: remove this hard string.
+    document.title = title + ' - namespace ntzyz;';
     query = '?' + query.join('&');    
 
     request.get(`/api/post${query}`).then((xhr) => {

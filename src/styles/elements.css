@@ -45,9 +45,9 @@ input:focus {
   background-color: rgba(128, 128, 128, .3);
   border: 1px solid gray;
   color: white;
-  line-height: 23px;
+  /*line-height: 23px;
   padding-left: 0.2em;
-  padding-right: 0.2em;
+  padding-right: 0.2em;*/
   transition: background ease 0.2s;
 }
 
