@@ -18,7 +18,7 @@ class Blog extends Component {
         <Background />
         <div id="container">
           <div id="left">
-            <Title />
+            <Title ref="title"/>
             <hr />
             <Search />
             <Category />

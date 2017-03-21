@@ -15,7 +15,7 @@ class Post extends Component {
   }
 
   refresh(props) {
-    let title = props.params.title;
+    let title = document.title = props.params.title;
     request.get(`/api/post?title=${encodeURIComponent(title)}&full=true`).then((xhr) => {
       let res = JSON.parse(xhr.responseText);
       if (typeof res.dataset[0] === 'undefined') {
@@ -34,7 +34,9 @@ class Post extends Component {
       else {
         this.setState({
           post: res.dataset[0]
-        })
+        });
+        // TODO: remove this hard string.
+        document.title = this.state.post.title  + ' - namespace ntzyz;';
       }
     })
   }

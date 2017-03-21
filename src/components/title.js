@@ -15,6 +15,7 @@ class Title extends Component {
     request.get('/api/common').then((xhr) => {
       let res = JSON.parse(xhr.responseText);
       this.setState(res.common);
+      window.titleBase = ` - ${res.common.blogTitle}`;
     })
   }
 
