@@ -59,6 +59,14 @@
   border: 1px solid gray;
 }
 
+.inputWrapper > .search {
+  border: 0;
+} 
+
+.inputWrapper > .search:active {
+  border: 0;
+} 
+
 @media screen and (max-width: 800px) {
   .searchWrapper {
     width: 80%;
