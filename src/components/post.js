@@ -15,9 +15,10 @@ class Post extends Component {
   }
 
   refresh(props) {
-    let title = document.title = props.params.title;
-    request.get(`/api/post?title=${encodeURIComponent(title)}&full=true`).then((xhr) => {
+    let slug = props.params.slug;
+    request.get(`/api/post?slug=${encodeURIComponent(slug)}&full=true`).then((xhr) => {
       let res = JSON.parse(xhr.responseText);
+      console.log(res);
       if (typeof res.dataset[0] === 'undefined') {
         this.setState({
           post: {
@@ -68,6 +69,7 @@ class Post extends Component {
     })
 
     /** DISQUS */
+    /*
     if (!window.disqusLoaded) {
       window.disqusLoaded = true;
       var d = document, s = d.createElement('script');
@@ -81,7 +83,7 @@ class Post extends Component {
           this.page.url = window.location.href;
         }
       });
-    }
+    }*/
   }
 
   componentWillUnmount() {
