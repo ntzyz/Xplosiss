@@ -18,7 +18,6 @@ class Post extends Component {
     let slug = props.params.slug;
     request.get(`/api/post?slug=${encodeURIComponent(slug)}&full=true`).then((xhr) => {
       let res = JSON.parse(xhr.responseText);
-      console.log(res);
       if (typeof res.dataset[0] === 'undefined') {
         this.setState({
           post: {
@@ -33,6 +32,7 @@ class Post extends Component {
         })
       }
       else {
+        res.dataset[0].date = new Date(res.dataset[0].date);
         this.setState({
           post: res.dataset[0]
         });
@@ -100,6 +100,7 @@ class Post extends Component {
         <div className="eachpost">
           <h1 className="postTitle">{ this.state.post.title }</h1>
           <h2 className="postMeta">
+            日期：{`${this.state.post.date.getFullYear()}-${this.state.post.date.getMonth() + 1}-${this.state.post.date.getDate()}`}　
             分类：{this.state.post.category}　
             标签：{this.state.post.tags.map(tag => { return <Link style={{marginRight: '0.5em'}} key={`${tag}`} to={`/tag/${tag}`}>{tag}</Link>})}
           </h2>

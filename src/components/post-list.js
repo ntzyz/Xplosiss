@@ -56,6 +56,7 @@ class PostList extends Component {
             <div className="eachpost" key={`post-${post._id}`}>
               <h1 className="postTitle"> <Link to={`/post/${post.date.getFullYear()}/${post.date.getMonth() + 1}/${post.date.getDate()}/${post.slug}`}>{ post.title }</Link> </h1>
               <h2 className="postMeta">
+                日期：{`${post.date.getFullYear()}-${post.date.getMonth() + 1}-${post.date.getDate()}`}　
                 {
                   post.category ? <span>分类：{post.category}　</span> : null
                 }
