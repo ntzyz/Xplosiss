@@ -63,7 +63,7 @@ let render = (posts, isFull) => {
 let getHandler = (req, res) => {
   utils.getCollection('posts').then(({db, collection}) => {
     let page = 0;
-    let parttern = {};
+    let pattern = {};
     let isFull = false;
 
     if (req.query.page) {
@@ -74,18 +74,18 @@ let getHandler = (req, res) => {
     }
 
     if (req.query.title) {
-      parttern.title = req.query.title;
+      pattern.title = req.query.title;
     }
 
     if (req.query.category) {
-      parttern.category = req.query.category;
+      pattern.category = req.query.category;
     }
 
     if (req.query.tag) {
-      parttern.tags = req.query.tag;
+      pattern.tags = req.query.tag;
     }
 
-    collection.find(parttern).toArray((err, docs) => {
+    collection.find(pattern).toArray((err, docs) => {
       res.send({
         status: 'ok',
         dataset: render(docs.slice(page * config.pageSize, (page + 1) * config.pageSize), isFull),
