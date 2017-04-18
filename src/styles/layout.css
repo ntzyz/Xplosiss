@@ -26,19 +26,20 @@
     max-width: 1080px;
     margin: 0 auto;
     padding-top: 5px;
-    display: flex;
   }
 
   #left {
-    max-width: 280px;
-    flex: 2;
+    width: 28%;
+    padding: 5px;
+    display: inline-block;
   }
 
   #right {
-    width: 65%;
-    flex: 4;
     padding-left: 2em;
     padding-top: 0.67em;
+    display: inline-block;
+    width: 65%;
+    vertical-align: top;
   }
 }
 

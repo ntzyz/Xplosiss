@@ -26,7 +26,7 @@ ReactDOM.render((
       <IndexRoute component={PostList} />
       <Route path="/category/:categoryName" component={PostList} />
       <Route path="/tag/:tagName" component={PostList} />
-      <Route path="/post/:title" component={Post} />
+      <Route path="/post/:year/:month/:date/:slug" component={Post} />
       <Route path="*" component={Post} />
     </Route>
   </Router>

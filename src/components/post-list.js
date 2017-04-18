@@ -32,6 +32,7 @@ class PostList extends Component {
 
     request.get(`/api/post${query}`).then((xhr) => {
       let res = JSON.parse(xhr.responseText);
+      res.dataset.forEach(item => item.date = new Date(item.date));
       this.setState({
         postsArray: res.dataset,
         pages: res.pages,
@@ -53,15 +54,16 @@ class PostList extends Component {
         this.state.postsArray.map(post => {
           return (
             <div className="eachpost" key={`post-${post._id}`}>
-              <h1 className="postTitle"> <Link to={`/post/${post.title}`}>{ post.title }</Link> </h1>
+              <h1 className="postTitle"> <Link to={`/post/${post.date.getFullYear()}/${post.date.getMonth() + 1}/${post.date.getDate()}/${post.slug}`}>{ post.title }</Link> </h1>
               <h2 className="postMeta">
+                日期：{`${post.date.getFullYear()}-${post.date.getMonth() + 1}-${post.date.getDate()}`}　
                 {
                   post.category ? <span>分类：{post.category}　</span> : null
                 }
                 {post.tags.map(tag => { return <span key={`${tag}`}>#<Link style={{marginRight: '0.5em'}} to={`/tag/${tag}`}>{tag}</Link></span>})}
               </h2>
               <div dangerouslySetInnerHTML={{__html: post.content.content}} className="postBody"></div>
-              <Link to={`/post/${post.title}`}><button className="more">MORE</button></Link>
+              <Link to={`/post/${post.date.getFullYear()}/${post.date.getMonth() + 1}/${post.date.getDate()}/${post.slug}`}><button className="more">MORE</button></Link>
             </div>
           )
         })
