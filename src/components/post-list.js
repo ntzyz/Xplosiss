@@ -70,11 +70,11 @@ class PostList extends Component {
       }
       <div className="pagenation"> {
         this.state.pages && this.state.pages.current !== 0
-        ? <Link to={`?page=${this.state.pages.current}`}><button style={{float: 'left'}}>Page--</button></Link>
+        ? <Link to={`${location.pathname}?page=${this.state.pages.current}`}><button style={{float: 'left'}}>Page--</button></Link>
         : null 
       } { 
         this.state.pages && this.state.pages.current + 1 !== this.state.pages.count 
-        ? <Link to={`?page=${this.state.pages.current + 2}`}><button style={{float: 'right'}}>Page++</button> </Link>
+        ? <Link to={`${location.pathname}?page=${this.state.pages.current + 2}`}><button style={{float: 'right'}}>Page++</button> </Link>
         : null 
       } </div>
       </div>
