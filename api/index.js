@@ -1,6 +1,7 @@
 'use strict';
 
 const express = require('express');
+const utils = require('../utils');
 const post = require('./post');
 const category = require('./category');
 const tag = require('./tag');
@@ -27,6 +28,8 @@ router.get('/category', category.get);
 router.get('/widget', widget.get);
 
 // authorization-required api
+router.use(utils.authTool);
 router.put('/common', common.put);
+router.post('/post', post.post);
 
 module.exports = router;

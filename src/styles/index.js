@@ -8,3 +8,4 @@ import "./rights.css";
 import "./scroll.css";
 import "./tags.css";
 import 'highlight.js/styles/dark.css';
+import "./editor.css";

@@ -1,0 +1,21 @@
+#editor input,
+#editor textarea {
+  width: 500px;
+}
+
+#editor {
+  padding-top: 30px;
+}
+
+#editor textarea {
+  height: 400px;
+  word-break: break-all;
+}
+
+#editor td {
+  vertical-align: top;
+}
+
+#editor .label {
+  text-align: right;
+}

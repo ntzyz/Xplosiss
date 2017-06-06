@@ -1,4 +1,4 @@
-input {
+input, textarea {
   display: inline-block;
   position: relative;
   border: 1px solid gray;
@@ -37,7 +37,7 @@ div.search, button {
   font-size: 0.8em;
 }
 
-input:focus, button:focus {
+input:focus, button:focus, textarea:focus {
   outline: none;
 }
 

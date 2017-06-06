@@ -7,17 +7,12 @@ const utils = require('../utils');
  * Get all tags.
  */
 let getHandler = (req, res) => {
-  utils.getCollection('posts').then(({db, collection}) => {
-
-    collection.distinct('tags', (err, docs) => {
-      res.send({
-        status: 'ok',
-        dataset: docs,
-      });
-      db.close();
+  utils.db.collection('posts').distinct('tags', (err, docs) => {
+    res.send({
+      status: 'ok',
+      dataset: docs,
     });
-
-  }).catch(err => console.error(err))
+  });
 }
 
 module.exports = {

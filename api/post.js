@@ -61,50 +61,77 @@ let render = (posts, isFull) => {
  * Get posts.
  */
 let getHandler = (req, res) => {
-  utils.getCollection('posts').then(({db, collection}) => {
-    let page = 0;
-    let pattern = {};
-    let isFull = false;
+  let page = 0;
+  let pattern = {};
+  let isFull = false;
 
-    if (req.query.page) {
-      page = req.query.page - 1;
-    }
-    if (req.query.full) {
-      isFull = true;
-    }
+  if (req.query.page) {
+    page = req.query.page - 1;
+  }
+  if (req.query.full) {
+    isFull = true;
+  }
 
-    if (req.query.title) {
-      pattern.title = req.query.title;
-    }
+  if (req.query.title) {
+    pattern.title = req.query.title;
+  }
 
-    if (req.query.category) {
-      pattern.category = req.query.category;
-    }
+  if (req.query.category) {
+    pattern.category = req.query.category;
+  }
 
-    if (req.query.tag) {
-      pattern.tags = req.query.tag;
-    }
+  if (req.query.tag) {
+    pattern.tags = req.query.tag;
+  }
 
-    if (req.query.slug) {
-      pattern.slug = req.query.slug;
-    }
+  if (req.query.slug) {
+    pattern.slug = req.query.slug;
+  }
 
-    collection.find(pattern).toArray((err, docs) => {
-      res.send({
-        status: 'ok',
-        dataset: render(docs.slice(page * config.pageSize, (page + 1) * config.pageSize), isFull),
-        pages: {
-          size: config.pageSize,
-          current: page,
-          count: Math.floor(docs.length / config.pageSize) + (docs.length % config.pageSize === 0 ? 0 : 1),
-        }
-      });
-      db.close();
+  utils.db.collection('posts').find(pattern).toArray((err, docs) => {
+    res.send({
+      status: 'ok',
+      dataset: render(docs.slice(page * config.pageSize, (page + 1) * config.pageSize), isFull),
+      pages: {
+        size: config.pageSize,
+        current: page,
+        count: Math.floor(docs.length / config.pageSize) + (docs.length % config.pageSize === 0 ? 0 : 1),
+      }
     });
+  });
+}
 
-  }).catch(err => console.error(err))
+/**
+ * POST, create new post
+ */
+let postHandler = (req, res) => {
+  if (!req.query.slug) {
+    res.status(400).send({
+      status: 'err',
+      message: 'slug for post is missing, which is essential.'
+    });
+    return;
+  } else {
+    let post = {
+      title: req.query.title || '',
+      slug: req.query.slug,
+      category: req.query.category || '',
+      date: new Date(req.query.year || 1970, req.query.month || 1 - 1, req.query.day || 1),
+      tags: req.query.tags || [],
+      content: req.body
+    };
+    console.log(JSON.stringify(post, null, '  '));
+    utils.db.collection('posts').insert(post, (err) => {
+      if (err) {
+        res.status(500).send({status: 'err', message: err});
+      } else {
+        res.send({status: 'ok'});
+      }
+    })
+  }
 }
 
 module.exports = {
   get: getHandler,
+  post: postHandler,
 }
