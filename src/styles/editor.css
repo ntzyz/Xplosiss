@@ -1,6 +1,10 @@
 #editor input,
 #editor textarea {
-  width: 500px;
+  width: 600px;
+}
+
+#editor input.inline {
+  width: 40px;
 }
 
 #editor {
@@ -8,7 +12,7 @@
 }
 
 #editor textarea {
-  height: 400px;
+  height: 70vh;
   word-break: break-all;
 }
 
