@@ -1,0 +1,85 @@
+$theme_color: #036;
+$font_color: white;
+
+button, input, textarea {
+  line-height: 1.75em;
+  padding: 0 0.5em 0 0.5em;
+  margin: 0 2px 0 2px;
+  border: 1px solid lightgrey;
+  color: $font_color;
+  background: rgba(255, 255, 255, 0.15);
+  transition: background ease 0.1s;
+  font-family: monospace;
+}
+
+textarea {
+  line-height: 1.25em;
+}
+
+button:focus, input:focus, textarea:focus {
+  outline: none;
+}
+
+button:hover, input:hover, button:focus, input:focus {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+button {
+  cursor: pointer;
+}
+
+a:link, a:visited, a:active, a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.forward-enter-active {
+  transition: all 0.3s;
+  transform: translateX(0);
+}
+
+.forward-enter {
+  opacity: 0;
+  transform: translateX(-8px);
+}
+
+.forward-leave-to /* .forward-leave-active in below version 2.1.8 */ {
+  opacity: 0;
+}
+
+/** code block **/
+pre {
+  font-family: 'Roboto Mono', Monaco, courier, monospace;
+  background-color: rgba(0, 0, 0, 0.2);
+  font-size: 0.8em;
+  line-height: 1.2em;
+  padding: 1em 1em 1em 1em;
+  border-radius: 0.5em;
+  overflow-x: auto;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: grey;
+  border: 0px none #fff;
+  transition: all ease 0.1s;
+  cursor: pointer;
+  border-radius: 7px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: lightgray;
+}
+::-webkit-scrollbar-thumb:active {
+  background: darkgray;
+}

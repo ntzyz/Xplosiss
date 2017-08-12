@@ -1,0 +1,33 @@
+<template lang="pug">
+  div.tags-list
+    h3 Tags
+    ul
+      li(v-for="tag in tags"): router-link(:to="'/tag/' + tag") {{ tag }}
+</template>
+
+<script>
+export default {
+  name: 'tags-list',
+  computed: {
+    tags: function () { return this.$store.state.tags; }
+  },
+  asyncData ({store, route}) {
+    return store.dispatch('fetchTags');
+  }
+}
+</script>
+
+<style lang="scss">
+div.tags-list {
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  li {
+    display: inline-block;
+    font-size: 0.8em;
+    padding-left: 1em;
+  }
+}
+</style>
