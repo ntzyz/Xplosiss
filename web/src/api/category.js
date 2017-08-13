@@ -14,8 +14,8 @@ function fetchPostsByCategory (params) {
     return Promise.reject('Category is required.');
   }
   return new Promise((resolve, reject) => {
-    axios.get(`${config.api.url}/category/${params.category}/posts`)
-    .then(response => resolve(response.data.posts))
+    axios.get(`${config.api.url}/category/${params.category}/posts?page=${params.page || 1}`)
+    .then(response => resolve(response.data))
     .catch(error => reject(error));
   })
 }

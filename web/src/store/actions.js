@@ -16,26 +16,29 @@ export default {
       state.commit('setWidgets', widgets);
     });
   },
-  fetchPostsByCategory: (state, category) => {
+  fetchPostsByCategory: (state, params) => {
     state.commit('setBusy', true);
-    return api.category.fetchPostsByCategory({ category }).then(posts => {
-      state.commit('setPosts', posts);
+    return api.category.fetchPostsByCategory(params).then(data => {
+      state.commit('setPages', data.page);
+      state.commit('setPosts', data.posts);
       state.commit('setBusy', false);
     });
   },
-  fetchPostsByTag: (state, tag) => {
+  fetchPostsByTag: (state, params) => {
     state.commit('setBusy', true);
     state.commit('setPosts', []);
-    return api.tag.fetchPostsByTag({ tag }).then(posts => {
-      state.commit('setPosts', posts);
+    return api.tag.fetchPostsByTag(params).then(data => {
+      state.commit('setPages', data.page);
+      state.commit('setPosts', data.posts);
       state.commit('setBusy', false);
     });
   },
-  fetchLatestPosts: state => {
+  fetchLatestPosts: (state, params) => {
     state.commit('setBusy', true);
     state.commit('setPosts', []);
-    return api.post.fetchPosts().then(posts => {
-      state.commit('setPosts', posts);
+    return api.post.fetchPosts(params).then(data => {
+      state.commit('setPages', data.page);
+      state.commit('setPosts', data.posts);
       state.commit('setBusy', false);
     });
   },

@@ -19,11 +19,23 @@ const router = new VueRouter({
       component: PostsList,
       meta: { keepAlive: true }
     }, {
+      path: '/page/:page',
+      component: PostsList,
+      meta: { keepAlive: true }
+    }, {
       path: '/tag/:tag',
       component: PostsList,
       meta: { keepAlive: true }
     }, {
+      path: '/tag/:tag/page/:page',
+      component: PostsList,
+      meta: { keepAlive: true }
+    }, {
       path: '/category/:category',
+      component: PostsList,
+      meta: { keepAlive: true }
+    }, {
+      path: '/category/:category/page/:page',
       component: PostsList,
       meta: { keepAlive: true }
     }, {
@@ -33,11 +45,7 @@ const router = new VueRouter({
     }
   ],
   scrollBehavior (to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition
-    } else {
-      return { x: 0, y: 0 }
-    }
+    return savedPosition || { x: 0, y: 0 };
   }
 });
 

@@ -31,7 +31,7 @@ export default {
   },
   watch: {
     post: function (post) {
-      document.title = `${post.title} - ${config.title}`;
+      document.title = `${post.title || 'Loading...'} - ${config.title}`;
       let componentRoot = document.querySelector('div.post-view');
       this.$nextTick(() => {
         let scripts = Array.from(componentRoot.querySelectorAll('script'));

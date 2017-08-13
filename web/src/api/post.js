@@ -1,10 +1,10 @@
 import axios from 'axios';
 import config from '../config';
 
-function fetchPosts (params) {
+function fetchPosts (params = {}) {
   return new Promise((resolve, reject) => {
-    axios.get(`${config.api.url}/post`)
-    .then(response => resolve(response.data.posts))
+    axios.get(`${config.api.url}/post?page=${params.page || 1}`)
+    .then(response => resolve(response.data))
     .catch(error => reject(error));
   })
 }

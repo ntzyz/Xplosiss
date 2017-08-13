@@ -13,16 +13,30 @@
         article.post-preview(v-html="post.content")
         footer
           router-link(:to="'/post/' + post.slug"): button.more MORE
+    pagination(v-if="$store.state.pages", :current="$store.state.pages.current", length="10", :max="$store.state.pages.max", :prefix="prefix")
 </template>
 
 <script>
+import Pagination from '../components/Pagination.vue';
+
 import config from '../config';
 import timeToString from '../utils/timeToString';
 
 export default {
   name: 'posts-list',
+  components: { Pagination },
   computed: {
-    posts: function () { return this.$store.state.posts; }
+    posts: function () { return this.$store.state.posts; },
+    prefix: function () {
+      let route = this.$route;
+      if (route.params.category) {
+        return `/category/${route.params.category}`;
+      } else if (route.params.tag) {
+        return `/tag/${route.params.tag}`;
+      } else {
+        return ``;
+      }
+    }
   },
   watch: {
     '$route': function () {
@@ -35,13 +49,13 @@ export default {
   asyncData ({store, route}) {
     if (route.params.category) {
       document.title = `分类：${route.params.category} - ${config.title}`;
-      store.dispatch('fetchPostsByCategory', route.params.category);
+      store.dispatch('fetchPostsByCategory', { category: route.params.category, page: route.params.page });
     } else if (route.params.tag) {
       document.title = `标签：${route.params.tag} - ${config.title}`;
-      store.dispatch('fetchPostsByTag', route.params.tag);
-    } else if (route.fullPath === '/') {
+      store.dispatch('fetchPostsByTag', { tag: route.params.tag, page: route.params.page });
+    } else {
       document.title = `首页 - ${config.title}`;
-      store.dispatch('fetchLatestPosts');
+      store.dispatch('fetchLatestPosts', { page: route.params.page });
     }
   }
 }

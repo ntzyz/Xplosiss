@@ -14,8 +14,8 @@ function fetchPostsByTag (params) {
     return Promise.reject('Tag is required.');
   }
   return new Promise((resolve, reject) => {
-    axios.get(`${config.api.url}/tag/${params.tag}/posts`)
-    .then(response => resolve(response.data.posts))
+    axios.get(`${config.api.url}/tag/${params.tag}/posts?page=${params.page || 1}`)
+    .then(response => resolve(response.data))
     .catch(error => reject(error));
   })
 }

@@ -13,6 +13,9 @@ export default {
     state.post = post;
     // setTimeout(() => { state.post = post; }, 300);
   },
+  setPages: (state, pages) => {
+    state.pages = pages;
+  },
   setBusy: (state, isBusy) => {
     state.busy = isBusy;
     // setTimeout(() => { state.busy = isBusy; }, isBusy ? 0 : 300);

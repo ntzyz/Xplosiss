@@ -4,7 +4,7 @@
       h3 评论列表
       ul.replies-list
         li(v-for="reply in replies")
-          div.name {{ reply.user }} from {{ reply.site }}
+          div.name {{ reply.user }} {{ reply.site !== '' ? `from ${reply.site}` : ''}}
           div.date {{ timeToString(reply.datetime) }}
           div(v-html="reply.content" v-if="reply.markdown")
           div.raw-content(v-else) {{ reply.content }}
@@ -41,7 +41,7 @@ export default {
       name: '',
       email: '',
       content: '',
-      site: 'https://',
+      site: '',
     };
   },
   methods: {
@@ -53,16 +53,26 @@ export default {
         site: this.site,
         content: this.content,
       }
+      if (!data.user) {
+        alert('姓名是必填项呢');
+        return;
+      } else if (!data.content) {
+        alert('评论内容为空呢');
+        return;
+      }
       api.reply.putReplyBySlug({ slug: this.$route.params.slug, data })
       .then(() => {
-        this.$store.dispatch('fetchPostBySlug', this.$route.params.slug);
+        if (this.$store.state.forceReload) {
+          window.location.href = window.location.href;
+        } else {
+          this.$store.dispatch('fetchPostBySlug', this.$route.params.slug);
+        }
       });
     }
   },
   watch: {
     replies () {
-      this.name = this.email = this.content = '';
-      this.site = 'https://';
+      this.name = this.email = this.content = this.site = '';
     }
   }
 }

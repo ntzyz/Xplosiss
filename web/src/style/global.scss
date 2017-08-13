@@ -9,6 +9,9 @@ button, input, textarea {
   color: $font_color;
   background: rgba(255, 255, 255, 0.15);
   transition: background ease 0.1s;
+}
+
+input, textarea {
   font-family: monospace;
 }
 

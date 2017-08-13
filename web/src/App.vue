@@ -4,10 +4,10 @@
       div#left-wrapper
         site-title
         hr
-        search
-        categories-list
-        tags-list
-        widgets
+        search.hide-on-mobile
+        categories-list.hide-on-mobile
+        tags-list.hide-on-mobile
+        widgets.hide-on-mobile
     #right
       loading-icon(v-show="busy")
       router-view(v-show="!busy")
@@ -45,6 +45,8 @@ export default {
     this.lastScrollY = window.scrollY;
 
     window.addEventListener('scroll', () => {
+      if (window.innerWidth <= 800) return;
+
       let isScrollingDown = (window.scrollY > this.lastScrollY);
       let left = document.querySelector('#left-wrapper');
       let bounding = left.getBoundingClientRect();
@@ -96,28 +98,46 @@ body {
 
 #app {
   max-width: 1000px;
-  display: flex;
-  padding: 0 5px 0 5px;
+  padding: 0 1em 0 1em;
   margin: 0 auto;
 }
 
-#left {
-  flex-shrink: 0;
-  flex-grow: 0;
-  width: 300px;
-  height: fit-content;
-  padding-right: 25px;
-  position: relative;
-  div#left-wrapper {
+@media screen and (min-width: 800px) {
+  #app {
+    display: flex;
+  }
+
+  #left {
+    flex-shrink: 0;
+    flex-grow: 0;
     width: 300px;
-    position: absolute;
+    height: fit-content;
+    padding-right: 25px;
+    position: relative;
+    div#left-wrapper {
+      width: 300px;
+      position: absolute;
+    }
+  }
+
+  #right {
+    flex-grow: 1;
+    position: relative;
+    overflow: hidden;
   }
 }
 
-#right {
-  flex-grow: 1;
-  position: relative;
-  overflow: hidden;
-}
+@media screen and (max-width: 800px) {
+  #app {
+    dispay: block;
+  }
 
+  #left {
+    width: 100%;
+  }
+
+  .hide-on-mobile {
+    display: none;
+  }
+}
 </style>
