@@ -14,9 +14,9 @@ site.use(bodyParser.json());
 // API entry
 site.use('/api', require('./server'));
 
-// 404
-site.use((req, res, next) => {
-  res.send('Ooops. Not found.');
+site.use(express.static('web'));
+site.use((req, res) => {
+  res.sendFile('./web/index.html', { root: __dirname });
 });
 
 // Establish database connection and start http service
