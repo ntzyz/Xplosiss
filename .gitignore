@@ -2,5 +2,3 @@ node_modules/
 .vscode
 database.sql
 config.js
-webpack.config.js
-static/bundle.js
