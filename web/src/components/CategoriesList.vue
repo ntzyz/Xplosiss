@@ -18,6 +18,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../style/global.scss';
+
 div.category-list {
   ul {
     list-style: none;
@@ -43,7 +45,7 @@ div.category-list {
 
   li:hover {
     cursor: pointer;
-    background: rgba(255, 255, 255, 0.2);
+    background: mix($theme_color, white, 80%);
     transition: background ease 0.1s;
     text-decoration: none;
   }

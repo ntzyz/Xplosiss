@@ -1,18 +1,22 @@
 $theme_color: #036;
 $font_color: white;
 
+body {
+  font-family: "Noto Sans CJK SC", "Source Han Sans CN", "WenQuanYi Micro Hei", "Microsoft Yahei UI", "SimHei", sans-serif;
+}
+
 button, input, textarea {
   line-height: 1.75em;
   padding: 0 0.5em 0 0.5em;
   margin: 0 2px 0 2px;
   border: 1px solid lightgrey;
   color: $font_color;
-  background: rgba(255, 255, 255, 0.15);
+  background: mix($theme_color, white, 85%);
   transition: background ease 0.1s;
 }
 
 input, textarea {
-  font-family: monospace;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
 
 textarea {
@@ -24,7 +28,7 @@ button:focus, input:focus, textarea:focus {
 }
 
 button:hover, input:hover, button:focus, input:focus {
-  background: rgba(255, 255, 255, 0.2);
+  background: mix($theme_color, white, 80%);
 }
 
 button {
@@ -56,8 +60,8 @@ a:hover {
 
 /** code block **/
 pre {
-  font-family: 'Roboto Mono', Monaco, courier, monospace;
-  background-color: rgba(0, 0, 0, 0.2);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  background: mix($theme_color, black, 80%);
   font-size: 0.8em;
   line-height: 1.2em;
   padding: 1em 1em 1em 1em;

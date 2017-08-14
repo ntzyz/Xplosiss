@@ -78,7 +78,7 @@ nav.pagination {
     }
     button.disabled {
       cursor: initial;
-      background: rgba(0, 0, 0, 0);
+      background: initial;;
     }
   }
   li:first-child {
