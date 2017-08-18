@@ -26,7 +26,6 @@ export default {
       let current = parseInt(this.current);
       let left = Math.max(1, current - Math.floor(Number(this.length) / 2));
       this.pages = new Array(parseInt(this.length)).fill(0).map((dummy, index) => index + left).filter(i => i <= Number(this.max));
-      console.log(this.pages);
     }
   },
   created () {

@@ -1,17 +1,7 @@
 const pug = require('pug');
 const hljs = require('highlight.js')
 const config = require('../config');
-const md = require('markdown-it')({
-  html: false,
-  highlight: function (str, lang) {
-    if (lang && hljs.getLanguage(lang)) {
-      try {
-        return `<pre>${hljs.highlight(lang, str, true).value}</pre>`
-      } catch (__) {}
-    }
-    return `<pre>${md.utils.escapeHtml(str)}</pre>`;
-  }
-});
+const mdit = require('markdown-it');
 
 function decodeHTML (str) {
     let strMap = {
@@ -38,10 +28,22 @@ function render (posts, options) {
   return posts.map(post => {
     if (/^markdown$/i.test(post.content.encoding)) {
       // Markdown-it can do it cleanly.
-      if (options.preview && post.content.indexOf('<!-- more -->') >= 0) {
-        post.content = post.content.substr(0, post.content.indexOf('<!-- more -->'));
+      if (options.preview && post.content.content.indexOf('<!-- more -->') >= 0) {
+        post.content = post.content.content.substr(0, post.content.content.indexOf('<!-- more -->'));
+      } else {
+        post.content = post.content.content;
       }
-      post.content = md.render(post.content.content);
+      post.content = mdit({
+        html: true,
+        highlight: function (str, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            try {
+              return `<pre>${hljs.highlight(lang, str, true).value}</pre>`
+            } catch (__) {}
+          }
+          return `<pre>${md.utils.escapeHtml(str)}</pre>`;
+        }
+      }).render(post.content);
     } else {
       let lang = '';
       // Render other formats (pug, makrdown, etc) into html
@@ -69,7 +71,17 @@ function render (posts, options) {
 
     if (post.replies && config.reply.enableMarkdownSupport) {
       post.replies = post.replies.map(reply => {
-        reply.content = md.render(reply.content);
+        reply.content = mdit({
+          html: false,
+          highlight: function (str, lang) {
+            if (lang && hljs.getLanguage(lang)) {
+              try {
+                return `<pre>${hljs.highlight(lang, str, true).value}</pre>`
+              } catch (__) {}
+            }
+            return `<pre>${md.utils.escapeHtml(str)}</pre>`;
+          }
+        }).render(reply.content);
         reply.markdown = true;
         return reply;
       })
@@ -79,4 +91,10 @@ function render (posts, options) {
   })
 }
 
-module.exports = render;
+module.exports = function () {
+  try {
+    return render.apply(null, arguments)
+  } catch (e) {
+    console.log(e);
+  }
+};

@@ -13,5 +13,6 @@ api.use('/category', require('./category'));
 api.use('/tag', require('./tag'));
 api.use('/widget', require('./widget'));
 api.use('/post', require('./post'));
+api.use('/token', require('./token'));
 
 module.exports = api;

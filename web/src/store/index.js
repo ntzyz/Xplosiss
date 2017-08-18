@@ -13,8 +13,9 @@ export default new Vuex.Store({
     widgets: [],
     pages: {},
     post: null,
-    busy: false,
+    busy: true,
     forceReload: false,
+    token: '',
   },
   actions,
   mutations

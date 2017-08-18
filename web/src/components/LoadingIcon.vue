@@ -25,16 +25,15 @@ export default {
 @import '../style/global.scss';
 div.wrapper {
   width: 100%;;
-  height: 0;
+  height: 100vh;
 }
 
 .sk-circle {
-  position: fixed;
+  position: relative;
   width: 50px;
   height: 50px;
   margin: 0 auto 0 auto;
-  transform: translateY(calc(50vh - 25px));
-  position: relative;
+  transform: translateY(50vh);
 }
 .sk-circle .sk-child {
   width: 100%;

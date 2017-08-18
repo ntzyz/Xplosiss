@@ -25,5 +25,8 @@ export default {
   },
   enableForceReload: state => {
     state.forceReload = true;
+  },
+  setToken: (state, token) => {
+    state.token = token;
   }
 }

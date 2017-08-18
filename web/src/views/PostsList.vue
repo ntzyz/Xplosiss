@@ -9,7 +9,6 @@
             span 分类：{{ post.category }}
             span(v-for="tag in post.tags") #
               router-link(:to="'/tag/' + tag") {{tag}}
-          //- div.post-meta
         article.post-preview(v-html="post.content")
         footer
           router-link(:to="'/post/' + post.slug"): button.more MORE

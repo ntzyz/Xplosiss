@@ -2,12 +2,7 @@
   div#app
     div#left
       div#left-wrapper
-        site-title
-        hr
-        search.hide-on-mobile
-        categories-list.hide-on-mobile
-        tags-list.hide-on-mobile
-        widgets.hide-on-mobile
+        router-view(name="sidebar")
     #right
       loading-icon(v-show="busy")
       router-view(v-show="!busy")
@@ -15,11 +10,6 @@
 </template>
 
 <script>
-import SiteTitle from './components/SiteTitle.vue';
-import Search from './components/Search.vue';
-import CategoriesList from './components/CategoriesList.vue';
-import TagsList from './components/TagsList.vue';
-import Widgets from './components/Widgets.vue';
 import LoadingIcon from './components/LoadingIcon.vue';
 
 export default {
@@ -31,7 +21,7 @@ export default {
     }
   },
   components: {
-    SiteTitle, Search, CategoriesList, TagsList, Widgets, LoadingIcon
+    LoadingIcon
   },
   computed: {
     busy: function () { return this.$store.state.busy; }
@@ -54,6 +44,11 @@ export default {
       let left = document.querySelector('#left-wrapper');
       let bounding = left.getBoundingClientRect();
       left.parentNode.style.height = `${bounding.height}px`;
+
+      if (bounding.height < window.innerHeight) {
+        document.querySelector('#left-wrapper').setAttribute('style', '');
+        return;
+      }
 
       if (isScrollingDown) {
         if (left.style.position === 'fixed' && left.style.top === '0px') {
@@ -100,7 +95,7 @@ body {
 }
 
 #app {
-  max-width: 1000px;
+  max-width: 1024px;
   padding: 0 1em 0 1em;
   margin: 0 auto;
 }
