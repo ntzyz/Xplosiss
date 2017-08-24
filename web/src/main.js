@@ -11,6 +11,7 @@ import AdminSideBar from './components/admin/AdminSideBar.vue';
 import TokenSetter from './components/admin/TokenSetter.vue';
 import AdminPostsList from './components/admin/PostsList.vue';
 import AdminPostEditor from './components/admin/PostEditor.vue';
+import AdminWidgets from './components/admin/Widgets.vue';
 
 import store from './store';
 
@@ -104,6 +105,13 @@ const router = new VueRouter({
         sidebar: AdminSideBar
       },
       meta: { keepAlive: true, empty: true },
+    }, {
+      path: '/admin/widgets',
+      components: {
+        default: AdminWidgets,
+        sidebar: AdminSideBar
+      },
+      meta: { keepAlive: true },
     }
   ],
   scrollBehavior (to, from, savedPosition) {

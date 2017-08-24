@@ -5,7 +5,7 @@
     ul
       li: router-link(to="/admin/post/new") 创建文章
       li: router-link(to="/admin/post") 管理文章
-      li 管理小工具
+      li: router-link(to="/admin/widgets") 管理小工具
       li 管理页面
       li 管理媒体
 </template>

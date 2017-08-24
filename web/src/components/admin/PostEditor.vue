@@ -20,7 +20,7 @@
       tr
         td.label 日期：
         td
-          input.short(v-model="date.year")
+          input.year(v-model="date.year")
           | 年
           input.short(v-model="date.month")
           | 月

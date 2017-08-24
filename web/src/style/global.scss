@@ -7,6 +7,9 @@ body {
 
 button, input, textarea, select {
   line-height: 1.75em;
+  height: 1.75em;
+  vertical-align: top;
+  box-sizing: border-box;
   padding: 0 0.5em 0 0.5em;
   margin: 0 2px 0 2px;
   border: 1px solid lightgrey;

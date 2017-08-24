@@ -207,6 +207,7 @@ router.put('/', async (req, res) => {
       date: new Date(req.body.date),
       tags: req.body.tags,
       content: req.body.content,
+      replies: [],
     });
   } catch (e) {
     console.error(e);

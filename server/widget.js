@@ -46,7 +46,7 @@ router.get('/all', async (req, res) => {
 
 /**
  * Update one widget by it's ObjectID.
- * POST: /widget/:id
+ * POST /widget/:id
  */
 router.post('/:id', async (req, res) => {
   if (req.query.token !== utils.token) {
@@ -100,7 +100,6 @@ router.put('/', async (req, res) => {
     });
   }
 
-  console.log(r);
   res.send({ status: 'ok', _id: r.insertedIds[0] });
 });
 
