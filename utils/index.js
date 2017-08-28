@@ -4,4 +4,6 @@ module.exports = {
   messages: require('./messages'),
   token: require('./token'),
   randomString: require('./random-string'),
+  logger: require('./logger'),
+  websocket: require('./websocket'),
 }

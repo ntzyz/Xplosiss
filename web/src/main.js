@@ -12,6 +12,7 @@ import TokenSetter from './components/admin/TokenSetter.vue';
 import AdminPostsList from './components/admin/PostsList.vue';
 import AdminPostEditor from './components/admin/PostEditor.vue';
 import AdminWidgets from './components/admin/Widgets.vue';
+import AdminLogs from './components/admin/AccessLogs.vue';
 
 import store from './store';
 
@@ -109,6 +110,13 @@ const router = new VueRouter({
       path: '/admin/widgets',
       components: {
         default: AdminWidgets,
+        sidebar: AdminSideBar
+      },
+      meta: { keepAlive: true },
+    }, {
+      path: '/admin/logs',
+      components: {
+        default: AdminLogs,
         sidebar: AdminSideBar
       },
       meta: { keepAlive: true },

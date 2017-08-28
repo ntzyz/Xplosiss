@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const config = require('./config');
 const utils = require('./utils');
+const io = require('socket.io');
 
 let site = express();
 
@@ -13,6 +14,9 @@ site.use(bodyParser.urlencoded({ extended: true }));
 
 // parse application/json
 site.use(bodyParser.json());
+
+// print all access logs
+site.use(utils.logger);
 
 // API entry
 site.use('/api', require('./server'));
@@ -34,7 +38,8 @@ site.use((req, res) => {
 
 // Establish database connection and start http service
 utils.db.prepare().then(() => {
-  site.listen(config.port, /*'localhost', */() => {
+  utils.websocket.attach(site);
+  utils.websocket.server.listen(config.port, /*'localhost', */() => {
     console.log(`Server started on port ${config.port}`);
   });
 })

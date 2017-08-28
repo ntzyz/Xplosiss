@@ -8,16 +8,20 @@
       li: router-link(to="/admin/widgets") 管理小工具
       li 管理页面
       li 管理媒体
+      li: router-link(to="/admin/logs")  访问日志
 </template>
 
 <script>
+import io from 'socket.io-client';
+
 import SiteTitle from '../SiteTitle.vue';
+import config from '../../config.js';
 
 export default {
   name: 'admin-side-bar',
   components: {
     SiteTitle
-  }
+  },
 };
 
 </script>
