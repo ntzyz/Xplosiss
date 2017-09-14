@@ -66,7 +66,7 @@ nav.pagination {
     font-size: 14px;
     line-height: $size;
     text-align: center;
-    margin-left: -1px;
+    margin-left: 0px;
     cursor: pointer;
     button, a {
       display: inline-block;
@@ -77,7 +77,7 @@ nav.pagination {
     }
     button.disabled {
       cursor: initial;
-      background: initial;;
+      background-color: $theme_color;
     }
   }
   li:first-child {
