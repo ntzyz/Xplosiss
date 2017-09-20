@@ -1,8 +1,8 @@
 <template lang="pug">
-  div
+  div.side-bar
     site-title
-    hr
-    search.hide-on-mobile
+    //- hr
+    //- search.hide-on-mobile
     categories-list.hide-on-mobile
     tags-list.hide-on-mobile
     widgets.hide-on-mobile

@@ -1,6 +1,6 @@
 <template lang="pug">
-  div.category-list
-    h3 Category
+  div.category-list.card
+    h3.title Category
     ul
       li(v-for="category in categories"): router-link(:to="'/category/' + category") {{ category }}
 </template>
@@ -39,15 +39,14 @@ div.category-list {
     }
 
     a:hover {
-      text-decoration: none;
+      border: none;
     }
   }
 
   li:hover {
     cursor: pointer;
-    background: mix($theme_color, white, 80%);
+    background: mix($theme_color, lightgrey, 80%);
     transition: background ease 0.1s;
-    text-decoration: none;
   }
 }
 </style>

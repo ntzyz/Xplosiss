@@ -1,32 +1,32 @@
 <template lang="pug">
-  div.reply
-    div(v-if="replies && replies.length !== 0")
-      h3 评论列表
-      ul.replies-list
-        li(v-for="reply in replies")
-          div.name {{ reply.user }} {{ reply.site !== '' ? `from ${reply.site}` : ''}}
-          div.date {{ timeToString(reply.datetime) }}
-          div(v-html="reply.content" v-if="reply.markdown")
-          div.raw-content(v-else) {{ reply.content }}
-    div.send-new
-      h3 发表评论
-      table
-        tr
-          th 姓名
-          td: input(v-model="name")
-        tr
-          th 站点
-          td: input(v-model="site")
-        tr
-          th 电子邮件
-          td: input(v-model="email", placeholder="邮件地址不会公开")
-        tr
-          th 评论
-          td: textarea(v-model="content", placeholder="We support markdown!")
-        tr
-          td
-          td: button(@click="submit") 提交
-
+  div.reply: div.card
+    h3.title 评论
+    div.content
+      div(v-if="replies && replies.length !== 0")
+        ul.replies-list
+          li(v-for="reply in replies")
+            div.name {{ reply.user }} {{ reply.site !== '' ? `from ${reply.site}` : ''}}
+            div.date {{ timeToString(reply.datetime) }}
+            div(v-html="reply.content" v-if="reply.markdown")
+            div.raw-content(v-else) {{ reply.content }}
+      div.send-new
+        h3 发表评论
+        table
+          tr
+            th 姓名
+            td: input(v-model="name")
+          tr
+            th 站点
+            td: input(v-model="site")
+          tr
+            th 电子邮件
+            td: input(v-model="email", placeholder="邮件地址不会公开")
+          tr
+            th 评论
+            td: textarea(v-model="content", placeholder="We support markdown!")
+          tr
+            td
+            td: button(@click="submit") submit
 </template>
 
 <script>
@@ -82,6 +82,10 @@ export default {
 @import '../style/global.scss';
 
 div.reply {
+  div.content {
+    padding: 0.2em 1em 0.2em 1em;
+  }
+
   table {
     width: 100%;
   }
@@ -111,15 +115,15 @@ div.reply {
     list-style: none;
 
     > li {
-      padding: 1em;
+      padding: 0.6em 1em 0.1em 1em;
       margin: 0.5em 0 0.5em 0;
-      background-color: mix($theme_color, black, 90%);
-      border-radius: 0.5em;
+      background-color: rgb(245, 245, 245);
+      border-radius: 2px;
       line-height: 1.2em;
 
       pre {
         background-color: inherit;
-        border: 1px solid mix($theme_color, white, 80%);
+        border: rgb(235, 235, 235);
         border-radius: 0;
       }
     }

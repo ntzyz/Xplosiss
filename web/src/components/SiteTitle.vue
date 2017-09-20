@@ -1,5 +1,5 @@
 <template lang="pug">
-  header.title
+  header.title.card
     router-link(to="/"): h1 {{ title }}
     h2 {{ subtitle }}
 </template>
@@ -26,6 +26,9 @@ header.title {
   }
   h1 {
     font-size: 2em;
+    font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+    letter-spacing: 2px;
+    font-weight: 300;
   }
   h2 {
     font-size: 20px;

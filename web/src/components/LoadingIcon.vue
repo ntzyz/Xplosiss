@@ -150,6 +150,6 @@ div.wrapper {
   }
 }
 .sk-circle .sk-child:before {
-  background-color: white;
+  background-color: black;
 }
 </style>

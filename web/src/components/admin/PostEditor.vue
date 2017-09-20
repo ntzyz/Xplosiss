@@ -10,13 +10,19 @@
         td: input.full(v-model="slug")
       tr
         td.label 分类：
-        td: input.full(v-model="category")
+        td
+          select.full(v-if="category === '' || categories.indexOf(category) >= 0" v-model="category")
+            option(v-for="c in categories", :value="c") {{ c }}
+            option(vaule="") 自定义
+          input(v-else v-model="category")
       tr
         td.label 标签：
         td: span(v-for="(tag, idx) in arraylize(tags)" @click="deleteTag(tag)") {{ '#' + tag }} 
       tr
         td.label 常用标签：
-        td: button.tag(v-for="tag in $store.state.tags" @click="addTag(tag.tag)") {{ tag.tag }}
+        td
+          button.tag(v-for="tag in $store.state.tags" @click="addTag(tag.tag)") {{ tag.tag }}
+          button.tag(@click="addTag(prompt('新标签叫啥呢？'))") +
       tr
         td.label 日期：
         td
@@ -79,7 +85,15 @@ export default {
       }
     }
   },
+  computed: {
+    categories () {
+      return this.$store.state.categories;
+    }
+  },
   methods: {
+    prompt (string) {
+      return window.prompt(string);
+    },
     back () {
       window.history.go(-1);
     },
@@ -115,6 +129,10 @@ export default {
       })
     },
     createPost() {
+      if (!this.title || !this.slug) {
+        alert('标题和 URL 名称是必须的！');
+        return;
+      }
       api.post.createPost({
         token: this.$store.state.token,
         post:{
@@ -155,6 +173,9 @@ export default {
     fetchTags () {
       this.$store.dispatch('fetchTags');
     },
+    fetchCategories () {
+      this.$store.dispatch('fetchCategory');
+    },
     deletePost () {
       if (!confirm('确认要删除文章？此操作不可撤销。')) {
         return;
@@ -174,6 +195,7 @@ export default {
       this.fetchPost();
     }
     this.fetchTags();
+    this.fetchCategories();
     document.querySelector('#app').style.maxWidth = 'initial';
   },
   watch: {
@@ -225,6 +247,10 @@ div.post-editor {
   button.tag {
     margin-right: 4px;
     margin-bottom: 4px;
+  }
+  button {
+    font-size: 12px;
+    margin-right: 2px;
   }
 }
 </style>

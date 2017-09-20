@@ -75,15 +75,16 @@ div.posts-list {
   }
 
   li.list-item {
-    margin-top: 15px;
-    padding-top: 15px;
-    margin-bottom: 15px;
-    padding-bottom: 15px;
+    margin: 15px;
+    padding: 20px;
+    box-shadow: 1px 1px 4px lightgrey;
+    background-color: white;
+    border-radius: 2px;
   }
 
-  li.list-item:not(:last-child) {
-    border-bottom: 1px solid grey;
-  }
+  // li.list-item:not(:last-child) {
+  //   border-bottom: 1px solid grey;
+  // }
 
   div.post-meta {
     font-size: 0.9em;
@@ -110,14 +111,15 @@ div.posts-list {
 
   div.post-meta > span {
     margin-right: 20px;
-    color: #ccc;
+    color: #333;
   }
 
   footer {
+    height: 28px;
     button {
-      font-size: 12px;
-      margin-left: 1em;
-      padding: 0em 1.2em 0em 1.2em;
+      font-size: 14px;
+      float: right;
+      margin-right: 2em;
     }
   }
 }

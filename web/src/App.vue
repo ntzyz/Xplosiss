@@ -5,8 +5,8 @@
         router-view(name="sidebar")
     #right
       loading-icon(v-show="busy")
-      router-view(v-show="!busy")
-      //- transition(:name="transitionName")
+      transition(:name="transitionName"): router-view(v-show="!busy")
+      //- 
 </template>
 
 <script>
@@ -81,9 +81,6 @@ export default {
 <style lang="scss">
 @import './style/global.scss';
 
-html {
-}
-
 body {
   margin: 0;
   color: $font_color;
@@ -95,10 +92,11 @@ body {
 }
 
 #app {
-  max-width: 1024px;
+  max-width: 1152px;
   padding: 0 1em 0 1em;
   margin: 0 auto;
 }
+
 
 @media screen and (min-width: 800px) {
   #app {
@@ -127,7 +125,7 @@ body {
 
 @media screen and (max-width: 800px) {
   #app {
-    dispay: block;
+    display: block;
   }
 
   #left {

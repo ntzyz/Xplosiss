@@ -66,8 +66,13 @@ nav.pagination {
     font-size: 14px;
     line-height: $size;
     text-align: center;
-    margin-left: 0px;
+    margin-left: 1em;
     cursor: pointer;
+    button:not(.disabled) {
+      background-color: rgb(245, 245, 245);
+      color: black;
+      box-shadow: none;
+    }
     button, a {
       display: inline-block;
       width: inherit;
@@ -77,7 +82,6 @@ nav.pagination {
     }
     button.disabled {
       cursor: initial;
-      background-color: $theme_color;
     }
   }
   li:first-child {

@@ -1,14 +1,15 @@
 <template lang="pug">
   div.post-view(v-if="post")
-    header
-      h2.post-title {{ post.title }}
-      div.post-meta
-        span {{ timeToString(post.date, true) }}
-        span 分类：{{ post.category }}
-        span(v-for="tag in post.tags") #
-          router-link(:to="'/tag/' + tag") {{ tag }}
-      //- div.post-meta
-    article.post-content(v-html="post.content")
+    div.card
+      header
+        h2.post-title {{ post.title }}
+        div.post-meta
+          span {{ timeToString(post.date, true) }}
+          span 分类：{{ post.category }}
+          span(v-for="tag in post.tags") #
+            router-link(:to="'/tag/' + tag") {{ tag }}
+        //- div.post-meta
+      article.post-content(v-html="post.content")
     reply(:replies="post.replies")
 </template>
 
@@ -68,11 +69,16 @@ export default {
 
 <style lang="scss">
 div.post-view {
+  margin: 15px;
+  
+  > div.card {
+    padding: 1em;
+  }
 
   h2.post-title {
     font-size: 1.25em;
     font-weight: normal;
-    margin-top: 1.75em;
+    margin-top: .25em;
   }
 
   div.post-meta {
@@ -100,7 +106,7 @@ div.post-view {
 
   div.post-meta > span {
     margin-right: 20px;
-    color: #ccc;
+    color: #333;
   }
 
   p.indent {

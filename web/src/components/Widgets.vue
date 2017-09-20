@@ -1,8 +1,8 @@
 <template lang="pug">
   div.widgets
     ul
-      li(v-for="widget in widgets")
-        h3 {{ widget.title }}
+      li(v-for="widget in widgets"): div.card
+        h3.title {{ widget.title }}
         p(v-html="widget.content")
 </template>
 
@@ -32,7 +32,7 @@ div.widgets {
   }
 
   p {
-    margin: 0;
+    margin: 1em 0 1em 0;
     padding-left: 1em;
   }
 }

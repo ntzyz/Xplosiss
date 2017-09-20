@@ -1,50 +1,40 @@
-$theme_color: #036;
-$font_color: white;
+$theme_color: rgb(245, 245, 245);
+$font_color: black;
 
 body {
   font-family: "Noto Sans CJK SC", "Source Han Sans CN", "WenQuanYi Micro Hei", "Microsoft Yahei UI", "SimHei", sans-serif;
 }
 
-button, input, textarea, select {
-  line-height: 1.75em;
-  height: 1.75em;
-  vertical-align: top;
-  box-sizing: content-box;
-  padding: 0 0.5em 0 0.5em;
-  margin: 0 2px 0 2px;
-  border: 1px solid lightgrey;
-  color: $font_color;
-  background: mix($theme_color, white, 85%);
-  transition: background ease 0.1s;
-}
-
-input, textarea {
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-}
-
-textarea {
-  line-height: 1.25em;
-}
-
-button:focus, input:focus, textarea:focus {
-  outline: none;
-}
-
-button:hover, input:hover, button:focus, input:focus {
-  background: mix($theme_color, white, 80%);
+h1, h2, h3, h4, h5 {
+  font-weight: 500;
 }
 
 button {
+  text-align: center;
+  // text-transform: uppercase;
+  padding: .4em 1.5em .4em 1.5em;
+  background: #00695c;
+  border: none;
+  color: white;
+  border-radius: 2px;
+  box-shadow: 0 0 4px lightgray;
+  font-size: 16px;
+  transition: all ease 0.2s;
   cursor: pointer;
 }
 
+button:hover {
+  background: mix(#00695c, white, 80%);
+  box-shadow: 0 0 4px grey;
+}
+
 a:link, a:visited, a:active, a:hover {
-  color: inherit;
+  color: #036;
   text-decoration: none;
 }
 
 a:hover {
-  text-decoration: underline;
+  border-bottom: 1px solid black;
 }
 
 .forward-enter-active {
@@ -54,21 +44,39 @@ a:hover {
 
 .forward-enter {
   opacity: 0;
-  transform: translateX(-8px);
+  transform: translateX(-5px);
 }
 
-.forward-leave-to /* .forward-leave-active in below version 2.1.8 */ {
+.forward-leave-active /* .forward-leave-active in below version 2.1.8 */ {
   opacity: 0;
+}
+
+.card {
+  background-color: white;
+  box-shadow: 1px 1px 4px lightgrey;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+}
+
+.card > .title {
+  margin: 0;
+  padding: 4px 4px 4px 10px;
+  color: white;
+  font-weight: 400;
+  background-color: #036;
+  font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
 }
 
 /** code block **/
 pre {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-  background: mix($theme_color, black, 80%);
+  background: rgb(245, 245, 245);
   font-size: 0.8em;
   line-height: 1.2em;
   padding: 1em 1em 1em 1em;
-  border-radius: 0.5em;
+  border-radius: 2px;
   overflow-x: auto;
 }
 
