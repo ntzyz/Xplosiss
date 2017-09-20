@@ -82,7 +82,7 @@ div.post-view {
   div.post-meta {
     font-size: 0.9em;
     line-height: 1.5em;
-    // word-wrap: break-word;
+    word-wrap: break-word;
     word-break: break-all;
   }
 

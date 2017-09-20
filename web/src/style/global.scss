@@ -69,6 +69,13 @@ a:hover {
   font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
 }
 
+@media screen and (max-width: 800px) {
+  .card {
+    box-shadow: none;
+    margin: 0;
+  }
+}
+
 /** code block **/
 pre {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;

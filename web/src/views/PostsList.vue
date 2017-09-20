@@ -1,7 +1,7 @@
 <template lang="pug">
   div.posts-list
     ul
-      li.list-item(v-for="post in posts")
+      li.list-item.card(v-for="post in posts")
         header
           router-link(:to="'/post/' + post.slug"): h2.post-title {{ post.title }}
           div.post-meta
@@ -64,6 +64,7 @@ export default {
 
 div.posts-list {
   > ul {
+    margin: 0;
     padding: 0;
     list-style: none;
   }
@@ -75,9 +76,8 @@ div.posts-list {
   }
 
   li.list-item {
-    margin: 15px 0 15px 0;
+    // margin: 15px 0 15px 0;
     padding: 20px;
-    box-shadow: 1px 1px 4px lightgrey;
     background-color: white;
     border-radius: 2px;
   }
@@ -89,6 +89,7 @@ div.posts-list {
   div.post-meta {
     font-size: 0.9em;
     line-height: 1.5em;
+    word-wrap: break-word;
     word-break: break-all;
   }
 

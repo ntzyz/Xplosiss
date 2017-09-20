@@ -97,7 +97,6 @@ body {
   margin: 0 auto;
 }
 
-
 @media screen and (min-width: 800px) {
   #app {
     display: flex;
@@ -120,6 +119,7 @@ body {
     flex-grow: 1;
     position: relative;
     overflow: hidden;
+    padding: 0 4px 0 4px;
   }
 }
 
