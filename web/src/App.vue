@@ -126,6 +126,7 @@ body {
 @media screen and (max-width: 800px) {
   #app {
     display: block;
+    padding: 0;
   }
 
   #left {

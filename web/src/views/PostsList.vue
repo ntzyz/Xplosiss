@@ -75,7 +75,7 @@ div.posts-list {
   }
 
   li.list-item {
-    margin: 15px;
+    margin: 15px 0 15px 0;
     padding: 20px;
     box-shadow: 1px 1px 4px lightgrey;
     background-color: white;
@@ -89,6 +89,7 @@ div.posts-list {
   div.post-meta {
     font-size: 0.9em;
     line-height: 1.5em;
+    word-break: break-all;
   }
 
   article.post-preview {

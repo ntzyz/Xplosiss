@@ -69,8 +69,6 @@ export default {
 
 <style lang="scss">
 div.post-view {
-  margin: 15px;
-  
   > div.card {
     padding: 1em;
   }
@@ -84,6 +82,8 @@ div.post-view {
   div.post-meta {
     font-size: 0.9em;
     line-height: 1.5em;
+    // word-wrap: break-word;
+    word-break: break-all;
   }
 
   article.post-content {
