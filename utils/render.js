@@ -24,6 +24,10 @@ function decodeHTML (str) {
     });
 }
 
+function addSpanEachLine (html) {
+  return html.split('\n').map(l => `<span class="__line">${l}</span>`).join('\n');
+}
+
 function render (posts, options) {
   return posts.map(post => {
     if (/^markdown$/i.test(post.content.encoding)) {
@@ -38,10 +42,10 @@ function render (posts, options) {
         highlight: function (str, lang) {
           if (lang && hljs.getLanguage(lang)) {
             try {
-              return `<pre>${hljs.highlight(lang, str, true).value}</pre>`
+              return `<pre>${addSpanEachLine(hljs.highlight(lang.trim(), str, true).value)}</pre>`
             } catch (__) {}
           }
-          return `<pre>${md.utils.escapeHtml(str)}</pre>`;
+          return `<pre>${str}</pre>`;
         }
       }).render(post.content);
     } else {
@@ -61,11 +65,11 @@ function render (posts, options) {
 
       // Apply syntax highlighting for code blocks.
       post.content = post.content.replace(/<code lang="(.+?)">([^]+?)<\/code>/g, (match, p1, p2) => {
-        let rendered = hljs.highlight(p1, p2).value;
-          return `<pre>${rendered}</pre>`;
+        let rendered = hljs.highlight(p1, p2.trim()).value;
+          return `<pre>${addSpanEachLine(rendered)}</pre>`;
       }).replace(/<code>([^]+?)<\/code>/g, (match, p1) => {
-        let rendered = hljs.highlightAuto(p1).value;
-        return `<pre>${rendered}</pre>`;
+        let rendered = hljs.highlightAuto(p1.trim()).value;
+        return `<pre>${addSpanEachLine(rendered)}</pre>`;
       });
     }
 
@@ -76,10 +80,10 @@ function render (posts, options) {
           highlight: function (str, lang) {
             if (lang && hljs.getLanguage(lang)) {
               try {
-                return `<pre>${hljs.highlight(lang, str, true).value}</pre>`
+                return `<pre>${addSpanEachLine(hljs.highlight(lang.trim(), str, true).value)}</pre>`
               } catch (__) {}
             }
-            return `<pre>${md.utils.escapeHtml(str)}</pre>`;
+            return `<pre>${str}</pre>`;
           }
         }).render(reply.content);
         reply.markdown = true;

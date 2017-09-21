@@ -191,6 +191,7 @@ export default {
     if (this.$store.state.token === '') {
       this.$router.push('/admin');
     }
+    this.$store.commit('setBusy', false);
     if (this.$route.params.id) {
       this.fetchPost();
     }
@@ -199,11 +200,11 @@ export default {
     document.querySelector('#app').style.maxWidth = 'initial';
   },
   watch: {
-    'content.content': function () {
-      this.$nextTick(() => {
-        document.querySelector('textarea').style.height = document.querySelector('textarea').scrollHeight + 'px';
-      });
-    },
+    // 'content.content': function () {
+    //   this.$nextTick(() => {
+    //     document.querySelector('textarea').style.height = document.querySelector('textarea').scrollHeight + 'px';
+    //   });
+    // },
     '$route': function () {
       Object.assign(this.$data, this.$options.data());
       this._tags = new Set();
@@ -235,11 +236,10 @@ div.post-editor {
   }
   textarea.content {
     width: 95%;
-    min-height: 20rem;
-    max-height: 90vh;
+    height: 50vh;
     line-height: 1rem;
-    font-size: 0.8rem;
-    resize: none;
+    font-size: 1rem;
+    resize: vertical;
   }
   input.short {
     width: 2.5em;

@@ -33,6 +33,7 @@ export default {
     if (this.$store.state.token === '') {
       this.$router.push('/admin');
     } else {
+      this.$store.commit('setBusy', false);
       this.loadPosts(this.$route.params.page || 1);
     }
   },

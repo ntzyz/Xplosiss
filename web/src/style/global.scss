@@ -1,5 +1,4 @@
-$theme_color: rgb(245, 245, 245);
-$font_color: black;
+@import './color.scss';
 
 body {
   font-family: "Noto Sans CJK SC", "Source Han Sans CN", "WenQuanYi Micro Hei", "Microsoft Yahei UI", "SimHei", sans-serif;
@@ -11,9 +10,8 @@ h1, h2, h3, h4, h5 {
 
 button {
   text-align: center;
-  // text-transform: uppercase;
   padding: .4em 1.5em .4em 1.5em;
-  background: #00695c;
+  background: $button_color;
   border: none;
   color: white;
   border-radius: 2px;
@@ -23,14 +21,19 @@ button {
   cursor: pointer;
 }
 
+select {
+  height: 21.5px;
+}
+
 button:hover {
-  background: mix(#00695c, white, 80%);
+  background: mix($button_color, white, 80%);
   box-shadow: 0 0 4px grey;
 }
 
-a:link, a:visited, a:active, a:hover {
-  color: #036;
+a, a:link, a:visited, a:active, a:hover {
+  color: $link_color;
   text-decoration: none;
+  cursor: pointer;
 }
 
 a:hover {
@@ -47,12 +50,12 @@ a:hover {
   transform: translateX(-5px);
 }
 
-.forward-leave-active /* .forward-leave-active in below version 2.1.8 */ {
+.forward-leave-active {
   opacity: 0;
 }
 
 .card {
-  background-color: white;
+  background-color: $card_background_color;
   box-shadow: 1px 1px 4px lightgrey;
   margin-top: 15px;
   margin-bottom: 15px;
@@ -63,9 +66,9 @@ a:hover {
 .card > .title {
   margin: 0;
   padding: 4px 4px 4px 10px;
-  color: white;
+  color: $card_title_font_color;
   font-weight: 400;
-  background-color: #036;
+  background-color: $card_title_background_color;
   font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
 }
 
@@ -82,9 +85,23 @@ pre {
   background: rgb(245, 245, 245);
   font-size: 0.8em;
   line-height: 1.2em;
-  padding: 1em 1em 1em 1em;
+  padding: 1em 0em 1em 1em;
   border-radius: 2px;
   overflow-x: auto;
+  counter-reset: line;  
+}
+
+/** line numbers **/
+pre span.__line:before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  border-right: 1px solid #ddd;
+  width: 20px;
+  text-align: right;
+  padding: 0 .5em;
+  margin-right: .5em;
+  color: #888
 }
 
 ::-webkit-scrollbar {
@@ -96,15 +113,15 @@ pre {
   height: 0px;
 }
 ::-webkit-scrollbar-thumb {
-  background: grey;
+  background: lightgrey;
   border: 0px none #fff;
   transition: all ease 0.1s;
   cursor: pointer;
   border-radius: 7px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: lightgray;
+  background: darkgray;
 }
 ::-webkit-scrollbar-thumb:active {
-  background: darkgray;
+  background: gray;
 }

@@ -87,7 +87,7 @@ body {
   min-height: 100vh;
   height: 100%;
   overflow-y: scroll;
-  background-color: $theme_color;
+  background-color: $background_color;
   font-family: Microsoft Yahei UI;
 }
 

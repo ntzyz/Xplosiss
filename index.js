@@ -6,6 +6,16 @@ const io = require('socket.io');
 
 let site = express();
 
+if (process.env.DEV) {
+  console.log('[WARN] You are now in development mode, HTTP header Access-Control-Allow-Origin will be set to *.');
+  site.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+  });
+}
+
 // disable 'x-powered-by' for security
 site.disable('x-powered-by');
 

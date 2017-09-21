@@ -21,8 +21,8 @@
         tr
           td.label
           td
-            button(@click="back") 返回
-            button(@click="save") 保存
+            button(@click="back") RETURN
+            button(@click="save") SAVE
 </template>
 
 <script>
@@ -83,7 +83,12 @@ export default {
     }
   },
   created () {
-    this.fetchWidgets();
+    if (this.$store.state.token === '') {
+      this.$router.push('/admin');
+    } else {
+      this.$store.commit('setBusy', false);
+      this.fetchWidgets();
+    }
   },
   beforeDestroy () {
     document.querySelector('#app').style.maxWidth = '';
@@ -111,7 +116,7 @@ div.widgets-manage {
     min-height: 20rem;
     max-height: 90vh;
     line-height: 1rem;
-    font-size: 0.8rem;
+    font-size: 1rem;
     resize: none;
     word-wrap: break-word;
     word-break: break-all;
@@ -122,6 +127,10 @@ div.widgets-manage {
   button.tag {
     margin-right: 4px;
     margin-bottom: 4px;
+  }
+  button:not(.tag) {
+    margin: 4px;
+    font-size: 14px;
   }
 }
 

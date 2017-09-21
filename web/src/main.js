@@ -13,7 +13,7 @@ import AdminPostsList from './components/admin/PostsList.vue';
 import AdminPostEditor from './components/admin/PostEditor.vue';
 import AdminWidgets from './components/admin/Widgets.vue';
 import AdminLogs from './components/admin/AccessLogs.vue';
-
+import AdminMedia from './components/admin/Media.vue';
 import store from './store';
 
 Vue.use(VueRouter);
@@ -77,7 +77,7 @@ const router = new VueRouter({
         default: TokenSetter,
         sidebar: AdminSideBar
       },
-      meta: { keepAlive: true }
+      meta: { keepAlive: false }
     }, {
       path: '/admin/post',
       components: {
@@ -110,6 +110,13 @@ const router = new VueRouter({
       path: '/admin/widgets',
       components: {
         default: AdminWidgets,
+        sidebar: AdminSideBar
+      },
+      meta: { keepAlive: true },
+    }, {
+      path: '/admin/media',
+      components: {
+        default: AdminMedia,
         sidebar: AdminSideBar
       },
       meta: { keepAlive: true },

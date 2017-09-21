@@ -83,6 +83,9 @@ nav.pagination {
     button.disabled {
       cursor: initial;
     }
+    a:hover {
+      border: none;
+    }
   }
   li:first-child {
     border-top-left-radius: 4px;

@@ -15,7 +15,7 @@ export default new Vuex.Store({
     post: null,
     busy: true,
     forceReload: false,
-    token: '',
+    token: window.localStorage.token || '',
   },
   actions,
   mutations

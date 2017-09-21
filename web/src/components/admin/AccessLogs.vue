@@ -1,7 +1,8 @@
 <template lang="pug">
   div.realtime-access-logs
+    h2 实时日志
     div.container
-      span(v-for="log in logs") {{ log }}
+      pre: span(v-for="log in logs" class="__line") {{ log }}
 </template>
 
 <script>
@@ -23,6 +24,7 @@ export default {
       this.$router.push('/admin');
       return;
     }
+    this.$store.commit('setBusy', false);
     api.log.fetchLogs({ token: this.$store.state.token }).then(logs => {
       this.logs = logs;
       this.socket = io.connect(window.location.host, { path: `${config.api.url}/ws/` });
@@ -44,13 +46,17 @@ export default {
 <style lang="scss">
 div.realtime-access-logs {
   div.container {
-    height: 90vh;
-    margin-top: 5vh;
-    overflow-y: scroll;
-    font-size: 0.8rem;
+    height: 85vh;
+    font-size: 0.9rem;
+    overflow: scroll;
+    pre {
+      margin: 0;
+      padding: 0;
+      overflow: visible;
+    }
     span {
       display: block;
-      margin-bottom: 0.2rem;
+      // margin-bottom: 0.2rem;
     }
   }
 }

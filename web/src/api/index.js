@@ -5,7 +5,8 @@ import token from './token';
 import widget from './widget';
 import category from './category';
 import log from './log';
+import media from './media';
 
 export default {
-  category, tag, post, reply, widget, token, log
+  category, tag, post, reply, widget, token, log, media
 };

@@ -45,7 +45,7 @@ div.category-list {
 
   li:hover {
     cursor: pointer;
-    background: mix($theme_color, lightgrey, 80%);
+    background: mix($background_color, lightgrey, 80%);
     transition: background ease 0.1s;
   }
 }
