@@ -6,6 +6,8 @@ import App from './App.vue';
 import ClientSideBar from './components/ClientSideBar.vue';
 import PostsList from './views/PostsList.vue';
 import PostView from './views/PostView.vue';
+import PageView from './views/PageView.vue';
+import NotFound from './views/NotFound.vue';
 
 import AdminSideBar from './components/admin/AdminSideBar.vue';
 import TokenSetter from './components/admin/TokenSetter.vue';
@@ -14,6 +16,8 @@ import AdminPostEditor from './components/admin/PostEditor.vue';
 import AdminWidgets from './components/admin/Widgets.vue';
 import AdminLogs from './components/admin/AccessLogs.vue';
 import AdminMedia from './components/admin/Media.vue';
+import AdminPage from './components/admin/Page.vue';
+
 import store from './store';
 
 Vue.use(VueRouter);
@@ -121,12 +125,33 @@ const router = new VueRouter({
       },
       meta: { keepAlive: true },
     }, {
+      path: '/admin/page',
+      components: {
+        default: AdminPage,
+        sidebar: AdminSideBar
+      },
+      meta: { keepAlive: true },
+    }, {
       path: '/admin/logs',
       components: {
         default: AdminLogs,
         sidebar: AdminSideBar
       },
       meta: { keepAlive: true },
+    }, {
+      path: '/not-found',
+      components: {
+        default: NotFound,
+        sidebar: ClientSideBar,
+      },
+      meta: { keepAlive: true },
+    }, {
+      path: '/:slug',
+      components: {
+        default: PageView,
+        sidebar: ClientSideBar,
+      },
+      meta: { keepAlive: false }
     }
   ],
   scrollBehavior (to, from, savedPosition) {
@@ -149,6 +174,10 @@ Vue.mixin({
       this.dataPromise = asyncData({
         store: this.$store,
         route: this.$route
+      }).catch(error => {
+        if (error.response.status === 404) {
+          this.$router.replace('/not-found');
+        }
       });
     }
   }

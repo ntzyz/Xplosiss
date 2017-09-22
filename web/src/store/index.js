@@ -15,6 +15,7 @@ export default new Vuex.Store({
     post: null,
     busy: true,
     forceReload: false,
+    page: {},
     token: window.localStorage.token || '',
   },
   actions,

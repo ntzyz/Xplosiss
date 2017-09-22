@@ -6,7 +6,8 @@ import widget from './widget';
 import category from './category';
 import log from './log';
 import media from './media';
+import page from './page';
 
 export default {
-  category, tag, post, reply, widget, token, log, media
+  category, tag, post, reply, widget, token, log, media, page
 };

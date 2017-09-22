@@ -23,6 +23,7 @@
           td
             button(@click="back") RETURN
             button(@click="save") SAVE
+            button.right(@click="deleteWidget") DELETE
 </template>
 
 <script>
@@ -80,6 +81,14 @@ export default {
           alert('会话过期，请手动刷新');
         })
       }
+    },
+    deleteWidget () {
+      if (confirm('该操作不可撤销，确认继续？')) {
+        api.widget.deleteWidget({ token: this.$store.state.token, id: this.editing._id }).then(() => {
+          alert('删除成功');
+          this.back();
+        })
+      }
     }
   },
   created () {
@@ -109,10 +118,10 @@ div.widgets-manage {
     vertical-align: top;
   }
   input.full {
-    width: 95%;
+    width: 99%;
   }
   textarea.content {
-    width: 95%;
+    width: 99%;
     min-height: 20rem;
     max-height: 90vh;
     line-height: 1rem;
@@ -131,6 +140,10 @@ div.widgets-manage {
   button:not(.tag) {
     margin: 4px;
     font-size: 14px;
+  }
+  button.right {
+    float: right;
+    background-color: mix(red, black, 80%);
   }
 }
 

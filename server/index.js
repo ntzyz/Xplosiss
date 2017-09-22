@@ -15,6 +15,7 @@ api.use('/widget', require('./widget'));
 api.use('/post', require('./post'));
 api.use('/token', require('./token'));
 api.use('/media', require('./media'));
+api.use('/page', require('./page'));
 api.use('/logs', require('./logs'));
 
 module.exports = api;

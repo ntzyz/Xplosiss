@@ -103,4 +103,27 @@ router.put('/', async (req, res) => {
   res.send({ status: 'ok', _id: r.insertedIds[0] });
 });
 
+router.delete('/:id', async (req, res) => {
+  if (req.query.token !== utils.token) {
+    return res.status(400).send({
+      status: 'error',
+      message: utils.messages.ERR_ACCESS_DENIED,
+    });
+  }
+
+  try {
+    await utils.db.conn.collection('widgets').remove(
+      { _id: ObjectID(req.params.id) }
+    );
+  } catch (e) {
+    console.error(e);
+    return res.status(500).send({
+      status: 'error',
+      message: utils.messages.ERR_MONGO_FAIL,
+    });
+  }
+
+  res.send({ status: 'ok' });
+});
+
 module.exports = router;

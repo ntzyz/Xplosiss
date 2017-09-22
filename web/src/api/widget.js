@@ -37,6 +37,19 @@ function createWidget (params = {}) {
   });
 }
 
+function deleteWidget (params = {}) {
+  if (!params.id) {
+    return Promise.reject('Widget id content is required.');
+  } else if (!params.token) {
+    return Promise.reject('Access token is required.');
+  }
+  return new Promise((resolve, reject) => {
+    axios.delete(`${config.api.url}/widget/${params.id}?token=${params.token}`)
+    .then(res => resolve(res.data))
+    .catch(err => reject(error));
+  });
+}
+
 export default {
-  fetchWidgetList, updateWidget, createWidget
+  fetchWidgetList, updateWidget, createWidget, deleteWidget
 }
