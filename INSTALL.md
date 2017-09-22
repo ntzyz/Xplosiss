@@ -31,16 +31,19 @@ Browser side:
 % popd 
 ```
 
-### 4. Build the script bundle.
+### 4. Import default database
+```
+% mongo localhost:27017/$database ./db.default.js
+```
+Note: replace `$database` with your real database.
+
+### 5. Build the script bundle.
 ```
 % pushd web/src
 % npm run build
 % popd 
 ```
 Note: you should always rebuild it after editing `/web/src/config.js` or merging from upstream.
-
-### 5. Import default database
-TODO
 
 ### 6. Create a systemd unit
 
