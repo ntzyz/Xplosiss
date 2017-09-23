@@ -6,7 +6,6 @@
     #right
       loading-icon(v-show="busy")
       transition(:name="transitionName"): router-view(v-show="!busy")
-      //- 
 </template>
 
 <script>
@@ -137,4 +136,6 @@ body {
     display: none;
   }
 }
+
+@import './style/custom.scss';
 </style>

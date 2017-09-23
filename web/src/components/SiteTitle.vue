@@ -21,6 +21,10 @@ export default {
 <style lang="scss">
 header.title {
   text-align: center;
+  > a {
+    // Fix IE11
+    border-bottom: none;
+  }
   h1, h2 {
     font-weight: normal;
   }

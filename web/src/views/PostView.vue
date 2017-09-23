@@ -61,7 +61,7 @@ export default {
     timeToString
   },
   asyncData ({ store, route }) {
-    store.dispatch('fetchPostBySlug', route.params.slug);
+    return store.dispatch('fetchPostBySlug', route.params.slug);
   }
 };
 

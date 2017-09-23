@@ -35,7 +35,7 @@ export default {
     max () {
       this.init();
     },
-    active () {
+    current () {
       this.init();
     }
   }
@@ -61,12 +61,12 @@ nav.pagination {
   }
   li {
     display: inline-block;
-    width: $size;
-    height: $size;
+    min-width: $size;
+    min-height: $size;
     font-size: 14px;
     line-height: $size;
     text-align: center;
-    margin-left: 1em;
+    margin-left: 0.5em;
     cursor: pointer;
     button:not(.disabled) {
       background-color: rgb(245, 245, 245);
@@ -82,6 +82,9 @@ nav.pagination {
     }
     button.disabled {
       cursor: initial;
+    }
+    button {
+      padding: 0 0.5em 0 0.5em;
     }
     a:hover {
       border: none;

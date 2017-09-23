@@ -1,6 +1,7 @@
 <template lang="pug">
   div.media-manage
     h2 管理媒体文件
+    button(@click="upload") UPLOAD NEW
     table
       tr
         th.filename 文件名
@@ -12,7 +13,6 @@
         td.operation 
           a(:href="getFileURL(file.file)" target="_blank") 预览
           a(@click="deleteFile(file.file)") 删除
-    button(@click="upload") UPLOAD NEW
     input(type="file" style="display: none")
 </template>
 

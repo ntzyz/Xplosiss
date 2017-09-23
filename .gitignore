@@ -3,3 +3,4 @@ node_modules/
 database.sql
 config.js
 /uploads
+package-lock.json

@@ -48,13 +48,13 @@ export default {
   asyncData ({store, route}) {
     if (route.params.category) {
       document.title = `分类：${route.params.category} - ${config.title}`;
-      store.dispatch('fetchPostsByCategory', { category: route.params.category, page: route.params.page });
+      return store.dispatch('fetchPostsByCategory', { category: route.params.category, page: route.params.page });
     } else if (route.params.tag) {
       document.title = `标签：${route.params.tag} - ${config.title}`;
-      store.dispatch('fetchPostsByTag', { tag: route.params.tag, page: route.params.page });
+      return store.dispatch('fetchPostsByTag', { tag: route.params.tag, page: route.params.page });
     } else {
       document.title = `首页 - ${config.title}`;
-      store.dispatch('fetchLatestPosts', { page: route.params.page });
+      return store.dispatch('fetchLatestPosts', { page: route.params.page });
     }
   }
 }

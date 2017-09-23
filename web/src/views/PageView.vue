@@ -5,11 +5,20 @@
 </template>
 
 <script>
+import config from '../config';
+
 export default {
   name: 'page-view',
   computed: {
     page () {
       return this.$store.state.page;
+    }
+  },
+  watch: {
+    page () {
+      if (page && page.title) {
+        document.title = `${page.title} - ${config.title}`;
+      }
     }
   },
   asyncData({ route, store }) {

@@ -30,6 +30,14 @@ button:hover {
   box-shadow: 0 0 4px grey;
 }
 
+button:focus {
+  outline: none;
+}
+
+article img {
+  width: 100%;
+}
+
 a, a:link, a:visited, a:active, a:hover {
   color: $link_color;
   text-decoration: none;
