@@ -9,6 +9,11 @@ const upload = multer({ dest: path.join(__dirname, '../uploads') });
 
 let router = express.Router();
 
+// Serve all static files through express's serve-static
+// for security
+router.use('/', express.static('uploads'));
+router.use('/', express.static('statics'));
+
 /**
  * 列出所有的媒体文件
  */
@@ -40,24 +45,6 @@ router.get('/', (req, res) => {
       files: fileWithMimes,
     })
   })
-});
-
-/**
- * 访问指定的一个媒体文件
- */
-router.get('/:filename', (req, res) => {
-  let filePath = path.join(__dirname, '../uploads', req.params.filename);
-  if (fs.exists(filePath, exists => {
-    if (exists) {
-      res.setHeader('content-type', mime.lookup(filePath) || 'text/plain');
-      res.sendFile(filePath);
-    } else {
-      res.status(404).send({
-        status: 'err',
-        message: utils.messages.ERR_NOT_FOUND,
-      })
-    }
-  }));
 });
 
 /**

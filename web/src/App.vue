@@ -45,7 +45,7 @@ export default {
       left.parentNode.style.height = `${bounding.height}px`;
 
       if (bounding.height < window.innerHeight) {
-        document.querySelector('#left-wrapper').setAttribute('style', '');
+        document.querySelector('#left-wrapper').setAttribute('style', 'position: fixed');
         return;
       }
 

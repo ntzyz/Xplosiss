@@ -12,7 +12,7 @@
         td.center.date: span {{ timeToString(post.date, true) }}
         td.center.category: span {{ post.category }}
         td.tag: span {{ post.tags ? post.tags.join(', '): '' }}
-    pagination(v-if="pages", :current="pages.current", length="10", :max="pages.max", prefix="/admin/post")
+    pagination(v-if="pages", :current="pages.current", length="7", :max="pages.max", prefix="/admin/post")
 </template>
 
 <script>

@@ -12,7 +12,7 @@
         article.post-preview(v-html="post.content")
         footer
           router-link(:to="'/post/' + post.slug"): button.more MORE
-    pagination(v-if="$store.state.pages", :current="$store.state.pages.current", length="10", :max="$store.state.pages.max", :prefix="prefix")
+    pagination(v-if="$store.state.pages", :current="$store.state.pages.current", length="7", :max="$store.state.pages.max", :prefix="prefix")
 </template>
 
 <script>

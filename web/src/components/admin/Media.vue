@@ -8,7 +8,7 @@
         th.mime MIME
         th.operation 操作
       tr(v-for="file in files")
-        td.filename {{ file.file }}
+        td.filename: span {{ file.file }}
         td.mime {{ file.mime || 'text/plain' }}
         td.operation 
           a(:href="getFileURL(file.file)" target="_blank") 预览
@@ -50,7 +50,7 @@ export default {
     getFileURL: api.media.getFileURL,
     fetchFiles () {
       api.media.fetchFiles({ token: this.$store.state.token }).then(files => {
-        this.files = files;
+        this.files = files.reverse();
       });
     },
     upload () {
@@ -69,8 +69,10 @@ export default {
 
 <style lang="scss">
 div.media-manage {
+  overflow: hidden;
   table {
     width: 100%;
+    table-layout: fixed;
   }
   th {
     font-weight: 600;
@@ -79,12 +81,17 @@ div.media-manage {
     width: 100px;
     text-align: center;
   }
+  .mime {
+    width: 150px;
+    text-align: center;
+  }
   .operation > a {
     margin-left: 5px;
   }
-  .mime {
-    width: 100px;
-    text-align: center;
+  td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: pre;
   }
   button {
     font-size: 14px;

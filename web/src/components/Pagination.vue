@@ -66,7 +66,7 @@ nav.pagination {
     font-size: 14px;
     line-height: $size;
     text-align: center;
-    margin-left: 0.5em;
+    margin-left: 0.3em;
     cursor: pointer;
     button:not(.disabled) {
       background-color: rgb(245, 245, 245);
@@ -89,14 +89,6 @@ nav.pagination {
     a:hover {
       border: none;
     }
-  }
-  li:first-child {
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
-  }
-  li:last-child {
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
   }
 }
 </style>

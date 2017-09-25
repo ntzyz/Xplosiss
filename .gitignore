@@ -3,4 +3,5 @@ node_modules/
 database.sql
 config.js
 /uploads
+/static
 package-lock.json
