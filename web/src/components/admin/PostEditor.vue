@@ -1,7 +1,7 @@
 <template lang="pug">
   div.post-editor
     h2 创建/编辑文章
-    table
+    table.form-table
       tr
         td.label 标题：
         td: input.full(v-model="title")
@@ -197,7 +197,7 @@ export default {
     }
     this.fetchTags();
     this.fetchCategories();
-    document.querySelector('#app').style.maxWidth = 'initial';
+    // document.querySelector('#app').style.maxWidth = 'initial';
   },
   watch: {
     // 'content.content': function () {
@@ -214,33 +214,16 @@ export default {
     }
   },
   beforeDestroy () {
-    document.querySelector('#app').style.maxWidth = '';
+    // document.querySelector('#app').style.maxWidth = '';
   }
 }
 
 </script>
 
 <style lang="scss" scoped>
+@import '../../style/form-table.scss';
+
 div.post-editor {
-  table {
-    width: 100%;
-    border-spacing: 10px;
-  }
-  td.label {
-    width: 90px;
-    text-align: right;
-    vertical-align: top;
-  }
-  input.full {
-    width: 95%;
-  }
-  textarea.content {
-    width: 95%;
-    height: 50vh;
-    line-height: 1rem;
-    font-size: 1rem;
-    resize: vertical;
-  }
   input.short {
     width: 2.5em;
   }

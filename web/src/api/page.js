@@ -21,7 +21,19 @@ function fetchPageBySlug (params = {}) {
   });
 }
 
-function createPageBySlug (params = {}) {
+function fetchPageById (params = {}) {
+  if (!params.id) {
+    return Promise.reject('Page slug is required');
+  }
+
+  return new Promise((resolve, reject) => {
+    axios.get(`${config.api.url}/page/by-id/${params.id}${params.raw ? '/raw' : ''}`)
+    .then(response => resolve(response.data.page))
+    .catch(error => reject(error));
+  });
+}
+
+function createPage (params = {}) {
   if (!params.page) {
     return Promise.reject('Page content is required.');
   } else if (!params.token) {
@@ -29,13 +41,13 @@ function createPageBySlug (params = {}) {
   }
 
   return new Promise((resolve, reject) => {
-    axios.put(`${config.api.url}/page/${params.id}?token=${params.token}`, params.page)
+    axios.put(`${config.api.url}/page?token=${params.token}`, params.page)
     .then(res => resolve(res.data))
     .catch(err => reject(error));
   });
 }
 
-function updatePageBySlug (params = {}) {
+function updatePageById (params = {}) {
   if (!params.id) {
     return Promise.reject('Page id is required.');
   } else if (!params.page) {
@@ -51,6 +63,20 @@ function updatePageBySlug (params = {}) {
   });
 }
 
+function deletePageById (params = {}) {
+  if (!params.id) {
+    return Promise.reject('Page id is required.');
+  } else if (!params.token) {
+    return Promise.reject('Access token is required.');
+  }
+
+  return new Promise((resolve, reject) => {
+    axios.delete(`${config.api.url}/page/by-id/${params.id}?token=${params.token}`, params.page)
+    .then(res => resolve(res.data))
+    .catch(err => reject(error));
+  });
+}
+
 export default {
-  fetchPages, fetchPageBySlug, updatePageBySlug, createPageBySlug
+  fetchPages, fetchPageBySlug, fetchPageById, updatePageById, createPage, deletePageById
 }

@@ -9,12 +9,10 @@ let router = express.Router();
  * 获取所有的静态页
  */
 router.get('/', async (req, res) => {
-  let page = req.query.page ? req.query.page - 1 : 0;
   let pages, count;
   try {
-    let cursor = utils.db.conn.collection('pages').find({}).skip(page * config.page.size).limit(config.page.size);
+    let cursor = utils.db.conn.collection('pages').find({});
     pages = await cursor.toArray();
-    count = await cursor.count();
   } catch (e) {
     console.error(e);
     return res.status(500).send({
@@ -30,11 +28,6 @@ router.get('/', async (req, res) => {
   return res.send({
     status: 'ok',
     pages: pages,
-    page: {
-      size: config.page.size,
-      max: Math.floor(count / config.page.size) + (count % config.page.size === 0 ? 0 : 1),
-      current: page + 1,
-    }
   })
 });
 

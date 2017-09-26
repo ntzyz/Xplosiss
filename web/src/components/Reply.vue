@@ -11,19 +11,19 @@
             div.raw-content(v-else) {{ reply.content }}
       div.send-new
         h3 发表评论
-        table
+        table.form-table
           tr
             th 姓名
-            td: input(v-model="name")
+            td: input.full(v-model="name")
           tr
             th 站点
-            td: input(v-model="site")
+            td: input.full(v-model="site")
           tr
             th 电子邮件
-            td: input(v-model="email", placeholder="邮件地址不会公开")
+            td: input.full(v-model="email", placeholder="邮件地址不会公开")
           tr
             th 评论
-            td: textarea(v-model="content", placeholder="We support markdown!")
+            td: textarea.content(v-model="content", placeholder="We support markdown!")
           tr
             td
             td: button(@click="submit") submit
@@ -80,14 +80,11 @@ export default {
 
 <style lang="scss">
 @import '../style/global.scss';
+@import '../style/form-table.scss';
 
 div.reply {
   div.content {
     padding: 0.2em 1em 0.2em 1em;
-  }
-
-  table {
-    width: 100%;
   }
   table th {
     text-align: right;
@@ -96,13 +93,10 @@ div.reply {
     font-weight: normal;
   }
   table {
+    width: 90%;
     border-spacing: 5px;
   }
-  table input, table textarea{
-    width: 90%;
-    resize: none;
-  }
-  table textarea {
+  table textarea.content {
     height: 8em;
   }
 

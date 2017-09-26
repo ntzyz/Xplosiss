@@ -15,7 +15,7 @@ export default {
     }
   },
   watch: {
-    page () {
+    page (page) {
       if (page && page.title) {
         document.title = `${page.title} - ${config.title}`;
       }

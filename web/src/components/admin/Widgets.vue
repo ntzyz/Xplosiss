@@ -8,7 +8,7 @@
       button.widget-edit-button(@click="editWidget(selected)") 继续
     div(v-else)
       h2 创建/编辑工具
-      table
+      table.form-table
         tr
           td.label 标题：
           td: input.full(v-model="editing.title")
@@ -106,30 +106,9 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../../style/form-table.scss';
 
 div.widgets-manage {
-  table {
-    width: 100%;
-    border-spacing: 10px;
-  }
-  td.label {
-    width: 90px;
-    text-align: right;
-    vertical-align: top;
-  }
-  input.full {
-    width: 99%;
-  }
-  textarea.content {
-    width: 99%;
-    min-height: 20rem;
-    max-height: 90vh;
-    line-height: 1rem;
-    font-size: 1rem;
-    resize: none;
-    word-wrap: break-word;
-    word-break: break-all;
-  }
   input.short {
     width: 2.5em;
   }
