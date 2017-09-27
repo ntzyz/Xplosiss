@@ -152,6 +152,13 @@ const router = new VueRouter({
         sidebar: ClientSideBar,
       },
       meta: { keepAlive: false }
+    }, {
+      path: '*',
+      components: {
+        default: NotFound,
+        sidebar: ClientSideBar,
+      },
+      meta: { keepAlive: true },
     }
   ],
   scrollBehavior (to, from, savedPosition) {

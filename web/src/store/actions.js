@@ -64,5 +64,12 @@ export default {
       state.commit('setPage', page);
       state.commit('setBusy', false);
     });
+  },
+
+  fetchLatestReplies: state => {
+    state.commit('setReplies', []);
+    return api.reply.fetchLatestReplies().then(replies => {
+      state.commit('setReplies', replies);
+    });
   }
 }

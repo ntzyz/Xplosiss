@@ -31,5 +31,8 @@ export default {
   },
   setPage: (state, page) => {
     state.page = page;
+  },
+  setReplies: (state, replies) => {
+    state.replies = replies;
   }
 }

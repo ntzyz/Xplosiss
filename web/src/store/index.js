@@ -11,6 +11,7 @@ export default new Vuex.Store({
     tags: [],
     posts: [],
     widgets: [],
+    replies: [],
     pages: {},
     post: null,
     busy: true,

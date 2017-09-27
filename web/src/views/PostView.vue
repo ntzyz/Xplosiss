@@ -52,6 +52,9 @@ export default {
         this.$store.commit('enableForceReload');
 
       })
+    },
+    '$route': function (route) {
+      this.$store.dispatch('fetchPostBySlug', route.params.slug);
     }
   },
   beforeDestroy () {

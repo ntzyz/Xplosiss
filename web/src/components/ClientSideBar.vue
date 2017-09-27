@@ -5,6 +5,7 @@
     //- search.hide-on-mobile
     categories-list.hide-on-mobile(v-if="components.categories")
     tags-list.hide-on-mobile(v-if="components.tags")
+    latest-replies.hide-on-mobile(v-if="components.replies")
     widgets.hide-on-mobile
 </template>
 
@@ -14,12 +15,13 @@ import Search from './Search.vue';
 import CategoriesList from './CategoriesList.vue';
 import TagsList from './TagsList.vue';
 import Widgets from './Widgets.vue';
+import LatestReplies from './LatestReplies.vue';
 import config from '../config';
 
 export default {
   name: 'client-side-bar',
   components: {
-    SiteTitle, Search, CategoriesList, TagsList, Widgets
+    SiteTitle, Search, CategoriesList, TagsList, Widgets, LatestReplies
   },
   data () {
     return {
