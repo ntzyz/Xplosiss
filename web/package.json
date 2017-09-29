@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --host $(ip route | grep src | awk '{ print $9 }')",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot --host $(ip route | grep -Po \"src\\ (\\d+\\.\\d+\\.\\d+\\.\\d+)\" | head -n 1 | awk '{ print $2 }')",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {

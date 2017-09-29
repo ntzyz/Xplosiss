@@ -6,7 +6,7 @@ const config = require('../config');
 let router = express.Router();
 
 /**
- * 获取所有的静态页
+ * Get all custom pages
  */
 router.get('/', async (req, res) => {
   let pages, count;
@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
 });
 
 /**
- * 按照 slug 获得指定静态页
+ * Get one custom page by it's slug
  */
 router.get('/by-slug/:slug', async (req, res) => {
   let page;
@@ -60,7 +60,7 @@ router.get('/by-slug/:slug', async (req, res) => {
 });
 
 /**
- * 按照 ID 获得指定静态页（未渲染，用于编辑）
+ * Get one custom page by it's id without rendering (for jobs like editing)
  */
 router.get('/by-id/:id/raw', async (req, res) => {
   let page;
@@ -88,7 +88,7 @@ router.get('/by-id/:id/raw', async (req, res) => {
 });
 
 /**
- * 按照 ID 更新
+ * Update one custom page by it's id.
  */
 router.post('/by-id/:id', async (req, res) => {
   if (req.query.token !== utils.token) {
@@ -120,7 +120,7 @@ router.post('/by-id/:id', async (req, res) => {
 });
 
 /**
- * 按照 ID 删除
+ * Delete one custom page by it's id.
  */
 router.delete('/by-id/:id', async (req, res) => {
   if (req.query.token !== utils.token) {
@@ -146,7 +146,7 @@ router.delete('/by-id/:id', async (req, res) => {
 });
 
 /**
- * 创建
+ * Create a new custom page.
  */
 router.put('/', async (req, res) => {
   if (req.query.token !== utils.token) {
