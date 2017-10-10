@@ -15,7 +15,7 @@ router.use('/', express.static('uploads'));
 router.use('/', express.static('statics'));
 
 /**
- * 列出所有的媒体文件
+ * List all media files.
  */
 router.get('/', (req, res) => {
   if (req.query.token !== utils.token) {
@@ -48,7 +48,7 @@ router.get('/', (req, res) => {
 });
 
 /**
- * 上传一个文件
+ * Upload one new file.
  */
 router.put('/:filename', upload.single('file'), (req, res) => {
   if (req.query.token !== utils.token) {
@@ -74,7 +74,7 @@ router.put('/:filename', upload.single('file'), (req, res) => {
 });
 
 /**
- * 删除一个文件
+ * Delete one file.
  */
 router.delete('/:filename', (req, res) => {
   if (req.query.token !== utils.token) {

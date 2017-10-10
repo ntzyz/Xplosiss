@@ -27,7 +27,7 @@ export default {
     this.$store.commit('setBusy', false);
     api.log.fetchLogs({ token: this.$store.state.token }).then(logs => {
       this.logs = logs;
-      this.socket = io.connect(window.location.host, { path: `${config.api.url}/ws/` });
+      this.socket = io.connect(window.location.host, { path: `${config.api.url}/ws/`, query: `token=${this.$store.state.token}` });
       this.socket.on('log', text => {
         this.logs.push(text);
         setTimeout(() => {

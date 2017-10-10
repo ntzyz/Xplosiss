@@ -1,5 +1,6 @@
 const http = require('http');
 const socket = require('socket.io');
+const token = require('./token');
 
 let server;
 let io;
@@ -9,7 +10,10 @@ function attachSocketIO (site) {
     server = http.Server(site);
     io = socket(server, { path: '/api/ws' }); 
     io.on('connection', socket => {
-      console.log('Client connected!');
+      if (socket.handshake.query.token !== token.accessToken) {
+        // Unauthorized connecton, disconnect it.
+        return socket.disconnect();
+      }
     });
   }
   return { io, server, };

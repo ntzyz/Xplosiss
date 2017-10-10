@@ -103,6 +103,9 @@ router.put('/', async (req, res) => {
   res.send({ status: 'ok', _id: r.insertedIds[0] });
 });
 
+/**
+ * Delete a widget.
+ */
 router.delete('/:id', async (req, res) => {
   if (req.query.token !== utils.token) {
     return res.status(400).send({

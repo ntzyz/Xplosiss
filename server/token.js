@@ -4,11 +4,17 @@ const config = require('../config');
 
 let router = express.Router();
 
+/**
+ * Print access token to stdout.
+ */
 router.get('/forgot', (req, res) => {
   console.log(`Your access token is ${utils.token}`);
   res.send({ status: 'ok' });
 })
 
+/**
+ * Check one access token is valid or not.
+ */
 router.get('/check', (req, res) => {
   res.send({
     status: 'ok',

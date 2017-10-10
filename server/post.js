@@ -6,7 +6,7 @@ const config = require('../config');
 let router = express.Router();
 
 /**
- * 获取文章列表
+ * Get posts list.
  */
 router.get('/', async (req, res) => {
   let page = req.query.page ? req.query.page - 1 : 0;
@@ -39,7 +39,7 @@ router.get('/', async (req, res) => {
 });
 
 /**
- * 根据 slug 获得文章详情
+ * Get post by it's slug
  */
 router.get('/by-slug/:slug', async (req, res) => {
   let post;
@@ -69,7 +69,7 @@ router.get('/by-slug/:slug', async (req, res) => {
 });
 
 /**
- * 发表评论
+ * Create an comment on one post.
  */
 router.put('/by-slug/:slug/reply', async (req, res) => {
   let post;
@@ -98,7 +98,7 @@ router.put('/by-slug/:slug/reply', async (req, res) => {
 });
 
 /**
- * 根据 ID 获得原始的文章数据（未渲染，用于编辑）
+ * Get one post by it's id without rendering (for jobs like editing)
  */
 router.get('/by-id/:id/raw', async (req, res) => {
   let post;
@@ -126,7 +126,7 @@ router.get('/by-id/:id/raw', async (req, res) => {
 });
 
 /**
- * 按 ID 更新文章内容
+ * Update one post by it's id;
  */
 router.post('/by-id/:id', async (req, res) => {
   if (req.query.token !== utils.token) {
@@ -162,7 +162,7 @@ router.post('/by-id/:id', async (req, res) => {
 
 
 /**
- * 按 ID 删除内容
+ * Delete one post by it's id.
  */
 router.delete('/by-id/:id', async (req, res) => {
   if (req.query.token !== utils.token) {
@@ -188,7 +188,7 @@ router.delete('/by-id/:id', async (req, res) => {
 });
 
 /**
- * 发表新文章
+ * Create a new post.
  */
 router.put('/', async (req, res) => {
   if (req.query.token !== utils.token) {
@@ -219,6 +219,5 @@ router.put('/', async (req, res) => {
 
   res.send({ status: 'ok', id: r.insertedIds[0] });
 });
-
 
 module.exports = router;
