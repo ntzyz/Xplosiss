@@ -42,6 +42,7 @@ a, a:link, a:visited, a:active, a:hover {
   color: $link_color;
   text-decoration: none;
   cursor: pointer;
+  outline: none;
 }
 
 a:hover {
