@@ -2,7 +2,8 @@
   div.latest-replies.card
     h3.title Recent replies
     p.content
-      ul(v-if="replies.length !== 0"): li(v-for="reply in replies"): router-link(:to="'/post/' + reply.slug") {{ reply.replies.user }} 发表于「{{ reply.title }}」
+      ul(v-if="replies.length !== 0"): li(v-for="reply in replies")
+        router-link(:to="(reply.path === 'post' ? '/post/' : '/') + reply.slug") {{ reply.replies.user }} 发表于「{{ reply.title }}」
       span(v-else) 暂无评论
 </template>
 

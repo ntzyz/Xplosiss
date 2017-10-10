@@ -10,7 +10,7 @@
             router-link(:to="'/tag/' + tag") {{ tag }}
         //- div.post-meta
       article.post-content(v-html="post.content")
-    reply(:replies="post.replies")
+    reply(:replies="post.replies", api-path="post", :refresh-replies="refreshReplies")
 </template>
 
 <script>
@@ -61,7 +61,10 @@ export default {
     this.extraDoms.forEach(el => el.remove());
   },
   methods: {
-    timeToString
+    timeToString,
+    refreshReplies () {
+      this.$store.dispatch('fetchPostBySlug', this.$route.params.slug);
+    }
   },
   asyncData ({ store, route }) {
     return store.dispatch('fetchPostBySlug', route.params.slug);

@@ -8,13 +8,21 @@ let router = express.Router();
  * Get lastest five replies
  */
 router.get('/latest', async (req, res) => {
-  let replies;
+  let postReplies, pageReplies;
 
   try {
-    replies = await utils.db.conn.collection('posts').aggregate([
+    postReplies = await utils.db.conn.collection('posts').aggregate([
       { $project: { slug: 1, title: 1, 'replies.datetime': 1, 'replies.user': 1 }},
       { $unwind: '$replies' },
       { $sort: {'replies.datetime': -1} },
+      { $addFields: { path: 'post' } },
+      { $limit: 5 }
+    ]).toArray();
+    pageReplies = await utils.db.conn.collection('pages').aggregate([
+      { $project: { slug: 1, title: 1, 'replies.datetime': 1, 'replies.user': 1 }},
+      { $unwind: '$replies' },
+      { $sort: {'replies.datetime': -1} },
+      { $addFields: { path: 'page' } },
       { $limit: 5 }
     ]).toArray();
   } catch (e) {
@@ -24,6 +32,9 @@ router.get('/latest', async (req, res) => {
       message: utils.messages.ERR_MONGO_FAIL
     });
   }
+
+  let replies = [...postReplies, ...pageReplies];
+  replies.sort((a, b) => b.replies.datetime > a.replies.datetime);
 
   return res.send({
     status: 'ok',

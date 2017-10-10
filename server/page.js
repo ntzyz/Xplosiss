@@ -174,4 +174,33 @@ router.put('/', async (req, res) => {
   res.send({ status: 'ok', _id: r.insertedIds[0] });
 });
 
+/**
+ * 评论
+ */
+router.put('/by-slug/:slug/reply', async (req, res) => {
+  let post;
+  try {
+    await utils.db.conn.collection('pages').update(
+      { slug: req.params.slug },
+      { $push: { replies: {
+        user: req.body.user,
+        email: req.body.email,
+        site: req.body.site,
+        content: req.body.content,
+        datetime: new Date().getTime()
+      }}}
+    )
+  } catch (e) {
+    console.error(e);
+    return res.status(500).send({
+      status: 'error',
+      message: utils.messages.ERR_MONGO_FAIL
+    });
+  }
+
+  return res.send({
+    status: 'ok',
+  })
+});
+
 module.exports = router;

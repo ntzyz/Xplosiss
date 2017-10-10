@@ -72,11 +72,20 @@ function createPost(params) {
   })
 }
 
+function putReplyBySlug (params) {
+  return new Promise((resolve, reject) => {
+    axios.put(`${config.api.url}/post/by-slug/${params.slug}/reply`, params.data)
+    .then(response => resolve(response.dat))
+    .catch(error => reject(error))
+  })
+}
+
 export default {
   fetchPosts,
   fetchPostBySlug,
   fetchPostById,
   updatePostById,
   deletePostById,
-  createPost
+  createPost,
+  putReplyBySlug
 }

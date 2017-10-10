@@ -26,7 +26,7 @@
             td: textarea.content(v-model="content", placeholder="We support markdown!")
           tr
             td
-            td: button(@click="submit") submit
+            td: button(@click="submit") SUBMIT
 </template>
 
 <script>
@@ -35,7 +35,7 @@ import api from '../api';
 
 export default {
   name: 'reply',
-  props: ['replies'],
+  props: ['replies', 'api-path', 'refresh-replies'],
   data () {
     return {
       name: '',
@@ -60,12 +60,12 @@ export default {
         alert('评论内容为空呢');
         return;
       }
-      api.reply.putReplyBySlug({ slug: this.$route.params.slug, data })
+      api[this.$props.apiPath].putReplyBySlug({ slug: this.$route.params.slug, data })
       .then(() => {
         if (this.$store.state.forceReload) {
           window.location.href = window.location.href;
         } else {
-          this.$store.dispatch('fetchPostBySlug', this.$route.params.slug);
+          this.$props.refreshReplies();
         }
       });
     }

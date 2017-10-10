@@ -91,7 +91,7 @@ body {
 }
 
 #app {
-  max-width: 1152px;
+  max-width: 1280px;
   padding: 0 1em 0 1em;
   margin: 0 auto;
 }

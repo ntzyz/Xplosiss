@@ -1,14 +1,18 @@
 <template lang="pug">
-  div.card.page-view
-    h3.title {{ page.title }}
-    article.content(v-html="page.content")
+  .page-view
+    .card
+      h3.title {{ page.title }}
+      article.content(v-html="page.content")
+    reply(:replies="page.replies || []", api-path="page", :refresh-replies="refreshReplies")
 </template>
 
 <script>
+import Reply from '../components/Reply.vue';
 import config from '../config';
 
 export default {
   name: 'page-view',
+  components: { Reply },
   computed: {
     page () {
       return this.$store.state.page;
@@ -21,6 +25,11 @@ export default {
       }
     }
   },
+  methods: {
+    refreshReplies () {
+      this.$store.dispatch('fetchPageBySlug', this.$route.params.slug)
+    }
+  },
   asyncData({ route, store }) {
     return store.dispatch('fetchPageBySlug', route.params.slug)
   }
@@ -29,7 +38,7 @@ export default {
 
 
 <style lang="scss">
-div.card.page-view {
+.page-view {
   article.content {
     padding: 15px;
   }
