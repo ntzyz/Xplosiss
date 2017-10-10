@@ -13,9 +13,9 @@ import config from '../config';
 
 export default {
   name: 'not-found',
-  created () {
+  title () { return 'Error 404'; },
+  mounted () {
     this.$store.commit('setBusy', false);
-    document.title = `Error 404 - ${config.title}`
   }
 }
 </script>

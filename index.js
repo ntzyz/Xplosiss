@@ -4,9 +4,11 @@ const config = require('./config');
 const utils = require('./utils');
 const io = require('socket.io');
 
+const isProd = process.env.NODE_ENV === 'production';
+
 let site = express();
 
-if (process.env.DEV) {
+if (!isProd) {
   console.log('[WARN] You are now in development mode, HTTP header Access-Control-Allow-Origin will be set to *.');
   site.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -40,11 +42,7 @@ site.get('/favicon.ico', (req, res) => {
   }
 });
 
-site.use(express.static('web'));
-
-site.use((req, res) => {
-  res.sendFile('./web/index.html', { root: __dirname });
-});
+require('./web/server')(site);
 
 // Establish database connection and start http service
 utils.db.prepare().then(() => {
