@@ -1,9 +1,10 @@
 <template lang="pug">
   div.latest-replies.card
     h3.title Recent replies
-    p.content
-      ul(v-if="replies.length !== 0"): li(v-for="reply in replies")
-        router-link(:to="(reply.path === 'post' ? '/post/' : '/') + reply.slug") {{ reply.replies.user }} 发表于「{{ reply.title }}」
+    div.content
+      ul(v-if="replies !== null")
+        li(v-for="reply in replies")
+          router-link(:to="(reply.path === 'post' ? '/post/' : '/') + encodeURIComponent(reply.slug)") {{ reply.replies.user }} 发表于「{{ reply.title }}」
       span(v-else) 暂无评论
 </template>
 
@@ -15,6 +16,8 @@ export default {
   },
   asyncData ({store, route}) {
     return store.dispatch('fetchLatestReplies');
+  },
+  beforeMount () {
   }
 }
 </script>
@@ -23,11 +26,12 @@ export default {
 div.latest-replies {
   .content {
     font-size: 0.9em;
-    margin: 1em;
+    padding: 1em;
   }
   ul {
     list-style: none;
     padding: 0;
+    margin: 0;
     li:not(:first-child) {
       margin-top: 0.5em;
     }

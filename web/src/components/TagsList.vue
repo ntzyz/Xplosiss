@@ -2,7 +2,7 @@
   div.tags-list.card
     h3.title Tags
     ul
-      li(v-for="tag in tags"): router-link(:to="'/tag/' + tag.tag" :title="tag.count + '篇相关文章'") {{ tag.tag }}
+      li(v-for="tag in tags"): router-link(:to="'/tag/' + encodeURIComponent(tag.tag)" :title="tag.count + '篇相关文章'") {{ tag.tag }}
 </template>
 
 <script>

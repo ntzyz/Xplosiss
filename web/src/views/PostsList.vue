@@ -1,17 +1,16 @@
 <template lang="pug">
   div.posts-list
-    ul
-      li.list-item.card(v-for="post in posts")
-        header
-          router-link(:to="'/post/' + post.slug"): h2.post-title {{ post.title }}
-          div.post-meta
-            span {{ timeToString(post.date, true) }}
-            span 分类：{{ post.category }}
-            span(v-for="tag in post.tags") #
-              router-link(:to="'/tag/' + tag") {{tag}}
-        article.post-preview(v-html="post.content")
-        footer
-          router-link(:to="'/post/' + post.slug"): button.more MORE
+    div.list-item.card(v-for="post in posts")
+      header
+        router-link(:to="'/post/' + post.slug"): h2.post-title {{ post.title }}
+        div.post-meta
+          span {{ timeToString(post.date, true) }}
+          span 分类：{{ post.category }}
+          span(v-for="tag in post.tags") #
+            router-link(:to="'/tag/' + tag") {{tag}}
+      article.post-preview(v-html="post.content")
+      footer
+        router-link(:to="'/post/' + post.slug"): button.more MORE
     pagination(v-if="$store.state.pages", :current="$store.state.pages.current", length="7", :max="$store.state.pages.max", :prefix="prefix")
 </template>
 
@@ -37,6 +36,16 @@ export default {
       }
     }
   },
+  title () {
+    const route = this.$route;
+    if (route.params.category) {
+      return `分类：${config.title}`;
+    } else if (route.params.tag) {
+      return `标签：${route.params.tag}`;
+    } else {
+      return `首页`;
+    }
+  },
   watch: {
     '$route': function () {
       this.$options.asyncData({store: this.$store, route: this.$route });
@@ -47,13 +56,10 @@ export default {
   },
   asyncData ({store, route}) {
     if (route.params.category) {
-      document.title = `分类：${route.params.category} - ${config.title}`;
       return store.dispatch('fetchPostsByCategory', { category: route.params.category, page: route.params.page });
     } else if (route.params.tag) {
-      document.title = `标签：${route.params.tag} - ${config.title}`;
       return store.dispatch('fetchPostsByTag', { tag: route.params.tag, page: route.params.page });
     } else {
-      document.title = `首页 - ${config.title}`;
       return store.dispatch('fetchLatestPosts', { page: route.params.page });
     }
   }
@@ -75,7 +81,7 @@ div.posts-list {
     margin-top: 0;
   }
 
-  li.list-item {
+  .list-item {
     // margin: 15px 0 15px 0;
     padding: 20px;
     background-color: white;

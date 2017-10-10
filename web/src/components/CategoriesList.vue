@@ -11,7 +11,7 @@ export default {
   computed: {
     categories () { return this.$store.state.categories; }
   },
-  asyncData ({store, state}) {
+  asyncData ({ store, state }) {
     return store.dispatch('fetchCategory');
   }
 }

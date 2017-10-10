@@ -6,9 +6,8 @@
         div.post-meta
           span {{ timeToString(post.date, true) }}
           span 分类：{{ post.category }}
-          span(v-for="tag in post.tags") #
-            router-link(:to="'/tag/' + tag") {{ tag }}
-        //- div.post-meta
+          span(v-for="tag in post.tags")
+            router-link(:to="'/tag/' + tag") \#{{ tag }}
       article.post-content(v-html="post.content")
     reply(:replies="post.replies", api-path="post", :refresh-replies="refreshReplies")
 </template>
@@ -18,13 +17,16 @@ import Reply from '../components/Reply.vue';
 
 import config from '../config';
 import timeToString from '../utils/timeToString';
+import titleMixin from '../utils/title';
 
 export default {
   name: 'post-view',
+  mixins: [titleMixin],
   components: { Reply },
   computed: {
-    post: function () { return this.$store.state.post; }
+    post () { return this.$store.state.post; },
   },
+  title () { return this.post.title },
   data () {
     return {
       extraDoms: [],
@@ -33,24 +35,25 @@ export default {
   watch: {
     post: function (post) {
       document.title = `${post.title || 'Loading...'} - ${config.title}`;
-      let componentRoot = document.querySelector('div.post-view');
       this.$nextTick(() => {
-        let scripts = Array.from(componentRoot.querySelectorAll('script'));
-        if (scripts.length === 0) return;
+        let componentRoot = document.querySelector('div.post-view');
+        this.$nextTick(() => {
+          let scripts = Array.from(componentRoot.querySelectorAll('script'));
+          if (scripts.length === 0) return;
 
-        scripts.forEach(script => {
-          let clone = document.createElement('SCRIPT');
-          if (script.getAttribute('src')) {
-            clone.setAttribute('src', script.getAttribute('src'));
-          } else {
-            clone.innerHTML = script.innerHTML;
-          }
-          componentRoot.appendChild(clone);
-          this.extraDoms.push(clone);
-        });
-
-        this.$store.commit('enableForceReload');
-
+          scripts.forEach(script => {
+            let clone = document.createElement('SCRIPT');
+            if (script.getAttribute('src')) {
+              clone.setAttribute('src', script.getAttribute('src'));
+            } else {
+              clone.innerHTML = script.innerHTML;
+            }
+            componentRoot.appendChild(clone);
+            this.extraDoms.push(clone);
+          });
+          
+          this.$store.commit('enableForceReload');
+        })
       })
     },
     '$route': function (route) {

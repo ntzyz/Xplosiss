@@ -1,9 +1,8 @@
 <template lang="pug">
   div.widgets
-    ul
-      li(v-for="widget in widgets"): div.card
-        h3.title {{ widget.title }}
-        p(v-html="widget.content")
+    div.card(v-for="widget in widgets")
+      h3.title {{ widget.title }}
+      div.content(v-html="widget.content")
 </template>
 
 <script>
@@ -31,9 +30,8 @@ div.widgets {
     line-height: 1.5em;
   }
 
-  p {
-    margin: 1em 0 1em 0;
-    padding-left: 1em;
+  .content {
+    padding: 1em;
   }
 }
 </style>

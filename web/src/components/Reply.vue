@@ -2,16 +2,15 @@
   div.reply: div.card
     h3.title 评论
     div.content
-      div(v-if="replies && replies.length !== 0")
-        ul.replies-list
-          li(v-for="reply in replies")
-            div.name {{ reply.user }} {{ reply.site !== '' ? `from ${reply.site}` : ''}}
-            div.date {{ timeToString(reply.datetime) }}
-            div(v-html="reply.content" v-if="reply.markdown")
-            div.raw-content(v-else) {{ reply.content }}
+      ul.replies-list(v-if="replies && replies.length !== 0")
+        li(v-for="reply in replies")
+          div.name {{ reply.user }} {{ reply.site !== '' ? `from ${reply.site}` : ''}}
+          div.date {{ timeToString(reply.datetime) }}
+          div(v-html="reply.content" v-if="reply.markdown")
+          div.raw-content(v-else) {{ reply.content }}
       div.send-new
         h3 发表评论
-        table.form-table
+        table.form-table: tbody
           tr
             th 姓名
             td: input.full(v-model="name")

@@ -30,7 +30,7 @@ export default {
       document.querySelector('#left-wrapper').setAttribute('style', '');
     }
   },
-  created () {
+  mounted () {
     this.lastScrollY = window.scrollY;
 
     window.addEventListener('scroll', () => {
