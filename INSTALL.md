@@ -14,7 +14,6 @@ Install `MongoDB`, `Node.js` and `npm`. for Arch Linux:
 % git clone https://github.com/ntzyz/new-blog
 % cd new-blog
 % npm i
-% pushd web && npm i && popd
 ```
 
 ### 3. Edit config file
@@ -25,7 +24,7 @@ Server side:
 ```
 Browser side:
 ```
-% pushd web/src
+% pushd src
 % cp config.sample.js config.js
 % vi config.js
 % popd 
@@ -39,11 +38,9 @@ Note: replace `$database` with your real database.
 
 ### 5. Build the script bundle.
 ```
-% pushd web/src
 % npm run build
-% popd 
 ```
-Note: you should always rebuild it after editing `/web/src/config.js` or merging from upstream.
+Note: you should always rebuild it after editing `/src/config.js` or merging from upstream.
 
 ### 6. Create a systemd unit
 
@@ -54,7 +51,7 @@ Description=A naive blog framework
 
 [Service]
 WorkingDirectory=$(pwd)
-ExecStart=$(which node) $(pwd)/index.js
+ExecStart=npm run start
 " | sudo tee /lib/systemd/system/new-blog.service
 ```
 
