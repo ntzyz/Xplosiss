@@ -3,13 +3,13 @@ import config from '../config';
 
 function fetchFiles (params = {}) {
   if (!params.token) {
-    return Promise.reject('Access token is required.')
+    return Promise.reject('Access token is required.');
   }
   return new Promise((resolve, reject) => {
     axios.get(`${config.api.url}/media?token=${params.token}`)
-    .then(response => resolve(response.data.files))
-    .catch(error => reject(error));
-  })
+      .then(response => resolve(response.data.files))
+      .catch(error => reject(error));
+  });
 }
 
 function getFileURL (file) {
@@ -18,9 +18,9 @@ function getFileURL (file) {
 
 function uploadFile (params = {}) {
   if (!params.token) {
-    return Promise.reject('Access token is required.')
+    return Promise.reject('Access token is required.');
   } else if (!params.file) {
-    return Promise.reject('Upload body is required.')
+    return Promise.reject('Upload body is required.');
   }
 
   let fd = new FormData();
@@ -31,9 +31,9 @@ function uploadFile (params = {}) {
 
 function deleteFile (params = {}) {
   if (!params.token) {
-    return Promise.reject('Access token is required.')
+    return Promise.reject('Access token is required.');
   } else if (!params.file) {
-    return Promise.reject('Upload body is required.')
+    return Promise.reject('Upload body is required.');
   }
 
   return axios.delete(`${config.api.url}/media/${params.file}?token=${params.token}`);
@@ -41,4 +41,4 @@ function deleteFile (params = {}) {
 
 export default {
   fetchFiles, getFileURL, uploadFile, deleteFile
-}
+};

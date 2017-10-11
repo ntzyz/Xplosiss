@@ -11,8 +11,8 @@ router.get('/', async (req, res) => {
   let tags;
   try {
     tags = await utils.db.conn.collection('posts').aggregate([
-      { $match: { tags: { $not: {$size: 0 }}}},
-      { $unwind: "$tags" },
+      { $match: { tags: { $not: { $size: 0 }}}},
+      { $unwind: '$tags' },
       { $group: { _id: '$tags', count: { $sum: 1 }}},
       { $project: { _id: 0, tag: '$_id', count: '$count' }},
       { $sort: { count: -1 }}
@@ -36,7 +36,7 @@ router.get('/:tag/posts', async (req, res) => {
   let page = req.query.page ? req.query.page - 1 : 0;
   let posts, count;
   try {
-    let cursor = utils.db.conn.collection('posts').find({ tags: req.params.tag }, { sort: [['date', 'desc' ]]}).skip(page * config.page.size).limit(config.page.size);
+    let cursor = utils.db.conn.collection('posts').find({ tags: req.params.tag }, { sort: [['date', 'desc']] }).skip(page * config.page.size).limit(config.page.size);
     posts = await cursor.toArray();
     count = await cursor.count();
   } catch (e) {
@@ -46,7 +46,7 @@ router.get('/:tag/posts', async (req, res) => {
     });
   }
 
-  for (post of posts) {
+  for (let post of posts) {
     delete post.replies;
   }
 

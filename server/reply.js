@@ -1,6 +1,5 @@
 const express = require('express');
 const utils = require('../utils');
-const config = require('../config');
 
 let router = express.Router();
 
@@ -14,15 +13,15 @@ router.get('/latest', async (req, res) => {
     postReplies = await utils.db.conn.collection('posts').aggregate([
       { $project: { slug: 1, title: 1, 'replies.datetime': 1, 'replies.user': 1 }},
       { $unwind: '$replies' },
-      { $sort: {'replies.datetime': -1} },
-      { $addFields: { path: 'post' } },
+      { $sort: { 'replies.datetime': -1 }},
+      { $addFields: { path: 'post' }},
       { $limit: 5 }
     ]).toArray();
     pageReplies = await utils.db.conn.collection('pages').aggregate([
       { $project: { slug: 1, title: 1, 'replies.datetime': 1, 'replies.user': 1 }},
       { $unwind: '$replies' },
-      { $sort: {'replies.datetime': -1} },
-      { $addFields: { path: 'page' } },
+      { $sort: { 'replies.datetime': -1 }},
+      { $addFields: { path: 'page' }},
       { $limit: 5 }
     ]).toArray();
   } catch (e) {

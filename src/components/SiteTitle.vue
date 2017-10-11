@@ -13,7 +13,7 @@ export default {
     return {
       title: config.title,
       subtitle: config.subtitle,
-    }
+    };
   }
 };
 </script>

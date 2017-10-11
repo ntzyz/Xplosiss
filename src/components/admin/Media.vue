@@ -24,7 +24,7 @@ export default {
   data () {
     return {
       files: [],
-    }
+    };
   },
   created () {
     if (!this.$store.state.token) {
@@ -44,7 +44,7 @@ export default {
           input.value = '';
         }
       });
-    })
+    });
   },
   methods: {
     getFileURL: api.media.getFileURL,
@@ -61,7 +61,7 @@ export default {
       api.media.deleteFile({ token: this.$store.state.token, file }).then(() => {
         this.fetchFiles();
         alert('删除成功');
-      })
+      });
     }
   }
 };

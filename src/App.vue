@@ -17,7 +17,7 @@ export default {
     return {
       transitionName: 'forward',
       lastScrollY: null,
-    }
+    };
   },
   components: {
     LoadingIcon
@@ -76,7 +76,7 @@ export default {
       this.lastScrollY = window.scrollY;
     });
   }
-}
+};
 </script>
 
 <style lang="scss">

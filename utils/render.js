@@ -1,28 +1,7 @@
 const pug = require('pug');
-const hljs = require('highlight.js')
+const hljs = require('highlight.js');
 const config = require('../config');
 const mdit = require('markdown-it');
-
-function decodeHTML (str) {
-  let strMap = {
-    '&lt': '<',
-    '&gt': '>',
-    '&quot': '"',
-    '&apos': '\'',
-    '&amp': '&',
-    '&lt;': '<',
-    '&gt;': '>',
-    '&quot;': '"',
-    '&apos;': '\'',
-    '&amp;': '&'
-  };
-  if (str.length === 0) {
-    return '';
-  }
-  return str.replace(/&[0-9a-zA-Z]+;?/g, function(s) {
-    return strMap[s] || s;
-  });
-}
 
 function addSpanEachLine (html) {
   return html.split('\n').map(l => `<span class="__line">${l}</span>`).join('\n');
@@ -42,17 +21,15 @@ function render (posts, options) {
         highlight: function (str, lang) {
           if (lang && hljs.getLanguage(lang)) {
             try {
-              return `<pre>${addSpanEachLine(hljs.highlight(lang.trim(), str, true).value)}</pre>`
+              return `<pre>${addSpanEachLine(hljs.highlight(lang.trim(), str, true).value)}</pre>`;
             } catch (__) {}
           }
           return `<pre>${str}</pre>`;
         }
       }).render(post.content);
     } else {
-      let lang = '';
       // Render other formats (pug, makrdown, etc) into html
       if (/^(jade|pug)$/i.test(post.content.encoding)) {
-        lang = 'PUG';
         post.content = pug.render(post.content.content);
       } else {
         post.content = post.content.content;
@@ -66,7 +43,7 @@ function render (posts, options) {
       // Apply syntax highlighting for code blocks.
       post.content = post.content.replace(/<code lang="(.+?)">([^]+?)<\/code>/g, (match, p1, p2) => {
         let rendered = hljs.highlight(p1, p2.trim()).value;
-          return `<pre>${addSpanEachLine(rendered)}</pre>`;
+        return `<pre>${addSpanEachLine(rendered)}</pre>`;
       }).replace(/<code>([^]+?)<\/code>/g, (match, p1) => {
         let rendered = hljs.highlightAuto(p1.trim()).value;
         return `<pre>${addSpanEachLine(rendered)}</pre>`;
@@ -80,7 +57,7 @@ function render (posts, options) {
           highlight: function (str, lang) {
             if (lang && hljs.getLanguage(lang)) {
               try {
-                return `<pre>${addSpanEachLine(hljs.highlight(lang.trim(), str, true).value)}</pre>`
+                return `<pre>${addSpanEachLine(hljs.highlight(lang.trim(), str, true).value)}</pre>`;
               } catch (__) {}
             }
             return `<pre>${str}</pre>`;
@@ -88,16 +65,16 @@ function render (posts, options) {
         }).render(reply.content);
         reply.markdown = true;
         return reply;
-      })
+      });
     }
 
     return post;
-  })
+  });
 }
 
 module.exports = function () {
   try {
-    return render.apply(null, arguments)
+    return render.apply(null, arguments);
   } catch (e) {
     console.log(e);
   }

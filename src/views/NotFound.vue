@@ -17,7 +17,7 @@ export default {
   mounted () {
     this.$store.commit('setBusy', false);
   }
-}
+};
 </script>
 
 <style lang="scss">

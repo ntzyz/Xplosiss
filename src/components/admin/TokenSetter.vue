@@ -44,7 +44,7 @@ export default {
   data () {
     return {
       token: '',
-    }
+    };
   },
   methods: {
     check (noalert = false) {
@@ -56,12 +56,12 @@ export default {
           this.$store.commit('setToken', this.token);
           window.localStorage.token = this.token;
         }
-      })
+      });
     },
     forgot () {
       api.token.forgotToken().then(() => {
         alert('查看服务器输出以获得 token。');
-      })
+      });
     },
   }
 };

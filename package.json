@@ -4,7 +4,8 @@
     "start": "cross-env NODE_ENV=production node index",
     "build": "rm -rf dist && mkdir dist && npm run build:client && npm run build:server",
     "build:client": "cross-env NODE_ENV=production webpack --config build/webpack.client.config.js --progress --hide-modules",
-    "build:server": "cross-env NODE_ENV=production webpack --config build/webpack.server.config.js --progress --hide-modules"
+    "build:server": "cross-env NODE_ENV=production webpack --config build/webpack.server.config.js --progress --hide-modules",
+    "lint": "eslint $(find . \\( -name \"*.js\" -o -name \"*.vue\" \\) -not \\( -path \"./node_modules/*\" -o -path \"./dist/*\" -o -name \".*\" \\))"
   },
   "dependencies": {
     "acorn": "^3.3.0",
@@ -35,6 +36,12 @@
     "babel-preset-env": "^1.5.1",
     "cross-env": "^3.0.0",
     "css-loader": "^0.25.0",
+    "eslint": "^4.8.0",
+    "eslint-config-vue": "^2.0.2",
+    "eslint-plugin-html": "^4.0.0-alpha.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "eslint-plugin-vue": "^3.13.1",
     "file-loader": "^0.9.0",
     "node-sass": "^4.5.0",
     "sass-loader": "^5.0.1",

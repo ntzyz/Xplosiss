@@ -18,7 +18,7 @@ export default {
       return this.$store.state.page;
     }
   },
-  title () { return this.page.title },
+  title () { return this.page.title; },
   watch: {
     page (page) {
       if (page && page.title) {
@@ -28,13 +28,13 @@ export default {
   },
   methods: {
     refreshReplies () {
-      this.$store.dispatch('fetchPageBySlug', this.$route.params.slug)
+      this.$store.dispatch('fetchPageBySlug', this.$route.params.slug);
     }
   },
   asyncData({ route, store }) {
-    return store.dispatch('fetchPageBySlug', route.params.slug)
+    return store.dispatch('fetchPageBySlug', route.params.slug);
   }
-}
+};
 </script>
 
 

@@ -26,7 +26,7 @@ module.exports = {
    * Get the database connection.
    */
   get conn () {
-    return  __conn;
+    return __conn;
   },
   /**
    * Connect to the database.
@@ -34,4 +34,4 @@ module.exports = {
   prepare () {
     return connect();
   }
-}
+};

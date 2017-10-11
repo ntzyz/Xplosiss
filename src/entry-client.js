@@ -1,10 +1,9 @@
-import Vue from 'vue';
 import { createApp } from './app.js';
 
 const { app, store, router } = createApp();
 
 if (window.__INITIAL_STATE__) {
-  store.replaceState(window.__INITIAL_STATE__)
+  store.replaceState(window.__INITIAL_STATE__);
 }
 
 router.onReady(() => {
@@ -15,32 +14,15 @@ router.onReady(() => {
       next();
     }
   });
-  
-  // Vue.mixin({
-  //   beforeMount () {
-  //     const { asyncData } = this.$options;
-  //     console.log(this)
-  //     if (asyncData) {
-  //       this.dataPromise = asyncData({
-  //         store: this.$store,
-  //         route: this.$route
-  //       }).catch(error => {
-  //         if (error.response.status === 404) {
-  //           this.$router.replace('/not-found');
-  //         }
-  //       });
-  //     }
-  //   }
-  // });
 
   router.beforeResolve((to, from, next) => {
     const matched = router.getMatchedComponents(to);
     const prevMatched = router.getMatchedComponents(from);
-    let diffed = false;
-    
+
     const activated = matched.filter((c, i) => {
       return prevMatched[i] !== c;
-    })
+    });
+
     if (!activated.length) {
       return next();
     }
@@ -56,7 +38,7 @@ router.onReady(() => {
         });
       }
     };
-    
+
     activated.forEach(C => {
       checkComponent(C);
     });
@@ -68,7 +50,7 @@ router.onReady(() => {
     })).then(() => {
       next();
     }).catch(next);
-  })
+  });
 
   app.$mount('#app');
 });

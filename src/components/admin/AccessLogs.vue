@@ -17,7 +17,7 @@ export default {
       socket: null,
       logs: [],
       logsText: '',
-    }
+    };
   },
   created () {
     if (this.$store.state.token === '') {
@@ -29,25 +29,20 @@ export default {
   beforeMount () {
     api.log.fetchLogs({ token: this.$store.state.token }).then(logs => {
       this.logs = logs;
-      console.log("Trying to establish websocket connection.")
-      this.socket = io.connect(window.location.host, { path: `/api/ws/`, query: `token=${this.$store.state.token}` });
-      this.socket.on('connect_error', err =>{
-        console.log(err);
-      });
-      console.log(this.socket);
+      this.socket = io.connect(window.location.host, { path: '/api/ws/', query: `token=${this.$store.state.token}` });
       this.socket.on('log', text => {
         this.logs.push(text);
         setTimeout(() => {
           let list = document.querySelector('div.container');
           list.scrollTop = list.scrollHeight;
-        }, 0)
-      })
-    })
+        }, 0);
+      });
+    });
   },
   beforeDestroy () {
     this.socket && this.socket.disconnect();
   }
-}
+};
 </script>
 
 <style lang="scss">

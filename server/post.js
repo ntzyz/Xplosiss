@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
   let page = req.query.page ? req.query.page - 1 : 0;
   let posts, count;
   try {
-    let cursor = utils.db.conn.collection('posts').find({}, { sort: [['date', 'desc']]}).skip(page * config.page.size).limit(config.page.size);
+    let cursor = utils.db.conn.collection('posts').find({}, { sort: [['date', 'desc']] }).skip(page * config.page.size).limit(config.page.size);
     posts = await cursor.toArray();
     count = await cursor.count();
   } catch (e) {
@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
     });
   }
 
-  for (post of posts) {
+  for (let post of posts) {
     delete post.replies;
   }
 
@@ -35,7 +35,7 @@ router.get('/', async (req, res) => {
       max: Math.floor(count / config.page.size) + (count % config.page.size === 0 ? 0 : 1),
       current: page + 1,
     }
-  })
+  });
 });
 
 /**
@@ -57,22 +57,21 @@ router.get('/by-slug/:slug', async (req, res) => {
     return res.status(404).send({
       status: 'error',
       message: utils.messages.ERR_NOT_FOUND,
-    })
+    });
   }
 
-  post.replies.forEach(reply => delete reply.email )
+  post.replies.forEach(reply => delete reply.email);
 
   return res.send({
     status: 'ok',
     post: utils.render([post], { preview: false })[0],
-  })
+  });
 });
 
 /**
  * Create an comment on one post.
  */
 router.put('/by-slug/:slug/reply', async (req, res) => {
-  let post;
   try {
     await utils.db.conn.collection('posts').update(
       { slug: req.params.slug },
@@ -83,7 +82,7 @@ router.put('/by-slug/:slug/reply', async (req, res) => {
         content: req.body.content,
         datetime: new Date().getTime()
       }}}
-    )
+    );
   } catch (e) {
     console.error(e);
     return res.status(500).send({
@@ -94,7 +93,7 @@ router.put('/by-slug/:slug/reply', async (req, res) => {
 
   return res.send({
     status: 'ok',
-  })
+  });
 });
 
 /**
@@ -116,13 +115,13 @@ router.get('/by-id/:id/raw', async (req, res) => {
     return res.status(404).send({
       status: 'error',
       message: utils.messages.ERR_NOT_FOUND,
-    })
+    });
   }
 
   return res.send({
     status: 'ok',
     post,
-  })
+  });
 });
 
 /**
@@ -159,7 +158,6 @@ router.post('/by-id/:id', async (req, res) => {
 
   res.send({ status: 'ok' });
 });
-
 
 /**
  * Delete one post by it's id.

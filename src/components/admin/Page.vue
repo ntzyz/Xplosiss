@@ -40,7 +40,7 @@ export default {
       pages: [],
       editing: null,
       page: {},
-    }
+    };
   },
   created () {
     this.fetchPages();
@@ -58,7 +58,7 @@ export default {
         // Load page data from server.
         api.page.fetchPageById({ id, raw: true }).then(page => {
           this.page = page;
-        })
+        });
       } else {
         // Create an empty template
         this.page = {
@@ -68,7 +68,7 @@ export default {
             encoding: '',
             content: '',
           }
-        }
+        };
       }
     },
     back () {
@@ -92,7 +92,7 @@ export default {
       }
     },
     deletePage () {
-      if (confirm("确认要删除该页面吗？此操作不可撤销。")) {
+      if (confirm('确认要删除该页面吗？此操作不可撤销。')) {
         api.page.deletePageById({ id: this.editing, token: this.$store.state.token }).then(() => {
           alert('删除成功');
           this.back();
@@ -100,7 +100,7 @@ export default {
       }
     }
   }
-}
+};
 </script>
 
 <style lang="scss">

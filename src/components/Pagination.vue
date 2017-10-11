@@ -29,7 +29,7 @@ export default {
     }
   },
   created () {
-    this.init()
+    this.init();
   },
   watch: {
     max () {

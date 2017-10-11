@@ -27,7 +27,7 @@ export default {
     return {
       posts: [],
       pages: {}
-    }
+    };
   },
   created () {
     if (this.$store.state.token === '') {
@@ -49,7 +49,7 @@ export default {
       api.post.fetchPosts({ page }).then(data => {
         this.posts = data.posts;
         this.pages = data.page;
-      })
+      });
     }
   }
 };

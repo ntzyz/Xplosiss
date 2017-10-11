@@ -35,4 +35,4 @@ export default {
   setReplies: (state, replies) => {
     state.replies = replies;
   }
-}
+};

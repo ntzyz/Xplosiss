@@ -9,12 +9,12 @@
 export default {
   name: 'widgets',
   computed: {
-    widgets: function () { return this.$store.state.widgets }
+    widgets: function () { return this.$store.state.widgets; }
   },
   asyncData ({ store, route }) {
     return store.dispatch('fetchWidget');
   }
-}
+};
 </script>
 
 <style lang="scss">

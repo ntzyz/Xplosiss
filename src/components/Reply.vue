@@ -51,7 +51,7 @@ export default {
         email: this.email,
         site: this.site,
         content: this.content,
-      }
+      };
       if (!data.user) {
         alert('姓名是必填项呢');
         return;
@@ -60,13 +60,13 @@ export default {
         return;
       }
       api[this.$props.apiPath].putReplyBySlug({ slug: this.$route.params.slug, data })
-      .then(() => {
-        if (this.$store.state.forceReload) {
-          window.location.href = window.location.href;
-        } else {
-          this.$props.refreshReplies();
-        }
-      });
+        .then(() => {
+          if (this.$store.state.forceReload) {
+            window.location.href = window.location.href;
+          } else {
+            this.$props.refreshReplies();
+          }
+        });
     }
   },
   watch: {
@@ -74,7 +74,7 @@ export default {
       this.name = this.email = this.content = this.site = '';
     }
   }
-}
+};
 </script>
 
 <style lang="scss">

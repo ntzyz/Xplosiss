@@ -8,7 +8,7 @@ module.exports = merge(base, {
   entry: path.resolve(__dirname, '../src/entry-client'),
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      name: "manifest",
+      name: 'manifest',
       minChunks: Infinity
     }),
     new VueSSRClientPlugin()
@@ -16,12 +16,12 @@ module.exports = merge(base, {
 });
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports.devtool = '#source-map'
+  module.exports.devtool = '#source-map';
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
       }
     }),
-  ])
+  ]);
 }

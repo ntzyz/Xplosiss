@@ -1,7 +1,6 @@
 const express = require('express');
 const utils = require('../utils');
 const { ObjectID } = require('mongodb');
-const config = require('../config');
 
 let router = express.Router();
 
@@ -9,7 +8,7 @@ let router = express.Router();
  * Get all custom pages
  */
 router.get('/', async (req, res) => {
-  let pages, count;
+  let pages;
   try {
     let cursor = utils.db.conn.collection('pages').find({});
     pages = await cursor.toArray();
@@ -28,7 +27,7 @@ router.get('/', async (req, res) => {
   return res.send({
     status: 'ok',
     pages: pages,
-  })
+  });
 });
 
 /**
@@ -50,13 +49,13 @@ router.get('/by-slug/:slug', async (req, res) => {
     return res.status(404).send({
       status: 'error',
       message: utils.messages.ERR_NOT_FOUND,
-    })
+    });
   }
 
   return res.send({
     status: 'ok',
     page: utils.render([page], { preview: false })[0],
-  })
+  });
 });
 
 /**
@@ -78,13 +77,13 @@ router.get('/by-id/:id/raw', async (req, res) => {
     return res.status(404).send({
       status: 'error',
       message: utils.messages.ERR_NOT_FOUND,
-    })
+    });
   }
 
   return res.send({
     status: 'ok',
     page,
-  })
+  });
 });
 
 /**
@@ -178,7 +177,6 @@ router.put('/', async (req, res) => {
  * 评论
  */
 router.put('/by-slug/:slug/reply', async (req, res) => {
-  let post;
   try {
     await utils.db.conn.collection('pages').update(
       { slug: req.params.slug },
@@ -189,7 +187,7 @@ router.put('/by-slug/:slug/reply', async (req, res) => {
         content: req.body.content,
         datetime: new Date().getTime()
       }}}
-    )
+    );
   } catch (e) {
     console.error(e);
     return res.status(500).send({
@@ -200,7 +198,7 @@ router.put('/by-slug/:slug/reply', async (req, res) => {
 
   return res.send({
     status: 'ok',
-  })
+  });
 });
 
 module.exports = router;

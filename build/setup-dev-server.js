@@ -5,12 +5,11 @@ const webpack = require('webpack');
 const clientConfig = require('./webpack.client.config');
 const serverConfig = require('./webpack.server.config');
 
-
 const readFile = (fs, file) => {
   try {
-    return fs.readFileSync(path.join(clientConfig.output.path, file), 'utf-8')
+    return fs.readFileSync(path.join(clientConfig.output.path, file), 'utf-8');
   } catch (e) {}
-}
+};
 
 module.exports = function setupDevServer (app, templatePath, callback) {
   let bundle, template, clientManifest, ready;
@@ -21,7 +20,7 @@ module.exports = function setupDevServer (app, templatePath, callback) {
       ready();
       callback(bundle, { template, clientManifest });
     }
-  }
+  };
 
   template = fs.readFileSync(templatePath, 'utf-8');
   // TODO: Watch this file.
@@ -54,17 +53,17 @@ module.exports = function setupDevServer (app, templatePath, callback) {
 
   app.use(require('webpack-hot-middleware')(clientCompiler, { heartbeat: 5000 }));
 
-  const serverCompiler = webpack(serverConfig)
-  const mfs = new MFS()
-  serverCompiler.outputFileSystem = mfs
+  const serverCompiler = webpack(serverConfig);
+  const mfs = new MFS();
+  serverCompiler.outputFileSystem = mfs;
   serverCompiler.watch({}, (err, stats) => {
-    if (err) throw err
-    stats = stats.toJson()
+    if (err) throw err;
+    stats = stats.toJson();
     if (stats.errors.length) return;
 
     bundle = JSON.parse(readFile(mfs, 'vue-ssr-server-bundle.json'));
-    update()
-  })
+    update();
+  });
 
-  return readyPromise
-}
+  return readyPromise;
+};

@@ -8,11 +8,11 @@ let io;
 function attachSocketIO (site) {
   if (site) {
     server = http.Server(site);
-    io = socket(server, { path: '/api/ws' }); 
+    io = socket(server, { path: '/api/ws' });
     io.on('connection', socket => {
       if (socket.handshake.query.token !== token) {
         // Unauthorized connecton, disconnect it.
-        console.log([socket.handshake.query.token, token])
+        console.log([socket.handshake.query.token, token]);
         return socket.disconnect();
       }
     });

@@ -30,7 +30,7 @@ router.get('/:category/posts', async (req, res) => {
   let page = req.query.page ? req.query.page - 1 : 0;
   let posts, count;
   try {
-    let cursor = utils.db.conn.collection('posts').find({ category: req.params.category }, { sort: [['date', 'desc' ]]}).skip(page * config.page.size).limit(config.page.size);
+    let cursor = utils.db.conn.collection('posts').find({ category: req.params.category }, { sort: [['date', 'desc']] }).skip(page * config.page.size).limit(config.page.size);
     posts = await cursor.toArray();
     count = await cursor.count();
   } catch (e) {
@@ -40,7 +40,7 @@ router.get('/:category/posts', async (req, res) => {
     });
   }
 
-  for (post of posts) {
+  for (let post of posts) {
     delete post.replies;
   }
 

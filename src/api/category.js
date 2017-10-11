@@ -4,9 +4,9 @@ import config from '../config';
 function fetchCategoryList (params) {
   return new Promise((resolve, reject) => {
     axios.get(`${config.api.url}/category`)
-    .then(response => resolve(response.data.categories))
-    .catch(error => reject(error));
-  })
+      .then(response => resolve(response.data.categories))
+      .catch(error => reject(error));
+  });
 }
 
 function fetchPostsByCategory (params) {
@@ -15,12 +15,12 @@ function fetchPostsByCategory (params) {
   }
   return new Promise((resolve, reject) => {
     axios.get(`${config.api.url}/category/${params.category}/posts?page=${params.page || 1}`)
-    .then(response => resolve(response.data))
-    .catch(error => reject(error));
-  })
+      .then(response => resolve(response.data))
+      .catch(error => reject(error));
+  });
 }
 
 export default {
   fetchCategoryList,
   fetchPostsByCategory
-}
+};

@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const config = require('./config');
 const utils = require('./utils');
-const io = require('socket.io');
 const fs = require('fs');
 const path = require('path');
 const { createBundleRenderer } = require('vue-server-renderer');
@@ -10,7 +9,7 @@ const { createBundleRenderer } = require('vue-server-renderer');
 const isProd = process.env.NODE_ENV === 'production';
 const serve = (p, cache) => express.static(path.resolve(__dirname, p), {
   maxAge: cache && isProd ? 1000 * 60 * 60 * 24 * 30 : 0
-})
+});
 
 let site = express();
 
@@ -51,7 +50,6 @@ site.get('/favicon.ico', (req, res) => {
 // Attach Socket.IO handlers
 utils.websocket.attach(site);
 
-
 // Factory for Vue renderer
 function createRenderer (bundle, options) {
   return createBundleRenderer(bundle, Object.assign(options, {
@@ -67,13 +65,13 @@ const templatePath = path.resolve(__dirname, 'src/index.html');
 // Setup server renderer
 if (isProd) {
   // Create renderer once, and keeping using it until SIGTERM
-  const template = fs.readFileSync(templatePath, 'utf-8')
-  const bundle = require('./dist/vue-ssr-server-bundle.json')
-  const clientManifest = require('./dist/vue-ssr-client-manifest.json')
+  const template = fs.readFileSync(templatePath, 'utf-8');
+  const bundle = require('./dist/vue-ssr-server-bundle.json');
+  const clientManifest = require('./dist/vue-ssr-client-manifest.json');
   renderer = createRenderer(bundle, {
     template,
     clientManifest
-  })
+  });
 } else {
   // Use webpack-dev-middleware, recreate renderer in case source is changed.
   readyPromise = require('./build/setup-dev-server')(
@@ -82,27 +80,27 @@ if (isProd) {
     (bundle, options) => {
       renderer = createRenderer(bundle, options);
     }
-  )
+  );
 }
 
 // Setup some static files
 site.get('/favicon.ico', (req, res) => res.status(404).send(''));
 site.get('/robots.txt', (req, res) => res.status(404).send(''));
 site.use('/dist', serve('./dist', true));
-site.use('/public', serve('./public', true))
-site.use('/manifest.json', serve('./manifest.json', true))
-site.use('/service-worker.js', serve('./dist/service-worker.js'))
+site.use('/public', serve('./public', true));
+site.use('/manifest.json', serve('./manifest.json', true));
+site.use('/service-worker.js', serve('./dist/service-worker.js'));
 
 // Read client config from ./src/config.js
 let clientConfig = fs.readFileSync(path.resolve(__dirname, 'src/config.js'), 'UTF-8');
 let tmp = clientConfig.split(' ');
 // Remove the first two words(export, default)
-tmp.shift(), tmp.shift();
-// Parse the remaining part as JSON.
+tmp.shift(); tmp.shift();
+// Parse the remaining part with eval.
 try {
-  clientConfig = JSON.parse(tmp.join(' '));  
+  eval('clientConfig = ' + tmp.join(' ')); // eslint-disable-line
 } catch (e) {
-  console.err(e);
+  console.error(e);
 }
 
 // The actual render entry.
@@ -112,14 +110,14 @@ function render (req, res) {
 
   const errorHandler = err => {
     if (err.url) {
-      res.redirect(err.url)
+      res.redirect(err.url);
     } else if (err.code === 404) {
       res.status(404).send('Page not found.');
     } else {
       res.redirect('/not-found');
       console.log(err.stack);
     }
-  }
+  };
 
   const context = {
     url: req.url,
@@ -140,11 +138,11 @@ function render (req, res) {
 // deal with all those unhandled requests here.
 site.get('*', isProd ? render : (req, res) => {
   readyPromise.then(() => render(req, res));
-})
+});
 
 // Establish database connection and start http service
 utils.db.prepare().then(() => {
-  utils.websocket.server.listen(config.port, /*'localhost', */() => {
+  utils.websocket.server.listen(config.port, /* 'localhost', */() => {
     console.log(`Server started on port ${config.port}`);
   });
-})
+});

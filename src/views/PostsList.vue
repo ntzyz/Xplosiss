@@ -31,9 +31,8 @@ export default {
         return `/category/${route.params.category}`;
       } else if (route.params.tag) {
         return `/tag/${route.params.tag}`;
-      } else {
-        return ``;
       }
+      return '';
     }
   },
   title () {
@@ -42,9 +41,8 @@ export default {
       return `分类：${config.title}`;
     } else if (route.params.tag) {
       return `标签：${route.params.tag}`;
-    } else {
-      return `首页`;
     }
+    return '首页';
   },
   watch: {
     '$route': function () {
@@ -54,7 +52,7 @@ export default {
   methods: {
     timeToString
   },
-  asyncData ({store, route}) {
+  asyncData ({ store, route }) {
     if (route.params.category) {
       return store.dispatch('fetchPostsByCategory', { category: route.params.category, page: route.params.page });
     } else if (route.params.tag) {
@@ -63,7 +61,7 @@ export default {
       return store.dispatch('fetchLatestPosts', { page: route.params.page });
     }
   }
-}
+};
 </script>
 
 <style lang="scss">

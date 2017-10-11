@@ -14,12 +14,10 @@ export default {
   computed: {
     replies: function () { return this.$store.state.replies; }
   },
-  asyncData ({store, route}) {
+  asyncData ({ store, route }) {
     return store.dispatch('fetchLatestReplies');
-  },
-  beforeMount () {
   }
-}
+};
 </script>
 
 <style lang="scss">

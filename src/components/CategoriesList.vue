@@ -14,7 +14,7 @@ export default {
   asyncData ({ store, state }) {
     return store.dispatch('fetchCategory');
   }
-}
+};
 </script>
 
 <style lang="scss">

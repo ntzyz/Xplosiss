@@ -10,7 +10,7 @@ export default {
   fetchTags: state => {
     return api.tag.fetchTagsList().then(tags => {
       state.commit('setTags', tags);
-    })
+    });
   },
 
   fetchWidget: state => {
@@ -72,4 +72,4 @@ export default {
       state.commit('setReplies', replies);
     });
   }
-}
+};

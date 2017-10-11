@@ -1,4 +1,3 @@
-import Vue from 'vue';
 import { createApp } from './app.js';
 
 export default context => new Promise((resolve, reject) => {
@@ -8,11 +7,11 @@ export default context => new Promise((resolve, reject) => {
 
   router.onReady(() => {
     const matchedComponents = router.getMatchedComponents();
-    
+
     if (!matchedComponents.length) {
       return reject({ code: 404 });
     }
-    
+
     const componentsWithAsyncData = [];
     const checkComponent = C => {
       if (C.asyncData) {
@@ -35,8 +34,8 @@ export default context => new Promise((resolve, reject) => {
         route: router.currentRoute
       });
     })).then(() => {
-      context.state = store.state
-      resolve(app)
-    }).catch(reject)
+      context.state = store.state;
+      resolve(app);
+    }).catch(reject);
   }, reject);
 });

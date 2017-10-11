@@ -83,7 +83,7 @@ export default {
         encoding: 'html',
         content: '',
       }
-    }
+    };
   },
   computed: {
     categories () {
@@ -126,7 +126,7 @@ export default {
         this.fetchPost();
       }).catch(e => {
         alert('会话过期，请手动刷新');
-      })
+      });
     },
     createPost() {
       if (!this.title || !this.slug) {
@@ -148,7 +148,7 @@ export default {
         this.$router.push(`/admin/post/edit/${res.id}`);
       }).catch(e => {
         alert('会话过期，请手动刷新');
-      })
+      });
     },
     fetchPost () {
       api.post.fetchPostById({ id: this.$route.params.id }).then(post => {
@@ -167,7 +167,7 @@ export default {
           hour: tmpDate.getHours(),
           minute: tmpDate.getMinutes(),
           second: tmpDate.getSeconds(),
-        }
+        };
       });
     },
     fetchTags () {
@@ -183,8 +183,8 @@ export default {
       api.post.deletePostById({ id: this.$route.params.id, token: this.$store.state.token }).then(() => {
         this.back();
       }).catch(e => {
-        alert('会话过期，请手动刷新')
-      })
+        alert('会话过期，请手动刷新');
+      });
     }
   },
   created () {
@@ -216,7 +216,7 @@ export default {
   beforeDestroy () {
     // document.querySelector('#app').style.maxWidth = '';
   }
-}
+};
 
 </script>
 

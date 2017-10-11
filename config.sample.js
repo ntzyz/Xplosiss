@@ -8,4 +8,4 @@ module.exports = {
   reply: {
     enableMarkdownSupport: true,
   }
-}
+};

@@ -35,13 +35,13 @@ export default {
       editing: null,
       widgets: [],
       selected: null,
-    }
+    };
   },
   methods: {
     fetchWidgets () {
       api.widget.fetchWidgetList({ all: true }).then(widgets => {
         this.widgets = widgets;
-      })
+      });
     },
     editWidget () {
       this.editing = Object.assign({
@@ -68,7 +68,7 @@ export default {
           this.back();
         }).catch(e => {
           alert('会话过期，请手动刷新');
-        })
+        });
       } else {
         // create
         api.widget.createWidget({
@@ -79,7 +79,7 @@ export default {
           this.back();
         }).catch(e => {
           alert('会话过期，请手动刷新');
-        })
+        });
       }
     },
     deleteWidget () {
@@ -87,7 +87,7 @@ export default {
         api.widget.deleteWidget({ token: this.$store.state.token, id: this.editing._id }).then(() => {
           alert('删除成功');
           this.back();
-        })
+        });
       }
     }
   },
@@ -102,7 +102,7 @@ export default {
   beforeDestroy () {
     document.querySelector('#app').style.maxWidth = '';
   }
-}
+};
 </script>
 
 <style lang="scss">

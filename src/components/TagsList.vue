@@ -14,7 +14,7 @@ export default {
   asyncData ({store, route}) {
     return store.dispatch('fetchTags');
   }
-}
+};
 </script>
 
 <style lang="scss">

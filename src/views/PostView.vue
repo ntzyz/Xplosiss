@@ -26,11 +26,11 @@ export default {
   computed: {
     post () { return this.$store.state.post; },
   },
-  title () { return this.post.title },
+  title () { return this.post.title; },
   data () {
     return {
       extraDoms: [],
-    }
+    };
   },
   watch: {
     post: function (post) {
@@ -53,8 +53,8 @@ export default {
           });
           
           this.$store.commit('enableForceReload');
-        })
-      })
+        });
+      });
     },
     '$route': function (route) {
       this.$store.dispatch('fetchPostBySlug', route.params.slug);
