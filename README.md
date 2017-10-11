@@ -2,6 +2,8 @@
 ## 简介
 简单的自用博客框架，使用 `Vue.js`, `Express` 和 `MongoDB` 完成。
 
+[![Build Status](https://travis-ci.org/ntzyz/new-blog.svg?branch=master)](https://travis-ci.org/ntzyz/new-blog)
+
 ## Todo
  - [X] 重构至上一版进度
  - [X] 过渡动画

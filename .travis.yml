@@ -5,4 +5,5 @@ install:
   - npm i
 script:
   - npm run lint
+  - cp src/config.sample.js src/config.js
   - npm run build
