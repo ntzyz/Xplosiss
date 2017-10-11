@@ -48,6 +48,10 @@ site.get('/favicon.ico', (req, res) => {
   }
 });
 
+// Attach Socket.IO handlers
+utils.websocket.attach(site);
+
+
 // Factory for Vue renderer
 function createRenderer (bundle, options) {
   return createBundleRenderer(bundle, Object.assign(options, {
@@ -140,7 +144,6 @@ site.get('*', isProd ? render : (req, res) => {
 
 // Establish database connection and start http service
 utils.db.prepare().then(() => {
-  utils.websocket.attach(site);
   utils.websocket.server.listen(config.port, /*'localhost', */() => {
     console.log(`Server started on port ${config.port}`);
   });

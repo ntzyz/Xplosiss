@@ -18,13 +18,17 @@ import api from '../../api';
 
 export default {
   name: 'token-setter',
-  created () {
+  beforeMount () {
     this.$store.commit('setBusy', false);
     if (this.$route.query.logout === 'true') {
       window.localStorage.token = '';
       this.$store.commit('setToken', '');
       this.$router.push({ query: {}});
     } else {
+      if (window.localStorage.token) {
+        this.token = window.localStorage.token;
+        this.$store.commit('setToken', window.localStorage.token);
+      }
       this.check(true);
     }
   },
@@ -39,7 +43,7 @@ export default {
   },
   data () {
     return {
-      token: window.localStorage.token || '',
+      token: '',
     }
   },
   methods: {
@@ -47,6 +51,7 @@ export default {
       api.token.checkToken(this.token).then(result => {
         if (!result) {
           noalert || alert('验证失败！');
+          this.$store.commit('setToken', '');
         } else {
           this.$store.commit('setToken', this.token);
           window.localStorage.token = this.token;

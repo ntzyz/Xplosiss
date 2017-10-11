@@ -25,9 +25,16 @@ export default {
       return;
     }
     this.$store.commit('setBusy', false);
+  },
+  beforeMount () {
     api.log.fetchLogs({ token: this.$store.state.token }).then(logs => {
       this.logs = logs;
-      this.socket = io.connect(window.location.host, { path: `${config.api.url}/ws/`, query: `token=${this.$store.state.token}` });
+      console.log("Trying to establish websocket connection.")
+      this.socket = io.connect(window.location.host, { path: `/api/ws/`, query: `token=${this.$store.state.token}` });
+      this.socket.on('connect_error', err =>{
+        console.log(err);
+      });
+      console.log(this.socket);
       this.socket.on('log', text => {
         this.logs.push(text);
         setTimeout(() => {

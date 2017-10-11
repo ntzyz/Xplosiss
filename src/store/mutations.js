@@ -7,18 +7,15 @@ export default {
   },
   setPosts: (state, posts) => {
     state.posts = posts;
-    // setTimeout(() => { state.posts = posts; }, 300);
   },
   setPost: (state, post) => {
     state.post = post;
-    // setTimeout(() => { state.post = post; }, 300);
   },
   setPages: (state, pages) => {
     state.pages = pages;
   },
   setBusy: (state, isBusy) => {
     state.busy = isBusy;
-    // setTimeout(() => { state.busy = isBusy; }, isBusy ? 0 : 300);
   },
   setWidgets: (state, widgets) => {
     state.widgets = widgets;
@@ -27,6 +24,9 @@ export default {
     state.forceReload = true;
   },
   setToken: (state, token) => {
+    if (process.env.VUE_ENV !== 'server') {
+      window.localStorage.token = token;
+    }
     state.token = token;
   },
   setPage: (state, page) => {

@@ -27,7 +27,9 @@ export default {
   },
   watch: {
     '$route': function () {
-      document.querySelector('#left-wrapper').setAttribute('style', '');
+      if (document) {
+        document.querySelector('#left-wrapper').setAttribute('style', '');
+      }
     }
   },
   mounted () {
