@@ -24,4 +24,11 @@ describe('Testing category-related APIs.', () => {
     expect(response.body.status).to.be.ok;
     expect(response.body.posts).not.to.be.undefined;
   });
+
+  it('Fetch posts under category with page', async () => {
+    const url = `/api/category/${categories[0]}/posts?page=2`;
+    const response = await agent.get(url).expect(200);
+    expect(response.body.status).to.be.ok;
+    expect(response.body.posts).not.to.be.undefined;
+  });
 });

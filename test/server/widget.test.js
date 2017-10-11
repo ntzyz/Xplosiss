@@ -63,6 +63,13 @@ describe('Testing widget-related APIs.', () => {
     expect(response.body.status).to.be.ok;
   });
 
+  it('Update a widget with invalid id', async () => {
+    const url = `/api/widget/123123?token=${token}`;
+    const response = await agent.post(url).send(widgetTemplate).expect(500);
+
+    expect(response.body.status).equal('error');
+  });
+  
   it('Delete the new widget', async () => {
     const url = `/api/widget/${id}?token=${token}`;
     const response = await agent.delete(url).expect(200);
@@ -70,4 +77,12 @@ describe('Testing widget-related APIs.', () => {
     expect(response.body.status).to.be.ok;
     id = null;
   });
+
+  it('Delete a widget with invalid id', async () => {
+    const url = `/api/widget/123123?token=${token}`;
+    const response = await agent.delete(url).expect(500);
+
+    expect(response.body.status).equal('error');
+  });
+  
 });

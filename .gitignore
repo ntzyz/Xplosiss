@@ -8,3 +8,4 @@ config.js
 package-lock.json
 /coverage
 .nyc_output
+.coveralls.yml

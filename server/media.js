@@ -58,6 +58,8 @@ router.put('/:filename', upload.single('file'), (req, res) => {
     });
   }
 
+  const newFileName = `${new Date().getTime()}-${req.params.filename}`;
+
   fs.rename(req.file.path, path.join(__dirname, `../uploads/${new Date().getTime()}-${req.params.filename}`), err => {
     if (err) {
       res.status(500).send({
@@ -67,6 +69,7 @@ router.put('/:filename', upload.single('file'), (req, res) => {
     } else {
       res.send({
         status: 'ok',
+        filename: newFileName,
       });
     }
   });
