@@ -6,3 +6,5 @@ config.js
 /static
 /dist
 package-lock.json
+/coverage
+.nyc_output

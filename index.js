@@ -7,13 +7,14 @@ const path = require('path');
 const { createBundleRenderer } = require('vue-server-renderer');
 
 const isProd = process.env.NODE_ENV === 'production';
+const isTest = process.env.NODE_ENV === 'test';
 const serve = (p, cache) => express.static(path.resolve(__dirname, p), {
   maxAge: cache && isProd ? 1000 * 60 * 60 * 24 * 30 : 0
 });
 
 let site = express();
 
-if (!isProd) {
+if (!(isProd || isTest)) {
   console.log('[WARN] You are now in development mode, HTTP header Access-Control-Allow-Origin will be set to *.');
   site.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -63,7 +64,7 @@ let renderer, readyPromise;
 const templatePath = path.resolve(__dirname, 'src/index.html');
 
 // Setup server renderer
-if (isProd) {
+if (isProd || isTest) {
   // Create renderer once, and keeping using it until SIGTERM
   const template = fs.readFileSync(templatePath, 'utf-8');
   const bundle = require('./dist/vue-ssr-server-bundle.json');
@@ -105,7 +106,6 @@ try {
 
 // The actual render entry.
 function render (req, res) {
-  console.log('here');
   res.setHeader('Content-Type', 'text/html');
 
   const errorHandler = err => {
@@ -136,7 +136,7 @@ function render (req, res) {
 }
 
 // deal with all those unhandled requests here.
-site.get('*', isProd ? render : (req, res) => {
+site.get('*', (isProd || isTest) ? render : (req, res) => {
   readyPromise.then(() => render(req, res));
 });
 
@@ -146,3 +146,5 @@ utils.db.prepare().then(() => {
     console.log(`Server started on port ${config.port}`);
   });
 });
+
+module.exports = site;
