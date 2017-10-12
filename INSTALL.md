@@ -51,7 +51,8 @@ Description=A naive blog framework
 
 [Service]
 WorkingDirectory=$(pwd)
-ExecStart=npm run start
+Environment="NODE_ENV=production"
+ExecStart=$(which node) $(pwd)/index
 " | sudo tee /lib/systemd/system/new-blog.service
 ```
 

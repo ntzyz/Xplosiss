@@ -2,7 +2,7 @@ export default {
   title: 'ntzyz\'s space',
   subtitle: '∠( ᐛ 」∠)_',
   api: {
-    'url': 'https://new.ntzyz.cn/api'
+    url: process.env.VUE_ENV === 'server' ? 'https://new.ntzyz.cn/api' : '/api'
   },
   components: {
     title: true,
