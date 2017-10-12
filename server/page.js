@@ -91,7 +91,7 @@ router.get('/by-id/:id/raw', async (req, res) => {
  */
 router.post('/by-id/:id', async (req, res) => {
   if (req.query.token !== utils.token) {
-    return res.status(400).send({
+    return res.status(403).send({
       status: 'error',
       message: utils.messages.ERR_ACCESS_DENIED,
     });
@@ -123,7 +123,7 @@ router.post('/by-id/:id', async (req, res) => {
  */
 router.delete('/by-id/:id', async (req, res) => {
   if (req.query.token !== utils.token) {
-    return res.status(400).send({
+    return res.status(403).send({
       status: 'error',
       message: utils.messages.ERR_ACCESS_DENIED,
     });
@@ -149,7 +149,7 @@ router.delete('/by-id/:id', async (req, res) => {
  */
 router.put('/', async (req, res) => {
   if (req.query.token !== utils.token) {
-    return res.status(400).send({
+    return res.status(403).send({
       status: 'error',
       message: utils.messages.ERR_ACCESS_DENIED,
     });
@@ -170,7 +170,7 @@ router.put('/', async (req, res) => {
     });
   }
 
-  res.send({ status: 'ok', _id: r.insertedIds[0] });
+  res.send({ status: 'ok', id: r.insertedIds[0] });
 });
 
 /**

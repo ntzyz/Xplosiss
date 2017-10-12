@@ -86,7 +86,7 @@ export default {
       } else {
         api.page.createPage({ token: this.$store.state.token, page: this.page }).then(data => {
           console.log(data);
-          this.editing = data._id;
+          this.editing = data.id;
           alert('创建成功');
         });
       }

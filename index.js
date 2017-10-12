@@ -14,16 +14,6 @@ const serve = (p, cache) => express.static(path.resolve(__dirname, p), {
 
 let site = express();
 
-if (!(isProd || isTest)) {
-  console.log('[WARN] You are now in development mode, HTTP header Access-Control-Allow-Origin will be set to *.');
-  site.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-  });
-}
-
 // disable 'x-powered-by' for security
 site.disable('x-powered-by');
 
@@ -85,7 +75,6 @@ if (isProd || isTest) {
 }
 
 // Setup some static files
-site.get('/favicon.ico', (req, res) => res.status(404).send(''));
 site.get('/robots.txt', (req, res) => res.status(404).send(''));
 site.use('/dist', serve('./dist', true));
 site.use('/public', serve('./public', true));
@@ -111,10 +100,8 @@ function render (req, res) {
   const errorHandler = err => {
     if (err.url) {
       res.redirect(err.url);
-    } else if (err.code === 404) {
-      res.status(404).send('Page not found.');
     } else {
-      res.redirect('/not-found');
+      res.status(500).send('500');
       console.log(err.stack);
     }
   };
@@ -125,7 +112,9 @@ function render (req, res) {
     meta: clientConfig.meta,
   };
 
-  context.meta.keywords = '';
+  if (req.path === '/not-found') {
+    res.status(404);
+  }
 
   renderer.renderToString(context, (err, html) => {
     if (err) {

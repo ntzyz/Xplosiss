@@ -18,7 +18,7 @@ router.use('/', express.static('statics'));
  */
 router.get('/', (req, res) => {
   if (req.query.token !== utils.token) {
-    return res.status(400).send({
+    return res.status(403).send({
       status: 'error',
       message: utils.messages.ERR_ACCESS_DENIED,
     });
@@ -80,7 +80,7 @@ router.put('/:filename', upload.single('file'), (req, res) => {
  */
 router.delete('/:filename', (req, res) => {
   if (req.query.token !== utils.token) {
-    return res.status(400).send({
+    return res.status(403).send({
       status: 'error',
       message: utils.messages.ERR_ACCESS_DENIED,
     });

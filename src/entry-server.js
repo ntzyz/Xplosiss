@@ -36,6 +36,11 @@ export default context => new Promise((resolve, reject) => {
     })).then(() => {
       context.state = store.state;
       resolve(app);
-    }).catch(reject);
+    }).catch(error => {
+      if (error.response.status === 404) {
+        reject({ url: '/not-found' });
+      }
+      reject(error);
+    });
   }, reject);
 });

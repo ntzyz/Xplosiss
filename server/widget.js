@@ -50,7 +50,7 @@ router.get('/all', async (req, res) => {
  */
 router.post('/:id', async (req, res) => {
   if (req.query.token !== utils.token) {
-    return res.status(400).send({
+    return res.status(403).send({
       status: 'error',
       message: utils.messages.ERR_ACCESS_DENIED,
     });
@@ -79,7 +79,7 @@ router.post('/:id', async (req, res) => {
  */
 router.put('/', async (req, res) => {
   if (req.query.token !== utils.token) {
-    return res.status(400).send({
+    return res.status(403).send({
       status: 'error',
       message: utils.messages.ERR_ACCESS_DENIED,
     });
@@ -108,7 +108,7 @@ router.put('/', async (req, res) => {
  */
 router.delete('/:id', async (req, res) => {
   if (req.query.token !== utils.token) {
-    return res.status(400).send({
+    return res.status(403).send({
       status: 'error',
       message: utils.messages.ERR_ACCESS_DENIED,
     });

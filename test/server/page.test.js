@@ -48,7 +48,7 @@ describe('Testing page-related APIs.', () => {
     const response = await agent.put(url)
       .set('Content-Type', 'application/json')
       .send(pageTemplate)
-      .expect(400);
+      .expect(403);
 
     expect(response.body.status).to.be.equal('error');
   });
@@ -61,9 +61,9 @@ describe('Testing page-related APIs.', () => {
       .expect(200);
 
     expect(response.body.status).to.be.ok;
-    expect(response.body._id).not.to.be.undefined;
+    expect(response.body.id).not.to.be.undefined;
 
-    id = response.body._id;
+    id = response.body.id;
   });
 
   it('Check if page created', async () => {
@@ -102,7 +102,7 @@ describe('Testing page-related APIs.', () => {
     const response = await agent.post(url)
       .set('Content-Type', 'application/json')
       .send(pageTemplate)
-      .expect(400);
+      .expect(403);
 
     expect(response.body.status).equal('error');
   });
@@ -113,7 +113,7 @@ describe('Testing page-related APIs.', () => {
     const response = await agent.post(url)
       .set('Content-Type', 'application/json')
       .send(pageTemplate)
-      .expect(400);
+      .expect(403);
 
     expect(response.body.status).equal('error');
   });
@@ -154,14 +154,14 @@ describe('Testing page-related APIs.', () => {
 
   it('Delete one page that doesnt exist', async () => {
     const url = `/api/page/by-id/${fakeId}`;
-    const response = await agent.delete(url).expect(400);
+    const response = await agent.delete(url).expect(403);
 
     expect(response.body.status).equal('error');
   });
   
   it('Delete the new page without token', async () => {
     const url = `/api/page/by-id/${id}`;
-    const response = await agent.delete(url).expect(400);
+    const response = await agent.delete(url).expect(403);
 
     expect(response.body.status).equal('error');
   });

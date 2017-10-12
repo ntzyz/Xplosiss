@@ -17,7 +17,7 @@ describe('Testing log-related APIs.', () => {
 
   it('Fetch logs with invalid token', async () => {
     const url = '/api/logs?token=2336666';
-    const response = await agent.get(url).expect(400);
+    const response = await agent.get(url).expect(403);
 
     expect(response.body.status).equal('error');
   });
