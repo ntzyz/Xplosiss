@@ -10,8 +10,10 @@ function fetchCategoryList (params) {
 }
 
 function fetchPostsByCategory (params) {
-  if (!params.category) {
-    return Promise.reject('Category is required.');
+  if (process.env.NODE_ENV === 'development') {
+    if (!params.category) {
+      return Promise.reject('Category is required.');
+    }
   }
   return new Promise((resolve, reject) => {
     axios.get(`${config.api.url}/category/${params.category}/posts?page=${params.page || 1}`)

@@ -2,8 +2,10 @@ import axios from 'axios';
 import config from '../config';
 
 function fetchLogs (params = {}) {
-  if (!params.token) {
-    return Promise.reject('Access token is required.');
+  if (process.env.NODE_ENV === 'development') {
+    if (!params.token) {
+      return Promise.reject('Access token is required.');
+    }
   }
   return new Promise((resolve, reject) => {
     axios.get(`${config.api.url}/logs?token=${params.token}`)

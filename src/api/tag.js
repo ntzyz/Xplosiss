@@ -10,8 +10,10 @@ function fetchTagsList (params) {
 }
 
 function fetchPostsByTag (params) {
-  if (!params.tag) {
-    return Promise.reject('Tag is required.');
+  if (process.env.NODE_ENV === 'development') {
+    if (!params.tag) {
+      return Promise.reject('Tag is required.');
+    }
   }
   return new Promise((resolve, reject) => {
     axios.get(`${config.api.url}/tag/${params.tag}/posts?page=${params.page || 1}`)

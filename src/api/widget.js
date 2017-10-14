@@ -10,12 +10,14 @@ function fetchWidgetList (params = {}) {
 }
 
 function updateWidget (params = {}) {
-  if (!params.id) {
-    return Promise.reject('Widget id is required.');
-  } else if (!params.widget) {
-    return Promise.reject('Widget content is required.');
-  } else if (!params.token) {
-    return Promise.reject('Access token is required.');
+  if (process.env.NODE_ENV === 'development') {
+    if (!params.id) {
+      return Promise.reject('Widget id is required.');
+    } else if (!params.widget) {
+      return Promise.reject('Widget content is required.');
+    } else if (!params.token) {
+      return Promise.reject('Access token is required.');
+    }
   }
   return new Promise((resolve, reject) => {
     axios.post(`${config.api.url}/widget/${params.id}?token=${params.token}`, params.widget)
@@ -25,10 +27,12 @@ function updateWidget (params = {}) {
 }
 
 function createWidget (params = {}) {
-  if (!params.widget) {
-    return Promise.reject('Widget content is required.');
-  } else if (!params.token) {
-    return Promise.reject('Access token is required.');
+  if (process.env.NODE_ENV === 'development') {
+    if (!params.widget) {
+      return Promise.reject('Widget content is required.');
+    } else if (!params.token) {
+      return Promise.reject('Access token is required.');
+    }
   }
   return new Promise((resolve, reject) => {
     axios.put(`${config.api.url}/widget?token=${params.token}`, params.widget)
@@ -38,10 +42,12 @@ function createWidget (params = {}) {
 }
 
 function deleteWidget (params = {}) {
-  if (!params.id) {
-    return Promise.reject('Widget id content is required.');
-  } else if (!params.token) {
-    return Promise.reject('Access token is required.');
+  if (process.env.NODE_ENV === 'development') {
+    if (!params.id) {
+      return Promise.reject('Widget id content is required.');
+    } else if (!params.token) {
+      return Promise.reject('Access token is required.');
+    }
   }
   return new Promise((resolve, reject) => {
     axios.delete(`${config.api.url}/widget/${params.id}?token=${params.token}`)

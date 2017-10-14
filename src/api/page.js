@@ -10,8 +10,10 @@ function fetchPages (params = {}) {
 }
 
 function fetchPageBySlug (params = {}) {
-  if (!params.slug) {
-    return Promise.reject('Page slug is required');
+  if (process.env.NODE_ENV === 'development') {
+    if (!params.slug) {
+      return Promise.reject('Page slug is required');
+    }
   }
 
   return new Promise((resolve, reject) => {
@@ -22,8 +24,10 @@ function fetchPageBySlug (params = {}) {
 }
 
 function fetchPageById (params = {}) {
-  if (!params.id) {
-    return Promise.reject('Page slug is required');
+  if (process.env.NODE_ENV === 'development') {
+    if (!params.id) {
+      return Promise.reject('Page slug is required');
+    }
   }
 
   return new Promise((resolve, reject) => {
@@ -34,10 +38,12 @@ function fetchPageById (params = {}) {
 }
 
 function createPage (params = {}) {
-  if (!params.page) {
-    return Promise.reject('Page content is required.');
-  } else if (!params.token) {
-    return Promise.reject('Access token is required.');
+  if (process.env.NODE_ENV === 'development') {
+    if (!params.page) {
+      return Promise.reject('Page content is required.');
+    } else if (!params.token) {
+      return Promise.reject('Access token is required.');
+    }
   }
 
   return new Promise((resolve, reject) => {
@@ -48,12 +54,14 @@ function createPage (params = {}) {
 }
 
 function updatePageById (params = {}) {
-  if (!params.id) {
-    return Promise.reject('Page id is required.');
-  } else if (!params.page) {
-    return Promise.reject('Page content is required.');
-  } else if (!params.token) {
-    return Promise.reject('Access token is required.');
+  if (process.env.NODE_ENV === 'development') {
+    if (!params.id) {
+      return Promise.reject('Page id is required.');
+    } else if (!params.page) {
+      return Promise.reject('Page content is required.');
+    } else if (!params.token) {
+      return Promise.reject('Access token is required.');
+    }
   }
 
   return new Promise((resolve, reject) => {
@@ -64,10 +72,12 @@ function updatePageById (params = {}) {
 }
 
 function deletePageById (params = {}) {
-  if (!params.id) {
-    return Promise.reject('Page id is required.');
-  } else if (!params.token) {
-    return Promise.reject('Access token is required.');
+  if (process.env.NODE_ENV === 'development') {
+    if (!params.id) {
+      return Promise.reject('Page id is required.');
+    } else if (!params.token) {
+      return Promise.reject('Access token is required.');
+    }
   }
 
   return new Promise((resolve, reject) => {

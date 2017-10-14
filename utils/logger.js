@@ -7,6 +7,10 @@ const websocket = require('./websocket');
  * @param {Function} next 
  */
 function logger (req, res, next) {
+  if (req.headers['server-side-rendering'] === 'true') {
+    return next();
+  }
+
   let message = `[${new Date().toLocaleString()}] ${req.headers['x-real-ip'] || req.ip} - ${req.method} ${req.url} - ${req.headers['user-agent']}`;
 
   // Write log to stdout, and push to the log array.

@@ -10,8 +10,10 @@ function fetchPosts (params = {}) {
 }
 
 function fetchPostBySlug (params) {
-  if (!params.slug) {
-    return Promise.reject('Post slug is required.');
+  if (process.env.NODE_ENV === 'development') {
+    if (!params.slug) {
+      return Promise.reject('Post slug is required.');
+    }
   }
   return new Promise((resolve, reject) => {
     axios.get(`${config.api.url}/post/by-slug/${params.slug}`)
@@ -21,8 +23,10 @@ function fetchPostBySlug (params) {
 }
 
 function fetchPostById (params) {
-  if (!params.id) {
-    return Promise.reject('Post id is required.');
+  if (process.env.NODE_ENV === 'development') {
+    if (!params.id) {
+      return Promise.reject('Post id is required.');
+    }
   }
   return new Promise((resolve, reject) => {
     axios.get(`${config.api.url}/post/by-id/${params.id}/raw`)
@@ -32,12 +36,14 @@ function fetchPostById (params) {
 }
 
 function updatePostById (params) {
-  if (!params.id) {
-    return Promise.reject('Post id is required.');
-  } else if (!params.post) {
-    return Promise.reject('Post body is required.');
-  } else if (!params.token) {
-    return Promise.reject('Access token is required.');
+  if (process.env.NODE_ENV === 'development') {
+    if (!params.id) {
+      return Promise.reject('Post id is required.');
+    } else if (!params.post) {
+      return Promise.reject('Post body is required.');
+    } else if (!params.token) {
+      return Promise.reject('Access token is required.');
+    }
   }
   return new Promise((resolve, reject) => {
     axios.post(`${config.api.url}/post/by-id/${params.id}?token=${params.token}`, params.post)
@@ -47,10 +53,12 @@ function updatePostById (params) {
 }
 
 function deletePostById (params) {
-  if (!params.id) {
-    return Promise.reject('Post id is required.');
-  } else if (!params.token) {
-    return Promise.reject('Access token is required.');
+  if (process.env.NODE_ENV === 'development') {
+    if (!params.id) {
+      return Promise.reject('Post id is required.');
+    } else if (!params.token) {
+      return Promise.reject('Access token is required.');
+    }
   }
   return new Promise((resolve, reject) => {
     axios.delete(`${config.api.url}/post/by-id/${params.id}?token=${params.token}`)
@@ -60,10 +68,12 @@ function deletePostById (params) {
 }
 
 function createPost (params) {
-  if (!params.post) {
-    return Promise.reject('Post body is required.');
-  } else if (!params.token) {
-    return Promise.reject('Access token is required.');
+  if (process.env.NODE_ENV === 'development') {
+    if (!params.post) {
+      return Promise.reject('Post body is required.');
+    } else if (!params.token) {
+      return Promise.reject('Access token is required.');
+    }
   }
   return new Promise((resolve, reject) => {
     axios.put(`${config.api.url}/post?token=${params.token}`, params.post)

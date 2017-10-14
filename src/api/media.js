@@ -2,8 +2,10 @@ import axios from 'axios';
 import config from '../config';
 
 function fetchFiles (params = {}) {
-  if (!params.token) {
-    return Promise.reject('Access token is required.');
+  if (process.env.NODE_ENV === 'development') {
+    if (!params.token) {
+      return Promise.reject('Access token is required.');
+    }
   }
   return new Promise((resolve, reject) => {
     axios.get(`${config.api.url}/media?token=${params.token}`)
@@ -17,10 +19,12 @@ function getFileURL (file) {
 }
 
 function uploadFile (params = {}) {
-  if (!params.token) {
-    return Promise.reject('Access token is required.');
-  } else if (!params.file) {
-    return Promise.reject('Upload body is required.');
+  if (process.env.NODE_ENV === 'development') {
+    if (!params.token) {
+      return Promise.reject('Access token is required.');
+    } else if (!params.file) {
+      return Promise.reject('Upload body is required.');
+    }
   }
 
   let fd = new FormData();
@@ -30,10 +34,12 @@ function uploadFile (params = {}) {
 }
 
 function deleteFile (params = {}) {
-  if (!params.token) {
-    return Promise.reject('Access token is required.');
-  } else if (!params.file) {
-    return Promise.reject('Upload body is required.');
+  if (process.env.NODE_ENV === 'development') {
+    if (!params.token) {
+      return Promise.reject('Access token is required.');
+    } else if (!params.file) {
+      return Promise.reject('Upload body is required.');
+    }
   }
 
   return axios.delete(`${config.api.url}/media/${params.file}?token=${params.token}`);

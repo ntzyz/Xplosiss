@@ -1,4 +1,5 @@
 import { createApp } from './app.js';
+import config from './config';
 
 const { app, store, router } = createApp();
 
@@ -51,6 +52,8 @@ router.onReady(() => {
       next();
     }).catch(next);
   });
+
+  console.log(`You are using Xplosiss-git(${process.env.COMMIT || 'unknown'})${process.env.COMMIT && `\nAbout this commit: https://github.com/ntzyz/new-blog/commit/${process.env.COMMIT}`}`);
 
   app.$mount('#app');
 });
