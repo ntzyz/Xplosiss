@@ -4,8 +4,8 @@
       div#left-wrapper
         router-view(name="sidebar")
     #right
-      loading-icon(v-show="busy")
-      transition(:name="transitionName"): router-view(v-show="!busy")
+      loading-icon(v-if="busy")
+      transition(name="forward"): router-view(v-show="!busy")
 </template>
 
 <script>
