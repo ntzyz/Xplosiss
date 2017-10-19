@@ -1,7 +1,5 @@
 <template lang="pug">
-  header.title.card
-    router-link(to="/"): h1 {{ title }}
-    h2 {{ subtitle }}
+
 </template>
 
 <script>
@@ -19,24 +17,6 @@ export default {
 </script>
 
 <style lang="scss">
-header.title {
-  text-align: center;
-  > a {
-    // Fix IE11
-    border-bottom: none;
-  }
-  h1, h2 {
-    font-weight: normal;
-  }
-  h1 {
-    font-size: 2em;
-    font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
-    letter-spacing: 2px;
-    font-weight: 300;
-  }
-  h2 {
-    font-size: 20px;
-  }
-}
+
 
 </style>
