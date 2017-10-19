@@ -21,13 +21,13 @@ export default {
 div.tags-list {
   ul {
     list-style: none;
-    padding: 0;
+    padding: 0 0.5em;
   }
 
   li {
     display: inline-block;
     font-size: 0.8em;
-    padding-left: 1em;
+    padding: 0 0.5em;
   }
 }
 </style>

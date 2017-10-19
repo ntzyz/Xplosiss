@@ -101,6 +101,7 @@ div.side-bar {
 
   div.drawer-container.active {
     background-color: rgba(0, 0, 0, 0.5);
+    pointer-events: initial;
   }
 
   div.drawer.active {
@@ -111,6 +112,7 @@ div.side-bar {
 header.title {
   text-align: center;
   position: relative;
+  padding-top: 1px;
 
   > a {
     // Fix IE11
@@ -160,8 +162,9 @@ header.title {
       height: 20px;
       width: 20px;
       position: absolute;
-      top: 12px;
-      left: 16px;
+      top: 0;
+      left: 0;
+      padding: 12px 10px 8px 10px;
     }
   }
 
