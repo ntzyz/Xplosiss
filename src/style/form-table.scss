@@ -1,3 +1,5 @@
+@import './color.scss';
+
 table.form-table {
   width: 100%;
 
@@ -10,6 +12,20 @@ table.form-table {
 
   input.full {
     width: 100%;
+  }
+
+  input:focus, textarea:focus {
+    outline: none;
+  }
+
+  input {
+    padding: 2px;
+  }
+
+  input, textarea {
+    border: none;
+    border-bottom: 1px solid $input_border_color;
+    background: rgba(0, 0, 0, 0);
   }
 
   textarea.content {

@@ -10,6 +10,7 @@ function attachSocketIO (site) {
     server = http.Server(site);
     io = socket(server, { path: '/api/ws' });
     io.on('connection', socket => {
+      console.log('Client connected!');
       if (socket.handshake.query.token !== token) {
         // Unauthorized connecton, disconnect it.
         console.log([socket.handshake.query.token, token]);

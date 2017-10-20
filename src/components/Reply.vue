@@ -81,6 +81,35 @@ export default {
 @import '../style/global.scss';
 @import '../style/form-table.scss';
 
+// label.md {
+//   height: 0;
+//   overflow: show;
+//   pointer-events: none;
+//   display: block;
+//   transform: translateY(-50px);
+//   font-size: 12px;
+//   transition: all linear 0.1s;
+//   color: grey;
+// }
+
+// input.md:not(:focus):invalid + label.md {
+//   font-size: initial;
+//   transform: translateY(-30px);
+// }
+
+// input.md {
+//   width: 200px;
+//   margin-top: 16px;
+//   padding-top: 8px;
+//   padding-bottom: 8px;
+//   border: none;
+//   border-bottom: 2px solid $button_color;
+// }
+
+// input.md:focus {
+//   outline: none;
+// }
+
 div.reply {
   div.content {
     padding: 0.2em 1em 0.2em 1em;
