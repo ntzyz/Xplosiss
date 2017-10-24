@@ -2,14 +2,12 @@
   nav.pagination
     ul(v-if="pages")
       li
-        router-link(:to="prefix + '/page/' + (current - 1)" v-if="Number(current) !== 1"): button &laquo;
-        button(v-else) &laquo;
+        router-link(:to="prefix + '/page/1'").button &laquo;
       li(v-for="page in pages")
-        router-link(:to="prefix + '/page/' + page" v-if="Number(current) !== page"): button {{ page }}
-        button.disabled(v-else) {{ page }}
+        router-link(:to="prefix + '/page/' + page" v-if="Number(current) !== page").button {{ page }}
+        a.disabled.button(v-else) {{ page }}
       li
-        router-link(:to="prefix + '/page/' + (current + 1)" v-if="Number(current) !== Number(max)"): button &raquo;
-        button(v-else) &raquo;
+        router-link(:to="prefix + '/page/' + max").button &raquo;
 </template>
 
 <script>
@@ -68,23 +66,17 @@ nav.pagination {
     text-align: center;
     margin-left: 0.3em;
     cursor: pointer;
-    button:not(.disabled) {
+    a:not(.disabled) {
       background-color: rgb(245, 245, 245);
       color: black;
       box-shadow: none;
     }
-    button, a {
+    a {
       display: inline-block;
-      width: inherit;
-      height: inherit;
-      line-height: inherit;
-      padding: 0;
+      padding: 0 0.75em 0 0.75em;
     }
-    button.disabled {
+    a.disabled {
       cursor: initial;
-    }
-    button {
-      padding: 0 0.5em 0 0.5em;
     }
     a:hover {
       border: none;

@@ -10,7 +10,7 @@
             router-link(:to="'/tag/' + tag") {{tag}}
       article.post-preview(v-html="post.content")
       footer
-        router-link(:to="'/post/' + post.slug"): button.more MORE
+        router-link(:to="'/post/' + post.slug").button.more MORE
     pagination(v-if="$store.state.pages", :current="$store.state.pages.current", length="7", :max="$store.state.pages.max", :prefix="prefix")
 </template>
 
@@ -122,7 +122,7 @@ div.posts-list {
 
   footer {
     height: 28px;
-    button {
+    a.more {
       font-size: 14px;
       float: right;
       margin-right: 2em;

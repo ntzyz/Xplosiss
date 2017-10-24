@@ -17,7 +17,7 @@ function fetchPageBySlug (params = {}) {
   }
 
   return new Promise((resolve, reject) => {
-    axios.get(`${config.api.url}/page/by-slug/${params.slug}${params.raw ? '/raw' : ''}`)
+    axios.get(`${config.api.url}/page/by-slug/${encodeURIComponent(params.slug)}${params.raw ? '/raw' : ''}`)
       .then(response => resolve(response.data.page))
       .catch(error => reject(error));
   });
@@ -26,7 +26,7 @@ function fetchPageBySlug (params = {}) {
 function fetchPageById (params = {}) {
   if (process.env.NODE_ENV === 'development') {
     if (!params.id) {
-      return Promise.reject('Page slug is required');
+      return Promise.reject('Page id is required');
     }
   }
 

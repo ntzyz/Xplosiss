@@ -16,7 +16,7 @@ function fetchPostBySlug (params) {
     }
   }
   return new Promise((resolve, reject) => {
-    axios.get(`${config.api.url}/post/by-slug/${params.slug}`)
+    axios.get(`${config.api.url}/post/by-slug/${encodeURIComponent(params.slug)}`)
       .then(response => resolve(response.data.post))
       .catch(error => reject(error));
   });
@@ -84,7 +84,7 @@ function createPost (params) {
 
 function putReplyBySlug (params) {
   return new Promise((resolve, reject) => {
-    axios.put(`${config.api.url}/post/by-slug/${params.slug}/reply`, params.data)
+    axios.put(`${config.api.url}/post/by-slug/${encodeURIComponent(params.slug)}/reply`, params.data)
       .then(response => resolve(response.dat))
       .catch(error => reject(error));
   });

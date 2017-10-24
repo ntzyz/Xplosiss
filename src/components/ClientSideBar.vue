@@ -76,19 +76,22 @@ div.side-bar {
     height: calc(100vh - 40px); /* title bar */
     position: fixed;
     top: 40px;
-    left: 0;
     overflow-y: scroll;
+    max-width: 300px;
     transform: translateX(-100vw);
   }
 
   div.drawer, div.drawer-container {
     z-index: 50;
     position: fixed;
-    top: 40px;
     left: 0;
     right: 0;
     bottom: 0;
     transition: all ease 0.3s;
+  }
+
+  div.drawer-container {
+    top: 0;
   }
 
   div.drawer::-webkit-scrollbar {
@@ -113,6 +116,7 @@ header.title {
   text-align: center;
   position: relative;
   padding-top: 1px;
+  z-index: 200;
 
   > a {
     // Fix IE11
