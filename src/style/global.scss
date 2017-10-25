@@ -107,6 +107,7 @@ pre {
   padding: 1em 0em 1em 1em;
   border-radius: 2px;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch; // iOS
   counter-reset: line;  
 }
 

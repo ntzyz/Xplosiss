@@ -24,6 +24,9 @@
           button.tag(v-for="tag in $store.state.tags" @click="addTag(tag.tag)") {{ tag.tag }}
           button.tag(@click="addTag(prompt('新标签叫啥呢？'))") +
       tr
+        td.label 封面图片：
+        td: input.full(v-model="cover") 
+      tr
         td.label 日期：
         td
           input.year(v-model="date.year")
@@ -79,6 +82,7 @@ export default {
       },
       category: '',
       tag: '',
+      cover: '',
       content: {
         encoding: 'html',
         content: '',
@@ -120,6 +124,7 @@ export default {
           category: this.category,
           content: this.content,
           tags: this.tags,
+          cover: this.cover,
         },
       }).then(() => {
         alert('文章已更新');
@@ -142,6 +147,7 @@ export default {
           category: this.category,
           content: this.content,
           tags: this.tags,
+          cover: this.cover,
         },
       }).then(res => {
         alert('文章已创建。');
@@ -156,6 +162,7 @@ export default {
         this.slug = post.slug;
         this.category = post.category;
         this.content = post.content;
+        this.cover = post.cover;
         this.id = post._id;
         this._tags = new Set(post.tags);
         this.tags = [...this._tags];

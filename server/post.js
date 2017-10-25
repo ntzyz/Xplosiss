@@ -146,6 +146,7 @@ router.post('/by-id/:id', async (req, res) => {
         date: new Date(req.body.date),
         tags: req.body.tags,
         content: req.body.content,
+        cover: req.body.cover,
       }}
     );
   } catch (e) {

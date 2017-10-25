@@ -13,6 +13,7 @@ function render (posts, options) {
       // Markdown-it can do it cleanly.
       if (options.preview && post.content.content.indexOf('<!-- more -->') >= 0) {
         post.content = post.content.content.substr(0, post.content.content.indexOf('<!-- more -->'));
+        post.more = true;
       } else {
         post.content = post.content.content;
       }
@@ -38,6 +39,7 @@ function render (posts, options) {
       // Cut the post content if we are in preview mode.
       if (options.preview && post.content.indexOf('<!-- more -->') >= 0) {
         post.content = post.content.substr(0, post.content.indexOf('<!-- more -->'));
+        post.more = true;
       }
 
       // Apply syntax highlighting for code blocks.

@@ -1,14 +1,16 @@
 <template lang="pug">
   div.post-view(v-if="post")
     div.card
-      header
-        h2.post-title {{ post.title }}
-        div.post-meta
-          span {{ timeToString(post.date, true) }}
-          span 分类：{{ post.category }}
-          span(v-for="tag in post.tags")
-            router-link(:to="'/tag/' + tag") \#{{ tag }}
-      article.post-content(v-html="post.content")
+      img(v-if="post.cover" :src="post.cover" style="width: 100%;")
+      .content
+        header
+          h2.post-title {{ post.title }}
+          div.post-meta
+            span {{ timeToString(post.date, true) }}
+            span 分类：{{ post.category }}
+            span(v-for="tag in post.tags")
+              router-link(:to="'/tag/' + tag") \#{{ tag }}
+        article.post-content(v-html="post.content")
     reply(:replies="post.replies", api-path="post", :refresh-replies="refreshReplies")
 </template>
 
@@ -79,7 +81,10 @@ export default {
 <style lang="scss">
 div.post-view {
   > div.card {
-    padding: 1em;
+    padding: 0em;
+    .content {
+      padding: 20px;
+    }
   }
 
   h2.post-title {

@@ -1,16 +1,18 @@
 <template lang="pug">
   div.posts-list
     div.list-item.card(v-for="post in posts")
-      header
-        router-link(:to="'/post/' + post.slug"): h2.post-title {{ post.title }}
-        div.post-meta
-          span {{ timeToString(post.date, true) }}
-          span 分类：{{ post.category }}
-          span(v-for="tag in post.tags") #
-            router-link(:to="'/tag/' + tag") {{tag}}
-      article.post-preview(v-html="post.content")
-      footer
-        router-link(:to="'/post/' + post.slug").button.more MORE
+      img(v-if="post.cover" :src="post.cover" style="width: 100%;")
+      div.content
+        header
+          router-link(:to="'/post/' + post.slug"): h2.post-title {{ post.title }}
+          div.post-meta
+            span {{ timeToString(post.date, true) }}
+            span 分类：{{ post.category }}
+            span(v-for="tag in post.tags") #
+              router-link(:to="'/tag/' + tag") {{tag}}
+        article.post-preview(v-html="post.content")
+        footer(v-if="post.more")
+          router-link(:to="'/post/' + post.slug").button.more MORE
     pagination(v-if="$store.state.pages", :current="$store.state.pages.current", length="7", :max="$store.state.pages.max", :prefix="prefix")
 </template>
 
@@ -73,6 +75,13 @@ div.posts-list {
     list-style: none;
   }
 
+  div.list-item.card {
+    padding: 0;
+    .content {
+      padding: 20px;
+    }
+  }
+
   h2.post-title {
     font-size: 1.25em;
     font-weight: normal;
@@ -80,15 +89,10 @@ div.posts-list {
   }
 
   .list-item {
-    // margin: 15px 0 15px 0;
     padding: 20px;
     background-color: white;
     border-radius: 2px;
   }
-
-  // li.list-item:not(:last-child) {
-  //   border-bottom: 1px solid grey;
-  // }
 
   div.post-meta {
     font-size: 0.9em;
@@ -98,7 +102,7 @@ div.posts-list {
   }
 
   article.post-preview {
-    padding: 0 1em 0 1em;
+    padding: 0 1em;
   }
 
   article {

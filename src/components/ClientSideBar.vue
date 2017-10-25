@@ -44,6 +44,7 @@ export default {
       e.stopPropagation();
       this.isDrawerOpen = false;
       document.removeEventListener('click', this.hideDrawer);
+      document.removeEventListener('touchstart', this.hideDrawer);
     },
     showDrawer (e) {
       if (this.isDrawerOpen) {
@@ -52,6 +53,7 @@ export default {
       e.stopPropagation();
       this.isDrawerOpen = true;
       document.addEventListener('click', this.hideDrawer);
+      document.addEventListener('touchstart', this.hideDrawer);
     }
   }
 };
@@ -77,6 +79,7 @@ div.side-bar {
     position: fixed;
     top: 40px;
     overflow-y: scroll;
+    -webkit-overflow-scrolling: touch; // iOS
     max-width: 300px;
     transform: translateX(-100vw);
   }
