@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.side-bar
+  div.side-bar(onclick="void(0)")
     header(v-if="components.title").title.card
       svg.drawer-trigger(viewBox="0 0 33.866666 33.866668" @click="showDrawer"): g(transform="translate(0,-263.13332)")
         rect(width="28.965336" height="5.5324793" x="2.4506655" y="277.30042")
@@ -44,7 +44,7 @@ export default {
       e.stopPropagation();
       this.isDrawerOpen = false;
       document.removeEventListener('click', this.hideDrawer);
-      document.removeEventListener('touchstart', this.hideDrawer);
+      // document.removeEventListener('touchstart', this.hideDrawer);
     },
     showDrawer (e) {
       if (this.isDrawerOpen) {
@@ -53,7 +53,7 @@ export default {
       e.stopPropagation();
       this.isDrawerOpen = true;
       document.addEventListener('click', this.hideDrawer);
-      document.addEventListener('touchstart', this.hideDrawer);
+      // document.addEventListener('touchstart', this.hideDrawer);
     }
   }
 };
@@ -150,9 +150,8 @@ header.title {
     width: 100vw;
     background: rgba(white, 0.9);
 
-    @supports (backdrop-filter: blur(2px)) {
-      backdrop-filter: blur(2px);
-    }
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
 
     h1 {
       margin: 0;
