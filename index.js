@@ -33,7 +33,7 @@ site.use((req, res, next) => {
   if (config.allowedOrigins.indexOf(origin) >= 0) {
     res.setHeader('Access-Control-Allow-Origin', origin);
   }
-  
+
   return next();
 });
 
@@ -104,7 +104,7 @@ function render (req, res) {
       res.redirect(err.url);
     } else {
       res.status(500).send('500');
-      console.log(err.stack);
+      console.log(err);
     }
   };
 
@@ -125,6 +125,21 @@ function render (req, res) {
     res.send(html);
   });
 }
+
+// Install all plugins
+config.plugins.forEach(plugin => {
+  let pluginMeta;
+
+  try {
+    pluginMeta = JSON.parse(fs.readFileSync(path.join(__dirname, './plugins/', plugin, './meta.json')));
+  } catch(e) {
+    console.error(e);
+    // TODO
+  }
+
+  const installer = require(path.join(__dirname, './plugins/', plugin, pluginMeta.entry.server));
+  installer({ site, utils });
+});
 
 // deal with all those unhandled requests here.
 site.get('*', (isProd || isTest) ? render : (req, res) => {

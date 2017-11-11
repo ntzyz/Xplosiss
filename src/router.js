@@ -18,7 +18,9 @@ const AdminPage = () => import(/* webpackChunkName: "group-admin" */ './componen
 
 Vue.use(VueRouter);
 
-export function createRouter () {
+export let coreComponents = { ClientSideBar, PostsList, PostView, PageView, NotFound };
+
+export function createRouter (extraRoutes) {
   const router = new VueRouter({
     mode: 'history',
     routes: [
@@ -141,20 +143,6 @@ export function createRouter () {
           sidebar: ClientSideBar,
         },
         meta: { keepAlive: true },
-      }, {
-        path: '/:slug',
-        components: {
-          default: PageView,
-          sidebar: ClientSideBar,
-        },
-        meta: { keepAlive: false }
-      }, {
-        path: '*',
-        components: {
-          default: NotFound,
-          sidebar: ClientSideBar,
-        },
-        meta: { keepAlive: true },
       }
     ],
     scrollBehavior (to, from, savedPosition) {
@@ -164,3 +152,22 @@ export function createRouter () {
 
   return router;
 };
+
+export function postCreateRouter (router) {
+  router.addRoutes([{
+    path: '/:slug',
+    components: {
+      default: PageView,
+      sidebar: ClientSideBar,
+    },
+    meta: { keepAlive: false }
+  }, {
+    path: '*',
+    components: {
+      default: NotFound,
+      sidebar: ClientSideBar,
+    },
+    meta: { keepAlive: true },
+  }]);
+};
+

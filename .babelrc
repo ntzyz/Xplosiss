@@ -2,12 +2,16 @@
   "presets": [
     ["env", { "modules": false }]
   ],
-  "plugins": ["syntax-dynamic-import"],
+  "plugins": [
+    "syntax-dynamic-import",
+    "transform-regenerator"
+  ],
   "env": {
     "test": {
       "plugins": [
         "istanbul",
-        "syntax-dynamic-import"
+        "syntax-dynamic-import",
+        "transform-regenerator"
       ]
     }
   }

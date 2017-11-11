@@ -1,0 +1,12 @@
+{
+  "name": "gallery",
+  "version": "0.1.0",
+  "author": {
+    "name": "ntzyz",
+    "email": "ntzyz@live.cn"
+  },
+  "entry": {
+    "server": "server/index.js",
+    "client": "client/index.js"
+  }
+}

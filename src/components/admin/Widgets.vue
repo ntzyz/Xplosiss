@@ -91,7 +91,7 @@ export default {
       }
     }
   },
-  created () {
+  mounted () {
     if (this.$store.state.token === '') {
       this.$router.push('/admin');
     } else {

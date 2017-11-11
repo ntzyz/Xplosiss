@@ -1,6 +1,5 @@
 <template lang="pug">
-  div.admin-side-bar
-    site-title
+  div.side-bar.admin-side-bar
     div.card
       h3.title Functions
       ul
@@ -23,7 +22,7 @@ export default {
   name: 'admin-side-bar',
   components: {
     SiteTitle
-  },
+  }
 };
 
 </script>

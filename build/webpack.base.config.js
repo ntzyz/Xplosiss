@@ -12,6 +12,7 @@ const clientConfig = {
   },
   components: config.components,
   meta: config.meta,
+  plugins: config.plugins,
 };
 
 fs.writeFileSync(path.join(__dirname, '../src/config.json'), JSON.stringify(clientConfig));
