@@ -2,9 +2,9 @@ const config = {
   database: 'mongodb://localhost:27017/newBlog?autoReconnect=false',
   port: 1234,
   favicon: null,
-  title: 'ntzyz\'s space"',
+  title: 'ntzyz\'s space',
   subtitle: '∠( ᐛ 」∠)_',
-  url: 'http://ntzyz-vm:1234/',
+  url: 'https://new.ntzyz.cn/',
   components: {
     title: true,
     categories: true,
@@ -19,7 +19,11 @@ const config = {
   },
   reply: {
     enableMarkdownSupport: true,
-  }
+  },
+  allowedOrigins: [
+    'https://example.ntzyz.cn/',
+    'http://example2.ntzyz.cn/',
+  ]
 };
 
 module.exports = config;

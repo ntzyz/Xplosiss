@@ -26,6 +26,17 @@ site.use(bodyParser.json());
 // print all access logs
 site.use(utils.logger);
 
+// set CORS headers
+site.use((req, res, next) => {
+  const origin = req.headers.origin;
+
+  if (config.allowedOrigins.indexOf(origin) >= 0) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  
+  return next();
+});
+
 // API entry
 site.use('/api', require('./server'));
 
