@@ -1,5 +1,20 @@
 const path = require('path');
 const webpack = require('webpack');
+const fs = require('fs');
+
+const config = require('../config');
+
+const clientConfig = {
+  title: config.title,
+  subtitle: config.subtitle,
+  api: {
+    url: config.url + 'api'
+  },
+  components: config.components,
+  meta: config.meta,
+};
+
+fs.writeFileSync(path.join(__dirname, '../src/config.json'), JSON.stringify(clientConfig));
 
 module.exports = {
   output: {

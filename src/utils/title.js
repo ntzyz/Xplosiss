@@ -1,4 +1,4 @@
-import config from '../config';
+import config from '../config.json';
 
 function getTitle (vm) {
   const { title } = vm.$options;

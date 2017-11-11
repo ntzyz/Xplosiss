@@ -19,7 +19,7 @@
 <script>
 import Pagination from '../components/Pagination.vue';
 
-import config from '../config';
+import config from '../config.json';
 import timeToString from '../utils/timeToString';
 
 export default {

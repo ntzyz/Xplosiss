@@ -17,7 +17,7 @@
 import io from 'socket.io-client';
 
 import SiteTitle from '../SiteTitle.vue';
-import config from '../../config.js';
+import config from '../../config.json';
 
 export default {
   name: 'admin-side-bar',

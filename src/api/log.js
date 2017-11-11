@@ -1,5 +1,5 @@
 import axios from 'axios';
-import config from '../config';
+import config from '../config.json';
 
 function fetchLogs (params = {}) {
   if (process.env.NODE_ENV === 'development') {

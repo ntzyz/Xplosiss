@@ -24,7 +24,7 @@ import CategoriesList from './CategoriesList.vue';
 import TagsList from './TagsList.vue';
 import Widgets from './Widgets.vue';
 import LatestReplies from './LatestReplies.vue';
-import config from '../config';
+import config from '../config.json';
 
 export default {
   name: 'client-side-bar',

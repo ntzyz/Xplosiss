@@ -1,5 +1,5 @@
 import axios from 'axios';
-import config from '../config';
+import config from '../config.json';
 
 function checkToken (token) {
   return new Promise((resolve, reject) => {

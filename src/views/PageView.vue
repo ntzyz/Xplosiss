@@ -8,7 +8,7 @@
 
 <script>
 import Reply from '../components/Reply.vue';
-import config from '../config';
+import config from '../config.json';
 
 export default {
   name: 'page-view',

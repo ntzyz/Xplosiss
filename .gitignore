@@ -2,6 +2,7 @@ node_modules/
 .vscode
 database.sql
 config.js
+config.json
 /uploads
 /static
 /dist

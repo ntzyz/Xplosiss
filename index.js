@@ -82,16 +82,7 @@ site.use('/manifest.json', serve('./manifest.json', true));
 site.use('/service-worker.js', serve('./dist/service-worker.js'));
 
 // Read client config from ./src/config.js
-let clientConfig = fs.readFileSync(path.resolve(__dirname, 'src/config.js'), 'UTF-8');
-let tmp = clientConfig.split(' ');
-// Remove the first two words(export, default)
-tmp.shift(); tmp.shift();
-// Parse the remaining part with eval.
-try {
-  eval('clientConfig = ' + tmp.join(' ')); // eslint-disable-line
-} catch (e) {
-  console.error(e);
-}
+let clientConfig = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'src/config.json'), 'UTF-8'));
 
 // The actual render entry.
 function render (req, res) {
