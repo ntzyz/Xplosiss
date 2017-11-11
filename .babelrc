@@ -2,10 +2,12 @@
   "presets": [
     ["env", { "modules": false }]
   ],
+  "plugins": ["syntax-dynamic-import"],
   "env": {
     "test": {
       "plugins": [
-        "istanbul"
+        "istanbul",
+        "syntax-dynamic-import"
       ]
     }
   }

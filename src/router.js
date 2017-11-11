@@ -7,14 +7,14 @@ import PostView from './views/PostView.vue';
 import PageView from './views/PageView.vue';
 import NotFound from './views/NotFound.vue';
 
-import AdminSideBar from './components/admin/AdminSideBar.vue';
-import TokenSetter from './components/admin/TokenSetter.vue';
-import AdminPostsList from './components/admin/PostsList.vue';
-import AdminPostEditor from './components/admin/PostEditor.vue';
-import AdminWidgets from './components/admin/Widgets.vue';
-import AdminLogs from './components/admin/AccessLogs.vue';
-import AdminMedia from './components/admin/Media.vue';
-import AdminPage from './components/admin/Page.vue';
+const AdminSideBar = () => import(/* webpackChunkName: "group-admin" */ './components/admin/AdminSideBar.vue');
+const TokenSetter = () => import(/* webpackChunkName: "group-admin" */ './components/admin/TokenSetter.vue');
+const AdminPostsList = () => import(/* webpackChunkName: "group-admin" */ './components/admin/PostsList.vue');
+const AdminPostEditor = () => import(/* webpackChunkName: "group-admin" */ './components/admin/PostEditor.vue');
+const AdminWidgets = () => import(/* webpackChunkName: "group-admin" */ './components/admin/Widgets.vue');
+const AdminLogs = () => import(/* webpackChunkName: "group-admin" */ './components/admin/AccessLogs.vue');
+const AdminMedia = () => import(/* webpackChunkName: "group-admin" */ './components/admin/Media.vue');
+const AdminPage = () => import(/* webpackChunkName: "group-admin" */ './components/admin/Page.vue');
 
 Vue.use(VueRouter);
 

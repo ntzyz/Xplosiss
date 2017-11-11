@@ -6,6 +6,7 @@ module.exports = {
         "browser": true,
     },
     "parserOptions": {
+        "parser": "babel-eslint",
         "ecmaVersion": 8
     },
     "extends": [
