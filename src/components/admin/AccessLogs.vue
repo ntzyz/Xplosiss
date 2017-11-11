@@ -28,10 +28,12 @@ export default {
   },
   beforeMount () {
     api.log.fetchLogs({ token: this.$store.state.token }).then(logs => {
+      const url = new URL(config.api.url + '/ws');
       this.logs = logs;
-      this.socket = io.connect(`${window.location.protocol}//${window.location.host}`, { path: `${config.api.url}/ws/`, query: `token=${this.$store.state.token}` });
-      this.socket.on('log', text => {
+      this.socket = io.connect(url.origin, { path: url.pathname, query: `token=${this.$store.state.token}` });
+      this.socket.on('log', text => { 
         this.logs.push(text);
+        console.log('here');
         setTimeout(() => {
           let list = document.querySelector('div.container');
           list.scrollTop = list.scrollHeight;
