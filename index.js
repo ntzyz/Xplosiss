@@ -128,17 +128,18 @@ function render (req, res) {
 
 // Install all plugins
 config.plugins.forEach(plugin => {
-  let pluginMeta;
+  let manifest;
 
   try {
-    pluginMeta = JSON.parse(fs.readFileSync(path.join(__dirname, './plugins/', plugin, './meta.json')));
+    manifest = JSON.parse(fs.readFileSync(path.join(__dirname, './plugins/', plugin, './manifest.json')));
   } catch(e) {
     console.error(e);
     // TODO
   }
 
-  const installer = require(path.join(__dirname, './plugins/', plugin, pluginMeta.entry.server));
+  const installer = require(path.join(__dirname, './plugins/', plugin, manifest.entry.server));
   installer({ site, utils });
+  console.log(`Loaded plugin: ${manifest.name} v${manifest.version}, written by ${manifest.author.name}.`);
 });
 
 // deal with all those unhandled requests here.

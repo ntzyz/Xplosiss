@@ -22,9 +22,10 @@ export async function createApp () {
   });
 
   await Promise.all(config.plugins.map(async plugin => {
-    const pluginMeta = await import(`../plugins/${plugin}/meta.json`);
-    const pluginEntity = await import(`../plugins/${plugin}/${pluginMeta.entry.client}`);
-    await pluginEntity.pluginInstaller({ app, router, store, coreComponents });
+    const pluginManifest = await import(`../plugins/${plugin}/manifest.json`);
+    const pluginEntity = await import(`../plugins/${plugin}/${pluginManifest.entry.client}`);
+    await pluginEntity.pluginInstaller({ app, router, store, coreComponents, config });
+    console.log(`Loaded plugin: ${pluginManifest.name} v${pluginManifest.version}, written by ${pluginManifest.author.name}.`);
   }));
 
   return { app, router, store };
