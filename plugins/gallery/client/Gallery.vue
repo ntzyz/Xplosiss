@@ -3,10 +3,13 @@
     h3.title Gallery
     div.content
       div.item-wrapper(v-for="image in images")
-        div.item(v-bind:style="{ backgroundImage: `url(${image.cover})` }")
-        div.introduction
-          h1.image-title {{ image.title }}
-          p {{ image.description }}
+        div.item-border
+          div.introduction
+            p.description {{ image.description }}
+            div.tags(v-if="image.tags && image.tags.length !== 0")
+              span.tag(v-for="tag in image.tags") {{ tag }}
+          div.item(v-bind:style="{ backgroundImage: `url(${image.cover})` }")
+        h3.image-title {{ image.title }}
 </template>
 
 <script>
@@ -28,68 +31,130 @@ export default {
 
 <style lang="scss" scoped>
 .gallery {
+  $height: 180px;
+
   div.content {
     display: flex;
-     flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding: 0.5em;
   }
 
   div.item-wrapper {
-    width: 50%;
-    height: 300px;
-    overflow: hidden;
+    width: calc(33.3% - 1em);
+    margin: 0.5em;
+    box-sizing: border-box;
     position: relative;
+  }
+
+  div.item-border {
+    overflow: hidden;
   }
 
   div.item {
     width: 100%;
-    height: 100%;
+    height: $height;
     background-size: cover;
     background-position: center;
     transition: all ease 0.6s;
-
-    &:hover {
-      transform: scale(1.05);
-      transition: all ease 0.3s;
-      filter: blur(2px);
-    }
   }
 
-  div.item:hover + div.introduction {
+  div.introduction:hover + div.item {
+    transform: scale(1.05);
+    transition: all ease 0.3s;
+    filter: blur(2px);
+  }
+
+  div.introduction:hover {
     opacity: 1;
+    background: rgba(0, 0, 0, 0.4);
   }
 
   div.introduction {
     position: absolute;
-    top: 0; bottom: 0;
+    top: 0;
     left: 0; right: 0;
+    z-index: 3;
+    height: $height;
     padding: 0 1em;
-    text-align: center;
     color: white;
-    text-shadow: rgba(white, 0.3) 0 0 2px;
-    background: rgba(0, 0, 0, 0.6);
-    opacity: 0;
+    $shadow-color: #333;
+    text-shadow: $shadow-color 1px 0px 1px, $shadow-color 0px 1px 1px, $shadow-color 0px -1px 1px, $shadow-color -1px 0px 1px;
     transition: all ease 0.3s;
-    pointer-events: none;
+    opacity: 0;
   }
 
-  h1.image-title {
-    margin: 3em 0 0 0;
+  h3.image-title {
+    margin: 0.5em 0 0 0;
+    font-size: 1.2rem;
+    font-weight: normal;
+    font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+    text-align: center;
+  }
+
+  p.description {
+    font-size: 0.95rem;
+  }
+
+  div.tags {
+    position: absolute;
+    bottom: 0.5em;
+    font-size: 13px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  div.tags::before {
+    content: 'Tags:';
+  }
+
+  span.tag {
+    display: block;
+    padding: 0px 4px;
+  }
+
+  span.tag::before {
+    content: '#'
+  }
+
+  @media screen and (max-width: 1152px) {
+    // middle device override
+    div.item-wrapper {
+      width: calc(50% - 1em);
+    }
+  }
+
+  @media screen and (max-width: 920px) {
+    // middle device override
+    div.item-wrapper {
+      width: calc(100% - 1em);
+    }
+  }
+
+  @media screen and (max-width: 800px) {
+    // tablet overrides
+    div.item-wrapper {
+      width: calc(50% - 1em);
+    }
+  }
+
+  @media screen and (max-width: 512px) {
+    // mobile overrides
+    div.item-wrapper {
+      width: calc(100% - 1em);
+    }
   }
 
   @media screen and (max-width: 800px) {
     // mobile overrides
-    div.item-wrapper {
-      width: 100%;
-    }
 
-    div.item:hover {
+    div.introduction:hover + div.item {
       filter: none;
       transform: none;
     }
 
     div.introduction {
       opacity: 1;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.4);
     }
   }
 
