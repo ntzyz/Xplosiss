@@ -8,7 +8,9 @@ function addSpanEachLine (html) {
 }
 
 function render (posts, options) {
-  return posts.map(post => {
+  return posts.map(origPost => {
+    let post = JSON.parse(JSON.stringify(origPost));
+    post.date = new Date(post.date);
     if (/^markdown$/i.test(post.content.encoding)) {
       // Markdown-it can do it cleanly.
       if (options.preview && post.content.content.indexOf('<!-- more -->') >= 0) {

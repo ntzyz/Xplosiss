@@ -68,6 +68,7 @@ module.exports = {
       'process.env.COMMIT': JSON.stringify(process.env.COMMIT || 'unknown'),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
     }),
+    new webpack.IgnorePlugin(/([^]+?)\/server\/([^]+?)/),
   ]
 };
 

@@ -5,6 +5,7 @@ const config = {
   title: 'ntzyz\'s space',
   subtitle: '∠( ᐛ 」∠)_',
   url: 'https://new.ntzyz.cn/',
+  language: 'zh-CN',
   components: {
     title: true,
     categories: true,

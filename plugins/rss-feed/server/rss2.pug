@@ -1,0 +1,18 @@
+doctype xml
+rss(version="2.0", xmlns:atom="http://www.w3.org/2005/Atom", xmlns:content="http://purl.org/rss/1.0/modules/content/"): channel
+  title=title
+  link=link
+  atom:link(href=feedUrl rel="self" type="application/rss+xml")
+  description=description
+  pubDate=posts[0].date.toUTCString()
+  generator https://github.com/ntzyz/new-blog
+  each post, index in posts
+    item
+      title=post.title
+      link=link + 'post/' + post.slug
+      guid=post._id
+      category=post.category
+      pubDate=post.date.toUTCString()
+      description=renderedPosts[index].content
+      content:encoded=post.content
+      comments=link + 'post/' + post.slug

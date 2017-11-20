@@ -138,7 +138,7 @@ config.plugins.forEach(plugin => {
   }
 
   const installer = require(path.join(__dirname, './plugins/', plugin, manifest.entry.server));
-  installer({ site, utils });
+  installer({ site, utils, config });
   console.log(`Loaded plugin: ${manifest.name} v${manifest.version}, written by ${manifest.author.name}.`);
 });
 
