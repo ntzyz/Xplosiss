@@ -16,7 +16,7 @@ function installer ({ site, utils, config }) {
       });
     }
     fs.readFile(path.resolve(__dirname, './rss2.pug'), 'utf-8', (err, template) => {
-      res.set('content-type', 'application/rss2+xml');
+      res.set('content-type', 'application/rss+xml');
       res.send(pug.render(template, {
         title: config.title,
         link: config.url,
