@@ -31,5 +31,21 @@ export async function createApp () {
     console.log(`Loaded plugin: ${pluginManifest.name} v${pluginManifest.version}, written by ${pluginManifest.author.name}.`);
   }));
 
+  router.addRoutes([{
+    path: '/:slug',
+    components: {
+      default: coreComponents.PageView,
+      sidebar: coreComponents.ClientSideBar,
+    },
+    meta: { keepAlive: false }
+  }, {
+    path: '*',
+    components: {
+      default: coreComponents.NotFound,
+      sidebar: coreComponents.ClientSideBar,
+    },
+    meta: { keepAlive: true },
+  }]);
+
   return { app, router, store };
 }

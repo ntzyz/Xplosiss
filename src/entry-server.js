@@ -19,7 +19,7 @@ export default context => new Promise((resolve, reject) => {
       const matchedComponents = router.getMatchedComponents();
   
       if (!matchedComponents.length) {
-        return reject({ code: 404 });
+        return reject({ code: 404, url: '/not-found' });
       }
   
       const componentsWithAsyncData = [];
