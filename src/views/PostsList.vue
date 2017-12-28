@@ -40,11 +40,23 @@ export default {
   title () {
     const route = this.$route;
     if (route.params.category) {
-      return `分类：${config.title}`;
+      return `分类：${route.params.category}`;
     } else if (route.params.tag) {
       return `标签：${route.params.tag}`;
     }
     return '首页';
+  },
+  openGraph () {
+    const route = this.$route;
+    let og = {};
+    if (route.params.category) {
+      og.description = `查看${route.params.category}分类下的所有文章`;
+    } else if (route.params.tag) {
+      og.description = `查看${route.params.tag}标签下的所有文章`;
+    } else {
+      og.description = '全部文章'
+    }
+    return og;
   },
   watch: {
     '$route': function () {

@@ -1,6 +1,6 @@
 <template lang="pug">
-  div.realtime-access-logs
-    h2 实时日志
+  div.realtime-access-logs.card
+    h3.title 实时日志
     div.container
       pre: span(v-for="log in logs" class="__line") {{ log }}
 </template>
@@ -55,8 +55,9 @@ div.realtime-access-logs {
     overflow: scroll;
     pre {
       margin: 0;
-      padding: 0;
+      padding: 1em 0 1em 0;
       overflow: visible;
+      background-color: white;
     }
     span {
       display: block;

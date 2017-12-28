@@ -19,6 +19,12 @@ export default {
     }
   },
   title () { return this.page.title; },
+  openGraph () {
+    return {
+      description: this.page.content.replace(/<(?:.|\n)*?>/gm, '').substr(0, 50) + '...',
+      image: this.post.cover,
+    }
+  },
   watch: {
     page (page) {
       if (page && page.title) {

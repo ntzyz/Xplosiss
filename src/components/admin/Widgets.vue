@@ -1,29 +1,31 @@
 <template lang="pug">
   div.widgets-manage
-    div(v-if="editing === null")
-      h2 从列表中选择一个待编辑的工具
-      select.widget-picker(v-model="selected")
-        option(v-for="widget in widgets" :value="widget._id") {{ widget.title }}
-        option(:value="null") 创建一个新的小工具
-      button.widget-edit-button(@click="editWidget(selected)") 继续
-    div(v-else)
-      h2 创建/编辑工具
-      table.form-table
-        tr
-          td.label 标题：
-          td: input.full(v-model="editing.title")
-        tr
-          td.label HTML：
-          td: textarea.content(v-model="editing.content")
-        tr
-          td.label 启用：
-          td: input(type="checkbox" v-model="editing.enabled")
-        tr
-          td.label
-          td
-            button(@click="back") RETURN
-            button(@click="save") SAVE
-            button.right(@click="deleteWidget") DELETE
+    div.card(v-if="editing === null")
+      h3.title 从列表中选择一个待编辑的工具
+      div.container
+        select.widget-picker(v-model="selected")
+          option(v-for="widget in widgets" :value="widget._id") {{ widget.title }}
+          option(:value="null") 创建一个新的小工具
+        button.widget-edit-button(@click="editWidget(selected)") 继续
+    div.card(v-else)
+      h3.title 创建/编辑工具
+      div.container
+        table.form-table
+          tr
+            td.label 标题：
+            td: input.full(v-model="editing.title")
+          tr
+            td.label HTML：
+            td: textarea.content(v-model="editing.content")
+          tr
+            td.label 启用：
+            td: input(type="checkbox" v-model="editing.enabled")
+          tr
+            td.label
+            td
+              button(@click="back") RETURN
+              button(@click="save") SAVE
+              button.right(@click="deleteWidget") DELETE
 </template>
 
 <script>
@@ -109,6 +111,9 @@ export default {
 @import '../../style/form-table.scss';
 
 div.widgets-manage {
+  .container {
+    padding: 1em;
+  }
   input.short {
     width: 2.5em;
   }

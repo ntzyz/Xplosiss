@@ -1,6 +1,6 @@
 <template lang="pug">
-  div.pages-manage
-    h3 管理自定义页面
+  div.pages-manage.card
+    h3.title 管理自定义页面
     div(v-if="editing === null")
       ul.pages-list
         li(v-for="page in pages" @click="edit(page._id)") {{ page.title }}

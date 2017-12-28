@@ -2,6 +2,9 @@
 
 body {
   font-family: "Noto Sans CJK", "Noto Sans CJK SC", "Source Han Sans", "Source Han Sans CN", "思源黑体", "思源黑体 CN", "WenQuanYi Micro Hei", "Microsoft Yahei UI", "Microsoft Yahei", "微软雅黑", "SimHei", sans-serif;
+  background-image: url(http://ntzyz-y50.lan:1234/api/media/1234.png);
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 h1, h2, h3, h4, h5 {
@@ -21,7 +24,7 @@ button, .button {
   border: none;
   color: white;
   border-radius: 2px;
-  box-shadow: 0 0 4px lightgray;
+  box-shadow: 0 0 4px rgba(white, 0.5);
   font-size: 14px;
   transition: all ease 0.2s;
   cursor: pointer;
@@ -49,6 +52,7 @@ a, a:link, a:visited, a:active, a:hover {
   text-decoration: none;
   cursor: pointer;
   outline: none;
+  word-break: break-all;  
 }
 
 a.button {
@@ -75,7 +79,8 @@ a:not(.button):hover {
 
 .card {
   background-color: $card_background_color;
-  box-shadow: 1px 1px 4px lightgrey;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(20px);
   margin-top: 15px;
   margin-bottom: 15px;
   padding-top: 0px;

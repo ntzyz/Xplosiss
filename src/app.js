@@ -8,9 +8,11 @@ import { createStore } from './store';
 import config from './config.json';
 
 import titleMixin from './utils/title';
+import openGraphMixin from './utils/open-graph';
 
 Vue.use(Vuex);
 Vue.mixin(titleMixin);
+Vue.mixin(openGraphMixin);
 
 export async function createApp () {
   const router = createRouter();

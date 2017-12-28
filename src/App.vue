@@ -10,6 +10,7 @@
 
 <script>
 import LoadingIcon from './components/LoadingIcon.vue';
+import config from './config.json';
 
 export default {
   name: 'app',
@@ -17,6 +18,12 @@ export default {
     return {
       transitionName: 'forward',
       lastScrollY: null,
+    };
+  },
+  openGraph () {
+    return {
+      site_name: config.title,
+      // description: config.subtitle,
     };
   },
   components: {
@@ -27,7 +34,7 @@ export default {
   },
   watch: {
     '$route': function () {
-      if (document) {
+      if (typeof document !== 'undefined') {
         document.querySelector('#left-wrapper').setAttribute('style', '');
       }
     }

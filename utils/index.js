@@ -6,4 +6,5 @@ module.exports = {
   randomString: require('./random-string'),
   logger: require('./logger'),
   websocket: require('./websocket'),
+  promise: require('./promise'),
 };

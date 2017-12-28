@@ -1,7 +1,7 @@
 <template lang="pug">
-  div.post-editor
-    h2 创建/编辑文章
-    table.form-table
+  div.post-editor.card
+    h3.title 创建/编辑文章
+    div.container: table.form-table
       tr
         td.label 标题：
         td: input.full(v-model="title")
@@ -231,6 +231,9 @@ export default {
 @import '../../style/form-table.scss';
 
 div.post-editor {
+  .container {
+    padding: 1em;
+  }
   input.short {
     width: 2.5em;
   }

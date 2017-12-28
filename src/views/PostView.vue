@@ -34,15 +34,39 @@ export default {
       extraDoms: [],
     };
   },
+  openGraph () {
+    return {
+      description: this.post.content.replace(/<(?:.|\n)*?>/gm, '').substr(0, 50) + '...',
+      image: this.post.cover,
+    }
+  },
   watch: {
-    post: function (post) {
+    post (post) {
       document.title = `${post.title || 'Loading...'} - ${config.title}`;
+    },
+    '$route': function (route) {
+      this.$store.dispatch('fetchPostBySlug', route.params.slug);
+    }
+  },
+  beforeDestroy () {
+    this.extraDoms.forEach(el => el.remove());
+  },
+  mounted () {
+    this.injectScripts();
+  },
+  methods: {
+    timeToString,
+    refreshReplies () {
+      this.$store.dispatch('fetchPostBySlug', this.$route.params.slug);
+    },
+    injectScripts () {
       this.$nextTick(() => {
-        let componentRoot = document.querySelector('div.post-view');
+        let componentRoot = this.$el;
         this.$nextTick(() => {
           let scripts = Array.from(componentRoot.querySelectorAll('script'));
           if (scripts.length === 0) return;
 
+          console.log(`Script to inject: ${scripts.length}`);
           scripts.forEach(script => {
             let clone = document.createElement('SCRIPT');
             if (script.getAttribute('src')) {
@@ -58,18 +82,6 @@ export default {
         });
       });
     },
-    '$route': function (route) {
-      this.$store.dispatch('fetchPostBySlug', route.params.slug);
-    }
-  },
-  beforeDestroy () {
-    this.extraDoms.forEach(el => el.remove());
-  },
-  methods: {
-    timeToString,
-    refreshReplies () {
-      this.$store.dispatch('fetchPostBySlug', this.$route.params.slug);
-    }
   },
   asyncData ({ store, route }) {
     return store.dispatch('fetchPostBySlug', route.params.slug);

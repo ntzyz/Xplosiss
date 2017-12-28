@@ -1,19 +1,20 @@
 <template lang="pug">
-  div.media-manage
-    h2 管理媒体文件
-    button(@click="upload") UPLOAD NEW
-    table
-      tr
-        th.filename 文件名
-        th.mime MIME
-        th.operation 操作
-      tr(v-for="file in files")
-        td.filename: span {{ file.file }}
-        td.mime {{ file.mime || 'text/plain' }}
-        td.operation 
-          a(:href="getFileURL(file.file)" target="_blank") 预览
-          a(@click="deleteFile(file.file)") 删除
-    input(type="file" style="display: none")
+  div.media-manage.card
+    h3.title 管理媒体文件
+    .container
+      button(@click="upload") UPLOAD NEW
+      table
+        tr
+          th.filename 文件名
+          th.mime MIME
+          th.operation 操作
+        tr(v-for="file in files")
+          td.filename: span {{ file.file }}
+          td.mime {{ file.mime || 'text/plain' }}
+          td.operation 
+            a(:href="getFileURL(file.file)" target="_blank") 预览
+            a(@click="deleteFile(file.file)") 删除
+      input(type="file" style="display: none")
 </template>
 
 <script>
@@ -70,6 +71,9 @@ export default {
 <style lang="scss">
 div.media-manage {
   overflow: hidden;
+  .container {
+    padding: 1em;
+  }
   table {
     width: 100%;
     table-layout: fixed;

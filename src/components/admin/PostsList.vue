@@ -1,7 +1,7 @@
 <template lang="pug">
-  div.posts-list
-    h2 文章列表
-    table
+  div.posts-list.card
+    h3.title 文章列表
+    div.container: table
       thead: tr
         th 标题
         th 时间
@@ -59,6 +59,9 @@ export default {
 @import '../../style/global.scss';
 
 .posts-list {
+  .container {
+    padding: 1em;
+  }
   table {
     width: 100%;
   }
