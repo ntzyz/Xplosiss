@@ -18,14 +18,7 @@ const serverOpenGraphMixin = {
   }
 };
 
-const clientOpenGraphMixin = {
-  mounted () {
-    const og = getOpenGraph(this);
-    if (og) {
-      this.$ssrContext.og = Object.assign(this.$ssrContext.og || {}, og);
-    }
-  }
-};
+const clientOpenGraphMixin = {};
 
 export default process.env.VUE_ENV === 'server'
   ? serverOpenGraphMixin
