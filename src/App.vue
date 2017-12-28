@@ -21,10 +21,13 @@ export default {
     };
   },
   openGraph () {
-    return {
+    let og = {
       site_name: config.title,
-      // description: config.subtitle,
+      type: 'website',
+      url: config.url + this.$router.resolve(this.$router.currentRoute).href,
     };
+
+    return og;
   },
   components: {
     LoadingIcon

@@ -7,8 +7,9 @@ const config = require('../config');
 const clientConfig = {
   title: config.title,
   subtitle: config.subtitle,
+  url: config.url,
   api: {
-    url: config.url + 'api'
+    url: config.url + '/api'
   },
   components: config.components,
   meta: config.meta,
