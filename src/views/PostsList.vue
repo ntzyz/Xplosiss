@@ -54,7 +54,7 @@ export default {
     } else if (route.params.tag) {
       og.description = `查看${route.params.tag}标签下的所有文章`;
     } else {
-      og.description = '全部文章'
+      og.description = '全部文章';
     }
     return og;
   },

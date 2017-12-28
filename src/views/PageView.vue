@@ -23,7 +23,7 @@ export default {
     return {
       description: this.page.content.replace(/<(?:.|\n)*?>/gm, '').substr(0, 50) + '...',
       image: this.post.cover,
-    }
+    };
   },
   watch: {
     page (page) {

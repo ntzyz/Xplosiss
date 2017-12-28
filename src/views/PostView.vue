@@ -38,7 +38,7 @@ export default {
     return {
       description: this.post.content.replace(/<(?:.|\n)*?>/gm, '').substr(0, 50) + '...',
       image: this.post.cover,
-    }
+    };
   },
   watch: {
     post (post) {
