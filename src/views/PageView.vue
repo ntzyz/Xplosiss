@@ -22,10 +22,13 @@ export default {
   openGraph () {
     return {
       description: this.page.content.replace(/<(?:.|\n)*?>/gm, '').substr(0, 50) + '...',
-      image: this.post.cover,
+      image: this.page.cover,
     };
   },
   watch: {
+    '$route': function (route) {
+      return this.$store.dispatch('fetchPageBySlug', route.params.slug);
+    },
     page (page) {
       if (page && page.title) {
         document.title = `${page.title} - ${config.title}`;

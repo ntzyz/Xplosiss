@@ -46,6 +46,9 @@ export default {
     this.lastScrollY = window.scrollY;
 
     window.addEventListener('click', event => {
+      if (event.which !== 1) {
+        return; // Capture left click only.
+      }
       let target = event.target;
       while (target !== null && target.tagName !== 'A') {
         target = target.parentNode;
