@@ -29,7 +29,7 @@ export default {
   computed: {
     post () { return this.$store.state.post; },
   },
-  title () { return this.post.title; },
+  title () { return this.post ? this.post.title : 'Loading...'; },
   data () {
     return {
       extraDoms: [],

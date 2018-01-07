@@ -43,15 +43,7 @@ export default {
     }
   },
   asyncData({ route, store, redirect }) {
-    return store.dispatch('fetchPageBySlug', route.params.slug)
-    // .catch(error => {
-    //   if (error.response.status === 404) {
-    //     setTimeout(() => { redirect('/not-found'); }, 100);
-    //     return Promise.resolve();
-    //   } else {
-    //     return Promise.reject(error);
-    //   }
-    // });
+    return store.dispatch('fetchPageBySlug', route.params.slug);
   }
 };
 </script>

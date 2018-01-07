@@ -10,7 +10,11 @@ createApp().then(({ app, store, router }) => {
     console.log(error);
     app.$forceUpdate();
     router.replace('/not-found');
-    app.$forceUpdate();
+    setTimeout(() => {
+      app.$forceUpdate();
+      console.log('updated');
+      window.app = app;
+    }, 1000);
   });
 
   router.onReady(() => {
@@ -57,7 +61,11 @@ createApp().then(({ app, store, router }) => {
       })).then(() => {
         next();
       }).catch((error) => {
-        next(error);
+        // We couldn't handle error here as `router.replace` will make components 'disappear'
+        // on Google Chrome and I don't know why will this shit happen.
+        // But server side rendering can redirect this page to error page like 404 not found
+        // So we just reload here, leave this problem to the render server.
+        window.location.href = router.resolve(to).href;
       });
     });
   
