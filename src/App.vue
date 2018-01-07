@@ -45,21 +45,6 @@ export default {
   mounted () {
     this.lastScrollY = window.scrollY;
 
-    window.addEventListener('click', event => {
-      if (event.which !== 1) {
-        return; // Capture left click only.
-      }
-      let target = event.target;
-      while (target !== null && target.tagName !== 'A') {
-        target = target.parentNode;
-      }
-      if (target && target.href && target.href.indexOf(window.location.origin) === 0) {
-        event.preventDefault();
-        let url = new window.URL(target.href);
-        this.$router.push(url.href.replace(url.origin, ''));
-      }
-    });
-
     window.addEventListener('scroll', () => {
       if (window.innerWidth <= 800) {
         document.querySelector('#left-wrapper').setAttribute('style', '');

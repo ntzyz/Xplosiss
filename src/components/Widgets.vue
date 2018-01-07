@@ -2,12 +2,15 @@
   div.widgets
     div.card(v-for="widget in widgets")
       h3.title {{ widget.title }}
-      div.content(v-html="widget.content")
+      div.content(v-html="widget.content" @click="linkEventHandler")
 </template>
 
 <script>
+import clickEventMixin from '../utils/link-injector';
+
 export default {
   name: 'widgets',
+  mixins: [clickEventMixin],
   computed: {
     widgets: function () { return this.$store.state.widgets; }
   },

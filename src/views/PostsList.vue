@@ -10,7 +10,7 @@
             span 分类：{{ post.category }}
             span(v-for="tag in post.tags") #
               router-link(:to="'/tag/' + tag") {{tag}}
-        article.post-preview(v-html="post.content")
+        article.post-preview(v-html="post.content" @click="linkEventHandler")
         footer(v-if="post.more")
           router-link(:to="'/post/' + post.slug").button.more MORE
     pagination(v-if="$store.state.pages", :current="$store.state.pages.current", length="7", :max="$store.state.pages.max", :prefix="prefix")
@@ -21,10 +21,12 @@ import Pagination from '../components/Pagination.vue';
 
 import config from '../config.json';
 import timeToString from '../utils/timeToString';
+import clickEventMixin from '../utils/link-injector';
 
 export default {
   name: 'posts-list',
   components: { Pagination },
+  mixins: [clickEventMixin],
   computed: {
     posts: function () { return this.$store.state.posts; },
     prefix: function () {

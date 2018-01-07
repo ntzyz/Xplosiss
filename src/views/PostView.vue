@@ -10,7 +10,7 @@
             span 分类：{{ post.category }}
             span(v-for="tag in post.tags")
               router-link(:to="'/tag/' + tag") \#{{ tag }}
-        article.post-content(v-html="post.content")
+        article.post-content(v-html="post.content" @click="linkEventHandler")
     reply(:replies="post.replies", api-path="post", :refresh-replies="refreshReplies")
 </template>
 
@@ -20,10 +20,11 @@ import Reply from '../components/Reply.vue';
 import config from '../config.json';
 import timeToString from '../utils/timeToString';
 import titleMixin from '../utils/title';
+import clickEventMixin from '../utils/link-injector';
 
 export default {
   name: 'post-view',
-  mixins: [titleMixin],
+  mixins: [titleMixin, clickEventMixin],
   components: { Reply },
   computed: {
     post () { return this.$store.state.post; },
@@ -35,9 +36,19 @@ export default {
     };
   },
   openGraph () {
+    let img = this.post.cover;
+    if (!img) {
+      const imgs = this.post.content.match(/<img ([^>]+?)>/);
+      if (imgs && imgs[1]) {
+        img = imgs[1].match(/src=\"([^"]+?)\"/);
+        if (img && img[1]) {
+          img = img[1];
+        }
+      }
+    }
     return {
-      description: this.post.content.replace(/<(?:.|\n)*?>/gm, '').substr(0, 50) + '...',
-      image: this.post.cover,
+      description: this.post.content.replace(/<(?:.|\n)*?>/gm, '').replace(/[\n\t\r]/g, '').replace(/\"/g, '&quot;').substr(0, 100) + '...',
+      image: img,
     };
   },
   watch: {

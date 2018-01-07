@@ -6,6 +6,13 @@ createApp().then(({ app, store, router }) => {
     store.replaceState(window.__INITIAL_STATE__);
   }
   
+  router.onError((error) => {
+    console.log(error);
+    app.$forceUpdate();
+    router.replace('/not-found');
+    app.$forceUpdate();
+  });
+
   router.onReady(() => {
     router.beforeEach((to, from, next) => {
       if (store.state.forceReload) {
@@ -42,14 +49,16 @@ createApp().then(({ app, store, router }) => {
       activated.forEach(C => {
         checkComponent(C);
       });
-  
+
       Promise.all(componentsWithAsyncData.map(c => {
         if (c.asyncData) {
           return c.asyncData({ store, route: to });
         }
       })).then(() => {
         next();
-      }).catch(next);
+      }).catch((error) => {
+        next(error);
+      });
     });
   
     console.log(`You are using Xplosiss-git(${process.env.COMMIT || 'unknown'})${process.env.COMMIT && `\nAbout this commit: https://github.com/ntzyz/new-blog/commit/${process.env.COMMIT}`}`);

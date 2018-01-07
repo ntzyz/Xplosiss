@@ -2,17 +2,19 @@
   .page-view
     .card
       h3.title {{ page.title }}
-      article.content(v-html="page.content")
+      article.content(v-html="page.content", @click="linkEventHandler")
     reply(:replies="page.replies || []", api-path="page", :refresh-replies="refreshReplies")
 </template>
 
 <script>
 import Reply from '../components/Reply.vue';
 import config from '../config.json';
+import clickEventMixin from '../utils/link-injector';
 
 export default {
   name: 'page-view',
   components: { Reply },
+  mixins: [clickEventMixin],
   computed: {
     page () {
       return this.$store.state.page;
@@ -40,8 +42,16 @@ export default {
       this.$store.dispatch('fetchPageBySlug', this.$route.params.slug);
     }
   },
-  asyncData({ route, store }) {
-    return store.dispatch('fetchPageBySlug', route.params.slug);
+  asyncData({ route, store, redirect }) {
+    return store.dispatch('fetchPageBySlug', route.params.slug)
+    // .catch(error => {
+    //   if (error.response.status === 404) {
+    //     setTimeout(() => { redirect('/not-found'); }, 100);
+    //     return Promise.resolve();
+    //   } else {
+    //     return Promise.reject(error);
+    //   }
+    // });
   }
 };
 </script>
