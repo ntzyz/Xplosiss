@@ -2,6 +2,7 @@
   div.card.gallery 
     h3.title Gallery
     div.content
+      div.empty(v-if="images.length === 0") 目前，这里除了好奇什么都没有。
       div.item-wrapper(v-for="image in images")
         div.item-border
           div.introduction
@@ -50,6 +51,16 @@ export default {
     overflow: hidden;
   }
 
+  div.empty {
+    text-align: center;
+    width: 100%;
+    font-size: 2.5em;
+    line-height: 200px;
+    color: grey;
+    user-select: none;
+    font-weight: 500;
+  }
+
   div.item {
     width: 100%;
     height: $height;
@@ -59,14 +70,14 @@ export default {
   }
 
   div.introduction:hover + div.item {
-    transform: scale(1.05);
+    transform: scale(1.1);
     transition: all ease 0.3s;
-    filter: blur(2px);
+    // filter: blur(2px);
   }
 
   div.introduction:hover {
     opacity: 1;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.5);
   }
 
   div.introduction {
@@ -104,7 +115,7 @@ export default {
   }
 
   div.tags::before {
-    content: 'Tags:';
+    // content: 'Tags:';
   }
 
   span.tag {
@@ -154,7 +165,7 @@ export default {
 
     div.introduction {
       opacity: 1;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.5);
     }
   }
 

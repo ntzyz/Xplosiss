@@ -34,5 +34,8 @@ export default {
   },
   setReplies: (state, replies) => {
     state.replies = replies;
+  },
+  addAdminUnit: (state, unit) => {
+    state.extraAdminUnits.push(unit);
   }
 };

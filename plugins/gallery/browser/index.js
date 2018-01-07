@@ -1,4 +1,5 @@
 import Gallery from './Gallery.vue';
+import GalleryAdmin from './GalleryAdmin.vue';
 import axios from 'axios';
 
 export function pluginInstaller ({ app, router, store, coreComponents, config }) {
@@ -9,6 +10,12 @@ export function pluginInstaller ({ app, router, store, coreComponents, config })
         default: Gallery,
         sidebar: coreComponents.ClientSideBar,
       },
+    }, {
+      path: '/admin/gallery',
+      components: {
+        default: GalleryAdmin,
+        sidebar: coreComponents.AdminSideBar
+      }
     }
   ]);
 
@@ -19,14 +26,28 @@ export function pluginInstaller ({ app, router, store, coreComponents, config })
     actions: {
       fetchImages: state => {
         return axios.get(`${config.api.url}/gallery`).then(response => {
-          console.log(response.data.images);
           state.commit('setImages', response.data.images);
         });
+      },
+      createImage: (state, image) => {
+        image.tags = image.tags.split(' ');
+        return axios.put(`${config.api.url}/gallery?token=${store.state.token}`, image);
+      },
+      removeImage: (state, id) => {
+        return axios.delete(`${config.api.url}/gallery/${id}?token=${store.state.token}`);
+      },
+      updateImage: (state, image) => {
+        return axios.post(`${config.api.url}/gallery/${image._id}?token=${store.state.token}`, image);
       }
     },
     mutations: {
       setImages: (store, images) => store.images = images,
     }
+  });
+
+  store.commit('addAdminUnit', {
+    name: '管理 Gallery',
+    href: '/admin/gallery',
   });
 
   return Promise.resolve();

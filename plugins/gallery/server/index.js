@@ -1,34 +1,103 @@
+const { ObjectID } = require('mongodb');
+
 function pluginInstaller ({ site, utils }) {
-  site.get('/api/gallery', (req, res) => {
-    res.send({
+  site.get('/api/gallery', async (req, res) => {
+    let images;
+
+    try {
+      images = await utils.db.conn.collection('gallery').find().toArray();
+    } catch (e) {
+      return res.status(500).send({
+        status: 'error',
+        message: utils.messages.ERR_MONGO_FAIL
+      });
+    }
+
+    return res.send({
       status: 'ok',
-      images: [
-        {
-          cover: '/api/media/fig-1.jpg',
-          title: 'SwagRocket555',
-          description: 'Active speed brake controller for model rocket target altitude competition',
-          tags: [],
-        }, 
-        {
-          cover: '/api/media/fig-3-3.jpg',
-          title: 'n00b',
-          description: 'Handle Jog for Computers',
-          tags: ['USB', 'ELECTRONICS', 'HMI', 'EMBEDDED'],
-        }, 
-        {
-          cover: '/api/media/fig-27.jpg',
-          title: 'Robocart',
-          description: '这是一张测试图片',
-          tags: [],
-        },
-        {
-          cover: '/api/media/WIN_20160502_21_54_45_Pro.webp',
-          title: 'Frontier Exploration with ROS+Turtlebot',
-          description: '这是一张测试图片',
-          tags: [],
-        },
-      ]
+      images,
     });
+  });
+
+  site.put('/api/gallery', async (req, res) => {
+    if (req.query.token !== utils.token) {
+      return res.status(403).send({
+        status: 'error',
+        message: utils.messages.ERR_ACCESS_DENIED,
+      });
+    }
+
+    let r;
+    try {
+      r = await utils.db.conn.collection('gallery').insert({
+        title: req.body.title,
+        description: req.body.description,
+        cover: req.body.cover,
+        tags: req.body.tags,
+        href: req.body.href,
+      });
+    } catch (e) {
+      return res.status(500).send({
+        status: 'error',
+        message: utils.messages.ERR_MONGO_FAIL
+      });
+    }
+
+    res.send({ status: 'ok', id: r.insertedIds[0] });
+  });
+
+  site.delete('/api/gallery/:id', async (req, res) => {
+    if (req.query.token !== utils.token) {
+      return res.status(403).send({
+        status: 'error',
+        message: utils.messages.ERR_ACCESS_DENIED,
+      });
+    }
+  
+    try {
+      await utils.db.conn.collection('gallery').remove(
+        { _id: ObjectID(req.params.id) }
+      );
+    } catch (e) {
+      console.error(e);
+      return res.status(500).send({
+        status: 'error',
+        message: utils.messages.ERR_MONGO_FAIL,
+      });
+    }
+  
+    res.send({ status: 'ok' });
+  });
+
+  site.post('/api/gallery/:id', async (req, res) => {
+    if (req.query.token !== utils.token) {
+      return res.status(403).send({
+        status: 'error',
+        message: utils.messages.ERR_ACCESS_DENIED,
+      });
+    }
+  
+    try {
+      await utils.db.conn.collection('gallery').findAndModify(
+        { _id: ObjectID(req.params.id) },
+        [],
+        { $set: {
+          title: req.body.title,
+          description: req.body.description,
+          cover: req.body.cover,
+          tags: req.body.tags,
+          href: req.body.href,
+        }}
+      );
+    } catch (e) {
+      console.error(e);
+      return res.status(500).send({
+        status: 'error',
+        message: utils.messages.ERR_MONGO_FAIL,
+      });
+    }
+  
+    res.send({ status: 'ok' });
   });
 }
 

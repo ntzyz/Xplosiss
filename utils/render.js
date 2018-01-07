@@ -24,7 +24,7 @@ function render (posts, options) {
         highlight: function (str, lang) {
           if (lang && hljs.getLanguage(lang)) {
             try {
-              return `<pre>${addSpanEachLine(hljs.highlight(lang.trim(), str, true).value)}</pre>`;
+              return `<pre>${addSpanEachLine(hljs.highlight(lang, str.replace(/(\s+$)/g, ''), true).value)}</pre>`;
             } catch (__) {}
           }
           return `<pre>${str}</pre>`;
@@ -46,10 +46,10 @@ function render (posts, options) {
 
       // Apply syntax highlighting for code blocks.
       post.content = post.content.replace(/<code lang="(.+?)">([^]+?)<\/code>/g, (match, p1, p2) => {
-        let rendered = hljs.highlight(p1, p2.trim()).value;
+        let rendered = hljs.highlight(p1, p2.replace(/(\s+$)/g, '')).value;
         return `<pre>${addSpanEachLine(rendered)}</pre>`;
       }).replace(/<code>([^]+?)<\/code>/g, (match, p1) => {
-        let rendered = hljs.highlightAuto(p1.trim()).value;
+        let rendered = hljs.highlightAuto(p1.replace(/(\s+$)/g, '')).value;
         return `<pre>${addSpanEachLine(rendered)}</pre>`;
       });
     }
@@ -61,7 +61,7 @@ function render (posts, options) {
           highlight: function (str, lang) {
             if (lang && hljs.getLanguage(lang)) {
               try {
-                return `<pre>${addSpanEachLine(hljs.highlight(lang.trim(), str, true).value)}</pre>`;
+                return `<pre>${addSpanEachLine(hljs.highlight(lang, str.replace(/(\s+$)/g, ''), true).value)}</pre>`;
               } catch (__) {}
             }
             return `<pre>${str}</pre>`;

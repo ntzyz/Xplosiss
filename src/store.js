@@ -19,6 +19,7 @@ export function createStore () {
       forceReload: false,
       page: {},
       token: '',
+      extraAdminUnits: [],
     },
     actions,
     mutations

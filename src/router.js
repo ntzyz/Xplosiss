@@ -18,7 +18,7 @@ const AdminPage = () => import(/* webpackChunkName: "group-admin" */ './componen
 
 Vue.use(VueRouter);
 
-export let coreComponents = { ClientSideBar, PostsList, PostView, PageView, NotFound };
+export let coreComponents = { ClientSideBar, PostsList, PostView, PageView, NotFound, AdminSideBar };
 
 export function createRouter (extraRoutes) {
   const router = new VueRouter({
