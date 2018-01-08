@@ -46,13 +46,17 @@ Note: you should always rebuild it after editing `/src/config.js` or merging fro
 
 ```
 echo "
-[Uint]
+[Unit]
 Description=A naive blog framework
+After=network.target
 
 [Service]
 WorkingDirectory=$(pwd)
 Environment="NODE_ENV=production"
 ExecStart=$(which node) $(pwd)/index
+
+[Install]
+WantedBy=multi-user.target
 " | sudo tee /lib/systemd/system/new-blog.service
 ```
 
