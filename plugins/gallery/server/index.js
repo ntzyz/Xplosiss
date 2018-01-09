@@ -5,7 +5,7 @@ function pluginInstaller ({ site, utils }) {
     let images;
 
     try {
-      images = await utils.db.conn.collection('gallery').find().toArray();
+      images = await utils.db.conn.collection('gallery').find({}, { sort: [['date', 'desc']] }).toArray();
     } catch (e) {
       return res.status(500).send({
         status: 'error',
@@ -35,6 +35,7 @@ function pluginInstaller ({ site, utils }) {
         cover: req.body.cover,
         tags: req.body.tags,
         href: req.body.href,
+        date: req.body.date,
       });
     } catch (e) {
       return res.status(500).send({
@@ -87,6 +88,7 @@ function pluginInstaller ({ site, utils }) {
           cover: req.body.cover,
           tags: req.body.tags,
           href: req.body.href,
+          date: req.body.date,
         }}
       );
     } catch (e) {

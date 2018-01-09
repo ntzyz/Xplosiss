@@ -30,7 +30,6 @@ export function pluginInstaller ({ app, router, store, coreComponents, config })
         });
       },
       createImage: (state, image) => {
-        image.tags = image.tags.split(' ');
         return axios.put(`${config.api.url}/gallery?token=${store.state.token}`, image);
       },
       removeImage: (state, id) => {

@@ -3,12 +3,12 @@
     h3.title Gallery
     div.content
       div.empty(v-if="images.length === 0") 目前，这里除了好奇什么都没有。
-      div.item-wrapper(v-for="image in images")
+      div.item-wrapper(v-for="image in images" v-bind:style="{ cursor: image.href ? 'pointer' : '' }" @click="imageOnClick(image)")
         div.item-border
           div.introduction
             p.description {{ image.description }}
             div.tags(v-if="image.tags && image.tags.length !== 0")
-              span.tag(v-for="tag in image.tags") {{ tag }}
+              span.tag(v-for="tag in image.tags" @click="tagOnClick(tag)") {{ tag }}
           div.item(v-bind:style="{ backgroundImage: `url(${image.cover})` }")
         h3.image-title {{ image.title }}
 </template>
@@ -24,6 +24,16 @@ export default {
       return this.$store.state.gallery.images;
     }
   },
+  methods: {
+    imageOnClick (image) {
+      if (image.href) {
+        window.open(image.href);
+      }
+    },
+    tagOnClick (tag) {
+      window.open(`/tag/${tag}`);
+    }
+  },
   asyncData ({ store, route }) {
     return store.dispatch('fetchImages');
   }
@@ -32,7 +42,7 @@ export default {
 
 <style lang="scss" scoped>
 .gallery {
-  $height: 180px;
+  $height: 220px;
 
   div.content {
     display: flex;
@@ -72,6 +82,7 @@ export default {
   div.introduction:hover + div.item {
     transform: scale(1.1);
     transition: all ease 0.3s;
+    user-select: none;
     // filter: blur(2px);
   }
 
@@ -121,6 +132,7 @@ export default {
   span.tag {
     display: block;
     padding: 0px 4px;
+    cursor: pointer;
   }
 
   span.tag::before {
