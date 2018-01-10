@@ -136,7 +136,7 @@ export default {
           cover: '',
           title: '',
           description: '',
-          tags: '',
+          tags: [],
           href: '',
         };
         date = new Date();
@@ -152,6 +152,7 @@ export default {
         minute: date.getMinutes(),
         second: date.getSeconds()
       };
+      this._tags = new Set(this.image.tags);
     },
   }
 };

@@ -5,7 +5,7 @@ import axios from 'axios';
 export function pluginInstaller ({ app, router, store, coreComponents, config }) {
   router.addRoutes([
     {
-      path: '/gallery',
+      path: config.plugins.gallery.mountPoint || '/gallery',
       components: {
         default: Gallery,
         sidebar: coreComponents.ClientSideBar,
@@ -21,6 +21,7 @@ export function pluginInstaller ({ app, router, store, coreComponents, config })
 
   store.registerModule('gallery', {
     state: {
+      title: config.plugins.gallery.title || 'Gallery',
       images: {},
     },
     actions: {

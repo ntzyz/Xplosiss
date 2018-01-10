@@ -127,7 +127,7 @@ function render (req, res) {
 }
 
 // Install all plugins
-config.plugins.forEach(plugin => {
+Object.keys(config.plugins).forEach(plugin => {
   let manifest;
 
   try {
@@ -135,6 +135,10 @@ config.plugins.forEach(plugin => {
   } catch(e) {
     console.error(e);
     // TODO
+  }
+
+  if (!config.plugins[plugin].enabled) {
+    return;
   }
 
   const installer = require(path.join(__dirname, './plugins/', plugin, manifest.entry.server));

@@ -4,7 +4,7 @@ const config = {
   favicon: null,
   title: 'ntzyz\'s space',
   subtitle: '∠( ᐛ 」∠)_',
-  url: 'https://new.ntzyz.cn/',
+  url: 'https://new.ntzyz.cn', // no slash at the end of url
   language: 'zh-CN',
   components: {
     title: true,
@@ -22,9 +22,19 @@ const config = {
     enableMarkdownSupport: true,
   },
   allowedOrigins: [
-    'https://example.ntzyz.cn/',
-    'http://example2.ntzyz.cn/',
-  ]
+    'https://example.ntzyz.cn',
+    'http://example2.ntzyz.cn',
+  ],
+  plugins: {
+    gallery: {
+      enabled: true,
+      mountPoint: '/projects',
+      title: 'Projects'
+    },
+    'rss-feed': {
+      enabled: true,
+    }
+  }
 };
 
 module.exports = config;

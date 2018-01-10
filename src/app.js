@@ -38,9 +38,9 @@ export async function createApp () {
     render: h => h(App)
   });
 
-  await Promise.all(config.plugins.map(async plugin => {
+  await Promise.all(Object.keys(config.plugins).map(async plugin => {
     const pluginManifest = await import(`../plugins/${plugin}/manifest.json`);
-    if (!pluginManifest.entry.browser) {
+    if (!config.plugins[plugin].enabled || !pluginManifest.entry.browser) {
       return;
     }
     const pluginEntity = await import(`../plugins/${plugin}/${pluginManifest.entry.browser}`);

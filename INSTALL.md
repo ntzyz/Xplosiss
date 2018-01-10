@@ -40,7 +40,7 @@ Note: replace `$database` with your real database.
 ```
 % npm run build
 ```
-Note: you should always rebuild it after editing `/src/config.js` or merging from upstream.
+Note: you should always rebuild it after editing `config.js` or merging from upstream.
 
 ### 6. Create a systemd unit
 

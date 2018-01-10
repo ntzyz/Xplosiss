@@ -1,6 +1,6 @@
 <template lang="pug">
   div.card.gallery 
-    h3.title Gallery
+    h3.title {{ title }}
     div.content
       div.empty(v-if="images.length === 0") 目前，这里除了好奇什么都没有。
       div.item-wrapper(v-for="image in images" v-bind:style="{ cursor: image.href ? 'pointer' : '' }" @click="imageOnClick(image)")
@@ -22,6 +22,9 @@ export default {
   computed: {
     images () {
       return this.$store.state.gallery.images;
+    },
+    title () {
+      return this.$store.state.gallery.title;
     }
   },
   methods: {
