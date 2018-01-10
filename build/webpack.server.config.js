@@ -13,11 +13,6 @@ module.exports = merge(base, {
     filename: 'server-bundle.js',
     libraryTarget: 'commonjs2'
   },
-  resolve: {
-    alias: {
-      'create-api': './create-api-server.js'
-    }
-  },
   externals: nodeExternals({
     whitelist: /\.css$/
   }),

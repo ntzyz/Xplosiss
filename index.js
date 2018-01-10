@@ -152,10 +152,8 @@ site.get('*', (isProd || isTest) ? render : (req, res) => {
 });
 
 // Establish database connection and start http service
-utils.db.prepare().then(() => {
-  utils.websocket.server.listen(config.port, /* 'localhost', */() => {
-    console.log(`Server started on port ${config.port}`);
-  });
+utils.websocket.server.listen(config.port, /* 'localhost', */() => {
+  console.log(`Server started on port ${config.port}`);
 });
 
 module.exports = site;

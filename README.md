@@ -4,6 +4,7 @@
 
 [![Build Status](https://travis-ci.org/ntzyz/new-blog.svg?branch=master)](https://travis-ci.org/ntzyz/new-blog)
 [![Coverage Status](https://coveralls.io/repos/github/ntzyz/new-blog/badge.svg?branch=master)](https://coveralls.io/github/ntzyz/new-blog?branch=master)
+[![Dependencies](https://david-dm.org/ntzyz/new-blog.svg?branch=master)](https://david-dm.org/ntzyz/new-blog?branch=master)
 
 ## Todo
  - [X] 重构至上一版进度

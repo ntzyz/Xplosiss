@@ -1,6 +1,12 @@
 const express = require('express');
+const utils = require('../utils');
 
 let api = express.Router();
+
+api.use(async (req, res, next) => {
+  await utils.db.prepare();
+  next();
+});
 
 api.use('/category', require('./category'));
 api.use('/tag', require('./tag'));
