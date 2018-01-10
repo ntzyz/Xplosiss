@@ -11,7 +11,7 @@ import config from '../../config.json';
 import api from '../../api';
 
 export default {
-  name: 'access-logs',
+  name: 'AccessLogs',
   data () {
     return {
       socket: null,

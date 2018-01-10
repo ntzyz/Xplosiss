@@ -32,12 +32,24 @@
 import api from '../../api';
 
 export default {
+  name: 'Widgets',
   data () {
     return {
       editing: null,
       widgets: [],
       selected: null,
     };
+  },
+  mounted () {
+    if (this.$store.state.token === '') {
+      this.$router.push('/admin');
+    } else {
+      this.$store.commit('setBusy', false);
+      this.fetchWidgets();
+    }
+  },
+  beforeDestroy () {
+    document.querySelector('#app').style.maxWidth = '';
   },
   methods: {
     fetchWidgets () {
@@ -93,17 +105,6 @@ export default {
       }
     }
   },
-  mounted () {
-    if (this.$store.state.token === '') {
-      this.$router.push('/admin');
-    } else {
-      this.$store.commit('setBusy', false);
-      this.fetchWidgets();
-    }
-  },
-  beforeDestroy () {
-    document.querySelector('#app').style.maxWidth = '';
-  }
 };
 </script>
 

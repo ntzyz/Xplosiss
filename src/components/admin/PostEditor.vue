@@ -63,7 +63,7 @@
 import api from '../../api';
 
 export default {
-  name: 'post-editor',
+  name: 'PostEditor',
   data () {
     let date = new Date();
     return {
@@ -71,7 +71,7 @@ export default {
       title: '',
       slug: '',
       tags: [],
-      _tags: new Set(),
+      tagsSet: new Set(),
       date: {
         year: date.getFullYear(),
         month: date.getMonth() + 1,
@@ -94,6 +94,35 @@ export default {
       return this.$store.state.categories;
     }
   },
+  watch: {
+    // 'content.content': function () {
+    //   this.$nextTick(() => {
+    //     document.querySelector('textarea').style.height = document.querySelector('textarea').scrollHeight + 'px';
+    //   });
+    // },
+    '$route': function () {
+      Object.assign(this.$data, this.$options.data());
+      this.tagsSet = new Set();
+      if (this.$route.params.id) {
+        this.fetchPost();
+      }
+    }
+  },
+  created () {
+    if (this.$store.state.token === '') {
+      this.$router.push('/admin');
+    }
+    this.$store.commit('setBusy', false);
+    if (this.$route.params.id) {
+      this.fetchPost();
+    }
+    this.fetchTags();
+    this.fetchCategories();
+    // document.querySelector('#app').style.maxWidth = 'initial';
+  },
+  beforeDestroy () {
+    // document.querySelector('#app').style.maxWidth = '';
+  },
   methods: {
     prompt (string) {
       return window.prompt(string);
@@ -105,13 +134,13 @@ export default {
       return [...set];
     },
     addTag (tag) {
-      if (!this._tags) this._tags = new Set();
-      this._tags.add(tag);
-      this.tags = [...this._tags];
+      if (!this.tagsSet) this.tagsSet = new Set();
+      this.tagsSet.add(tag);
+      this.tags = [...this.tagsSet];
     },
     deleteTag (tag) {
-      this._tags.delete(tag);
-      this.tags = [...this._tags];
+      this.tagsSet.delete(tag);
+      this.tags = [...this.tagsSet];
     },
     updatePost () {
       api.post.updatePostById({
@@ -164,8 +193,8 @@ export default {
         this.content = post.content;
         this.cover = post.cover;
         this.id = post._id;
-        this._tags = new Set(post.tags);
-        this.tags = [...this._tags];
+        this.tagsSet = new Set(post.tags);
+        this.tags = [...this.tagsSet];
         let tmpDate = new Date(post.date);
         this.date = {
           year: tmpDate.getFullYear(),
@@ -194,35 +223,6 @@ export default {
       });
     }
   },
-  created () {
-    if (this.$store.state.token === '') {
-      this.$router.push('/admin');
-    }
-    this.$store.commit('setBusy', false);
-    if (this.$route.params.id) {
-      this.fetchPost();
-    }
-    this.fetchTags();
-    this.fetchCategories();
-    // document.querySelector('#app').style.maxWidth = 'initial';
-  },
-  watch: {
-    // 'content.content': function () {
-    //   this.$nextTick(() => {
-    //     document.querySelector('textarea').style.height = document.querySelector('textarea').scrollHeight + 'px';
-    //   });
-    // },
-    '$route': function () {
-      Object.assign(this.$data, this.$options.data());
-      this._tags = new Set();
-      if (this.$route.params.id) {
-        this.fetchPost();
-      }
-    }
-  },
-  beforeDestroy () {
-    // document.querySelector('#app').style.maxWidth = '';
-  }
 };
 
 </script>

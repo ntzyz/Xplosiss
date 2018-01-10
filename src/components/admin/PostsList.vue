@@ -21,7 +21,7 @@ import timeToString from '../../utils/timeToString';
 import Pagination from '../Pagination.vue';
 
 export default {
-  name: 'posts-list',
+  name: 'PostsList',
   components: { Pagination },
   data () {
     return {
@@ -29,16 +29,16 @@ export default {
       pages: {}
     };
   },
+  watch: {
+    '$route': function () {
+      this.loadPosts(this.$route.params.page || 1);
+    }
+  },
   created () {
     if (this.$store.state.token === '') {
       this.$router.push('/admin');
     } else {
       this.$store.commit('setBusy', false);
-      this.loadPosts(this.$route.params.page || 1);
-    }
-  },
-  watch: {
-    '$route': function () {
       this.loadPosts(this.$route.params.page || 1);
     }
   },

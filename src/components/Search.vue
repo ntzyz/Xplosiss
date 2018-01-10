@@ -8,7 +8,7 @@
 import config from '../config.json';
 
 export default {
-  name: 'search',
+  name: 'Search',
   data () {
     return {
       text: ''

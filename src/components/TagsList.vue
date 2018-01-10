@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'tags-list',
+  name: 'TagsList',
   computed: {
     tags: function () { return this.$store.state.tags; }
   },

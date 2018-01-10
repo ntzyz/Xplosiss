@@ -24,7 +24,7 @@ import timeToString from '../utils/timeToString';
 import clickEventMixin from '../utils/link-injector';
 
 export default {
-  name: 'posts-list',
+  name: 'PostsList',
   components: { Pagination },
   mixins: [clickEventMixin],
   computed: {

@@ -12,7 +12,7 @@ import config from '../config.json';
 import clickEventMixin from '../utils/link-injector';
 
 export default {
-  name: 'page-view',
+  name: 'PageView',
   components: { Reply },
   mixins: [clickEventMixin],
   computed: {

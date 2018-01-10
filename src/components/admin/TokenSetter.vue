@@ -17,7 +17,21 @@
 import api from '../../api';
 
 export default {
-  name: 'token-setter',
+  name: 'TokenSetter',
+  data () {
+    return {
+      token: '',
+    };
+  },
+  watch: {
+    '$route': function () {
+      if (this.$route.query.logout === 'true') {
+        window.localStorage.token = '';
+        this.$store.commit('setToken', '');
+        this.$router.push({ query: {}});
+      }
+    }
+  },
   beforeMount () {
     this.$store.commit('setBusy', false);
     if (this.$route.query.logout === 'true') {
@@ -31,20 +45,6 @@ export default {
       }
       this.check(true);
     }
-  },
-  watch: {
-    '$route': function () {
-      if (this.$route.query.logout === 'true') {
-        window.localStorage.token = '';
-        this.$store.commit('setToken', '');
-        this.$router.push({ query: {}});
-      }
-    }
-  },
-  data () {
-    return {
-      token: '',
-    };
   },
   methods: {
     check (noalert = false) {

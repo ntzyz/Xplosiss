@@ -54,13 +54,18 @@
 import axios from 'axios';
 
 export default {
-  name: 'gallery',
+  name: 'GalleryAdmin',
   data () {
     return {
       editing: null,
       image: {},
       date: {},
     };
+  },
+  computed: {
+    images () {
+      return this.$store.state.gallery.images;
+    }
   },
   created () {
     if (this.$store.state.token === '') {
@@ -70,11 +75,6 @@ export default {
     this.$store.commit('setBusy', false);
     this.$store.dispatch('fetchTags');
     this.fetchImages();
-  },
-  computed: {
-    images () {
-      return this.$store.state.gallery.images;
-    }
   },
   methods: {
     fetchImages () {

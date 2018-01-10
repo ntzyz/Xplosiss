@@ -33,8 +33,21 @@ import timeToString from '../utils/timeToString';
 import api from '../api';
 
 export default {
-  name: 'reply',
-  props: ['replies', 'api-path', 'refresh-replies'],
+  name: 'Reply',
+  props: {
+    replies: {
+      type: Array,
+      required: true,
+    },
+    'api-path': {
+      type: String,
+      required: true,
+    },
+    'refresh-replies': {
+      type: Function,
+      required: true,
+    }
+  },
   data () {
     return {
       name: '',
@@ -42,6 +55,11 @@ export default {
       content: '',
       site: '',
     };
+  },
+  watch: {
+    replies () {
+      this.name = this.email = this.content = this.site = '';
+    }
   },
   methods: {
     timeToString,
@@ -69,11 +87,6 @@ export default {
         });
     }
   },
-  watch: {
-    replies () {
-      this.name = this.email = this.content = this.site = '';
-    }
-  }
 };
 </script>
 

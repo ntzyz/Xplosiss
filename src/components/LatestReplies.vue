@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'latest-replies',
+  name: 'LatestReplies',
   computed: {
     replies: function () { return this.$store.state.replies; }
   },

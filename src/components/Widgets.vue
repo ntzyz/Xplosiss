@@ -9,7 +9,7 @@
 import clickEventMixin from '../utils/link-injector';
 
 export default {
-  name: 'widgets',
+  name: 'Widgets',
   mixins: [clickEventMixin],
   computed: {
     widgets: function () { return this.$store.state.widgets; }

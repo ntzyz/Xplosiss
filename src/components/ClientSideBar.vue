@@ -27,7 +27,7 @@ import LatestReplies from './LatestReplies.vue';
 import config from '../config.json';
 
 export default {
-  name: 'client-side-bar',
+  name: 'ClientSideBar',
   components: {
     SiteTitle, Search, CategoriesList, TagsList, Widgets, LatestReplies
   },

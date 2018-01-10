@@ -12,22 +12,29 @@
 
 <script>
 export default {
-  name: 'pagination',
-  props: ['current', 'length', 'prefix', 'max'],
+  name: 'Pagination',
+  props: {
+    current: {
+      type: Number,
+      required: true,
+    },
+    length: {
+      type: Number,
+      required: true,
+    },
+    max: {
+      type: Number,
+      required: true,
+    },
+    prefix: {
+      type: String,
+      required: true,
+    },
+  },
   data () {
     return {
       pages: [],
     };
-  },
-  methods: {
-    init () {
-      let current = parseInt(this.current);
-      let left = Math.max(1, current - Math.floor(Number(this.length) / 2));
-      this.pages = new Array(parseInt(this.length)).fill(0).map((dummy, index) => index + left).filter(i => i <= Number(this.max));
-    }
-  },
-  created () {
-    this.init();
   },
   watch: {
     max () {
@@ -36,7 +43,17 @@ export default {
     current () {
       this.init();
     }
-  }
+  },
+  created () {
+    this.init();
+  },
+  methods: {
+    init () {
+      let current = parseInt(this.current);
+      let left = Math.max(1, current - Math.floor(Number(this.length) / 2));
+      this.pages = new Array(parseInt(this.length)).fill(0).map((dummy, index) => index + left).filter(i => i <= Number(this.max));
+    }
+  },
 };
 </script>
 

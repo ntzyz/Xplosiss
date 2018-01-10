@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: 'categories-list',
+  name: 'CategoriesList',
   computed: {
     categories () { return this.$store.state.categories; }
   },

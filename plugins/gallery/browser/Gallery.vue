@@ -15,14 +15,11 @@
 
 <script>
 export default {
-  name: 'gallery',
+  name: 'Gallery',
   data () {
     return {
       activeImage: null,
     };
-  },
-  mounted () {
-    this.$store.commit('setBusy', false);
   },
   computed: {
     images () {
@@ -31,6 +28,9 @@ export default {
     title () {
       return this.$store.state.gallery.title;
     }
+  },
+  mounted () {
+    this.$store.commit('setBusy', false);
   },
   methods: {
     imageOnClick (image, event) {

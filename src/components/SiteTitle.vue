@@ -6,7 +6,7 @@
 import config from '../config.json';
 
 export default {
-  name: 'site-title',
+  name: 'SiteTitle',
   data () {
     return {
       title: config.title,

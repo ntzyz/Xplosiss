@@ -13,7 +13,10 @@ import LoadingIcon from './components/LoadingIcon.vue';
 import config from './config.json';
 
 export default {
-  name: 'app',
+  name: 'App',
+  components: {
+    LoadingIcon
+  },
   data () {
     return {
       transitionName: 'forward',
@@ -28,9 +31,6 @@ export default {
     };
 
     return og;
-  },
-  components: {
-    LoadingIcon
   },
   computed: {
     busy: function () { return this.$store.state.busy; }

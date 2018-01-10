@@ -20,7 +20,7 @@ import SiteTitle from '../SiteTitle.vue';
 import config from '../../config.json';
 
 export default {
-  name: 'admin-side-bar',
+  name: 'AdminSideBar',
   components: {
     SiteTitle
   },

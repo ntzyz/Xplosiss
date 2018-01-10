@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: 'loading-icon',
+  name: 'LoadingIcon',
 };
 </script>
 

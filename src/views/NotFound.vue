@@ -12,7 +12,7 @@
 import config from '../config.json';
 
 export default {
-  name: 'not-found',
+  name: 'NotFound',
   title () { return 'Error 404'; },
   mounted () {
     this.$store.commit('setBusy', false);

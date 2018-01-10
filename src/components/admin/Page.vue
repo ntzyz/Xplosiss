@@ -34,7 +34,7 @@
 import api from '../../api';
 
 export default {
-  name: 'page',
+  name: 'Page',
   data () {
     return {
       pages: [],

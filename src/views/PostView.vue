@@ -23,17 +23,17 @@ import titleMixin from '../utils/title';
 import clickEventMixin from '../utils/link-injector';
 
 export default {
-  name: 'post-view',
-  mixins: [titleMixin, clickEventMixin],
+  name: 'PostView',
   components: { Reply },
-  computed: {
-    post () { return this.$store.state.post; },
-  },
+  mixins: [titleMixin, clickEventMixin],
   title () { return this.post ? this.post.title : 'Loading...'; },
   data () {
     return {
       extraDoms: [],
     };
+  },
+  computed: {
+    post () { return this.$store.state.post; },
   },
   openGraph () {
     let img = this.post.cover;
