@@ -44,4 +44,18 @@ describe('Testing index-rendering with SSR', async () => {
     const response = await agent.get(url).expect(404);
   });
 
+  it('Render RSS feeds', async () => {
+    if (!config.plugins['rss-feed'].enabled) {
+      return;
+    }
+    await agent.get('/feeds').expect(200);
+  });
+
+  it('Render Gallery', async () => {
+    if (!config.plugins.gallery.enabled) {
+      return;
+    }
+    await agent.get(config.plugins.gallery.mountPoint).expect(200);
+  });
+
 });

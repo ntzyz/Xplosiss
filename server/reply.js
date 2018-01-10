@@ -25,7 +25,9 @@ router.get('/latest', async (req, res) => {
       { $limit: 5 }
     ]).toArray();
   } catch (e) {
+    /* istanbul ignore next */
     console.error(e);
+    /* istanbul ignore next */
     return res.status(500).send({
       status: 'error',
       message: utils.messages.ERR_MONGO_FAIL

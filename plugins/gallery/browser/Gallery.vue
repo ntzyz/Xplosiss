@@ -1,9 +1,9 @@
 <template lang="pug">
   div.card.gallery 
     h3.title {{ title }}
-    div.content
+    div.content(@click="activeImage = null")
       div.empty(v-if="images.length === 0") 目前，这里除了好奇什么都没有。
-      div.item-wrapper(v-for="image in images" v-bind:style="{ cursor: image.href ? 'pointer' : '' }" @click="imageOnClick(image)")
+      div.item-wrapper(v-for="image in images" v-bind:style="{ cursor: image.href ? 'pointer' : '' }" @click="imageOnClick(image, $event)")
         div.item-border
           div.introduction
             p.description {{ image.description }}
@@ -16,6 +16,11 @@
 <script>
 export default {
   name: 'gallery',
+  data () {
+    return {
+      activeImage: null,
+    };
+  },
   mounted () {
     this.$store.commit('setBusy', false);
   },
@@ -28,8 +33,12 @@ export default {
     }
   },
   methods: {
-    imageOnClick (image) {
-      if (image.href) {
+    imageOnClick (image, event) {
+      if (window.innerWidth <= 800 && this.activeImage !== image) {
+        this.activeImage = image;
+        event.preventDefault();
+        event.stopPropagation();
+      } else if (image.href) {
         window.open(image.href);
       }
     },
@@ -173,15 +182,15 @@ export default {
   @media screen and (max-width: 800px) {
     // mobile overrides
 
-    div.introduction:hover + div.item {
-      filter: none;
-      transform: none;
-    }
+    // div.introduction:hover + div.item {
+    //   filter: none;
+    //   transform: none;
+    // }
 
-    div.introduction {
-      opacity: 1;
-      background: rgba(0, 0, 0, 0.5);
-    }
+    // div.introduction {
+    //   opacity: 1;
+    //   background: rgba(0, 0, 0, 0.5);
+    // }
   }
 
 }

@@ -13,6 +13,7 @@ router.get('/', async (req, res) => {
   try {
     widgets = await utils.db.conn.collection('widgets').find({ enabled: true }).toArray();
   } catch (e) {
+    /* istanbul ignore next */
     return res.status(500).send({
       status: 'error',
       message: utils.messages.ERR_MONGO_FAIL
@@ -33,6 +34,7 @@ router.get('/all', async (req, res) => {
   try {
     widgets = await utils.db.conn.collection('widgets').find().toArray();
   } catch (e) {
+    /* istanbul ignore next */
     return res.status(500).send({
       status: 'error',
       message: utils.messages.ERR_MONGO_FAIL
@@ -63,7 +65,9 @@ router.post('/:id', async (req, res) => {
       { $set: { title: req.body.title, content: req.body.content, enabled: req.body.enabled }}
     );
   } catch (e) {
+    /* istanbul ignore next */
     console.error(e);
+    /* istanbul ignore next */
     return res.status(500).send({
       status: 'error',
       message: utils.messages.ERR_MONGO_FAIL,
@@ -93,7 +97,9 @@ router.put('/', async (req, res) => {
       enabled: !!req.body.enabled
     });
   } catch (e) {
+    /* istanbul ignore next */
     console.error(e);
+    /* istanbul ignore next */
     return res.status(500).send({
       status: 'error',
       message: utils.messages.ERR_MONGO_FAIL,
@@ -119,7 +125,9 @@ router.delete('/:id', async (req, res) => {
       { _id: ObjectID(req.params.id) }
     );
   } catch (e) {
+    /* istanbul ignore next */
     console.error(e);
+    /* istanbul ignore next */
     return res.status(500).send({
       status: 'error',
       message: utils.messages.ERR_MONGO_FAIL,

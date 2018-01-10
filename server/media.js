@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
 
   fs.readdir(path.join(__dirname, '../uploads'), (err, files) => {
     if (err) {
-      console.log(err);
+      /* istanbul ignore next */
       return res.status(500).send({
         status: 'error',
         messagee: utils.messages.ERR_FS_FAIL
@@ -52,7 +52,7 @@ router.get('/', (req, res) => {
 router.put('/:filename', upload.single('file'), (req, res) => {
   if (req.query.token !== utils.token) {
     fs.unlink(req.file.path, () => {});
-    return res.status(400).send({
+    return res.status(403).send({
       status: 'error',
       message: utils.messages.ERR_ACCESS_DENIED,
     });
@@ -62,8 +62,9 @@ router.put('/:filename', upload.single('file'), (req, res) => {
 
   fs.rename(req.file.path, path.join(__dirname, `../uploads/${new Date().getTime()}-${req.params.filename}`), err => {
     if (err) {
+      /* istanbul ignore next */
       res.status(500).send({
-        status: 'err',
+        status: 'error',
         message: err
       });
     } else {
@@ -88,6 +89,7 @@ router.delete('/:filename', (req, res) => {
 
   fs.unlink(path.join(__dirname, '../uploads', req.params.filename), err => {
     if (err) {
+      /* istanbul ignore next */
       res.status(500).send({
         status: 'error',
         message: err,

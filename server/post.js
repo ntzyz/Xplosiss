@@ -16,7 +16,9 @@ router.get('/', async (req, res) => {
     posts = await cursor.toArray();
     count = await cursor.count();
   } catch (e) {
+    /* istanbul ignore next */
     console.error(e);
+    /* istanbul ignore next */
     return res.status(500).send({
       status: 'error',
       message: utils.messages.ERR_MONGO_FAIL
@@ -46,7 +48,9 @@ router.get('/by-slug/:slug', async (req, res) => {
   try {
     post = await utils.db.conn.collection('posts').findOne({ slug: req.params.slug });
   } catch (e) {
+    /* istanbul ignore next */
     console.error(e);
+    /* istanbul ignore next */
     return res.status(500).send({
       status: 'error',
       message: utils.messages.ERR_MONGO_FAIL
@@ -84,7 +88,9 @@ router.put('/by-slug/:slug/reply', async (req, res) => {
       }}}
     );
   } catch (e) {
+    /* istanbul ignore next */
     console.error(e);
+    /* istanbul ignore next */
     return res.status(500).send({
       status: 'error',
       message: utils.messages.ERR_MONGO_FAIL
@@ -104,7 +110,9 @@ router.get('/by-id/:id/raw', async (req, res) => {
   try {
     post = await utils.db.conn.collection('posts').findOne({ _id: ObjectID(req.params.id) });
   } catch (e) {
+    /* istanbul ignore next */
     console.error(e);
+    /* istanbul ignore next */
     return res.status(500).send({
       status: 'error',
       message: utils.messages.ERR_MONGO_FAIL
@@ -150,7 +158,9 @@ router.post('/by-id/:id', async (req, res) => {
       }}
     );
   } catch (e) {
+    /* istanbul ignore next */
     console.error(e);
+    /* istanbul ignore next */
     return res.status(500).send({
       status: 'error',
       message: utils.messages.ERR_MONGO_FAIL,
@@ -176,7 +186,9 @@ router.delete('/by-id/:id', async (req, res) => {
       { _id: ObjectID(req.params.id) }
     );
   } catch (e) {
+    /* istanbul ignore next */
     console.error(e);
+    /* istanbul ignore next */
     return res.status(500).send({
       status: 'error',
       message: utils.messages.ERR_MONGO_FAIL,
@@ -209,7 +221,9 @@ router.put('/', async (req, res) => {
       replies: [],
     });
   } catch (e) {
+    /* istanbul ignore next */
     console.error(e);
+    /* istanbul ignore next */
     return res.status(500).send({
       status: 'error',
       message: utils.messages.ERR_MONGO_FAIL,

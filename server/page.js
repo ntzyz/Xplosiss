@@ -13,7 +13,9 @@ router.get('/', async (req, res) => {
     let cursor = utils.db.conn.collection('pages').find({});
     pages = await cursor.toArray();
   } catch (e) {
+    /* istanbul ignore next */
     console.error(e);
+    /* istanbul ignore next */
     return res.status(500).send({
       status: 'error',
       message: utils.messages.ERR_MONGO_FAIL
@@ -38,7 +40,9 @@ router.get('/by-slug/:slug', async (req, res) => {
   try {
     page = await utils.db.conn.collection('pages').findOne({ slug: req.params.slug });
   } catch (e) {
+    /* istanbul ignore next */
     console.error(e);
+    /* istanbul ignore next */
     return res.status(500).send({
       status: 'error',
       message: utils.messages.ERR_MONGO_FAIL
@@ -66,7 +70,9 @@ router.get('/by-id/:id/raw', async (req, res) => {
   try {
     page = await utils.db.conn.collection('pages').findOne({ _id: ObjectID(req.params.id) });
   } catch (e) {
+    /* istanbul ignore next */
     console.error(e);
+    /* istanbul ignore next */
     return res.status(500).send({
       status: 'error',
       message: utils.messages.ERR_MONGO_FAIL
@@ -108,7 +114,9 @@ router.post('/by-id/:id', async (req, res) => {
       }}
     );
   } catch (e) {
+    /* istanbul ignore next */
     console.error(e);
+    /* istanbul ignore next */
     return res.status(500).send({
       status: 'error',
       message: utils.messages.ERR_MONGO_FAIL,
@@ -134,7 +142,9 @@ router.delete('/by-id/:id', async (req, res) => {
       { _id: ObjectID(req.params.id) },
     );
   } catch (e) {
+    /* istanbul ignore next */
     console.error(e);
+    /* istanbul ignore next */
     return res.status(500).send({
       status: 'error',
       message: utils.messages.ERR_MONGO_FAIL,
@@ -163,7 +173,9 @@ router.put('/', async (req, res) => {
       content: req.body.content,
     });
   } catch (e) {
+    /* istanbul ignore next */
     console.error(e);
+    /* istanbul ignore next */
     return res.status(500).send({
       status: 'error',
       message: utils.messages.ERR_MONGO_FAIL,
@@ -189,7 +201,9 @@ router.put('/by-slug/:slug/reply', async (req, res) => {
       }}}
     );
   } catch (e) {
+    /* istanbul ignore next */
     console.error(e);
+    /* istanbul ignore next */
     return res.status(500).send({
       status: 'error',
       message: utils.messages.ERR_MONGO_FAIL

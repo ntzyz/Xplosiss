@@ -1,7 +1,7 @@
 const randomString = require('./random-string');
 const fs = require('fs');
 
-const accessToken = process.env.NODE_ENV !== 'production' ? '1' : randomString(15);
+const accessToken = (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') ? '1' : randomString(15);
 const savePath = ` /var/run/user/${process.getuid()}/blog-access-token`;
 
 console.log(`Your access token is ${accessToken}`);

@@ -18,6 +18,7 @@ router.get('/', async (req, res) => {
       { $sort: { count: -1 }}
     ]).toArray();
   } catch (e) {
+    /* istanbul ignore next */
     return res.status(500).send({
       status: 'error',
       message: utils.messages.ERR_MONGO_FAIL
@@ -40,6 +41,7 @@ router.get('/:tag/posts', async (req, res) => {
     posts = await cursor.toArray();
     count = await cursor.count();
   } catch (e) {
+    /* istanbul ignore next */
     return res.status(500).send({
       status: 'error',
       message: utils.messages.ERR_MONGO_FAIL

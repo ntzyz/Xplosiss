@@ -36,6 +36,13 @@ describe('Testing widget-related APIs.', () => {
     widgets = response.body.widgets;
   });
 
+  it('Create new widget without token', async () => {
+    const url = '/api/widget';
+    const response = await agent.put(url).send(widgetTemplate).expect(403);
+
+    expect(response.body.status).to.be.equal('error');
+  });
+
   it('Create new widget', async () => {
     const url = `/api/widget?token=${token}`;
     const response = await agent.put(url).send(widgetTemplate).expect(200);
@@ -54,6 +61,15 @@ describe('Testing widget-related APIs.', () => {
     expect(response.body.widgets.length).to.be.greaterThan(widgets.length);
   });
 
+  it('Update the new widget without token', async () => {
+    widgetTemplate.enabled = false;
+
+    const url = `/api/widget/${id}`;
+    const response = await agent.post(url).send(widgetTemplate).expect(403);
+
+    expect(response.body.status).to.be.equal('error');
+  });
+
   it('Update the new widget', async () => {
     widgetTemplate.enabled = false;
 
@@ -70,6 +86,13 @@ describe('Testing widget-related APIs.', () => {
     expect(response.body.status).equal('error');
   });
   
+  it('Delete the new widget without token', async () => {
+    const url = `/api/widget/${id}`;
+    const response = await agent.delete(url).expect(403);
+
+    expect(response.body.status).to.be.equal('error');
+  });
+
   it('Delete the new widget', async () => {
     const url = `/api/widget/${id}?token=${token}`;
     const response = await agent.delete(url).expect(200);

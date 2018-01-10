@@ -12,6 +12,7 @@ router.get('/', async (req, res) => {
   try {
     categories = await utils.db.conn.collection('posts').distinct('category');
   } catch (e) {
+    /* istanbul ignore next */
     return res.status(500).send({
       status: 'error',
       message: utils.messages.ERR_MONGO_FAIL
@@ -34,6 +35,7 @@ router.get('/:category/posts', async (req, res) => {
     posts = await cursor.toArray();
     count = await cursor.count();
   } catch (e) {
+    /* istanbul ignore next */
     return res.status(500).send({
       status: 'error',
       message: utils.messages.ERR_MONGO_FAIL
