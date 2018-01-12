@@ -71,6 +71,8 @@ export default {
 
   div.item-border {
     overflow: hidden;
+    padding-top: 75%;
+    position: relative;
   }
 
   div.empty {
@@ -84,8 +86,10 @@ export default {
   }
 
   div.item {
-    width: 100%;
-    height: $height;
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 0; right: 0;
+    overflow: hidden;
     background-size: cover;
     background-position: center;
     transition: all ease 0.6s;
@@ -105,10 +109,9 @@ export default {
 
   div.introduction {
     position: absolute;
-    top: 0;
+    top: 0; bottom: 0;
     left: 0; right: 0;
     z-index: 3;
-    height: $height;
     padding: 0 1em;
     color: white;
     $shadow-color: #333;

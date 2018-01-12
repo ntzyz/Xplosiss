@@ -118,7 +118,7 @@ body {
     flex-grow: 0;
     width: 300px;
     height: fit-content;
-    padding-right: 25px;
+    padding-right: 15px;
     position: relative;
     div#left-wrapper {
       width: 300px;
