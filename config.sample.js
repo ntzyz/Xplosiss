@@ -1,5 +1,8 @@
 const config = {
-  database: 'mongodb://localhost:27017/newBlog?autoReconnect=false',
+  database: { 
+    address: 'mongodb://localhost:27017/',
+    db: 'newBlog',
+  },
   port: 1234,
   favicon: null,
   title: 'ntzyz\'s space',
