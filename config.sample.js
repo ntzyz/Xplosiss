@@ -7,6 +7,10 @@ const config = {
   favicon: null,
   title: 'ntzyz\'s space',
   subtitle: '∠( ᐛ 」∠)_',
+  footer: [
+    'Copyright © 2016-2018 ntzyz. All rights reversed.',
+    'Except where otherwise noted, content on this blog is licensed under CC-BY 2.0.'
+  ],
   url: 'https://new.ntzyz.cn', // no slash at the end of url
   language: 'zh-CN',
   components: {
