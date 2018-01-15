@@ -6,6 +6,8 @@
     #right
       loading-icon(v-if="busy")
       transition(name="forward"): router-view(v-show="!busy")
+      footer
+        div.row(v-for="line in footer") {{ line }}
 </template>
 
 <script>
@@ -21,6 +23,7 @@ export default {
     return {
       transitionName: 'forward',
       lastScrollY: null,
+      footer: config.footer,
     };
   },
   openGraph () {
@@ -106,6 +109,15 @@ body {
   max-width: 1280px;
   padding: 0 1em 0 1em;
   margin: 0 auto;
+}
+
+footer {
+  font-size: 12px;
+  color: grey;
+  text-align: center;
+  padding: 0 0 14px 0;
+  // border-top: 2px solid lightgrey;
+  // margin: 0 36px;
 }
 
 @media screen and (min-width: 800px) {

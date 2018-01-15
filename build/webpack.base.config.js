@@ -8,6 +8,7 @@ const clientConfig = {
   title: config.title,
   subtitle: config.subtitle,
   url: config.url,
+  footer: config.footer,
   api: {
     url: config.url + '/api'
   },
