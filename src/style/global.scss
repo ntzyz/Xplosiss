@@ -1,0 +1,152 @@
+@import './color.scss';
+
+body {
+  font-family: "Noto Sans CJK", "Noto Sans CJK SC", "Source Han Sans", "Source Han Sans CN", "思源黑体", "思源黑体 CN", "WenQuanYi Micro Hei", "Microsoft Yahei UI", "Microsoft Yahei", "微软雅黑", "SimHei", sans-serif;
+  // background-image: url(http://ntzyz-y50.lan:1234/api/media/1234.png);
+  // background-size: cover;
+  // background-attachment: fixed;
+}
+
+h1, h2, h3, h4, h5 {
+  font-weight: 500;
+}
+
+h1 { font-size: 26px; }
+h2 { font-size: 24px; }
+h3 { font-size: 20px; }
+h4 { font-size: 18px; }
+h5 { font-size: 16px; }
+
+button, .button {
+  text-align: center;
+  padding: .4em 1.5em .4em 1.5em;
+  background: $button_color;
+  border: none;
+  color: white;
+  border-radius: 2px;
+  box-shadow: 0 0 4px rgba(white, 0.5);
+  font-size: 14px;
+  transition: all ease 0.2s;
+  cursor: pointer;
+}
+
+select {
+  height: 21.5px;
+}
+
+button:hover, .button:hover {
+  background: mix($button_color, white, 80%);
+  box-shadow: 0 0 4px grey;
+}
+
+button:focus, .button:focus {
+  outline: none;
+}
+
+article img {
+  max-width: 100%;
+}
+
+a, a:link, a:visited, a:active, a:hover {
+  color: $link_color;
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+  word-break: break-all;  
+}
+
+a.button {
+  color: white;
+}
+
+a:not(.button):hover {
+  border-bottom: 1px solid black;
+}
+
+.forward-enter-active {
+  transition: all 0.3s;
+  transform: translateX(0);
+}
+
+.forward-enter {
+  opacity: 0;
+  transform: translateX(-5px);
+}
+
+.forward-leave-active {
+  opacity: 0;
+}
+
+.card {
+  background-color: $card_background_color;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(20px);
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding-top: 0px;
+  padding-bottom: 1px;
+}
+
+.card > .title {
+  margin: 0;
+  padding: 4px 4px 4px 10px;
+  color: $card_title_font_color;
+  font-weight: 400;
+  background-color: $card_title_background_color;
+  font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
+}
+
+@media screen and (max-width: 800px) {
+  .card {
+    box-shadow: none;
+    margin: 0;
+  }
+}
+
+/** code block **/
+pre {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  background: rgb(245, 245, 245);
+  font-size: 0.8em;
+  line-height: 1.2em;
+  padding: 1em 0em 1em 1em;
+  border-radius: 2px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; // iOS
+  counter-reset: line;  
+}
+
+/** line numbers **/
+pre span.__line:before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  border-right: 1px solid #ddd;
+  width: 20px;
+  text-align: right;
+  padding: 0 .5em;
+  margin-right: .5em;
+  color: #888
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: lightgrey;
+  border: 0px none #fff;
+  transition: all ease 0.1s;
+  cursor: pointer;
+  border-radius: 7px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: darkgray;
+}
+::-webkit-scrollbar-thumb:active {
+  background: gray;
+}

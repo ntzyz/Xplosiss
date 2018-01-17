@@ -2,5 +2,11 @@ node_modules/
 .vscode
 database.sql
 config.js
-webpack.config.js
-static/bundle.js
+config.json
+/uploads
+/static
+/dist
+package-lock.json
+/coverage
+.nyc_output
+.coveralls.yml

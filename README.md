@@ -1,11 +1,19 @@
 
 ## 简介
-简单的自用博客框架，使用 `React`, `Express` 和 `MongoDB` 完成。[目前可以查看的版本](https://new.ntzyz.cn/)
+简单的自用博客框架，使用 `Vue.js`, `Express` 和 `MongoDB` 完成。
+
+[![Build Status](https://travis-ci.org/ntzyz/new-blog.svg?branch=master)](https://travis-ci.org/ntzyz/new-blog)
+[![Coverage Status](https://coveralls.io/repos/github/ntzyz/new-blog/badge.svg?branch=master)](https://coveralls.io/github/ntzyz/new-blog?branch=master)
+[![Dependencies](https://david-dm.org/ntzyz/new-blog.svg?branch=master)](https://david-dm.org/ntzyz/new-blog?branch=master)
 
 ## Todo
- - [x] 移动端布局
- - [x] Disqus 评论
- - [x] 左侧自定义控件
- - [ ] 搜索
- - [ ] 文章日期
- - [ ] 一个简单的后台面板
+ - [X] 重构至上一版进度
+ - [X] 过渡动画
+ - [X] 404 等相关错误页面
+ - [X] 自定义页面评论
+ - [X] 一个简单的后台面板
+ - [X] Gallery
+ - [X] 服务端渲染
+ - [X] 单元测试与 ESlint
+ - [X] 文本框组件样式
+ - [X] 移动端侧边栏访问
