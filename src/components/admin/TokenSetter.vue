@@ -41,9 +41,11 @@ export default {
     } else {
       if (window.localStorage.token) {
         this.token = window.localStorage.token;
+        this.$nextTick(() => { 
         this.$store.commit('setToken', window.localStorage.token);
+          this.check(true);
+        });
       }
-      this.check(true);
     }
   },
   methods: {
@@ -72,7 +74,7 @@ export default {
 
 .token-setter {
   text-align: center;
-  padding-top: 20vh;
+  padding: 20vh 0;
 
   input {
     width: 250px;

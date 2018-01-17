@@ -3,7 +3,7 @@
     h3.title 管理媒体文件
     .container
       button(@click="upload") UPLOAD NEW
-      table
+      table: tbody
         tr
           th.filename 文件名
           th.mime MIME
