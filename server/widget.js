@@ -121,7 +121,7 @@ router.delete('/:id', async (req, res) => {
   }
 
   try {
-    await utils.db.conn.collection('widgets').remove(
+    await utils.db.conn.collection('widgets').deleteOne(
       { _id: ObjectID(req.params.id) }
     );
   } catch (e) {

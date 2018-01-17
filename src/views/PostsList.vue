@@ -1,15 +1,23 @@
 <template lang="pug">
   div.posts-list
     div.list-item.card(v-for="post in posts")
-      img(v-if="post.cover" :src="post.cover" style="width: 100%;")
-      div.content
-        header
+      div(v-if="post.cover" style="position: relative;")
+        img(:src="post.cover" style="width: 100%;")
+        header.image-overlay
           router-link(:to="'/post/' + post.slug"): h2.post-title {{ post.title }}
           div.post-meta
             span {{ timeToString(post.date, true) }}
             span 分类：{{ post.category }}
             span(v-for="tag in post.tags") #
-              router-link(:to="'/tag/' + tag") {{tag}}
+              router-link(:to="'/tag/' + tag") {{ tag }}
+      div.content
+        header(v-if="!post.cover")
+          router-link(:to="'/post/' + post.slug"): h2.post-title {{ post.title }}
+          div.post-meta
+            span {{ timeToString(post.date, true) }}
+            span 分类：{{ post.category }}
+            span(v-for="tag in post.tags") #
+              router-link(:to="'/tag/' + tag") {{ tag }}
         article.post-preview(v-html="post.content" @click="linkEventHandler")
         footer(v-if="post.more")
           router-link(:to="'/post/' + post.slug").button.more MORE
@@ -121,8 +129,11 @@ div.posts-list {
 
   article {
     line-height: 1.5em;
-    margin-top: 1em;
     margin-bottom: 1em;
+  }
+
+  article:not(:first-child) {
+    margin-top: 1em;
   }
 
   article > *:first-child {
@@ -135,6 +146,9 @@ div.posts-list {
 
   div.post-meta > span {
     margin-right: 20px;
+  }
+
+  header:not(.image-overlay) div.post-meta > span {
     color: #333;
   }
 
@@ -144,6 +158,23 @@ div.posts-list {
       font-size: 14px;
       float: right;
       margin-right: 2em;
+    }
+  }
+
+  header.image-overlay {
+    padding: 20px;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 5px;
+    background: linear-gradient(to bottom, rgba(black, 0), rgba(black, 0.5));
+    width: 100%;
+    div.post-meta > span {
+      color: #fff;
+    }
+    * {
+      $shadow-color: #333;
+      color: #fff;
+      text-shadow: $shadow-color 1px 0px 1px, $shadow-color 0px 1px 1px, $shadow-color 0px -1px 1px, $shadow-color -1px 0px 1px;
     }
   }
 }

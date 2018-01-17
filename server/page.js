@@ -138,7 +138,7 @@ router.delete('/by-id/:id', async (req, res) => {
   }
 
   try {
-    await utils.db.conn.collection('pages').remove(
+    await utils.db.conn.collection('pages').deleteOne(
       { _id: ObjectID(req.params.id) },
     );
   } catch (e) {

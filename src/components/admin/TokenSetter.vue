@@ -42,7 +42,7 @@ export default {
       if (window.localStorage.token) {
         this.token = window.localStorage.token;
         this.$nextTick(() => { 
-        this.$store.commit('setToken', window.localStorage.token);
+          this.$store.commit('setToken', window.localStorage.token);
           this.check(true);
         });
       }

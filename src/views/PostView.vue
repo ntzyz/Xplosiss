@@ -1,9 +1,17 @@
 <template lang="pug">
   div.post-view(v-if="post")
     div.card
-      img(v-if="post.cover" :src="post.cover" style="width: 100%;")
+      div(v-if="post.cover" style="position: relative;")
+        img(:src="post.cover" style="width: 100%;")
+        header.image-overlay
+          router-link(:to="'/post/' + post.slug"): h2.post-title {{ post.title }}
+          div.post-meta
+            span {{ timeToString(post.date, true) }}
+            span 分类：{{ post.category }}
+            span(v-for="tag in post.tags") #
+              router-link(:to="'/tag/' + tag") {{ tag }}
       .content
-        header
+        header(v-if="!post.cover")
           h2.post-title {{ post.title }}
           div.post-meta
             span {{ timeToString(post.date, true) }}
@@ -129,8 +137,11 @@ div.post-view {
 
   article {
     line-height: 1.5em;
-    margin-top: 1em;
     margin-bottom: 1em;
+  }
+
+  article:not(:first-child) {
+    margin-top: 1em;
   }
 
   article > *:first-child {
@@ -143,11 +154,32 @@ div.post-view {
 
   div.post-meta > span {
     margin-right: 20px;
+  }
+
+  header:not(.image-overlay) div.post-meta > span {
     color: #333;
   }
 
   p.indent {
     text-indent: 2em;
   }
+
+  header.image-overlay {
+    padding: 20px;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 5px;
+    background: linear-gradient(to bottom, rgba(black, 0), rgba(black, 0.5));
+    width: 100%;
+    div.post-meta > span {
+      color: #fff;
+    }
+    * {
+      $shadow-color: #333;
+      color: #fff;
+      text-shadow: $shadow-color 1px 0px 1px, $shadow-color 0px 1px 1px, $shadow-color 0px -1px 1px, $shadow-color -1px 0px 1px;
+    }
+  }
+
 }
 </style>
