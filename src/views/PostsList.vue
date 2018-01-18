@@ -2,6 +2,7 @@
   div.posts-list
     div.list-item.card(v-for="post in posts")
       div.cover-image(v-if="post.cover" v-bind:style="{ backgroundImage: `url(${ post.cover })` }")
+        div.placeholder
         header.image-overlay
           router-link(:to="'/post/' + post.slug"): h2.post-title {{ post.title }}
           div.post-meta
@@ -163,7 +164,7 @@ div.posts-list {
   header.image-overlay {
     padding: 20px;
     box-sizing: border-box;
-    position: absolute;
+    // position: absolute;
     bottom: 0px;
     background: linear-gradient(to bottom, rgba(black, 0), rgba(black, 0.5));
     width: 100%;
@@ -178,11 +179,16 @@ div.posts-list {
   }
   
   div.cover-image {
+    display: flex;
+    align-items: flex-end;
     position: relative;
     background-size: cover;
     background-position: center;
-    padding-top: 30%;
     width: 100%;
+  }
+
+  div.placeholder {
+    padding-top: 30%;
   }
 }
 </style>
