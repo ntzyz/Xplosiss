@@ -1,7 +1,7 @@
 <template lang="pug">
   div.posts-list
     div.list-item.card(v-for="post in posts")
-      div.cover-image(v-if="post.cover" :style="{'background-image': `url(${post.cover})`}")
+      div.cover-image(v-if="post.cover" v-bind:style="{ backgroundImage: `url(${ post.cover })` }")
         header.image-overlay
           router-link(:to="'/post/' + post.slug"): h2.post-title {{ post.title }}
           div.post-meta
@@ -179,10 +179,10 @@ div.posts-list {
   
   div.cover-image {
     position: relative;
-	background-size: cover;
-	background-position: center;
-	padding-top: 30%;
-	width: 100%;
+    background-size: cover;
+    background-position: center;
+    padding-top: 30%;
+    width: 100%;
   }
 }
 </style>

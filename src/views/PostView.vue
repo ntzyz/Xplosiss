@@ -156,23 +156,5 @@ div.post-view {
   p.indent {
     text-indent: 2em;
   }
-
-  header.image-overlay {
-    padding: 20px;
-    box-sizing: border-box;
-    position: absolute;
-    bottom: 5px;
-    background: linear-gradient(to bottom, rgba(black, 0), rgba(black, 0.5));
-    width: 100%;
-    div.post-meta > span {
-      color: #fff;
-    }
-    * {
-      $shadow-color: #333;
-      color: #fff;
-      text-shadow: $shadow-color 1px 0px 1px, $shadow-color 0px 1px 1px, $shadow-color 0px -1px 1px, $shadow-color -1px 0px 1px;
-    }
-  }
-
 }
 </style>
