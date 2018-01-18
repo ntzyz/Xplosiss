@@ -1,23 +1,16 @@
 <template lang="pug">
   div.post-view(v-if="post")
     div.card
-      div(v-if="post.cover" style="position: relative;")
-        img(:src="post.cover" style="width: 100%;")
-        header.image-overlay
-          router-link(:to="'/post/' + post.slug"): h2.post-title {{ post.title }}
-          div.post-meta
-            span {{ timeToString(post.date, true) }}
-            span 分类：{{ post.category }}
-            span(v-for="tag in post.tags") #
-              router-link(:to="'/tag/' + tag") {{ tag }}
       .content
-        header(v-if="!post.cover")
+        header
           h2.post-title {{ post.title }}
           div.post-meta
             span {{ timeToString(post.date, true) }}
             span 分类：{{ post.category }}
             span(v-for="tag in post.tags")
               router-link(:to="'/tag/' + tag") \#{{ tag }}
+        article.post-content
+          img(:src="post.cover" style="width: 100%;")
         article.post-content(v-html="post.content" @click="linkEventHandler")
     reply(:replies="post.replies", api-path="post", :refresh-replies="refreshReplies")
 </template>
