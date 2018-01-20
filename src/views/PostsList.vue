@@ -179,12 +179,15 @@ div.posts-list {
   }
   
   div.cover-image {
-    display: flex;
-    align-items: flex-end;
+    display: block;
     position: relative;
     background-size: cover;
     background-position: center;
     width: 100%;
+    > * {
+      display: inline-block;
+      vertical-align: bottom;
+    }
   }
 
   div.placeholder {
