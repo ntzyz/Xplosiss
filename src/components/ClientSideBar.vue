@@ -185,7 +185,7 @@ header.title {
       height: 100px;
       margin: 20px auto -10px auto;
       background-size: cover;
-      border-radius: 10px;
+      border-radius: 50px;
       // border: 2px solid red;
       box-shadow: 0 0 20px rgba(black, 0.5);
     }

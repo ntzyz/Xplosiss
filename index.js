@@ -147,9 +147,14 @@ Object.keys(config.plugins).forEach(plugin => {
 });
 
 // deal with all those unhandled requests here.
-site.get('*', (isProd || isTest) ? render : (req, res) => {
-  readyPromise.then(() => render(req, res));
-});
+site.get('*', (isProd || isTest) ?
+  (req, res) => {
+    utils.db.prepare().then(() => render(req, res));
+  } :
+  (req, res) => {
+    Promise.all([readyPromise, utils.db.prepare()]).then(() => render(req, res));
+  }
+);
 
 // Establish database connection and start http service
 utils.websocket.server.listen(config.port, /* 'localhost', */() => {

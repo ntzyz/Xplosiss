@@ -24,6 +24,14 @@ const clientTitleMixin = {
     if (title) {
       document.title = `${title} - ${config.title}`;
     }
+  },
+  watch: {
+    '$route': function () {
+      const title = getTitle(this);
+      if (title) {
+        document.title = `${title} - ${config.title}`;
+      }
+    }
   }
 };
 
