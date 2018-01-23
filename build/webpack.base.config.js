@@ -7,6 +7,7 @@ const config = require('../config');
 const clientConfig = {
   title: config.title,
   subtitle: config.subtitle,
+  avatar: config.avatar,
   url: config.url,
   footer: config.footer,
   api: {
@@ -79,6 +80,7 @@ if (process.env.NODE_ENV === 'production') {
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.LoaderOptionsPlugin({
       minimize: true
-    })
+    }),
+    new webpack.optimize.ModuleConcatenationPlugin()
   ]);
 }

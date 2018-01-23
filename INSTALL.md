@@ -17,17 +17,9 @@ Install `MongoDB`, `Node.js` and `npm`. for Arch Linux:
 ```
 
 ### 3. Edit config file
-Server side:
 ```
 % cp config.sample.js config.js
 % vi config.js
-```
-Browser side:
-```
-% pushd src
-% cp config.sample.js config.js
-% vi config.js
-% popd 
 ```
 
 ### 4. Import default database

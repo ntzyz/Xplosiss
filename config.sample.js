@@ -4,7 +4,8 @@ const config = {
     db: 'newBlog',
   },
   port: 1234,
-  favicon: null,
+  favicon: null,  // local file path
+  avatar: null,   // http/https url
   title: 'ntzyz\'s space',
   subtitle: '∠( ᐛ 」∠)_',
   footer: [

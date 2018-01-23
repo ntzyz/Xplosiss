@@ -5,6 +5,7 @@
         rect(width="28.965336" height="5.5324793" x="2.4506655" y="277.30042")
         rect(width="28.965336" height="5.5324793" x="2.4506655" y="267.77527")
         rect(width="28.965336" height="5.5324793" x="2.4506655" y="286.82556")
+      router-link(to="/"): div.avatar(v-if="avatar" v-bind:style="{ backgroundImage: `url(${avatar})` }")
       router-link(to="/"): h1 {{ title }}
       h2 {{ subtitle }}
     //- hr
@@ -36,6 +37,7 @@ export default {
       components: config.components,
       title: config.title,
       subtitle: config.subtitle,
+      avatar: config.avatar,
       isDrawerOpen: false
     };
   },
@@ -177,6 +179,15 @@ header.title {
   @media screen and (min-width: 800px) {
     svg.drawer-trigger {
       display: none;
+    }
+    div.avatar {
+      width: 100px;
+      height: 100px;
+      margin: 20px auto -10px auto;
+      background-size: cover;
+      border-radius: 10px;
+      // border: 2px solid red;
+      box-shadow: 0 0 20px rgba(black, 0.5);
     }
   }
 }
