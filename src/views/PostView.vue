@@ -9,7 +9,7 @@
             span 分类：{{ post.category }}
             span(v-for="tag in post.tags")
               router-link(:to="'/tag/' + tag") \#{{ tag }}
-        article.post-content
+        article.post-content(v-if="post.cover")
           img(:src="post.cover" style="width: 100%;")
         article.post-content(v-html="post.content" @click="linkEventHandler")
     reply(:replies="post.replies", api-path="post", :refresh-replies="refreshReplies")
