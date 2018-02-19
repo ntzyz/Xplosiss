@@ -42,7 +42,11 @@ export default {
       page: {},
     };
   },
-  created () {
+  mounted () {
+    if (this.$store.state.token === '') {
+      this.$router.push('/admin');
+    }
+    this.$store.commit('setBusy', false);
     this.fetchPages();
   },
   methods: {

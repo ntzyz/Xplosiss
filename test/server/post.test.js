@@ -85,7 +85,14 @@ describe('Testing post-related APIs.', () => {
     expect(response.body.status).equal('error');
   });  
 
-  it('Add reply to one post', async () => {
+  it('Add a reply to one post', async () => {
+    const url = `/api/post/by-slug/${postTemplate.slug}/reply`;
+    const response = await agent.put(url).set('Content-Type', 'application/json').send(replyTemplate).expect(200);
+
+    expect(response.body.status).to.be.ok;
+  });
+
+  it('Add another reply to one post', async () => {
     const url = `/api/post/by-slug/${postTemplate.slug}/reply`;
     const response = await agent.put(url).set('Content-Type', 'application/json').send(replyTemplate).expect(200);
 

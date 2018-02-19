@@ -86,11 +86,11 @@ if (isProd || isTest) {
 }
 
 // Setup some static files
-site.get('/robots.txt', (req, res) => res.status(404).send(''));
 site.use('/dist', serve('./dist', true));
 site.use('/public', serve('./public', true));
 site.use('/manifest.json', serve('./manifest.json', true));
 site.use('/service-worker.js', serve('./dist/service-worker.js'));
+site.use(serve('./static'));
 
 // Read client config from ./src/config.js
 let clientConfig = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'src/config.json'), 'UTF-8'));

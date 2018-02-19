@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.latest-replies.card
+  div.latest-replies.card(v-if="replies.length >= 1")
     h3.title Recent replies
     div.content
       ul(v-if="replies !== null")

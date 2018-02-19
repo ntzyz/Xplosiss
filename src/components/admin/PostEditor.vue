@@ -1,7 +1,7 @@
 <template lang="pug">
   div.post-editor.card
     h3.title 创建/编辑文章
-    div.container: table.form-table
+    div.container: table.form-table: tbody
       tr
         td.label 标题：
         td: input.full(v-model="title")
@@ -108,7 +108,7 @@ export default {
       }
     }
   },
-  created () {
+  mounted () {
     if (this.$store.state.token === '') {
       this.$router.push('/admin');
     }

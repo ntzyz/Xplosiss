@@ -19,14 +19,12 @@ export default {
       logsText: '',
     };
   },
-  created () {
+  mounted () {
     if (this.$store.state.token === '') {
       this.$router.push('/admin');
       return;
     }
     this.$store.commit('setBusy', false);
-  },
-  beforeMount () {
     api.log.fetchLogs({ token: this.$store.state.token }).then(logs => {
       const url = new URL(config.api.url + '/ws');
       this.logs = logs;

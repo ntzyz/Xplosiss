@@ -5,6 +5,10 @@ createApp().then(({ app, store, router }) => {
   if (window.__INITIAL_STATE__) {
     store.replaceState(window.__INITIAL_STATE__);
   }
+
+  if (window.localStorage.token !== undefined) {
+    store.commit('setToken', window.localStorage.token);
+  }
   
   router.onError((error) => {
     console.log(error);

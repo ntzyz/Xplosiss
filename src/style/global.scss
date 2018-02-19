@@ -116,6 +116,15 @@ pre {
   counter-reset: line;  
 }
 
+code {
+  display: inline-block;
+  border-radius: 0.2em;
+  font-size: 0.9em;
+  padding: 0.1em 0.2em;
+  background: rgb(245, 245, 245);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
 /** line numbers **/
 pre span.__line:before {
   counter-increment: line;
