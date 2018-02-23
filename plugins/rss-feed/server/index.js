@@ -1,26 +1,18 @@
 const pug = require('pug');
 const path = require('path');
 const fs = require('fs');
+const express = require('express');
 
 function installer ({ site, utils, config }) {
-  site.get('/feeds', async (req, res) => {
-    try {
-      let cursor = utils.db.conn.collection('posts').find({}, { sort: [['date', 'desc']] }).limit(config.page.size);
-      posts = await cursor.toArray();
-      count = await cursor.count();
-    } catch (e) {
-      console.error(e);
-      return res.status(500).send({
-        status: 'error',
-        message: utils.messages.ERR_MONGO_FAIL
-      });
-    }
+  function renderXML (posts) {
+    let resolve, promise;
+    promise = new Promise(r => resolve = r);
+
     fs.readFile(path.resolve(__dirname, './rss2.pug'), 'utf-8', (err, template) => {
-      res.set('content-type', 'application/rss+xml');
-      res.send(pug.render(template, {
+      const xml = pug.render(template, {
         title: config.title,
-        link: config.url,
-        feedUrl: config.url + 'feeds',
+        link: config.url + '/',
+        feedUrl: config.url + '/feeds',
         language: config.language,
         description: '',
         posts: utils.render(posts, { preview: false }),
@@ -28,9 +20,40 @@ function installer ({ site, utils, config }) {
         cdata (text, options) {
           return '<![CDATA[' + text.replace(/\]\]>/g, ']]]]><![CDATA[>') + ']]>';
         }
-      }));
+      });
+
+      resolve(xml);
     });
+
+    return promise;
+  }
+
+  const router = express.Router();
+
+  router.use((req, res, next) => {
+    res.set('content-type', 'application/rss+xml');
+    next();
   });
+
+  router.use((req, res, next) => {
+    utils.db.prepare().then(next);
+  });
+
+  router.get('/', async (req, res) => {
+    try {
+      let cursor = utils.db.conn.collection('posts').find({}, { sort: [['date', 'desc']] }).limit(config.page.size);
+      posts = await cursor.toArray();
+    } catch (e) {
+      console.error(e);
+      return res.status(500).send({
+        status: 'error',
+        message: utils.messages.ERR_MONGO_FAIL
+      });
+    }
+    res.send(await renderXML(posts));
+  });
+
+  site.use('/feeds', router);
 }
 
 module.exports = installer;
