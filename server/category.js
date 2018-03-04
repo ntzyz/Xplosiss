@@ -28,7 +28,7 @@ router.get('/', async (req, res) => {
  * Get all posts with the same category. Read only.
  */
 router.get('/:category/posts', async (req, res) => {
-  let page = req.query.page ? req.query.page - 1 : 0;
+  let page = Math.max(req.query.page ? req.query.page - 1 : 0, 0);
   let posts, count;
   try {
     let cursor = utils.db.conn.collection('posts').find({ category: req.params.category }, { sort: [['date', 'desc']] }).skip(page * config.page.size).limit(config.page.size);
@@ -44,6 +44,13 @@ router.get('/:category/posts', async (req, res) => {
 
   for (let post of posts) {
     delete post.replies;
+  }
+
+  if (posts.length === 0) {
+    return res.status(404).send({
+      status: 'error',
+      message: 'the specified resources cannot be found on this server.'
+    });
   }
 
   return res.send({

@@ -1,6 +1,6 @@
 <template lang="pug">
   div.token-setter
-    div(v-if="$store.state.token === ''")
+    div(v-show="$store.state.token === ''")
       h2 需要认证
       div(style="margin-bottom: 20px") 请输入你的管理 token，查看服务器日志以获得：
       div
@@ -8,7 +8,7 @@
       div
         button(@click="check") CONTINUE
         button(@click="forgot") I FORGOT
-    div(v-else) 
+    div(v-show="$store.state.token !== ''") 
       h2 身份已认证
       div 在左侧选择任务以继续。
 </template>
@@ -32,20 +32,25 @@ export default {
       }
     }
   },
-  beforeMount () {
+  mounted () {
     this.$store.commit('setBusy', false);
     if (this.$route.query.logout === 'true') {
       window.localStorage.token = '';
       this.$store.commit('setToken', '');
       this.$router.push({ query: {}});
     } else {
-      if (window.localStorage.token) {
+      console.log(this.$store.state.token);
+      this.$nextTick(() => {
         this.token = window.localStorage.token;
-        this.$nextTick(() => { 
-          this.$store.commit('setToken', window.localStorage.token);
-          this.check(true);
-        });
-      }
+        this.check(true);
+      })
+      // if (window.localStorage.token) {
+      //   this.token = window.localStorage.token;
+      //   this.$nextTick(() => { 
+      //     this.$store.commit('setToken', window.localStorage.token);
+      //     this.check(true);
+      //   });
+      // }
     }
   },
   methods: {

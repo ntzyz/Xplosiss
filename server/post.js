@@ -9,7 +9,7 @@ let router = express.Router();
  * Get posts list.
  */
 router.get('/', async (req, res) => {
-  let page = req.query.page ? req.query.page - 1 : 0;
+  let page = Math.max(req.query.page ? req.query.page - 1 : 0, 0);
   let posts, count;
   try {
     let cursor = utils.db.conn.collection('posts').find({}, { sort: [['date', 'desc']] }).skip(page * config.page.size).limit(config.page.size);

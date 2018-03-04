@@ -1,5 +1,6 @@
 <template lang="pug">
   div.posts-list
+    div.title-card.card(v-show="title") {{ title }}
     div.list-item.card(v-for="post in posts")
       div.cover-image(v-if="post.cover" v-bind:style="{ backgroundImage: `url(${ post.cover })` }")
         div.placeholder
@@ -35,6 +36,9 @@ export default {
   name: 'PostsList',
   components: { Pagination },
   mixins: [clickEventMixin],
+  data () {
+    return { title: null };
+  },
   computed: {
     posts: function () { return this.$store.state.posts; },
     prefix: function () {
@@ -49,12 +53,17 @@ export default {
   },
   title () {
     const route = this.$route;
+    
     if (route.params.category) {
-      return `分类：${route.params.category}`;
+      this.title = `分类：${route.params.category}`;
+      return this.title;
     } else if (route.params.tag) {
-      return `标签：${route.params.tag}`;
+      this.title = `标签：${route.params.tag}`;
+      return this.title;
+    } else {
+      this.title = null;
+      return '首页';
     }
-    return '首页';
   },
   openGraph () {
     const route = this.$route;
@@ -89,8 +98,18 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../style/global.scss';
 
 div.posts-list {
+
+  div.title-card {
+    margin-top: 15px;
+    color: $card_title_background_color;
+    font-weight: 600;
+    padding: 1em;
+    font-size: 1.5rem;
+  }
+
   > ul {
     margin: 0;
     padding: 0;
