@@ -43,7 +43,7 @@ export default {
       this.$nextTick(() => {
         this.token = window.localStorage.token;
         this.check(true);
-      })
+      });
       // if (window.localStorage.token) {
       //   this.token = window.localStorage.token;
       //   this.$nextTick(() => { 
