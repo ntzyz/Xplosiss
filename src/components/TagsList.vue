@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.tags-list.card
+  div.tags-list.card(v-if="tags.length > 0")
     h3.title Tags
     ul
       li(v-for="tag in tags"): router-link(:to="'/tag/' + encodeURIComponent(tag.tag)" :title="tag.count + '篇相关文章'") {{ tag.tag }}

@@ -138,6 +138,24 @@ pre span.__line:before {
   color: #888
 }
 
+/** table **/
+table {
+  border-collapse: collapse;
+  th {
+    font-weight: 600;
+    border-bottom: 2px solid $table_border_color;
+  }
+  td {
+    border-bottom: 1px solid $table_border_color;
+  }
+  th, td {
+    padding: 4px 12px;
+  }
+  tr:hover {
+    background-color: $table_row_hover_color;
+  }
+}
+
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;

@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.category-list.card
+  div.category-list.card(v-if="categories.length > 0")
     h3.title Category
     ul
       li(v-for="category in categories"): router-link(:to="'/category/' + category") {{ category }}
