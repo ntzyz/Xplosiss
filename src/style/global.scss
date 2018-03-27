@@ -139,7 +139,8 @@ pre span.__line:before {
 }
 
 /** table **/
-table {
+article.post-preview table,
+article.post-content table {
   border-collapse: collapse;
   th {
     font-weight: 600;
