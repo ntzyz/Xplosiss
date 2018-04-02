@@ -216,6 +216,7 @@ router.put('/', async (req, res) => {
       slug: req.body.slug,
       category: req.body.category,
       date: new Date(req.body.date),
+      cover: req.body.cover,
       tags: req.body.tags,
       content: req.body.content,
       replies: [],

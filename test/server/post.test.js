@@ -18,6 +18,7 @@ describe('Testing post-related APIs.', () => {
       encoding: 'html',
       content: 'div 233'
     },
+    cover: 'https://www.ntzyz.cn/avatar.jpg',
     replies: [],
   };
   const replyTemplate = {
@@ -52,6 +53,7 @@ describe('Testing post-related APIs.', () => {
     expect(response.body.status).to.be.ok;
     expect(response.body.id).not.to.be.undefined;
 
+
     id = response.body.id;
   });
 
@@ -61,6 +63,20 @@ describe('Testing post-related APIs.', () => {
 
     expect(response.body.status).to.be.ok;
     expect(response.body.post).not.to.be.undefined;
+
+    Object.keys(postTemplate).forEach(key => {
+      if (key === 'date') {
+        // Date in response is a string, we need a special judge here:
+        expect(new Date(response.body.post[key]).getTime()).equal(postTemplate[key].getTime());
+        return;
+      } 
+      else if (key === 'content') {
+        // Common request will not include the syntax of the post, special judge:
+        expect(response.body.post[key]).equal(postTemplate[key].content);
+        return;
+      }
+      expect(response.body.post[key]).to.deep.equal(postTemplate[key]);
+    });
   });  
 
   it('Check if new post is created by id', async () => {

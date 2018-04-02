@@ -32,6 +32,10 @@ site.use((req, res, next) => {
 
   if (config.allowedOrigins.indexOf(origin) >= 0) {
     res.setHeader('Access-Control-Allow-Origin', origin);
+    
+    // PUT must be allowed or nobody can post a reply when CROS.
+    res.setHeader('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   }
 
   return next();

@@ -90,6 +90,8 @@ router.delete('/:filename', (req, res) => {
   fs.unlink(path.join(__dirname, '../uploads', req.params.filename), err => {
     if (err) {
       /* istanbul ignore next */
+      console.error(err);
+      /* istanbul ignore next */
       res.status(500).send({
         status: 'error',
         message: err,
