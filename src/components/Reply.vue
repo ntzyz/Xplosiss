@@ -3,34 +3,50 @@
     h3.title 评论
     div.content
       ul.replies-list(v-if="replies && replies.length !== 0")
-        li(v-for="reply in replies")
-          div.name {{ reply.user }} {{ reply.site !== '' ? `from ${reply.site}` : ''}}
-          div.date {{ timeToString(reply.datetime) }}
-          div(v-html="reply.content" v-if="reply.markdown")
-          div.raw-content(v-else) {{ reply.content }}
+        li(v-for="reply in replyTree", v-bind:style="{ marginLeft: reply.depth * 56 + 'px' }")
+          div.avatar
+            div.github-avatar(v-if="reply.githubId", v-bind:style="{ backgroundImage: `url(https://github.com/${reply.githubId}.png)` }")
+            div.fallback-avatar(v-else) {{ reply.user.substr(0, 1).toUpperCase() }}
+          div.reply-body
+            div.name {{ reply.user }} {{ reply.site !== '' ? `from ${reply.site}` : ''}}
+            div.date {{ timeToString(reply.datetime) }}
+            div(v-html="reply.content" v-if="reply.markdown")
+            div.raw-content(v-else) {{ reply.content }}
+            a.reply-to(@click="setReplyTo(reply.index)") 回复该评论
       div.send-new
-        h3 发表评论
+        h3(v-if="replyTo === null") 发表评论
+        h3(v-if="replyTo !== null && replies[replyTo] !== undefined") 回复给 {{ replies[replyTo].user }}
         table.form-table: tbody
           tr
             th 姓名
-            td: input.full(v-model="name")
+            td: input.full(v-model="name", placeholder="必填")
+          tr
+            th GitHub ID
+            td: input.full(v-model="githubId", placeholder="选填，填写后可以显示头像")
           tr
             th 站点
-            td: input.full(v-model="site")
+            td: input.full(v-model="site", placeholder="选填")
           tr
             th 电子邮件
-            td: input.full(v-model="email", placeholder="邮件地址不会公开")
+            td: input.full(v-model="email", placeholder="选填，邮件地址不会公开")
           tr
             th 评论
-            td: textarea.content(v-model="content", placeholder="We support markdown!")
+            td: textarea.content(v-model="content", placeholder="必填，可以使用 Markdown 语法")
           tr
             td
-            td: button(@click="submit") SUBMIT
+            td
+              button(@click="submit") 提交
+              button(@click="reset") 重置
 </template>
 
 <script>
 import timeToString from '../utils/timeToString';
 import api from '../api';
+
+function ReplyNode (value) {
+  this.value = value;
+  this.childs = [];
+}
 
 export default {
   name: 'Reply',
@@ -54,11 +70,52 @@ export default {
       email: '',
       content: '',
       site: '',
+      githubId: '',
+      replyTo: null,
     };
+  },
+  computed: {
+    replyTree () {
+      let replies = this.replies.map((el, idx) => {
+        el.index = idx;
+        return el;
+      });
+      
+      if (!replies) {
+        return;
+      }
+
+      let nodes = [];
+      let root = [];
+      replies.forEach((reply, index) => {
+        let node = new ReplyNode(reply);
+        nodes[index] = node;
+
+        if (typeof reply.replyTo === 'number') {
+          nodes[reply.replyTo].childs.push(node);
+        } else {
+          root.push(node);
+        }
+      });
+
+      let treeView = [];
+      let dfs = (node, depth = 0) => {
+        const value = node.value;
+        value.depth = depth;
+        treeView.push(value);
+
+        node.childs.sort(el => el.value.datatime);
+        node.childs.forEach(childNode => dfs(childNode, depth + 1));
+      };
+
+      root.forEach(node => dfs(node, 0));
+
+      return treeView;
+    }
   },
   watch: {
     replies () {
-      this.name = this.email = this.content = this.site = '';
+      this.reset();
     }
   },
   methods: {
@@ -69,7 +126,10 @@ export default {
         email: this.email,
         site: this.site,
         content: this.content,
+        replyTo: this.replyTo,
+        githubId: this.githubId,
       };
+
       if (!data.user) {
         alert('姓名是必填项呢');
         return;
@@ -77,6 +137,7 @@ export default {
         alert('评论内容为空呢');
         return;
       }
+
       api[this.$props.apiPath].putReplyBySlug({ slug: this.$route.params.slug, data })
         .then(() => {
           if (this.$store.state.forceReload) {
@@ -85,7 +146,20 @@ export default {
             this.$props.refreshReplies();
           }
         });
-    }
+    },
+    reset () {
+      Object.assign(this.$data, {
+        name: '',
+        email: '',
+        content: '',
+        site: '',
+        githubId: '',
+        replyTo: null,
+      });
+    },
+    setReplyTo (idx) {
+      this.replyTo = idx;
+    },
   },
 };
 </script>
@@ -94,38 +168,9 @@ export default {
 @import '../style/global.scss';
 @import '../style/form-table.scss';
 
-// label.md {
-//   height: 0;
-//   overflow: show;
-//   pointer-events: none;
-//   display: block;
-//   transform: translateY(-50px);
-//   font-size: 12px;
-//   transition: all linear 0.1s;
-//   color: grey;
-// }
-
-// input.md:not(:focus):invalid + label.md {
-//   font-size: initial;
-//   transform: translateY(-30px);
-// }
-
-// input.md {
-//   width: 200px;
-//   margin-top: 16px;
-//   padding-top: 8px;
-//   padding-bottom: 8px;
-//   border: none;
-//   border-bottom: 2px solid $button_color;
-// }
-
-// input.md:focus {
-//   outline: none;
-// }
-
 div.reply {
   div.content {
-    padding: 0.2em 1em 0.2em 1em;
+    padding: 0 1em 0 1em;
   }
   table th {
     text-align: right;
@@ -150,9 +195,11 @@ div.reply {
     list-style: none;
 
     > li {
-      padding: 0.6em 1em 0.1em 1em;
+      position: relative;
+      display: flex;
+      padding: 0.6em 1em 0.1em 0.3em;
       margin: 0.5em 0 0.5em 0;
-      background-color: rgb(245, 245, 245);
+      // background-color: rgb(245, 245, 245);
       border-radius: 2px;
       line-height: 1.2em;
 
@@ -160,6 +207,51 @@ div.reply {
         background-color: inherit;
         border: rgb(235, 235, 235);
         border-radius: 0;
+      }
+
+      a.reply-to {
+        font-size: 12px;
+        position: absolute;
+        bottom: 5px;
+        right: 8px;
+        opacity: 0;
+        transition: all ease 0.3s;
+        &:not(:hover) {
+          border-bottom: 1px solid transparent;
+        }
+      }
+
+      div.avatar, div.github-avatar {
+        width: 40px;
+        height: 40px;
+      }
+
+      div.avatar {
+        border-radius: 20px;
+        overflow: hidden;
+        margin-top: 5px;
+        margin-right: 1em;
+      }
+
+      div.github-avatar {
+        background-size: cover;
+      }
+
+      div.fallback-avatar {
+        line-height: 40px;
+        max-width: 40px;
+        text-align: center;
+        font-size: 20px;
+        background-color: $avatar_fallback_background_color;
+        color: $avatar_fallback_text_color;
+        user-select: none;
+      }
+    }
+
+    > li:hover {
+      a.reply-to {
+        opacity: 1;
+        transition: none;
       }
     }
 
@@ -170,6 +262,11 @@ div.reply {
       font-size: 0.8em;
       color: grey;
     }
+  }
+
+  button {
+    font-size: 12px;
+    margin-right: 5px;
   }
 }
 </style>
