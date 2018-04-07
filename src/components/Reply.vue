@@ -227,6 +227,8 @@ div.reply {
       }
 
       div.avatar {
+        flex-grow: 0;
+        flex-shrink: 0;
         border-radius: 20px;
         overflow: hidden;
         margin-top: 5px;
