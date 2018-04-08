@@ -4,7 +4,7 @@
     div.content
       ul(v-if="replies !== null")
         li(v-for="reply in replies")
-          router-link(:to="(reply.path === 'post' ? '/post/' : '/') + encodeURIComponent(reply.slug)") {{ reply.replies.user }} 发表于「{{ reply.title }}」
+          router-link(:to="(reply.path === 'post' ? '/post/' : '/') + encodeURIComponent(reply.slug) + '#reply'") {{ reply.replies.user }} 发表于「{{ reply.title }}」
       span(v-else) 暂无评论
 </template>
 

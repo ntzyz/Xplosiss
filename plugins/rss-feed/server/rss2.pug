@@ -10,7 +10,7 @@ rss(version="2.0", xmlns:atom="http://www.w3.org/2005/Atom", xmlns:content="http
     item
       title=post.title
       link=link + 'post/' + post.slug
-      guid=post._id
+      guid(isPermaLink="false")=post._id
       category=post.category
       pubDate=post.date.toUTCString()
       description=renderedPosts[index].content

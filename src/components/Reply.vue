@@ -1,5 +1,5 @@
 <template lang="pug">
-  div.reply: div.card
+  div.reply#reply: div.card
     h3.title 评论
     div.content
       ul.replies-list(v-if="replies && replies.length !== 0")
@@ -13,7 +13,7 @@
             div(v-html="reply.content" v-if="reply.markdown")
             div.raw-content(v-else) {{ reply.content }}
             a.reply-to(@click="setReplyTo(reply.index)") 回复该评论
-      div.send-new
+      div#reply-form.send-new
         h3(v-if="replyTo === null") 发表评论
         h3(v-if="replyTo !== null && replies[replyTo] !== undefined") 回复给 {{ replies[replyTo].user }}
         table.form-table: tbody
@@ -118,6 +118,13 @@ export default {
       this.reset();
     }
   },
+  mounted () {
+    this.$nextTick(() => {
+      if (this.$route.hash === '#reply') {
+        this.$el.scrollIntoView();
+      }
+    });
+  },
   methods: {
     timeToString,
     submit () {
@@ -159,6 +166,10 @@ export default {
     },
     setReplyTo (idx) {
       this.replyTo = idx;
+      this.focusReplyForm();
+    },
+    focusReplyForm () {
+      this.$el.querySelector('#reply-form').scrollIntoView();
     },
   },
 };
