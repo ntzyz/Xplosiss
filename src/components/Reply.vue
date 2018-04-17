@@ -104,7 +104,6 @@ export default {
         value.depth = depth;
         treeView.push(value);
 
-        node.childs.sort(el => el.value.datatime);
         node.childs.forEach(childNode => dfs(childNode, depth + 1));
       };
 

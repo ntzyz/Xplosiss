@@ -1,19 +1,22 @@
 <template lang="pug">
-  div.card.gallery 
-    h3.title {{ title }}
-    div.content(@click="activeImage = null")
-      div.empty(v-if="!images || images.length === 0") 目前，这里除了好奇什么都没有。
-      div.item-wrapper(v-for="image in images" v-bind:style="{ cursor: image.href ? 'pointer' : '' }" @click="imageOnClick(image, $event)")
-        div.item-border
-          div.introduction
-            p.description {{ image.description }}
-            div.tags(v-if="image.tags && image.tags.length !== 0")
-              span.tag(v-for="tag in image.tags" @click="tagOnClick(tag)") {{ tag }}
-          div.item(v-bind:style="{ backgroundImage: `url(${image.cover})` }")
-        h3.image-title {{ image.title }}
+  div.gallery 
+    div.title-card.card {{ title }}
+    div.empty(v-if="!images || images.length === 0") 目前，这里除了好奇什么都没有。
+    div.gallery-item.card(v-for="image in images")
+      div.image(v-bind:style="{ backgroundImage: `url(${image.cover})` }")
+      div.introduction
+        header.title
+          a(v-if="image.href" :href="image.href" target="_blank"): h3 {{ image.title }}
+          h3(v-else) {{ image.title }}
+        article.description {{ image.description }}
+        footer.meta
+          span {{ timeToString(new Date(image.date), true) }}
+          span(v-for="tag in image.tags") \#{{ tag }}
 </template>
 
 <script>
+import timeToString from '../../../src/utils/timeToString';
+
 export default {
   name: 'Gallery',
   data () {
@@ -33,6 +36,7 @@ export default {
     this.$store.commit('setBusy', false);
   },
   methods: {
+    timeToString,
     imageOnClick (image, event) {
       if (window.innerWidth <= 800 && this.activeImage !== image) {
         this.activeImage = image;
@@ -53,6 +57,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../../src/style/global.scss';
+
+
 .gallery {
   $height: 220px;
 
@@ -85,116 +92,92 @@ export default {
     font-weight: 500;
   }
 
-  div.item {
-    position: absolute;
-    top: 0; bottom: 0;
-    left: 0; right: 0;
-    overflow: hidden;
-    background-size: cover;
-    background-position: center;
-    transition: all ease 0.6s;
-  }
-
-  div.introduction:hover + div.item {
-    transform: scale(1.1);
-    transition: all ease 0.3s;
-    user-select: none;
-    // filter: blur(2px);
-  }
-
-  div.introduction:hover {
-    opacity: 1;
-    background: rgba(0, 0, 0, 0.5);
-  }
-
-  div.introduction {
-    position: absolute;
-    top: 0; bottom: 0;
-    left: 0; right: 0;
-    z-index: 3;
-    padding: 0 1em;
-    color: white;
-    $shadow-color: #333;
-    text-shadow: $shadow-color 1px 0px 1px, $shadow-color 0px 1px 1px, $shadow-color 0px -1px 1px, $shadow-color -1px 0px 1px;
-    transition: all ease 0.3s;
-    opacity: 0;
-  }
-
-  h3.image-title {
-    margin: 0.5em 0 0 0;
-    font-size: 1.2rem;
-    font-weight: normal;
-    font-family: 'Source Sans Pro', 'Helvetica Neue', Arial, sans-serif;
-    text-align: center;
-  }
-
-  p.description {
-    font-size: 0.95rem;
-  }
-
-  div.tags {
-    position: absolute;
-    bottom: 0.5em;
-    font-size: 13px;
+  div.gallery-item {
+    padding-bottom: 0;
     display: flex;
-    flex-wrap: wrap;
-  }
 
-  div.tags::before {
-    // content: 'Tags:';
-  }
-
-  span.tag {
-    display: block;
-    padding: 0px 4px;
-    cursor: pointer;
-  }
-
-  span.tag::before {
-    content: '#'
-  }
-
-  @media screen and (max-width: 1152px) {
-    // middle device override
-    div.item-wrapper {
-      width: calc(50% - 1em);
+    div.image {
+      width: 320px;
+      padding-top: 240px;
+      background-size: cover;
+      background-position: center;
+      margin: 15px 0 15px 15px;
+      flex-grow: 0;
+      flex-shrink: 0;
     }
-  }
 
-  @media screen and (max-width: 920px) {
-    // middle device override
-    div.item-wrapper {
-      width: calc(100% - 1em);
+    div.introduction {
+      flex-grow: 1;
+      flex-shrink: 1;
+      overflow: hidden;
+      padding: 1em;
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+    }
+
+    header.title {
+      z-index: initial;
+      position: initial;
+      background: initial;
+    }
+
+    header.title h3 {
+      color: $card_title_background_color;
+      margin: 0;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    article.description {
+      flex-grow: 1;
+      flex-shrink: 1;
+      min-height: 0;
+      padding: 1em 0;
+    }
+
+    footer.meta {
+      text-align: left;
+      padding: 0;
+
+      span {
+        margin-right: 1em;
+      }
     }
   }
 
   @media screen and (max-width: 800px) {
-    // tablet overrides
-    div.item-wrapper {
-      width: calc(50% - 1em);
+    div.gallery-item.card {
+      position: relative;
+      min-height: 220px;
+      &:not(:last-child) {
+        margin-bottom: 5px;
+      }
+      div.image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0;
+        padding: 0;
+        width: initial;
+        z-index: 0;
+      }
+      div.introduction {
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 1;
+      }
+      header.title h3, div.introduction, footer.meta {
+        color: white;
+        $shadow-color: #333;
+        text-shadow: $shadow-color 1px 0px 1px, $shadow-color 0px 1px 1px, $shadow-color 0px -1px 1px, $shadow-color -1px 0px 1px;
+      }
     }
   }
-
-  @media screen and (max-width: 512px) {
-    // mobile overrides
-    div.item-wrapper {
-      width: calc(100% - 1em);
-    }
-  }
-
-  @media screen and (max-width: 800px) {
-    // mobile overrides
-
-    // div.introduction:hover + div.item {
-    //   filter: none;
-    //   transform: none;
-    // }
-
-    // div.introduction {
-    //   opacity: 1;
-    //   background: rgba(0, 0, 0, 0.5);
-    // }
-  }
-
 }
 </style>

@@ -102,20 +102,6 @@ export default {
 
 div.posts-list {
 
-  div.title-card {
-    color: $card_title_background_color;
-    border-left: 5px solid $card_title_background_color;
-    font-weight: 600;
-    padding: 1em;
-    font-size: 1.5rem;
-  }
-
-  @media screen and (min-width: 800px) {
-    div.title-card {
-      margin-top: 15px;
-    }
-  }
-
   > ul {
     margin: 0;
     padding: 0;

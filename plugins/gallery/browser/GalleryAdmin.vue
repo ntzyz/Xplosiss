@@ -30,7 +30,7 @@
           td: input.full(v-model="image.cover")
         tr
           td.label 简介
-          td: input.full(v-model="image.description")
+          td: textarea(v-model="image.description")
         tr
           td.label 链接
           td: input.full(v-model="image.href")
@@ -170,6 +170,11 @@ export default {
   ul.image-list > li {
     color: darkgreen;
     cursor: pointer;
+  }
+
+  textarea {
+    width: 100%;
+    height: 8em;
   }
 
   button {

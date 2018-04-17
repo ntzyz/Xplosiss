@@ -114,6 +114,7 @@ div.side-bar {
 
   div.drawer.active {
     transform: initial;
+    background: white;
   }
 }
 
