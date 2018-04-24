@@ -2,7 +2,7 @@
   .page-view
     .card
       h3.title {{ page.title }}
-      article.content(v-html="page.content", @click="linkEventHandler")
+      article.page-content(v-html="page.content", @click="linkEventHandler")
     reply(:replies="page.replies || []", api-path="page", :refresh-replies="refreshReplies")
 </template>
 
@@ -51,7 +51,7 @@ export default {
 
 <style lang="scss">
 .page-view {
-  article.content {
+  article.page-content {
     padding: 15px;
   }
 }
