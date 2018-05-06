@@ -124,8 +124,8 @@ header.title {
   padding-top: 1px;
   z-index: 200;
 
-  > a {
-    // Fix IE11
+  > a, > a:hover {
+    // Fix IE11 & Edge
     border-bottom: none;
   }
   h1, h2 {
