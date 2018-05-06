@@ -15,7 +15,7 @@ before_script:
 script:
   - npm run lint
   - cp config.sample.js config.js
-  - sed -i 's/https:\/\/www.ntzyz.cn/http:\/\/localhost/g' config.js
+  - sed -i 's,https://new.ntzyz.cn,http://localhost:1234,g' config.js
   - npm run build
   - npm run test
 after_script:

@@ -33,7 +33,7 @@ Vue.mixin(openGraphMixin);
 axios.interceptors.response.use(response => {
   return response;
 }, error => {
-  console.log(`ERROR: ${error.errno}: failed to ${error.config.method} ${error.config.url}`)
+  console.log(`ERROR: ${error.errno}: failed to ${error.config.method} ${error.config.url}`);
   return Promise.reject(error);
 });
 
