@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import regeneratorRuntime from 'regenerator-runtime';
+import axios from 'axios';
 
 import App from './App.vue';
 import { createRouter, postCreateRouter, coreComponents } from './router';
@@ -28,6 +29,13 @@ Vue.mixin(openGraphMixin);
 //     }
 //   }
 // });
+
+axios.interceptors.response.use(response => {
+  return response;
+}, error => {
+  console.log(`ERROR: ${error.errno}: failed to ${error.config.method} ${error.config.url}`)
+  return Promise.reject(error);
+});
 
 export async function createApp () {
   const router = createRouter();
