@@ -1,8 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const fs = require('fs');
-
 const config = require('../config');
+const { VueLoaderPlugin } = require('vue-loader');
 
 const clientConfig = {
   title: config.title,
@@ -40,6 +40,18 @@ module.exports = {
         }
       },
       {
+        test: /\.scss$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          'sass-loader',
+        ],
+      },
+      {
+        test: /\.pug$/,
+        loader: 'pug-plain-loader',
+      },
+      {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/
@@ -65,6 +77,7 @@ module.exports = {
   performance: {
     hints: false
   },
+  mode: 'development',
   devtool: '#eval-source-map',
   plugins: [
     new webpack.DefinePlugin({
@@ -72,6 +85,7 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
     }),
     new webpack.IgnorePlugin(/server/, /plugins/),
+    new VueLoaderPlugin(),
   ]
 };
 
@@ -83,4 +97,5 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.optimize.ModuleConcatenationPlugin()
   ]);
+  module.exports.mode = 'production';
 }

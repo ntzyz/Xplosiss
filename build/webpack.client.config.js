@@ -6,24 +6,20 @@ const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 
 module.exports = merge(base, {
   entry: path.resolve(__dirname, '../src/entry-client'),
+  optimization: {
+    runtimeChunk: {
+      name: 'manifest'
+    },
+  },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'manifest',
-      minChunks: Infinity
-    }),
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'manifest',
+    //   minChunks: Infinity
+    // }),
     new VueSSRClientPlugin()
   ]
 });
 
 if (process.env.NODE_ENV === 'production') {
   module.exports.devtool = '#source-map';
-  module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-        unused: true,
-        dead_code: true
-      }
-    }),
-  ]);
 }
