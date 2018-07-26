@@ -146,7 +146,14 @@ export function createRouter (extraRoutes) {
       }
     ],
     scrollBehavior (to, from, savedPosition) {
-      return savedPosition || { x: 0, y: 0 };
+      if (!savedPosition) {
+        return { x: 0, y: 0 };
+      }
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve(savedPosition);
+        }, 300);
+      });
     }
   });
 

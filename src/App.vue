@@ -146,6 +146,27 @@ footer {
   // margin: 0 36px;
 }
 
+#progress-bar {
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  left: 0;
+  background-color: $progress_bar_color;
+  box-shadow: 0 0 5px $progress_bar_color;
+  height: 2px;
+  // transition: all ease .3s;
+  opacity: 0;
+
+  &.updating {
+    transition: all linear .1s;
+    opacity: 1;
+  }
+
+  &.finishing {
+    transition: all ease .7s;
+  }
+}
+
 @media screen and (min-width: 800px) {
   #app {
     display: flex;
@@ -169,26 +190,6 @@ footer {
     position: relative;
     overflow: hidden;
     padding: 0 4px 0 4px;
-  }
-
-  #progress-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: $progress_bar_color;
-    box-shadow: 0 0 5px $progress_bar_color;
-    height: 2px;
-    // transition: all ease .3s;
-    opacity: 0;
-
-    &.updating {
-      transition: all linear .1s;
-      opacity: 1;
-    }
-
-    &.finishing {
-      transition: all ease .7s;
-    }
   }
 }
 
