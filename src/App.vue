@@ -206,6 +206,11 @@ footer {
   .hide-on-mobile {
     display: none;
   }
+
+  #progress-bar {
+    box-shadow: 0 0 10px $progress_bar_color;
+    height: 4px;
+  }
 }
 
 @import './style/custom.scss';
