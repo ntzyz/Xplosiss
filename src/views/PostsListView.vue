@@ -1,40 +1,22 @@
 <template lang="pug">
   div.posts-list
-    div.title-card.card(v-show="title") {{ title }}
-    div.list-item.card(v-for="post in posts")
-      div.cover-image(v-if="post.cover" v-bind:style="{ backgroundImage: `url(${ post.cover })` }")
-        div.placeholder
-        header.image-overlay
-          router-link(:to="'/post/' + post.slug"): h2.post-title {{ post.title }}
-          div.post-meta
-            span {{ timeToString(post.date, true) }}
-            span 分类：{{ post.category }}
-            span(v-for="tag in post.tags") #
-              router-link(:to="'/tag/' + tag") {{ tag }}
-      div.content
-        header(v-if="!post.cover")
-          router-link(:to="'/post/' + post.slug"): h2.post-title {{ post.title }}
-          div.post-meta
-            span {{ timeToString(post.date, true) }}
-            span 分类：{{ post.category }}
-            span(v-for="tag in post.tags") #
-              router-link(:to="'/tag/' + tag") {{ tag }}
-        article.post-preview(v-html="post.content" @click="linkEventHandler")
-        footer(v-if="post.more")
-          router-link(:to="'/post/' + post.slug").button.more MORE
-    pagination(v-if="$store.state.pages", :current="$store.state.pages.current", :length="7", :max="$store.state.pages.max", :prefix="prefix")
+    transition(name="forward"): div(:key="title")
+      div.title-card.card(v-show="title") {{ title }}
+      posts-list(:posts="posts")
+      pagination(v-if="$store.state.pages", :current="$store.state.pages.current", :length="7", :max="$store.state.pages.max", :prefix="prefix")
 </template>
 
 <script>
 import Pagination from '../components/Pagination.vue';
+import PostsList from '../components/PostsList.vue';
 
 import config from '../config.json';
 import timeToString from '../utils/timeToString';
 import clickEventMixin from '../utils/link-injector';
 
 export default {
-  name: 'PostsList',
-  components: { Pagination },
+  name: 'PostsListView',
+  components: { Pagination, PostsList },
   mixins: [clickEventMixin],
   data () {
     return { title: null };
@@ -79,7 +61,7 @@ export default {
   },
   watch: {
     '$route': function () {
-      this.$options.asyncData({store: this.$store, route: this.$route });
+      this.promise = this.$options.asyncData({store: this.$store, route: this.$route });
     }
   },
   methods: {
@@ -203,6 +185,13 @@ div.posts-list {
 
   div.placeholder {
     padding-top: 30%;
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
   }
 }
 </style>

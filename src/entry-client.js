@@ -60,7 +60,9 @@ createApp().then(({ app, store, router }) => {
 
       Promise.all(componentsWithAsyncData.map(c => {
         if (c.asyncData) {
-          return c.asyncData({ store, route: to });
+          const promise = c.asyncData({ store, route: to });
+
+          return promise;
         }
       })).then(() => {
         next();

@@ -30,7 +30,7 @@ export default {
 
   fetchPostsByTag: (state, params) => {
     state.commit('setBusy', true);
-    state.commit('setPosts', []);
+    // state.commit('setPosts', []);
     return api.tag.fetchPostsByTag(params).then(data => {
       state.commit('setPages', data.page);
       state.commit('setPosts', data.posts);
@@ -40,7 +40,7 @@ export default {
 
   fetchLatestPosts: (state, params) => {
     state.commit('setBusy', true);
-    state.commit('setPosts', []);
+    // state.commit('setPosts', []);
     return api.post.fetchPosts(params).then(data => {
       state.commit('setPages', data.page);
       state.commit('setPosts', data.posts);
@@ -50,7 +50,7 @@ export default {
 
   fetchPostBySlug: (state, slug) => {
     state.commit('setBusy', true);
-    state.commit('setPost', []);
+    // state.commit('setPost', []);
     return api.post.fetchPostBySlug({ slug }).then(post => {
       state.commit('setPost', post);
       state.commit('setBusy', false);
@@ -59,7 +59,7 @@ export default {
 
   fetchPageBySlug: (state, slug) => {
     state.commit('setBusy', true);
-    state.commit('setPage', {});
+    // state.commit('setPage', {});
     return api.page.fetchPageBySlug({ slug }).then(page => {
       state.commit('setPage', page);
       state.commit('setBusy', false);

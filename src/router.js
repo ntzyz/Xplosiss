@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import ClientSideBar from './components/ClientSideBar.vue';
-import PostsList from './views/PostsList.vue';
+import PostsListView from './views/PostsListView.vue';
 import PostView from './views/PostView.vue';
 import PageView from './views/PageView.vue';
 import NotFound from './views/NotFound.vue';
@@ -18,7 +18,7 @@ const AdminPage = () => import(/* webpackChunkName: "group-admin" */ './componen
 
 Vue.use(VueRouter);
 
-export let coreComponents = { ClientSideBar, PostsList, PostView, PageView, NotFound, AdminSideBar };
+export let coreComponents = { ClientSideBar, PostsListView, PostView, PageView, NotFound, AdminSideBar };
 
 export function createRouter (extraRoutes) {
   const router = new VueRouter({
@@ -27,42 +27,42 @@ export function createRouter (extraRoutes) {
       {
         path: '/',
         components: {
-          default: PostsList,
+          default: PostsListView,
           sidebar: ClientSideBar,
         },
         meta: { keepAlive: true }
       }, {
         path: '/page/:page',
         components: {
-          default: PostsList,
+          default: PostsListView,
           sidebar: ClientSideBar,
         },
         meta: { keepAlive: true }
       }, {
         path: '/tag/:tag',
         components: {
-          default: PostsList,
+          default: PostsListView,
           sidebar: ClientSideBar,
         },
         meta: { keepAlive: true }
       }, {
         path: '/tag/:tag/page/:page',
         components: {
-          default: PostsList,
+          default: PostsListView,
           sidebar: ClientSideBar,
         },
         meta: { keepAlive: true }
       }, {
         path: '/category/:category',
         components: {
-          default: PostsList,
+          default: PostsListView,
           sidebar: ClientSideBar,
         },
         meta: { keepAlive: true }
       }, {
         path: '/category/:category/page/:page',
         components: {
-          default: PostsList,
+          default: PostsListView,
           sidebar: ClientSideBar,
         },
         meta: { keepAlive: true }

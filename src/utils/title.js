@@ -27,10 +27,22 @@ const clientTitleMixin = {
   },
   watch: {
     '$route': function () {
-      const title = getTitle(this);
-      if (title) {
-        document.title = `${title} - ${config.title}`;
-      }
+      const updateTitle = function () {
+        const title = getTitle(this);
+        if (title) {
+          document.title = `${title} - ${config.title}`;
+        }  
+      }.bind(this);
+
+      this.$nextTick(() => {
+        if (this.promise) {
+          this.promise.then(() => {
+            updateTitle();
+          });
+        } else {
+          updateTitle();
+        }
+      });
     }
   }
 };
