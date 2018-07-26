@@ -4,8 +4,11 @@
       div#left-wrapper
         router-view(name="sidebar")
     #right
-      // loading-icon(v-if="busy")
-      transition(name="forward"): router-view
+      keep-alive
+        transition(name="forward")
+          router-view(v-if="$route.meta.keepAlive")
+      transition(name="forward")
+        router-view(v-if="!$route.meta.keepAlive")
       footer
         div.row(v-for="line in footer") {{ line }}
     #progress-bar(v-bind:style="{ width: `${progressBarAnimeLength}vw`}", v-bind:class="{ updating: busy && progressBarUpdating, finishing: (!busy) && progressBarUpdating }")
