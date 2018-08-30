@@ -4,8 +4,11 @@
       li
         router-link(:to="prefix + '/page/1'").button &laquo;
       li(v-for="page in pages")
-        router-link(:to="prefix + '/page/' + page" v-if="Number(current) !== page").button {{ page }}
-        a.disabled.button(v-else) {{ page }}
+        template(v-if="page !== null")
+          router-link(:to="prefix + '/page/' + page" v-if="Number(current) !== page").button {{ page }}
+          a.disabled.button(v-else) {{ page }}
+        template(v-else)
+          span …
       li
         router-link(:to="prefix + '/page/' + max").button &raquo;
 </template>
@@ -51,7 +54,31 @@ export default {
     init () {
       let current = parseInt(this.current);
       let left = Math.max(1, current - Math.floor(Number(this.length) / 2));
-      this.pages = new Array(parseInt(this.length)).fill(0).map((dummy, index) => index + left).filter(i => i <= Number(this.max));
+      let pages = new Array(parseInt(this.length)).fill(0).map((dummy, index) => index + left).filter(i => i <= Number(this.max));
+
+      if (pages.length < Number(this.length)) {
+        const padCount = Number(this.length) - pages.length;
+        pages = [
+          ...new Array(padCount).fill(0).map((dummy, index) => pages[0] - padCount + index),
+          ...pages
+        ];
+      }
+
+      if (pages[0] && pages[0] > 1) {
+        pages.shift();
+        pages.shift();
+        pages.unshift(null);
+        pages.unshift(1);
+      }
+
+      if (pages[pages.length - 1] < Number(this.max)) {
+        pages.pop();
+        pages.pop();
+        pages.push(null);
+        pages.push(Number(this.max));
+      }
+
+      this.pages = pages;
     }
   },
 };
