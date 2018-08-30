@@ -59,7 +59,7 @@ export default {
       if (pages.length < Number(this.length)) {
         const padCount = Number(this.length) - pages.length;
         pages = [
-          ...new Array(padCount).fill(0).map((dummy, index) => pages[0] - padCount + index),
+          ...new Array(padCount).fill(0).map((dummy, index) => pages[0] - padCount + index).filter(el => el > 0),
           ...pages
         ];
       }
