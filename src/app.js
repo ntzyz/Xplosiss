@@ -14,21 +14,6 @@ import openGraphMixin from './utils/open-graph';
 Vue.use(Vuex);
 Vue.mixin(titleMixin);
 Vue.mixin(openGraphMixin);
-// Vue.mixin({
-//   beforeMount () {
-//     const { asyncData } = this.$options;
-//     if (asyncData) {
-//       this.dataPromise = new Promise((resolve, reject) => {
-//         this.$nextTick(() => {
-//           asyncData({
-//             store: this.$store,
-//             route: this.$route
-//           }).then(resolve).catch(reject);
-//         });
-//       });
-//     }
-//   }
-// });
 
 axios.interceptors.response.use(response => {
   return response;

@@ -1,4 +1,5 @@
 const websocket = require('./websocket');
+const utils = require('../utils');
 
 /**
  * Activity logger middleware.
@@ -24,6 +25,18 @@ function logger (req, res, next) {
 
   // Broadcast to all those connected websocket clients.
   websocket.io.emit('log', message);
+
+  // Write log to database
+  // We do NOT need to await here.
+  utils.db.conn.collection('logs').insert({
+    time: new Date(),
+    ip: req.headers['x-real-ip'] || req.ip || '0.0.0.0',
+    method: req.method,
+    url: req.url,
+    userAgent: req.userAgent,
+  }).catch(error => {
+    console.error(error);
+  });
 
   // Continue.
   next();
