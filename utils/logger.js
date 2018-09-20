@@ -30,7 +30,7 @@ async function logger (req, res, next) {
   // Write log to database
   await db.prepare();
   // We do NOT need to await here.
-  if (!/^\/(dist|static)/.match(req.url)) {
+  if (!/^\/(dist|static|api\/media)/.test(req.url)) {
     db.conn.collection('logs').insert({
       time: new Date(),
       ip: req.headers['x-real-ip'] || req.ip || '0.0.0.0',
