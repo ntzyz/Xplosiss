@@ -34,7 +34,7 @@ async function logger (req, res, next) {
     ip: req.headers['x-real-ip'] || req.ip || '0.0.0.0',
     method: req.method,
     url: req.url,
-    userAgent: req.userAgent,
+    userAgent: req.headers['user-agent'],
   }).catch(error => {
     console.error(error);
   });
