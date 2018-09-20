@@ -1,5 +1,5 @@
 const websocket = require('./websocket');
-const utils = require('../utils');
+const db = require('./db');
 
 /**
  * Activity logger middleware.
@@ -7,7 +7,7 @@ const utils = require('../utils');
  * @param {Response} res 
  * @param {Function} next 
  */
-function logger (req, res, next) {
+async function logger (req, res, next) {
   if (req.headers['server-side-rendering'] === 'true') {
     return next();
   }
@@ -27,8 +27,9 @@ function logger (req, res, next) {
   websocket.io.emit('log', message);
 
   // Write log to database
+  await db.prepare();
   // We do NOT need to await here.
-  utils.db.conn.collection('logs').insert({
+  db.conn.collection('logs').insert({
     time: new Date(),
     ip: req.headers['x-real-ip'] || req.ip || '0.0.0.0',
     method: req.method,
