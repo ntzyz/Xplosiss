@@ -1,5 +1,6 @@
 const websocket = require('./websocket');
 const db = require('./db');
+const uaParser = require('ua-parser-js');
 
 /**
  * Activity logger middleware.
@@ -29,15 +30,17 @@ async function logger (req, res, next) {
   // Write log to database
   await db.prepare();
   // We do NOT need to await here.
-  db.conn.collection('logs').insert({
-    time: new Date(),
-    ip: req.headers['x-real-ip'] || req.ip || '0.0.0.0',
-    method: req.method,
-    url: req.url,
-    userAgent: req.headers['user-agent'],
-  }).catch(error => {
-    console.error(error);
-  });
+  if (!/^\/(dist|static)/.match(req.url)) {
+    db.conn.collection('logs').insert({
+      time: new Date(),
+      ip: req.headers['x-real-ip'] || req.ip || '0.0.0.0',
+      method: req.method,
+      url: req.url,
+      userAgent: uaParser(req.headers['user-agent']),
+    }).catch(error => {
+      console.error(error);
+    });
+  }
 
   // Continue.
   next();
