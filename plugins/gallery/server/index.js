@@ -44,7 +44,7 @@ function pluginInstaller ({ site, utils }) {
       });
     }
 
-    res.send({ status: 'ok', id: r.insertedIds[0] });
+    res.send({ status: 'ok', id: r.insertedId });
   });
 
   site.delete('/api/gallery/:id', async (req, res) => {

@@ -106,7 +106,7 @@ router.put('/', async (req, res) => {
     });
   }
 
-  res.send({ status: 'ok', _id: r.insertedIds[0] });
+  res.send({ status: 'ok', _id: r.insertedId });
 });
 
 /**
