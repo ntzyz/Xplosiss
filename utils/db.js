@@ -9,7 +9,7 @@ let promise = null;
  */
 function connect () {
   return new Promise((resolve, reject) => {
-    MongoClient.connect(config.database.address, (err, server) => {
+    MongoClient.connect(config.database.address, { useNewUrlParser: true }, (err, server) => {
       if (err) {
         console.error(err);
         process.exit(10);

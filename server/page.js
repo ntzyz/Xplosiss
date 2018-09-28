@@ -167,7 +167,7 @@ router.put('/', async (req, res) => {
 
   let r;
   try {
-    r = await utils.db.conn.collection('pages').insert({
+    r = await utils.db.conn.collection('pages').insertOne({
       title: req.body.title,
       slug: req.body.slug,
       content: req.body.content,

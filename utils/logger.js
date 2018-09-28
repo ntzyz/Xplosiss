@@ -1,7 +1,7 @@
 const websocket = require('./websocket');
 const db = require('./db');
 const uaParser = require('ua-parser-js');
-
+const geoip = require('geoip-lite');
 /**
  * Activity logger middleware.
  * @param {Request} req 
@@ -16,7 +16,7 @@ async function logger (req, res, next) {
   let message = `[${new Date().toLocaleString()}] ${req.headers['x-real-ip'] || req.ip} - ${req.method} ${req.url} - ${req.headers['user-agent']}`;
 
   // Write log to stdout, and push to the log array.
-  console.log(message);
+  // console.log(message);
   logger.logs.push(message);
 
   // Keep the log array size not to big
@@ -31,11 +31,15 @@ async function logger (req, res, next) {
   await db.prepare();
   // We do NOT need to await here.
   if (!/^\/(dist|static|api\/media)/.test(req.url)) {
-    db.conn.collection('logs').insert({
+    const ipAddr = req.headers['x-real-ip'] || req.ip || '0.0.0.0';
+    db.conn.collection('logs').insertOne({
       time: new Date(),
-      ip: req.headers['x-real-ip'] || req.ip || '0.0.0.0',
+      ip: Object.assign({
+        addr: ipAddr,
+      }, geoip.lookup(ipAddr) || {}),
       method: req.method,
       url: req.url,
+      referrer: req.referrer,
       userAgent: uaParser(req.headers['user-agent']),
     }).catch(error => {
       console.error(error);

@@ -26,6 +26,7 @@
     "body-parser": "^1.18.2",
     "bufferutil": "^4.0.0",
     "express": "^4.16.2",
+    "geoip-lite": "^1.3.2",
     "highlight.js": "^9.12.0",
     "markdown-it": "^8.4.0",
     "memory-fs": "^0.4.1",

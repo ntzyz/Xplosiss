@@ -91,7 +91,7 @@ router.put('/', async (req, res) => {
 
   let r;
   try {
-    r = await utils.db.conn.collection('widgets').insert({
+    r = await utils.db.conn.collection('widgets').insertOne({
       title: req.body.title,
       content: req.body.content,
       enabled: !!req.body.enabled

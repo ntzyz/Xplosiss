@@ -29,7 +29,7 @@ function pluginInstaller ({ site, utils }) {
 
     let r;
     try {
-      r = await utils.db.conn.collection('gallery').insert({
+      r = await utils.db.conn.collection('gallery').insertOne({
         title: req.body.title,
         description: req.body.description,
         cover: req.body.cover,
