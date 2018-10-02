@@ -39,7 +39,7 @@ async function logger (req, res, next) {
       }, geoip.lookup(ipAddr) || {}),
       method: req.method,
       url: req.url,
-      referrer: req.referrer,
+      referer: req.headers['referer'],
       userAgent: uaParser(req.headers['user-agent']),
     }).catch(error => {
       console.error(error);
