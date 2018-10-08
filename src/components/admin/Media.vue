@@ -13,12 +13,14 @@
           td.mime {{ file.mime || 'text/plain' }}
           td.operation 
             a(:href="getFileURL(file.file)" target="_blank") 预览
+            a(href="javascript:void(0)" @click="copyMarkdownLink(file)") 复制 MD 链接
             a(@click="deleteFile(file.file)") 删除
       input(type="file" style="display: none")
 </template>
 
 <script>
 import api from '../../api';
+import copyToClipboard from '../../utils/clipboard';
 
 export default {
   name: 'Media',
@@ -63,6 +65,9 @@ export default {
         this.fetchFiles();
         alert('删除成功');
       });
+    },
+    copyMarkdownLink (file) {
+      copyToClipboard(`![${file.file}](${this.getFileURL(file.file)})`);
     }
   }
 };
@@ -82,7 +87,7 @@ div.media-manage {
     font-weight: 600;
   }
   .operation {
-    width: 100px;
+    width: 220px;
     text-align: center;
   }
   .mime {
