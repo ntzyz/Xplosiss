@@ -5,7 +5,7 @@ const path = require('path');
 function getCurrentCommitHash () {
   return new Promise((resolve) => {
     child_process.exec('git rev-parse HEAD', (err, stdout) => {
-      resolve(stdout);
+      resolve(stdout.trim());
     });
   });
 }
@@ -13,7 +13,7 @@ function getCurrentCommitHash () {
 function evalGitPull () {
   return new Promise((resolve) => {
     child_process.exec('git pull', (err, stdout) => {
-      resolve(stdout);
+      resolve(stdout.trim());
     });
   });
 }
@@ -28,7 +28,10 @@ function getCommitSinceHash (hash) {
 
 function evalBuildBundle () {
   return new Promise((resolve) => {
-    child_process.exec('npm run build', (err, stdout) => {
+    const cp = child_process.spawn('npm', ['run', 'build'], {
+      stdio: 'inherit',
+    });
+    cp.on('close', (code) => {
       resolve();
     });
   });
@@ -45,6 +48,8 @@ async function main () {
     currentCommitHash,
     ...await getCommitSinceHash(currentCommitHash),
   ];
+
+  console.log(hashs);
 
   console.log('Checking scripts to run...');
   for (const hash of hashs) {
