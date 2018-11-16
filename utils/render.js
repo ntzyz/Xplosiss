@@ -30,6 +30,13 @@ function render (posts, options) {
           return `<pre>${str}</pre>`;
         }
       }).render(post.content);
+
+      // Render {AAA}(b) as
+      //   b
+      //  AAA
+      post.content = post.content.replace(/{([^\n]+?)}\(([^\n]+?)\)/g, (m, p1, p2) => {
+        return `<ruby>${p1}<rp>(</rp><rt>${p2}</rt><rp>)</rp></ruby>`;
+      });
     } else {
       // Render other formats (pug, makrdown, etc) into html
       if (/^(jade|pug)$/i.test(post.content.encoding)) {

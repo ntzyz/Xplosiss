@@ -126,6 +126,10 @@ code {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
 }
 
+ruby {
+  margin: 0 0.5rem;
+}
+
 /** line numbers **/
 pre span.__line:before {
   counter-increment: line;
