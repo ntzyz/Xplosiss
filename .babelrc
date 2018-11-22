@@ -1,17 +1,17 @@
 {
   "presets": [
-    ["env", { "modules": false }]
+    ["@babel/preset-env", { "modules": false }]
   ],
   "plugins": [
-    "syntax-dynamic-import",
-    "transform-regenerator"
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-transform-regenerator"
   ],
   "env": {
     "test": {
       "plugins": [
         "istanbul",
-        "syntax-dynamic-import",
-        "transform-regenerator"
+        "@babel/plugin-syntax-dynamic-import",
+        "@babel/plugin-transform-regenerator"
       ]
     }
   }
