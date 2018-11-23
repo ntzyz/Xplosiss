@@ -20,8 +20,6 @@ createApp({
     router.replace('/not-found');
     setTimeout(() => {
       app.$forceUpdate();
-      console.log('updated');
-      window.app = app;
     }, 1000);
   });
 
@@ -47,7 +45,7 @@ createApp({
       }
   
       const componentsWithAsyncData = [];
-      const checkedCompoments = []
+      const checkedCompoments = [];
       const checkComponent = C => {
         if (checkedCompoments.indexOf(C) >= 0) {
           return;
