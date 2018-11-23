@@ -1,6 +1,3 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-
 import ClientSideBar from './components/ClientSideBar.vue';
 import PostsListView from './views/PostsListView.vue';
 import PostView from './views/PostView.vue';
@@ -16,11 +13,11 @@ const AdminLogs = () => import(/* webpackChunkName: "group-admin" */ './componen
 const AdminMedia = () => import(/* webpackChunkName: "group-admin" */ './components/admin/Media.vue');
 const AdminPage = () => import(/* webpackChunkName: "group-admin" */ './components/admin/Page.vue');
 
-Vue.use(VueRouter);
-
 export let coreComponents = { ClientSideBar, PostsListView, PostView, PageView, NotFound, AdminSideBar };
 
-export function createRouter (extraRoutes) {
+export function createRouter (extraRoutes, { Vue, VueRouter }) {
+  Vue.use(VueRouter);
+
   const router = new VueRouter({
     mode: 'history',
     routes: [

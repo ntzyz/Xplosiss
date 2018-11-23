@@ -11,11 +11,12 @@ module.exports = merge(base, {
       name: 'manifest'
     },
   },
+  externals: {
+    'vue': 'Vue',
+    'vuex': 'Vuex',
+    'vue-router': 'VueRouter',
+  },
   plugins: [
-    // new webpack.optimize.CommonsChunkPlugin({
-    //   name: 'manifest',
-    //   minChunks: Infinity
-    // }),
     new VueSSRClientPlugin()
   ]
 });

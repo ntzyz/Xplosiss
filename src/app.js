@@ -1,5 +1,3 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
 import regeneratorRuntime from 'regenerator-runtime';
 import axios from 'axios';
 
@@ -11,10 +9,6 @@ import config from './config.json';
 import titleMixin from './utils/title';
 import openGraphMixin from './utils/open-graph';
 
-Vue.use(Vuex);
-Vue.mixin(titleMixin);
-Vue.mixin(openGraphMixin);
-
 axios.interceptors.response.use(response => {
   return response;
 }, error => {
@@ -22,9 +16,15 @@ axios.interceptors.response.use(response => {
   return Promise.reject(error);
 });
 
-export async function createApp () {
-  const router = createRouter();
-  const store = createStore();
+export async function createApp (libs) {
+  const { Vue, Vuex } = libs;
+
+  Vue.use(Vuex);
+  Vue.mixin(titleMixin);
+  Vue.mixin(openGraphMixin);
+    
+  const router = createRouter(null, libs);
+  const store = createStore(libs);
 
   const app = new Vue({
     router, store,

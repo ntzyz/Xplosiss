@@ -1,3 +1,7 @@
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Vuex from 'vuex';
+
 import { createApp } from './app.js';
 import axios from 'axios';
 import regeneratorRuntime from 'regenerator-runtime';
@@ -12,7 +16,11 @@ axios.interceptors.request.use(function (config) {
 });
 
 export default context => new Promise((resolve, reject) => {
-  createApp().then(({ app, store, router }) => {
+  createApp({
+    Vue,
+    VueRouter,
+    Vuex
+  }).then(({ app, store, router }) => {
     router.push(context.url);
 
     router.onReady(() => {      

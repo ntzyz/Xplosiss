@@ -1,7 +1,11 @@
 import { createApp } from './app.js';
 import config from './config.json';
 
-createApp().then(({ app, store, router }) => {
+createApp({
+  Vue: window.Vue,
+  VueRouter: window.VueRouter,
+  Vuex: window.Vuex,
+}).then(({ app, store, router }) => {
   if (window.__INITIAL_STATE__) {
     store.replaceState(window.__INITIAL_STATE__);
   }

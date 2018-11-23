@@ -3,7 +3,11 @@ const path = require('path');
 const fs = require('fs');
 const express = require('express');
 
+const RSS_CACHE_STATUS_HEADER = 'X-RSS-From-Cache';
+
 function installer ({ site, utils, config }) {
+  let rssCacheContent = null;
+
   function renderXML (posts) {
     let resolve, promise;
     promise = new Promise(r => resolve = r);
@@ -28,10 +32,23 @@ function installer ({ site, utils, config }) {
     return promise;
   }
 
+  function rssCacheController (req, res, next) {
+    switch (req.method) {
+    case 'PUT':
+    case 'POST':
+    case 'DELETE':
+      rssCacheContent = null;
+    default:
+      next();
+    }
+  }
+
   const router = express.Router();
 
   router.use((req, res, next) => {
     res.set('content-type', 'application/rss+xml');
+    res.header(RSS_CACHE_STATUS_HEADER, 'false');
+    
     next();
   });
 
@@ -40,6 +57,11 @@ function installer ({ site, utils, config }) {
   });
 
   router.get('/', async (req, res) => {
+    if (rssCacheContent) {
+      res.header(RSS_CACHE_STATUS_HEADER, 'true');
+      return res.send(rssCacheContent);
+    }
+
     try {
       let cursor = utils.db.conn.collection('posts').find({}, { sort: [['date', 'desc']] }).limit(config.page.size);
       posts = await cursor.toArray();
@@ -50,9 +72,11 @@ function installer ({ site, utils, config }) {
         message: utils.messages.ERR_MONGO_FAIL
       });
     }
-    res.send(await renderXML(posts));
+    rssCacheContent = await renderXML(posts);
+    res.send(rssCacheContent);
   });
 
+  site.use(rssCacheController);
   site.use('/feeds', router);
 }
 

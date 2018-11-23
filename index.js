@@ -13,6 +13,7 @@ const serve = (p, cache) => express.static(path.resolve(__dirname, p), {
 });
 
 let site = express();
+let pluginRouter = express.Router();
 
 // disable 'x-powered-by' for security
 site.disable('x-powered-by');
@@ -40,6 +41,9 @@ site.use((req, res, next) => {
 
   return next();
 });
+
+// Router for all plugins
+site.use(pluginRouter);
 
 // API entry
 site.use('/api', require('./server'));
@@ -138,7 +142,6 @@ Object.keys(config.plugins).forEach(plugin => {
     manifest = JSON.parse(fs.readFileSync(path.join(__dirname, './plugins/', plugin, './manifest.json')));
   } catch(e) {
     console.error(e);
-    // TODO
   }
 
   if (!config.plugins[plugin].enabled) {
@@ -146,7 +149,7 @@ Object.keys(config.plugins).forEach(plugin => {
   }
 
   const installer = require(path.join(__dirname, './plugins/', plugin, manifest.entry.server));
-  installer({ site, utils, config });
+  installer({ site: pluginRouter, utils, config });
   console.log(`Loaded plugin: ${manifest.name} v${manifest.version}, written by ${manifest.author.name}.`);
 });
 
