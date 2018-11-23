@@ -48,6 +48,10 @@ createApp({
   
       const componentsWithAsyncData = [];
       const checkComponent = C => {
+        if (checkedCompoments.indexOf(C) >= 0) {
+          return;
+        }
+        checkedCompoments.push(C);
         if (C.asyncData) {
           componentsWithAsyncData.push(C);
         }
