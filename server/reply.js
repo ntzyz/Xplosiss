@@ -35,7 +35,7 @@ router.get('/latest', async (req, res) => {
   }
 
   let replies = [...postReplies, ...pageReplies];
-  replies.sort((a, b) => b.replies.datetime > a.replies.datetime);
+  replies.sort((a, b) => b.replies.datetime - a.replies.datetime);
 
   return res.send({
     status: 'ok',
