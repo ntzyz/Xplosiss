@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const fs = require('fs');
 const config = require('../config');
 const { VueLoaderPlugin } = require('vue-loader');
+const child_process = require('child_process');
 
 const clientConfig = {
   title: config.title,
@@ -19,6 +20,13 @@ const clientConfig = {
 };
 
 fs.writeFileSync(path.join(__dirname, '../src/config.json'), JSON.stringify(clientConfig));
+
+let commit = null;
+try {
+  commit = child_process.execSync('git log -1 --format="%h"');
+} catch (e) {
+  commit = 'unknown';
+}
 
 module.exports = {
   output: {
@@ -81,7 +89,7 @@ module.exports = {
   devtool: '#eval-source-map',
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.COMMIT': JSON.stringify(process.env.COMMIT || 'unknown'),
+      'process.env.COMMIT': JSON.stringify(commit),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
     }),
     new webpack.IgnorePlugin(/server/, /plugins/),

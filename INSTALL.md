@@ -26,18 +26,28 @@ Install `MongoDB`, `Node.js` and `npm`. for Arch Linux:
 ```
 % mongo localhost:27017/$database ./db.default.js
 ```
-Note: replace `$database` with your real database.
+Note: replace `$database` with your real database name.
 
 ### 5. Build the script bundle.
+
+For Unix-like environment:
 ```
 % npm run build
 ```
-Note: you should always rebuild it after editing `config.js` or merging from upstream.
 
-### 6. Create a systemd unit
+For Windows:
+```
+> npm run bulid-win32
+```
+
+Note: you should **always** rebuild it after editing `config.js` or merging from upstream.
+
+### 6. Start service
+
+For Linux user with systemd init, create a systemd service is recommended:
 
 ```
-echo "
+% echo "
 [Unit]
 Description=A naive blog framework
 After=network.target
@@ -50,10 +60,12 @@ ExecStart=$(which node) $(pwd)/index
 [Install]
 WantedBy=multi-user.target
 " | sudo tee /lib/systemd/system/new-blog.service
-```
-
-### 7. Start the server and enable it to be started on startup.
-```
 % sudo systemctl enable new-blog.service
 % sudo systemctl start new-blog.service
+```
+
+Or if you just want to start the server in command-line environment:
+
+```
+npm run start
 ```
