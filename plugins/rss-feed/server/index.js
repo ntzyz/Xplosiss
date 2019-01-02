@@ -63,7 +63,11 @@ function installer ({ site, utils, config }) {
     }
 
     try {
-      let cursor = utils.db.conn.collection('posts').find({}, { sort: [['date', 'desc']] }).limit(config.page.size);
+      let cursor = utils.db.conn.collection('posts').find({
+        hideOnIndex: {
+          $ne: true,
+        }
+      }, { sort: [['date', 'desc']] }).limit(config.page.size);
       posts = await cursor.toArray();
     } catch (e) {
       console.error(e);
