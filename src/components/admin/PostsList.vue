@@ -46,7 +46,7 @@ export default {
     timeToString,
     loadPosts (page) {
       this.posts = [];
-      api.post.fetchPosts({ page }).then(data => {
+      api.post.fetchPosts({ page, full: true }).then(data => {
         this.posts = data.posts;
         this.pages = data.page;
       });

@@ -3,7 +3,7 @@ import config from '../config.json';
 
 function fetchPosts (params = {}) {
   return new Promise((resolve, reject) => {
-    axios.get(`${config.api.url}/post?page=${params.page || 1}`)
+    axios.get(`${config.api.url}/post?page=${params.page || 1}${ params.full ? '&full=true' : ''}`)
       .then(response => resolve(response.data))
       .catch(error => reject(error));
   });

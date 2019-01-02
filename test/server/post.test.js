@@ -181,4 +181,39 @@ describe('Testing post-related APIs.', () => {
     expect(response.body.status).to.be.ok;
   });
 
+  it('Create a post with hideOnIndex property', async () => {
+    const url = `/api/post?token=${token}`;
+    const post = Object.assign({}, postTemplate);
+    
+    post.hideOnIndex = true;
+    post.date = new Date();
+    const response = await agent.put(url).set('Content-Type', 'application/json').send(post).expect(200);
+
+    expect(response.body.status).to.be.ok;
+    expect(response.body.id).not.to.be.undefined;
+
+    id = response.body.id;
+  });
+
+  it('Get list.', async () => {
+    const url = '/api/post';
+    const response = await agent.get(url).expect(200);
+
+    expect(response.body.status).to.be.ok;
+    expect(response.body.posts).not.to.be.undefined;
+
+    console.log(response.body);
+
+    response.body.posts.forEach(post => expect(post._id).not.equals(id));
+
+    posts = response.body.posts;
+  });
+
+  it('Delete the new post with valid token', async () => {
+    const url = `/api/post/by-id/${id}?token=${token}`;
+    const response = await agent.delete(url).expect(200);
+
+    expect(response.body.status).to.be.ok;
+  });
+
 });

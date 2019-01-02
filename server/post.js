@@ -12,7 +12,11 @@ router.get('/', async (req, res) => {
   let page = Math.max(req.query.page ? req.query.page - 1 : 0, 0);
   let posts, count;
   try {
-    let cursor = utils.db.conn.collection('posts').find({}, { sort: [['date', 'desc']] }).skip(page * config.page.size).limit(config.page.size);
+    let cursor = utils.db.conn.collection('posts').find(req.query.full === 'true' ? {} : {
+      hideOnIndex: {
+        $ne: true,
+      }
+    }, { sort: [['date', 'desc']] }).skip(page * config.page.size).limit(config.page.size);
     posts = await cursor.toArray();
     count = await cursor.count();
   } catch (e) {
@@ -157,6 +161,7 @@ router.post('/by-id/:id', async (req, res) => {
         tags: req.body.tags,
         content: req.body.content,
         cover: req.body.cover,
+        hideOnIndex: req.body.hideOnIndex,
       }}
     );
   } catch (e) {
@@ -221,6 +226,7 @@ router.put('/', async (req, res) => {
       cover: req.body.cover,
       tags: req.body.tags,
       content: req.body.content,
+      hideOnIndex: req.body.hideOnIndex,
       replies: [],
     });
   } catch (e) {

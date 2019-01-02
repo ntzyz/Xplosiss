@@ -70,7 +70,7 @@ function createRenderer (bundle, options) {
 
 // Renderer and HTML template
 let renderer, readyPromise;
-const templatePath = path.resolve(__dirname, 'src/index.html');
+const templatePath = path.resolve(__dirname, isProd ? 'src/index.prod.html' : 'src/index.dev.html');
 
 // Setup server renderer
 if (isProd || isTest) {

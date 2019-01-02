@@ -44,9 +44,12 @@
       tr
         td.label 文章语法：
         td: select(v-model="content.encoding")
-          option(value="jade") Jade/Pug
           option(value="markdown") Markdown
+          option(value="jade") Jade/Pug
           option(value="HTML") HTML
+      tr
+        td.label 首页隐藏：
+        td: input(type="checkbox" v-model="hideOnIndex")
       tr
         td.label 文章内容：
         td: textarea.content(v-model="content.content")
@@ -80,11 +83,12 @@ export default {
         minute: date.getMinutes(),
         second: date.getSeconds()
       },
+      hideOnIndex: false,
       category: '',
       tag: '',
       cover: '',
       content: {
-        encoding: 'html',
+        encoding: 'markdown',
         content: '',
       }
     };
@@ -154,6 +158,7 @@ export default {
           content: this.content,
           tags: this.tags,
           cover: this.cover,
+          hideOnIndex: this.hideOnIndex,
         },
       }).then(() => {
         alert('文章已更新');
@@ -177,6 +182,7 @@ export default {
           content: this.content,
           tags: this.tags,
           cover: this.cover,
+          hideOnIndex: this.hideOnIndex,
         },
       }).then(res => {
         alert('文章已创建。');
@@ -195,6 +201,7 @@ export default {
         this.id = post._id;
         this.tagsSet = new Set(post.tags);
         this.tags = [...this.tagsSet];
+        this.hideOnIndex = post.hideOnIndex;
         let tmpDate = new Date(post.date);
         this.date = {
           year: tmpDate.getFullYear(),
