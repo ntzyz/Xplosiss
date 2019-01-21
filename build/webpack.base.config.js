@@ -23,7 +23,7 @@ fs.writeFileSync(path.join(__dirname, '../src/config.json'), JSON.stringify(clie
 
 let commit = null;
 try {
-  commit = child_process.execSync('git log -1 --format="%h"');
+  commit = child_process.execSync('git log -1 --format="%h"').toString().trim();
 } catch (e) {
   commit = 'unknown';
 }
