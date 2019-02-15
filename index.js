@@ -144,7 +144,7 @@ Object.keys(config.plugins).forEach(plugin => {
     console.error(e);
   }
 
-  if (!config.plugins[plugin].enabled) {
+  if (!config.plugins[plugin].enabled || !manifest.entry.server) {
     return;
   }
 

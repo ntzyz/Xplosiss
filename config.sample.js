@@ -41,6 +41,10 @@ const config = {
     },
     'rss-feed': {
       enabled: true,
+    },
+    'navigation-sound': {
+      enabled: true,
+      audioURL: '/Windows%20Navigation%20Start.aac',
     }
   }
 };
