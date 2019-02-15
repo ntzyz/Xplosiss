@@ -31,8 +31,14 @@ createApp({
         next();
       }
     });
+
+    const audioEffect = new Audio();
+    audioEffect.src = '/Windows%20Navigation%20Start.aac';
+    audioEffect.loop = false;
   
     router.beforeResolve((to, from, next) => {
+      audioEffect.play();
+
       const matched = router.getMatchedComponents(to);
       const prevMatched = router.getMatchedComponents(from);
   
