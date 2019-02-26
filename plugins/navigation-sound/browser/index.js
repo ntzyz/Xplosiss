@@ -5,7 +5,9 @@ export function pluginInstaller ({ app, router, store, coreComponents, config })
     audioEffect.loop = false;
   
     router.beforeResolve((to, from, next) => {
-      audioEffect.play();
+      try {
+        audioEffect.play();
+      } catch (e) { /* doing nothing here */ }
       next();
     });
   }

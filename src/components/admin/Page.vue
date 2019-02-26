@@ -32,6 +32,7 @@
 
 <script>
 import api from '../../api';
+import preventLeaveMixin from '../../mixins/prevent-leave';
 
 export default {
   name: 'Page',
@@ -42,6 +43,7 @@ export default {
       page: {},
     };
   },
+  mixins: [preventLeaveMixin],
   mounted () {
     if (this.$store.state.token === '') {
       this.$router.push('/admin');
@@ -76,11 +78,13 @@ export default {
       }
     },
     back () {
-      // Clean up
-      this.page = {};
-      this.editing = null;
-      // refresh data
-      this.fetchPages();
+      if (confirm('确实要跳转吗？修改可能没有保存。')) {
+        // Clean up
+        this.page = {};
+        this.editing = null;
+        // refresh data
+        this.fetchPages();
+      }
     },
     updatePage () {
       if (this.editing) {

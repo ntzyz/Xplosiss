@@ -64,9 +64,11 @@
 
 <script>
 import api from '../../api';
+import preventLeaveMixin from '../../mixins/prevent-leave';
 
 export default {
   name: 'PostEditor',
+  mixins: [preventLeaveMixin],
   data () {
     let date = new Date();
     return {
