@@ -11,7 +11,7 @@
             span(v-for="tag in post.tags") #
               router-link(:to="'/tag/' + tag") {{ tag }}
       .content
-        header
+        header(v-if="!post.cover || post.insertCover")
           h2.post-title {{ post.title }}
           div.post-meta
             span {{ timeToString(post.date, true) }}
