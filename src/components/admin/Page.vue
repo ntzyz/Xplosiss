@@ -36,6 +36,7 @@ import preventLeaveMixin from '../../mixins/prevent-leave';
 
 export default {
   name: 'Page',
+  mixins: [preventLeaveMixin],
   data () {
     return {
       pages: [],
@@ -43,7 +44,6 @@ export default {
       page: {},
     };
   },
-  mixins: [preventLeaveMixin],
   mounted () {
     if (this.$store.state.token === '') {
       this.$router.push('/admin');
