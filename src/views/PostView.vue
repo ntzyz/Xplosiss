@@ -1,6 +1,15 @@
 <template lang="pug">
   div.post-view(v-if="post")
     div.card
+      div.cover-image(v-if="post.cover && !post.insertCover" v-bind:style="{ backgroundImage: `url(${ post.cover })` }")
+        div.placeholder
+        header.image-overlay
+          router-link(:to="'/post/' + post.slug"): h2.post-title {{ post.title }}
+          div.post-meta
+            span {{ timeToString(post.date, true) }}
+            span 分类：{{ post.category }}
+            span(v-for="tag in post.tags") #
+              router-link(:to="'/tag/' + tag") {{ tag }}
       .content
         header
           h2.post-title {{ post.title }}
@@ -9,7 +18,7 @@
             span 分类：{{ post.category }}
             span(v-for="tag in post.tags")
               router-link(:to="'/tag/' + tag") \#{{ tag }}
-        article.post-content(v-if="post.cover")
+        article.post-content(v-if="post.cover && post.insertCover")
           img(:src="post.cover" style="width: 100%;")
         article.post-content(v-html="post.content" @click="linkEventHandler")
     reply(:replies="post.replies || []", api-path="post", :refresh-replies="refreshReplies")
@@ -155,6 +164,39 @@ div.post-view {
 
   p.indent {
     text-indent: 2em;
+  }
+
+  header.image-overlay {
+    padding: 20px;
+    box-sizing: border-box;
+    // position: absolute;
+    bottom: 0px;
+    background: linear-gradient(to bottom, rgba(black, 0), rgba(black, 0.5));
+    width: 100%;
+    div.post-meta > span {
+      color: #fff;
+    }
+    * {
+      $shadow-color: #333;
+      color: #fff;
+      text-shadow: $shadow-color 1px 0px 1px, $shadow-color 0px 1px 1px, $shadow-color 0px -1px 1px, $shadow-color -1px 0px 1px;
+    }
+  }
+  
+  div.cover-image {
+    display: block;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    > * {
+      display: inline-block;
+      vertical-align: bottom;
+    }
+  }
+
+  div.placeholder {
+    padding-top: 30%;
   }
 }
 </style>

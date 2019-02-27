@@ -51,6 +51,9 @@
         td.label 首页隐藏：
         td: input(type="checkbox" v-model="hideOnIndex")
       tr
+        td.label 插入封面：
+        td: input(type="checkbox" v-model="insertCover")
+      tr
         td.label 文章内容：
         td: textarea.content(v-model="content.content")
       tr
@@ -86,6 +89,7 @@ export default {
         second: date.getSeconds()
       },
       hideOnIndex: false,
+      insertCover: true,
       category: '',
       tag: '',
       cover: '',
@@ -161,6 +165,7 @@ export default {
           tags: this.tags,
           cover: this.cover,
           hideOnIndex: this.hideOnIndex,
+          insertCover: this.insertCover,
         },
       }).then(() => {
         alert('文章已更新');
@@ -185,6 +190,7 @@ export default {
           tags: this.tags,
           cover: this.cover,
           hideOnIndex: this.hideOnIndex,
+          insertCover: this.insertCover,
         },
       }).then(res => {
         alert('文章已创建。');
@@ -204,6 +210,7 @@ export default {
         this.tagsSet = new Set(post.tags);
         this.tags = [...this.tagsSet];
         this.hideOnIndex = post.hideOnIndex;
+        this.insertCover = post.insertCover;
         let tmpDate = new Date(post.date);
         this.date = {
           year: tmpDate.getFullYear(),

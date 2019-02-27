@@ -162,6 +162,7 @@ router.post('/by-id/:id', async (req, res) => {
         content: req.body.content,
         cover: req.body.cover,
         hideOnIndex: req.body.hideOnIndex,
+        insertCover: req.body.insertCover,
       }}
     );
   } catch (e) {
@@ -227,6 +228,7 @@ router.put('/', async (req, res) => {
       tags: req.body.tags,
       content: req.body.content,
       hideOnIndex: req.body.hideOnIndex,
+      insertCover: req.body.insertCover,
       replies: [],
     });
   } catch (e) {
