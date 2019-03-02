@@ -171,6 +171,7 @@ export default {
       div.introduction {
         background: rgba(0, 0, 0, 0.3);
         z-index: 1;
+        position: relative;
       }
       header.title h3, div.introduction, footer.meta {
         color: white;
