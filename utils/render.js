@@ -89,7 +89,7 @@ function render (posts, options) {
       }
 
       // 获取所有的语言
-      const langs = post.content.match(/\<multi\-lang\ lang=\"([^\"]+?)\">/ig).map(matched => {
+      const langs = [...new Set(post.content.match(/\<multi\-lang\ lang=\"([^\"]+?)\">/ig))].map(matched => {
         const lang = matched.match(/\<multi\-lang\ lang=\"([^\"]+?)\">/i)[1];
         return {
           name: lang,
