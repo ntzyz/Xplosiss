@@ -35,7 +35,7 @@ router.get('/', async (req, res) => {
 
   return res.send({
     status: 'ok',
-    posts: utils.render(posts, { preview: true }),
+    posts: utils.render(posts, { preview: true, acceptLanguage: req.headers['accept-language'] }),
     page: {
       size: config.page.size,
       max: Math.floor(count / config.page.size) + (count % config.page.size === 0 ? 0 : 1),
@@ -72,7 +72,7 @@ router.get('/by-slug/:slug', async (req, res) => {
 
   return res.send({
     status: 'ok',
-    post: utils.render([post], { preview: false })[0],
+    post: utils.render([post], { preview: false, acceptLanguage: req.headers['accept-language'] })[0],
   });
 });
 

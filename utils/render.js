@@ -79,6 +79,31 @@ function render (posts, options) {
       });
     }
 
+    if (/multi-lang/.test(post.content)) {
+      let acceptLanguage;
+
+      if (!options.acceptLanguage) {
+        acceptLanguage = 'zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7,ja;q=0.6';
+      } else {
+        acceptLanguage = options.acceptLanguage;
+      }
+
+      // 获取所有的语言
+      const langs = post.content.match(/\<multi\-lang\ lang=\"([^\"]+?)\">/ig).map(matched => {
+        const lang = matched.match(/\<multi\-lang\ lang=\"([^\"]+?)\">/i)[1];
+        return {
+          name: lang,
+          priority: acceptLanguage.indexOf(lang) >= 0 ? (acceptLanguage.length - acceptLanguage.indexOf(lang)) : (-1),
+        };
+      }).sort((a, b) => b.priority - a.priority);
+
+      // 移除最匹配的语言
+      langs.shift();
+
+      // 移除剩下的所有语言块
+      post.content = post.content.replace(new RegExp('\\<multi\\-lang\\ lang\\=\\"(' + langs.map(l => l.name).join('|') + ')\\"\\>[^]+?\\<\\/multi\\-lang\\>', 'ig'), '');
+    }
+
     return post;
   });
 }

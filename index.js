@@ -120,6 +120,7 @@ function render (req, res) {
     url: req.url,
     title: clientConfig.title,
     meta: clientConfig.meta,
+    acceptLanguage: req.headers['accept-language'],
   };
 
   if (req.path === '/not-found') {

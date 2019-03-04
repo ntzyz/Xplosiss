@@ -55,7 +55,7 @@ router.get('/:category/posts', async (req, res) => {
 
   return res.send({
     status: 'ok',
-    posts: utils.render(posts, { preview: true }),
+    posts: utils.render(posts, { preview: true, acceptLanguage: req.headers['accept-language'] }),
     page: {
       size: config.page.size,
       max: Math.floor(count / config.page.size) + (count % config.page.size === 0 ? 0 : 1),

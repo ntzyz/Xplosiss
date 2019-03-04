@@ -6,16 +6,21 @@ import { createApp } from './app.js';
 import axios from 'axios';
 import regeneratorRuntime from 'regenerator-runtime';
 
-axios.interceptors.request.use(function (config) {
-  config.headers = {
-    'server-side-rendering': 'true'
-  };
-  return config;
-}, function (error) {
-  return Promise.reject(error);
-});
-
 export default context => new Promise((resolve, reject) => {
+  axios.interceptors.request.use(function (config) {
+    config.headers = {
+      'server-side-rendering': 'true'
+    };
+
+    if (context.acceptLanguage) {
+      config.headers['accept-language'] = context.acceptLanguage;
+    }
+
+    return config;
+  }, function (error) {
+    return Promise.reject(error);
+  });
+
   createApp({
     Vue,
     VueRouter,

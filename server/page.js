@@ -58,7 +58,7 @@ router.get('/by-slug/:slug', async (req, res) => {
 
   return res.send({
     status: 'ok',
-    page: utils.render([page], { preview: false })[0],
+    page: utils.render([page], { preview: false, acceptLanguage: req.headers['accept-language'] })[0],
   });
 });
 
