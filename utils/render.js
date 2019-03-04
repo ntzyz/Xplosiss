@@ -88,6 +88,8 @@ function render (posts, options) {
         acceptLanguage = options.acceptLanguage;
       }
 
+      console.log(options);
+
       // 获取所有的语言
       const langs = [...new Set(post.content.match(/\<multi\-lang\ lang=\"([^\"]+?)\">/ig))].map(matched => {
         const lang = matched.match(/\<multi\-lang\ lang=\"([^\"]+?)\">/i)[1];
