@@ -173,6 +173,9 @@ export default {
         z-index: 1;
         position: relative;
       }
+      header {
+        backdrop-filter: none;
+      }
       header.title h3, div.introduction, footer.meta {
         color: white;
         $shadow-color: #333;
