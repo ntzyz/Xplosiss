@@ -97,6 +97,8 @@ function render (posts, options) {
         };
       }).sort((a, b) => b.priority - a.priority);
 
+      console.log(langs);
+
       // 移除最匹配的语言
       langs.shift();
 
