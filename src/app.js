@@ -13,6 +13,7 @@ axios.interceptors.response.use(response => {
   return response;
 }, error => {
   console.log(`ERROR: ${error.errno}: failed to ${error.config.method} ${error.config.url}`);
+  console.error(error);
   return Promise.reject(error);
 });
 
