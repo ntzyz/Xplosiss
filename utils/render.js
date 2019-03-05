@@ -88,8 +88,6 @@ function render (posts, options) {
         acceptLanguage = options.acceptLanguage;
       }
 
-      console.log(options);
-
       // 获取所有的语言
       const langs = [...new Set(post.content.match(/\<multi\-lang\ lang=\"([^\"]+?)\">/ig))].map(matched => {
         const lang = matched.match(/\<multi\-lang\ lang=\"([^\"]+?)\">/i)[1];
@@ -98,8 +96,6 @@ function render (posts, options) {
           priority: acceptLanguage.indexOf(lang) >= 0 ? (acceptLanguage.length - acceptLanguage.indexOf(lang)) : (-1),
         };
       }).sort((a, b) => b.priority - a.priority);
-
-      console.log(langs);
 
       // 移除最匹配的语言
       langs.shift();
