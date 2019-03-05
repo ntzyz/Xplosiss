@@ -22,7 +22,9 @@ axios.interceptors.request.use(axiosMiddleware, function (error) {
 
 export default context => new Promise((resolve, reject) => {
   axiosMiddleware.configLang = function (cfg) {
-    cfg.headers['accept-language'] = context.acceptLanguage;
+    if (context.acceptLanguage) {
+      cfg.headers['accept-language'] = context.acceptLanguage;
+    }
   };
 
   createApp({
