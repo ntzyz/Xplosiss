@@ -3,9 +3,6 @@
     h3.title 创建/编辑文章
     div.container: table.form-table: tbody
       tr
-        td.label 标题：
-        td: input.full(v-model="title")
-      tr
         td.label URL 名称：
         td: input.full(v-model="slug")
       tr
@@ -42,20 +39,36 @@
           input.short(v-model="date.second")
           | 秒
       tr
-        td.label 文章语法：
-        td: select(v-model="content.encoding")
-          option(value="markdown") Markdown
-          option(value="jade") Jade/Pug
-          option(value="HTML") HTML
-      tr
         td.label 首页隐藏：
         td: input(type="checkbox" v-model="hideOnIndex")
       tr
         td.label 插入封面：
         td: input(type="checkbox" v-model="insertCover")
       tr
-        td.label 文章内容：
-        td: textarea.content(v-model="content.content")
+        td.label 自然语言：
+        td: select(v-model="editingLanguage")
+          option(v-for="item of body" :key="item.language" :value="item.language") {{ item.language }}
+          option(:value="null") 新增语言
+      template(v-for="item of body" v-if="editingLanguage === item.language")
+        tr
+          td.label 标题：
+          td
+            input.full(v-model="item.title")
+        tr
+          td.label 文章语法：
+          td
+            select(v-model="item.format")
+              option(value="markdown") Markdown
+              option(value="jade") Jade/Pug
+              option(value="HTML") HTML
+        tr
+          td.label 默认语言：
+          td
+            input(type="checkbox" v-model="item.default")
+        tr
+          td.label 文章内容：
+          td
+            textarea.content(v-model="item.content")
       tr
         td
         td
@@ -76,7 +89,6 @@ export default {
     let date = new Date();
     return {
       id: '',
-      title: '',
       slug: '',
       tags: [],
       tagsSet: new Set(),
@@ -93,10 +105,8 @@ export default {
       category: '',
       tag: '',
       cover: '',
-      content: {
-        encoding: 'markdown',
-        content: '',
-      }
+      body: [],
+      editingLanguage: '',
     };
   },
   computed: {
@@ -105,16 +115,28 @@ export default {
     }
   },
   watch: {
-    // 'content.content': function () {
-    //   this.$nextTick(() => {
-    //     document.querySelector('textarea').style.height = document.querySelector('textarea').scrollHeight + 'px';
-    //   });
-    // },
     '$route': function () {
       Object.assign(this.$data, this.$options.data());
       this.tagsSet = new Set();
       if (this.$route.params.id) {
         this.fetchPost();
+      }
+    }
+  },
+  watch: {
+    editingLanguage (val) {
+      if (val) {
+        return;
+      }
+      const result = window.prompt('叫啥呢？');
+      if (result && result.length > 0) {
+        this.body.push({
+          content: '',
+          format: '',
+          language: result,
+          default: false,
+        });
+        this.editingLanguage = result;
       }
     }
   },
@@ -156,21 +178,21 @@ export default {
       api.post.updatePostById({
         token: this.$store.state.token,
         id: this.id,
-        post:{
-          title: this.title,
+        post: {
           slug: this.slug,
           date: new Date(this.date.year, this.date.month - 1, this.date.day, this.date.hour, this.date.minute, this.date.second),
           category: this.category,
-          content: this.content,
           tags: this.tags,
           cover: this.cover,
           hideOnIndex: this.hideOnIndex,
           insertCover: this.insertCover,
+          body: this.body,
         },
       }).then(() => {
         alert('文章已更新');
-        this.fetchPost();
+        this.fetchPost(true);
       }).catch(e => {
+        console.log(e);
         alert('会话过期，请手动刷新');
       });
     },
@@ -181,16 +203,15 @@ export default {
       }
       api.post.createPost({
         token: this.$store.state.token,
-        post:{
-          title: this.title,
+        post: {
           slug: this.slug,
           date: new Date(this.date.year, this.date.month - 1, this.date.day, this.date.hour, this.date.minute, this.date.second),
           category: this.category,
-          content: this.content,
           tags: this.tags,
           cover: this.cover,
           hideOnIndex: this.hideOnIndex,
           insertCover: this.insertCover,
+          body: this.body,
         },
       }).then(res => {
         alert('文章已创建。');
@@ -199,18 +220,25 @@ export default {
         alert('会话过期，请手动刷新');
       });
     },
-    fetchPost () {
+    fetchPost (keepSelectedLanguage) {
       api.post.fetchPostById({ id: this.$route.params.id }).then(post => {
-        this.title = post.title;
         this.slug = post.slug;
         this.category = post.category;
-        this.content = post.content;
         this.cover = post.cover;
         this.id = post._id;
         this.tagsSet = new Set(post.tags);
         this.tags = [...this.tagsSet];
         this.hideOnIndex = post.hideOnIndex;
         this.insertCover = post.insertCover;
+        this.body = post.body;
+
+        (!keepSelectedLanguage) && this.$nextTick(() => {
+          try {
+            this.editingLanguage = this.body.filter(body => body.default)[0].language;
+          } catch (_) {
+          }
+        });
+
         let tmpDate = new Date(post.date);
         this.date = {
           year: tmpDate.getFullYear(),

@@ -56,6 +56,14 @@ router.get('/by-slug/:slug', async (req, res) => {
     });
   }
 
+  page.body = [{
+    language: '',
+    default: true,
+    title: page.title,
+    content: page.content.content,
+    format: page.content.encoding,
+  }];
+
   return res.send({
     status: 'ok',
     page: utils.render([page], { preview: false, acceptLanguage: req.headers['accept-language'] })[0],

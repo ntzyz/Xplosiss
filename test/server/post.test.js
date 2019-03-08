@@ -9,15 +9,16 @@ let token = require('../../utils').token;
 describe('Testing post-related APIs.', () => {
   let posts, id;
   let postTemplate = {
-    title: 'hello world',
     slug: 'foo-bar',
     category: 'emmmm',
     date: new Date(),
     tags: ['233', '666'],
-    content: {
-      encoding: 'html',
-      content: 'div 233'
-    },
+    body: [{
+      title: 'foo',
+      content: 'bar',
+      format: 'HTML',
+      default: true,
+    }],
     cover: 'https://www.ntzyz.cn/avatar.jpg',
     replies: [],
   };
@@ -63,6 +64,7 @@ describe('Testing post-related APIs.', () => {
 
     expect(response.body.status).to.be.ok;
     expect(response.body.post).not.to.be.undefined;
+    // console.log(response.body.post); process.exit(0);
 
     Object.keys(postTemplate).forEach(key => {
       if (key === 'date') {
@@ -70,9 +72,10 @@ describe('Testing post-related APIs.', () => {
         expect(new Date(response.body.post[key]).getTime()).equal(postTemplate[key].getTime());
         return;
       } 
-      else if (key === 'content') {
+      else if (key === 'body') {
         // Common request will not include the syntax of the post, special judge:
-        expect(response.body.post[key]).equal(postTemplate[key].content);
+        expect(response.body.post.title).equal(postTemplate[key][0].title);
+        expect(response.body.post.content).equal(postTemplate[key][0].content);
         return;
       }
       expect(response.body.post[key]).to.deep.equal(postTemplate[key]);
@@ -140,8 +143,8 @@ describe('Testing post-related APIs.', () => {
     let response;
     const url = `/api/post/by-slug/${postTemplate.slug}`;
     // Update encoding to 'html'
-    postTemplate.content.encoding = 'html';
-    postTemplate.content.content = '<!-- more --><code lang="js">\nconsole.log("hello world");</code>';
+    postTemplate.body[0].format = 'html';
+    postTemplate.body[0].content = '<!-- more --><code lang="js">\nconsole.log("hello world");</code>';
     response = await agent.post(`/api/post/by-id/${id}?token=${token}`).set('Content-Type', 'application/json').send(postTemplate).expect(200);
 
     response = await agent.get(url).expect(200);
@@ -149,8 +152,8 @@ describe('Testing post-related APIs.', () => {
     expect(response.body.post).not.to.be.undefined;
 
     // Update encoding to 'jade'
-    postTemplate.content.encoding = 'jade';
-    postTemplate.content.content = '// more \ncode(lang="js").\n  console.log("hello world");\n';
+    postTemplate.body[0].format = 'jade';
+    postTemplate.body[0].content = '// more \ncode(lang="js").\n  console.log("hello world");\n';
     await agent.post(`/api/post/by-id/${id}?token=${token}`).set('Content-Type', 'application/json').send(postTemplate).expect(200);
 
     response = await agent.get(url).expect(200);
@@ -158,8 +161,8 @@ describe('Testing post-related APIs.', () => {
     expect(response.body.post).not.to.be.undefined;
 
     // Update encoding to 'markdown'
-    postTemplate.content.encoding = 'markdown';
-    postTemplate.content.content = '<!-- more -->\n```js\nconsole.log("hello world");</code>\n```';
+    postTemplate.body[0].format = 'markdown';
+    postTemplate.body[0].content = '<!-- more -->\n```js\nconsole.log("hello world");</code>\n```';
     await agent.post(`/api/post/by-id/${id}?token=${token}`).set('Content-Type', 'application/json').send(postTemplate).expect(200);
 
     response = await agent.get(url).expect(200);
@@ -201,8 +204,6 @@ describe('Testing post-related APIs.', () => {
 
     expect(response.body.status).to.be.ok;
     expect(response.body.posts).not.to.be.undefined;
-
-    console.log(response.body);
 
     response.body.posts.forEach(post => expect(post._id).not.equals(id));
 

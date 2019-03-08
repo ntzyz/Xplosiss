@@ -154,12 +154,11 @@ router.post('/by-id/:id', async (req, res) => {
       { _id: ObjectID(req.params.id) },
       [],
       { $set: {
-        title: req.body.title,
         slug: req.body.slug,
         category: req.body.category,
         date: new Date(req.body.date),
         tags: req.body.tags,
-        content: req.body.content,
+        body: req.body.body,
         cover: req.body.cover,
         hideOnIndex: req.body.hideOnIndex,
         insertCover: req.body.insertCover,
@@ -220,13 +219,12 @@ router.put('/', async (req, res) => {
   let r;
   try {
     r = await utils.db.conn.collection('posts').insertOne({
-      title: req.body.title,
       slug: req.body.slug,
       category: req.body.category,
       date: new Date(req.body.date),
       cover: req.body.cover,
       tags: req.body.tags,
-      content: req.body.content,
+      body: req.body.body,
       hideOnIndex: req.body.hideOnIndex,
       insertCover: req.body.insertCover,
       replies: [],
