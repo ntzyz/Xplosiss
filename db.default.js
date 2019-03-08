@@ -3,15 +3,18 @@
 
 db.posts.remove({});
 db.posts.insertMany([{
-  'title': '世界，您好！',
   'slug': 'hello-world',
   'category': 'Default',
   'date': new Date(0),
   'tags': ['HelloWorld'],
-  'content': {
-    'encoding': 'HTML',
-    'content': '<p>欢迎使用 Xplosiss。这是您的第一篇文章。编辑或删除它，然后开始写作吧！</p>'
-  },
+  'body': [
+    {
+      'content': '<p>欢迎使用 Xplosiss。这是您的第一篇文章。编辑或删除它，然后开始写作吧！</p>',
+      'format': 'HTML',
+      'language': 'zh',
+      'default': true
+    }
+  ],
   'replies': [{
     'user': '一位 Xplosiss 评论者',
     'email': '',
