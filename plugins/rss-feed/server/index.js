@@ -6,9 +6,7 @@ const express = require('express');
 const RSS_CACHE_STATUS_HEADER = 'X-RSS-From-Cache';
 
 function installer ({ site, utils, config }) {
-  let rssCacheContent = null;
-
-  function renderXML (posts) {
+  function renderXML (posts, acceptLanguage) {
     let resolve, promise;
     promise = new Promise(r => resolve = r);
 
@@ -19,8 +17,8 @@ function installer ({ site, utils, config }) {
         feedUrl: config.url + '/feeds',
         language: config.language,
         description: '',
-        posts: utils.render(posts, { preview: false }),
-        renderedPosts: utils.render(posts, { preview: true }),
+        posts: utils.render(posts, { preview: false, acceptLanguage }),
+        renderedPosts: utils.render(posts, { preview: true, acceptLanguage }),
         cdata (text, options) {
           return '<![CDATA[' + text.replace(/\]\]>/g, ']]]]><![CDATA[>') + ']]>';
         }
@@ -30,17 +28,6 @@ function installer ({ site, utils, config }) {
     });
 
     return promise;
-  }
-
-  function rssCacheController (req, res, next) {
-    switch (req.method) {
-    case 'PUT':
-    case 'POST':
-    case 'DELETE':
-      rssCacheContent = null;
-    default:
-      next();
-    }
   }
 
   const router = express.Router();
@@ -57,10 +44,7 @@ function installer ({ site, utils, config }) {
   });
 
   router.get('/', async (req, res) => {
-    if (rssCacheContent) {
-      res.header(RSS_CACHE_STATUS_HEADER, 'true');
-      return res.send(rssCacheContent);
-    }
+    const acceptLanguage = req.query.acceptLanguage || req.headers['accept-language'] || 'zh-CN,zh;q=0.9,zh-TW;q=0.8,en;q=0.7,ja;q=0.6';
 
     try {
       let cursor = utils.db.conn.collection('posts').find({
@@ -76,11 +60,10 @@ function installer ({ site, utils, config }) {
         message: utils.messages.ERR_MONGO_FAIL
       });
     }
-    rssCacheContent = await renderXML(posts);
+    rssCacheContent = await renderXML(posts, acceptLanguage);
     res.send(rssCacheContent);
   });
 
-  site.use(rssCacheController);
   site.use('/feeds', router);
 }
 
