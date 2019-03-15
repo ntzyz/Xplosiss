@@ -92,7 +92,7 @@ module.exports = {
       'process.env.COMMIT': JSON.stringify(commit),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
     }),
-    new webpack.IgnorePlugin(/server/, /plugins/),
+    new webpack.IgnorePlugin(/(server|\.md$)/, /plugins/),
     new VueLoaderPlugin(),
   ]
 };
