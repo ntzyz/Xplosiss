@@ -197,8 +197,8 @@ export default {
       });
     },
     createPost() {
-      if (!this.title || !this.slug) {
-        alert('标题和 URL 名称是必须的！');
+      if (!this.slug) {
+        alert('URL 名称是必须的！');
         return;
       }
       api.post.createPost({
