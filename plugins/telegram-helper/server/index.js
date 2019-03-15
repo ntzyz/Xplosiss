@@ -20,7 +20,7 @@ function installer ({ site, utils, config }) {
       chat_id: config.plugins['telegram-helper'].ownerId,
       parse_mode: 'HTML',
       disable_web_page_preview: true,
-      text: `Your access token is ${utils.token}`,
+      text: `Your access token is <code>${utils.token}</code>`,
     });
   });
 }
