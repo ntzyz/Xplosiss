@@ -45,6 +45,11 @@ const config = {
     'navigation-sound': {
       enabled: true,
       audioURL: '/Windows%20Navigation%20Start.aac',
+    },
+    'telegram-helper': {
+      enabled: false,
+      ownerId: null,
+      telegramBotToken: null,
     }
   }
 };

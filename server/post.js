@@ -3,6 +3,7 @@ const utils = require('../utils');
 const { ObjectID } = require('mongodb');
 const config = require('../config');
 
+const { eventBus } = utils;
 let router = express.Router();
 
 /**
@@ -80,6 +81,16 @@ router.get('/by-slug/:slug', async (req, res) => {
  * Create an comment on one post.
  */
 router.put('/by-slug/:slug/reply', async (req, res) => {
+  eventBus.emit(eventBus.EVENT_NEW_REPLY, {
+    ipAddr: req.headers['x-real-ip'] || req.ip,
+    userAgent: req.headers['user-agent'],
+    postSlug: req.params.slug,
+    user: req.body.user,
+    email: '*hidden*',
+    site: req.body.site,
+    content: req.body.content,
+  });
+
   try {
     await utils.db.conn.collection('posts').update(
       { slug: req.params.slug },

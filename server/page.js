@@ -2,6 +2,7 @@ const express = require('express');
 const utils = require('../utils');
 const { ObjectID } = require('mongodb');
 
+const { eventBus } = utils;
 let router = express.Router();
 
 /**
@@ -197,6 +198,16 @@ router.put('/', async (req, res) => {
  * 评论
  */
 router.put('/by-slug/:slug/reply', async (req, res) => {
+  eventBus.emit(eventBus.EVENT_NEW_REPLY, {
+    ipAddr: req.headers['x-real-ip'] || req.ip,
+    userAgent: req.headers['user-agent'],
+    pageSlug: req.params.slug,
+    user: req.body.user,
+    email: '*hidden*',
+    site: req.body.site,
+    content: req.body.content,
+  });
+
   try {
     await utils.db.conn.collection('pages').update(
       { slug: req.params.slug },

@@ -7,4 +7,5 @@ module.exports = {
   logger: require('./logger'),
   websocket: require('./websocket'),
   promise: require('./promise'),
+  eventBus: require('./eventBus'),
 };
