@@ -48,10 +48,10 @@ export default {
     });
   },
 
-  fetchPostBySlug: (state, slug) => {
+  fetchPostBySlug: (state, { slug, password }) => {
     state.commit('setBusy', true);
     // state.commit('setPost', []);
-    return api.post.fetchPostBySlug({ slug }).then(post => {
+    return api.post.fetchPostBySlug({ slug, password }).then(post => {
       state.commit('setPost', post);
       state.commit('setBusy', false);
     });

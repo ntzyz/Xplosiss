@@ -16,7 +16,7 @@ function fetchPostBySlug (params) {
     }
   }
   return new Promise((resolve, reject) => {
-    axios.get(`${config.api.url}/post/by-slug/${encodeURIComponent(params.slug)}`)
+    axios.get(`${config.api.url}/post/by-slug/${encodeURIComponent(params.slug)}${params.password ? `?password=${encodeURIComponent(params.password)}` : ''}`)
       .then(response => resolve(response.data.post))
       .catch(error => reject(error));
   });

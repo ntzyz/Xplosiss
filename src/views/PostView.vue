@@ -20,7 +20,14 @@
               router-link(:to="'/tag/' + tag") \#{{ tag }}
         article.post-content(v-if="post.cover && post.insertCover")
           img(:src="post.cover" style="width: 100%;")
-        article.post-content(v-html="post.content" @click="linkEventHandler")
+        article.protect-article.post-content(v-if="post.protected")
+          div 这是一个受密码保护的文章。要查看该文章，请提供密码：
+          div(v-if="wrongPassword" style="color: #a00") 提供的密码不正确。
+          div(style="display: inline-block;")
+            input(type="password" v-model="password")
+            br
+            button(@click="refreshWithPassword()" style="float: right") 提交
+        article.post-content(v-else v-html="post.content" @click="linkEventHandler")
     reply(:replies="post.replies || []", api-path="post", :refresh-replies="refreshReplies")
 </template>
 
@@ -40,6 +47,8 @@ export default {
   data () {
     return {
       extraDoms: [],
+      password: '',
+      wrongPassword: false,
     };
   },
   computed: {
@@ -66,7 +75,7 @@ export default {
       document.title = `${post.title || 'Loading...'} - ${config.title}`;
     },
     '$route': function (route) {
-      this.$store.dispatch('fetchPostBySlug', route.params.slug);
+      this.$store.dispatch('fetchPostBySlug', { slug: route.params.slug });
     }
   },
   beforeDestroy () {
@@ -78,7 +87,15 @@ export default {
   methods: {
     timeToString,
     refreshReplies () {
-      this.$store.dispatch('fetchPostBySlug', this.$route.params.slug);
+      this.$store.dispatch('fetchPostBySlug', { slug: this.$route.params.slug, password: this.password });
+    },
+    refreshWithPassword () {
+      this.$store.dispatch('fetchPostBySlug', { slug: this.$route.params.slug, password: this.password }).then(() => {
+        this.wrongPassword = false;
+        if (this.post.protected) {
+          this.wrongPassword = true;
+        }
+      });
     },
     injectScripts () {
       this.$nextTick(() => {
@@ -105,7 +122,7 @@ export default {
     },
   },
   asyncData ({ store, route }) {
-    return store.dispatch('fetchPostBySlug', route.params.slug);
+    return store.dispatch('fetchPostBySlug', { slug: route.params.slug });
   }
 };
 
@@ -197,6 +214,27 @@ div.post-view {
 
   div.placeholder {
     padding-top: 30%;
+  }
+
+  article.protect-article {
+    input {
+      margin: 1em 0;
+      width: 200px;
+      padding: 5px;
+      font-size: 12px;
+      // margin-right: 1em;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+    }
+
+    input, textarea {
+      border: none;
+      border-radius: 0;
+      border: 1px solid #888888;
+      background: rgba(0, 0, 0, 0);
+    }
   }
 }
 </style>

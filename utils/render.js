@@ -33,6 +33,21 @@ function render (posts, options) {
       matchedBody = post.body.filter(body => body.language === availableLanguages[0].name)[0];
     }
 
+    // Check if post is password-protected.
+    if (typeof post.password === 'string' && post.password.length > 0) {
+      if (options.password !== post.password) {
+        post.more = true;
+        post.protected = true;
+        post.replies = [];
+        post.title = matchedBody.title;
+        post.content = 'This is a password-protected post, content preview is not available.';
+
+        delete post.password;
+
+        return post;
+      }
+    }
+
     if (!options.fakeRendering) {
       if (/^markdown$/i.test(matchedBody.format)) {
         // Markdown-it can do it cleanly.
@@ -106,6 +121,9 @@ function render (posts, options) {
     // Finally, remove original source & add title
     post.title = matchedBody.title;
     delete post.body;
+
+    // *Always* delete password after rendering.
+    delete post.password;
 
     return post;
   });

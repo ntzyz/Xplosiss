@@ -45,6 +45,9 @@
         td.label 插入封面：
         td: input(type="checkbox" v-model="insertCover")
       tr
+        td.label 密码保护：
+        td: input.full(type="text" v-model="password" placeholder="留空即为公开访问")
+      tr
         td.label 自然语言：
         td: select(v-model="editingLanguage")
           option(v-for="item of body" :key="item.language" :value="item.language") {{ item.language }}
@@ -100,6 +103,7 @@ export default {
         minute: date.getMinutes(),
         second: date.getSeconds()
       },
+      password: '',
       hideOnIndex: false,
       insertCover: true,
       category: '',
@@ -186,6 +190,7 @@ export default {
           cover: this.cover,
           hideOnIndex: this.hideOnIndex,
           insertCover: this.insertCover,
+          password: this.password,
           body: this.body,
         },
       }).then(() => {
@@ -211,6 +216,7 @@ export default {
           cover: this.cover,
           hideOnIndex: this.hideOnIndex,
           insertCover: this.insertCover,
+          password: this.password,
           body: this.body,
         },
       }).then(res => {
@@ -230,6 +236,7 @@ export default {
         this.tags = [...this.tagsSet];
         this.hideOnIndex = post.hideOnIndex;
         this.insertCover = post.insertCover;
+        this.password = post.password;
         this.body = post.body;
 
         (!keepSelectedLanguage) && this.$nextTick(() => {

@@ -73,7 +73,11 @@ router.get('/by-slug/:slug', async (req, res) => {
 
   return res.send({
     status: 'ok',
-    post: utils.render([post], { preview: false, acceptLanguage: req.headers['accept-language'] })[0],
+    post: utils.render([post], {
+      preview: false,
+      acceptLanguage: req.headers['accept-language'],
+      password: req.query.password,
+    })[0],
   });
 });
 
@@ -143,6 +147,8 @@ router.get('/by-id/:id/raw', async (req, res) => {
     });
   }
 
+  delete post.password;
+
   return res.send({
     status: 'ok',
     post,
@@ -173,6 +179,7 @@ router.post('/by-id/:id', async (req, res) => {
         cover: req.body.cover,
         hideOnIndex: req.body.hideOnIndex,
         insertCover: req.body.insertCover,
+        password: req.body.password,
       }}
     );
   } catch (e) {
@@ -238,6 +245,7 @@ router.put('/', async (req, res) => {
       body: req.body.body,
       hideOnIndex: req.body.hideOnIndex,
       insertCover: req.body.insertCover,
+      password: req.body.password,
       replies: [],
     });
   } catch (e) {

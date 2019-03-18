@@ -18,7 +18,8 @@
             span 分类：{{ post.category }}
             span(v-for="tag in post.tags") #
               router-link(:to="'/tag/' + tag") {{ tag }}
-        article.post-preview(v-html="post.content" @click="linkEventHandler")
+        article.post-preview(v-if="post.protected") 这是一个受密码保护的文章，请点击下放的更多按钮，并提供密码。
+        article.post-preview(v-else v-html="post.content" @click="linkEventHandler")
         footer(v-if="post.more")
           router-link(:to="'/post/' + post.slug").button.more MORE
 </template>
