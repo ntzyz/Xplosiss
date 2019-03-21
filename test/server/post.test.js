@@ -15,8 +15,8 @@ describe('Testing post-related APIs.', () => {
     tags: ['233', '666'],
     body: [{
       title: 'foo',
-      content: 'bar',
-      format: 'HTML',
+      content: '{123}(666)',
+      format: 'markdown',
       default: true,
     }],
     cover: 'https://www.ntzyz.cn/avatar.jpg',

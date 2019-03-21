@@ -71,10 +71,11 @@ export default context => new Promise((resolve, reject) => {
         context.state = store.state;
         resolve(app);
       }).catch(error => {
-        console.error(error);
         if (error.response && error.response.status === 404) {
           reject({ code: 404, url: '/not-found' });
+          return;
         }
+        console.error(error);
         reject(error);
       });
     }, reject);

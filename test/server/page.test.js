@@ -10,7 +10,7 @@ let token = require('../../utils').token;
 describe('Testing page-related APIs.', () => {
   const pageTemplate = {
     title: 'Hello World',
-    slug: 'hello-world',
+    slug: `hello-world-${new Date().getTime()}`,
     content: {
       encoding: 'html',
       content: 'Hello World'

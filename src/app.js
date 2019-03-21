@@ -12,10 +12,11 @@ import openGraphMixin from './utils/open-graph';
 axios.interceptors.response.use(response => {
   return response;
 }, error => {
-  if (error.config) {
+  if (error.response && error.response.status !== 404) {
+    console.error(error);
+  } else if (error.config) {
     console.log(`ERROR: ${error.errno}: failed to ${error.config.method} ${error.config.url}`);
   }
-  console.error(error);
   return Promise.reject(error);
 });
 
