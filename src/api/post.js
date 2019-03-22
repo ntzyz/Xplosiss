@@ -15,8 +15,18 @@ function fetchPostBySlug (params) {
       return Promise.reject('Post slug is required.');
     }
   }
+
+  const options = {};
+  if (params.preferLanguage) {
+    options.headers = {
+      'Accept-Language': params.preferLanguage,
+    };
+  }
+
+  console.log(options);
+
   return new Promise((resolve, reject) => {
-    axios.get(`${config.api.url}/post/by-slug/${encodeURIComponent(params.slug)}${params.password ? `?password=${encodeURIComponent(params.password)}` : ''}`)
+    axios.get(`${config.api.url}/post/by-slug/${encodeURIComponent(params.slug)}${params.password ? `?password=${encodeURIComponent(params.password)}` : ''}`, options)
       .then(response => resolve(response.data.post))
       .catch(error => reject(error));
   });

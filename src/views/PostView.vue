@@ -75,7 +75,7 @@ export default {
       document.title = `${post.title || 'Loading...'} - ${config.title}`;
     },
     '$route': function (route) {
-      this.$store.dispatch('fetchPostBySlug', { slug: route.params.slug });
+      this.$store.dispatch('fetchPostBySlug', { slug: route.params.slug, preferLanguage: route.query['prefer-language'] });
     }
   },
   beforeDestroy () {
@@ -87,10 +87,10 @@ export default {
   methods: {
     timeToString,
     refreshReplies () {
-      this.$store.dispatch('fetchPostBySlug', { slug: this.$route.params.slug, password: this.password });
+      this.$store.dispatch('fetchPostBySlug', { slug: this.$route.params.slug, password: this.password, preferLanguage: route.query['prefer-language'] });
     },
     refreshWithPassword () {
-      this.$store.dispatch('fetchPostBySlug', { slug: this.$route.params.slug, password: this.password }).then(() => {
+      this.$store.dispatch('fetchPostBySlug', { slug: this.$route.params.slug, password: this.password, preferLanguage: route.query['prefer-language'] }).then(() => {
         this.wrongPassword = false;
         if (this.post.protected) {
           this.wrongPassword = true;
@@ -122,7 +122,7 @@ export default {
     },
   },
   asyncData ({ store, route }) {
-    return store.dispatch('fetchPostBySlug', { slug: route.params.slug });
+    return store.dispatch('fetchPostBySlug', { slug: route.params.slug, preferLanguage: route.query['prefer-language'] });
   }
 };
 
