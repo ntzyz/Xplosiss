@@ -9,7 +9,7 @@ rss(version="2.0", xmlns:atom="http://www.w3.org/2005/Atom", xmlns:content="http
   each post, index in posts
     item
       title=post.title
-      link=link + 'post/' + post.slug + '?preferLanguage=' + post.language
+      link=link + 'post/' + post.slug + '?prefer-language=' + post.language
       guid(isPermaLink="false")=post._id
       category=post.category
       pubDate=post.date.toUTCString()
