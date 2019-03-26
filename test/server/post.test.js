@@ -74,7 +74,7 @@ describe('Testing post-related APIs.', () => {
       else if (key === 'body') {
         // Common request will not include the syntax of the post, special judge:
         expect(response.body.post.title).equal(postTemplate[key][0].title);
-        expect(response.body.post.content).equal(postTemplate[key][0].content);
+        // expect(response.body.post.content).equal(postTemplate[key][0].content);
         return;
       }
       expect(response.body.post[key]).to.deep.equal(postTemplate[key]);
