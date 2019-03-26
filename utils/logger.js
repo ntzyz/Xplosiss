@@ -16,7 +16,6 @@ async function logger (req, res, next) {
   let message = `[${new Date().toLocaleString()}] ${req.headers['x-real-ip'] || req.ip} - ${req.method} ${req.url} - ${req.headers['user-agent']}`;
 
   // Write log to stdout, and push to the log array.
-  // console.log(message);
   logger.logs.push(message);
 
   // Keep the log array size not to big

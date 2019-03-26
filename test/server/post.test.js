@@ -64,7 +64,6 @@ describe('Testing post-related APIs.', () => {
 
     expect(response.body.status).to.be.ok;
     expect(response.body.post).not.to.be.undefined;
-    // console.log(response.body.post); process.exit(0);
 
     Object.keys(postTemplate).forEach(key => {
       if (key === 'date') {

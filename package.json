@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "node index",
+    "dev": "node --inspect index",
     "start": "cross-env NODE_ENV=production node index",
     "build": "rm -rf dist && mkdir dist && npm run build:client && npm run build:server",
     "build-win32": "rmdir /Q /S dist & mkdir dist & npm run build:client & npm run build:server",

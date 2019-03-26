@@ -8,7 +8,7 @@ function addSpanEachLine (html) {
 }
 
 function render (posts, options) {
-  const acceptLanguage = options.acceptLanguage || 'zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7,ja;q=0.6';
+  const acceptLanguage = options.acceptLanguage || '';
 
   return posts.map(origPost => {
     let post = JSON.parse(JSON.stringify(origPost));
@@ -27,7 +27,7 @@ function render (posts, options) {
     let matchedBody = null;
     if (availableLanguages[0].priority < 0) {
       // Nobody matched, use default;
-      matchedBody = post.body.filter(body => body.default)[0];
+      matchedBody = post.body.filter(body => body.default)[0] || post.body[0];
     } else {
       // use language which has max priority
       matchedBody = post.body.filter(body => body.language === availableLanguages[0].name)[0];
@@ -120,6 +120,7 @@ function render (posts, options) {
 
     // Finally, remove original source & add title
     post.title = matchedBody.title;
+    post.language = matchedBody.language;
     delete post.body;
 
     // *Always* delete password after rendering.

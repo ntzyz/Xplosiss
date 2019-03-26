@@ -44,7 +44,7 @@ function installer ({ site, utils, config }) {
   });
 
   router.get('/', async (req, res) => {
-    const acceptLanguage = req.query.acceptLanguage || req.headers['accept-language'] || 'zh-CN,zh;q=0.9,zh-TW;q=0.8,en;q=0.7,ja;q=0.6';
+    const acceptLanguage = req.query.acceptLanguage || '';
 
     try {
       let cursor = utils.db.conn.collection('posts').find({

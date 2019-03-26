@@ -31,7 +31,6 @@ export default {
       this.socket = io.connect(url.origin, { path: url.pathname, query: `token=${this.$store.state.token}` });
       this.socket.on('log', text => { 
         this.logs.push(text);
-        console.log('here');
         setTimeout(() => {
           let list = document.querySelector('div.container');
           list.scrollTop = list.scrollHeight;

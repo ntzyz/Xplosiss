@@ -7,9 +7,7 @@ import axios from 'axios';
 import regeneratorRuntime from 'regenerator-runtime';
 
 function axiosMiddleware (config) {
-  config.headers = {
-    'server-side-rendering': 'true'
-  };
+  config.headers['server-side-rendering'] = true;
 
   axiosMiddleware.configLang(config);
 
@@ -22,7 +20,7 @@ axios.interceptors.request.use(axiosMiddleware, function (error) {
 
 export default context => new Promise((resolve, reject) => {
   axiosMiddleware.configLang = function (cfg) {
-    if (context.acceptLanguage) {
+    if (context.acceptLanguage && !cfg.headers['accept-language']) {
       cfg.headers['accept-language'] = context.acceptLanguage;
     }
   };
