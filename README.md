@@ -6,17 +6,13 @@
 [![Coverage Status](https://coveralls.io/repos/github/ntzyz/new-blog/badge.svg?branch=master)](https://coveralls.io/github/ntzyz/new-blog?branch=master)
 [![Dependencies](https://david-dm.org/ntzyz/new-blog.svg?branch=master)](https://david-dm.org/ntzyz/new-blog?branch=master)
 
-## Todo
- - [X] 重构至上一版进度
- - [X] 过渡动画
- - [X] 404 等相关错误页面
- - [X] 自定义页面评论
- - [X] 一个简单的后台面板
- - [X] Gallery
- - [X] 服务端渲染
- - [X] 单元测试与 ESlint
- - [X] 文本框组件样式
- - [X] 移动端侧边栏访问
+## Demo
+
+ZephRay 的博客： [module ZephRay](https://zephray.me)
+
+我的博客： [ntzyz's space](https://ntzyz.io/)
+
+建议参考 ZephRay 的博客，因为有很多特性我自己并没有用上（比如多语言和封面图片）
 
 ## Licenses
 >The MIT License (MIT)
