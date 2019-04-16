@@ -87,10 +87,10 @@ export default {
   methods: {
     timeToString,
     refreshReplies () {
-      this.$store.dispatch('fetchPostBySlug', { slug: this.$route.params.slug, password: this.password, preferLanguage: route.query['prefer-language'] });
+      this.$store.dispatch('fetchPostBySlug', { slug: this.$route.params.slug, password: this.password, preferLanguage: this.$route.query['prefer-language'] });
     },
     refreshWithPassword () {
-      this.$store.dispatch('fetchPostBySlug', { slug: this.$route.params.slug, password: this.password, preferLanguage: route.query['prefer-language'] }).then(() => {
+      this.$store.dispatch('fetchPostBySlug', { slug: this.$route.params.slug, password: this.password, preferLanguage: this.$route.query['prefer-language'] }).then(() => {
         this.wrongPassword = false;
         if (this.post.protected) {
           this.wrongPassword = true;

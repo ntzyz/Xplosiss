@@ -101,6 +101,10 @@ function render (posts, options) {
   
       if (post.replies && config.reply.enableMarkdownSupport) {
         post.replies = post.replies.map(reply => {
+          if (!reply.content) {
+            return {};
+          }
+          
           reply.content = mdit({
             html: false,
             highlight: function (str, lang) {

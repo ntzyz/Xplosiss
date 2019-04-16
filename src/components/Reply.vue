@@ -3,7 +3,7 @@
     h3.title 评论
     div.content
       ul.replies-list(v-if="replies && replies.length !== 0")
-        li(v-for="reply in replyTree", v-bind:style="{ marginLeft: reply.depth * 56 + 'px' }")
+        li(v-for="reply in replyTree", v-bind:style="{ marginLeft: reply.depth * 56 + 'px' }", v-if="!reply.deleted")
           div.avatar
             div.github-avatar(v-if="reply.githubId", v-bind:style="{ backgroundImage: `url(https://github.com/${reply.githubId}.png)` }")
             div.fallback-avatar(v-else) {{ reply.user.substr(0, 1).toUpperCase() }}
@@ -72,6 +72,7 @@ export default {
       site: '',
       githubId: '',
       replyTo: null,
+      busy: false,
     };
   },
   computed: {
@@ -80,7 +81,7 @@ export default {
         el.index = idx;
         return el;
       });
-      
+
       if (!replies) {
         return;
       }
@@ -127,6 +128,12 @@ export default {
   methods: {
     timeToString,
     submit () {
+      if (this.busy) {
+        return;
+      }
+
+      this.busy = true;
+
       let data = {
         user: this.name,
         email: this.email,
@@ -151,6 +158,8 @@ export default {
           } else {
             this.$props.refreshReplies();
           }
+
+          this.busy = false;
         });
     },
     reset () {
