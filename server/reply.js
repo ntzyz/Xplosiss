@@ -11,8 +11,9 @@ router.get('/latest', async (req, res) => {
 
   try {
     postReplies = await utils.db.conn.collection('posts').aggregate([
-      { $project: { slug: 1, body: 1, 'replies.datetime': 1, 'replies.user': 1 }},
+      { $project: { slug: 1, body: 1, 'replies.datetime': 1, 'replies.user': 1, 'replies.deleted': 1 }},
       { $unwind: '$replies' },
+      { $match: { 'replies.deleted': { $ne: true } } },
       { $sort: { 'replies.datetime': -1 }},
       { $addFields: { path: 'post' }},
       { $limit: 5 }
@@ -20,8 +21,9 @@ router.get('/latest', async (req, res) => {
     postReplies = utils.render(postReplies, { fakeRendering: true });
 
     pageReplies = await utils.db.conn.collection('pages').aggregate([
-      { $project: { slug: 1, title: 1, 'replies.datetime': 1, 'replies.user': 1 }},
+      { $project: { slug: 1, title: 1, 'replies.datetime': 1, 'replies.user': 1, 'replies.deleted': 1 }},
       { $unwind: '$replies' },
+      { $match: { 'replies.deleted': { $ne: true } } },
       { $sort: { 'replies.datetime': -1 }},
       { $addFields: { path: 'page' }},
       { $limit: 5 }
