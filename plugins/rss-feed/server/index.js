@@ -31,6 +31,7 @@ function installer ({ site, utils, config }) {
   }
 
   const router = express.Router();
+  let rssLastModifiedDate = new Date();
 
   router.use((req, res, next) => {
     res.set('content-type', 'application/rss+xml');
@@ -60,10 +61,23 @@ function installer ({ site, utils, config }) {
         message: utils.messages.ERR_MONGO_FAIL
       });
     }
+
     rssCacheContent = await renderXML(posts, acceptLanguage);
+
+    res.append('Last-Modified', rssLastModifiedDate.toUTCString());
     res.send(rssCacheContent);
   });
 
+  site.use((req, res, next) => {
+    switch (req.method) {
+    case 'PUT':
+    case 'POST':
+    case 'DELETE':
+      rssLastModifiedDate = new Date();
+    default:
+      next();
+    }
+  });
   site.use('/feeds', router);
 }
 
