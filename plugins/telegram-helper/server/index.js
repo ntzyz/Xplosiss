@@ -1,4 +1,5 @@
 const axios = require('axios');
+const geoip = require('geoip-lite');
 
 function installer ({ site, utils, config }) {
   const eventBus = utils.eventBus;
@@ -6,12 +7,25 @@ function installer ({ site, utils, config }) {
   eventBus.on(eventBus.EVENT_NEW_REPLY, params => {
     const name = params.pageSlug || params.postSlug;
     const URL = config.url + (params.pageSlug ? `/${params.pageSlug}` : `/post/${params.postSlug}`);
+    const ipInfo = geoip(params.ipAddr) || {};
+    
+    let ipRegion = [];
+
+    if (ipInfo.country) {
+      ipRegion.push(ipInfo.country);
+    }
+    if (ipInfo.region) {
+      ipRegion.push(ipInfo.region);
+    }
+    if (ipInfo.city) {
+      ipRegion.push(ipInfo.city);
+    }
 
     axios.post(`https://api.telegram.org/bot${config.plugins['telegram-helper'].telegramBotToken}/sendMessage`, {
       chat_id: config.plugins['telegram-helper'].ownerId,
       parse_mode: 'HTML',
       disable_web_page_preview: true,
-      text: `<b>You have a new reply!</b>\nFrom: ${params.user}\nLink: <a href="${URL}">${name}</a>\nIP Address: ${params.ipAddr}\nContent:\n${params.content}`,
+      text: `<b>You have a new reply!</b>\nFrom: ${params.user}\nLink: <a href="${URL}">${name}</a>\nIP Address: ${params.ipAddr} (${ipRegion.join('/')})\nContent:\n${params.content}`,
     });
   });
 
