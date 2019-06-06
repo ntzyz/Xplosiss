@@ -25,7 +25,7 @@ describe('Testing index-rendering with SSR', async () => {
     // Fetch all categories first
     const categories = (await agent.get('/api/category').expect(200)).body.categories;
 
-    const url = `/category/${categories[0]}`;
+    const url = `/category/${encodeURIComponent(categories[0])}`;
     const response = await agent.get(url).expect(200);
   });
 
