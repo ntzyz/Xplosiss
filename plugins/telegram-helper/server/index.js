@@ -7,7 +7,7 @@ function installer ({ site, utils, config }) {
   eventBus.on(eventBus.EVENT_NEW_REPLY, params => {
     const name = params.pageSlug || params.postSlug;
     const URL = config.url + (params.pageSlug ? `/${params.pageSlug}` : `/post/${params.postSlug}`);
-    const ipInfo = geoip(params.ipAddr) || {};
+    const ipInfo = geoip.lookup(params.ipAddr) || {};
     
     let ipRegion = [];
 

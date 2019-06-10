@@ -6,7 +6,8 @@ export function pluginInstaller ({ app, router, store, coreComponents, config })
 
   // Disable for mobile devices, as playing sound on these devices may
   // activate the global media control widget/notification
-  if (/(iPhone|IEMobile|Mobile|Android)/.test(navigator.userAgent)) {
+  // Also disable for Internet Explorer, see #12
+  if (/(iPhone|IEMobile|Mobile|Android|Trident)/.test(navigator.userAgent)) {
     return;
   }
 
