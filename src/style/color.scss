@@ -2,16 +2,17 @@
 
 $background_color: #F5F5F5;
 $font_color: #000000;
-$button_color: #00695c;
-$card_title_background_color: #003366;
+$button_color: #555;
+$card_title_background_color: #333;
 $card_title_font_color: #FFFFFF;
 $card_background_color: #FFFFFF;
 $card_font_color: 000000;
-$link_color: #003366;
-$table_border_color: mix(#003366, white, 70%);
-$table_row_hover_color: mix(#003366, white, 4%);
+$link_color: #333;
+$table_border_color: mix(#333, white, 70%);
+$table_row_hover_color: mix(#333, white, 4%);
 $loading_indicator_color: #888888;
-$input_border_color: #00695c;
-$avatar_fallback_background_color: #00695c;
+$input_border_color: #555;
+$avatar_fallback_background_color: #555;
 $avatar_fallback_text_color: #FFFFFF;
-$progress_bar_color: #00695c;
+$progress_bar_color: #555;
+
