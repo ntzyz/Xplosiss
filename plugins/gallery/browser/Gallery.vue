@@ -32,6 +32,9 @@ export default {
       return this.$store.state.gallery.title;
     }
   },
+  asyncData ({ store, route }) {
+    return store.dispatch('fetchImages');
+  },
   mounted () {
     this.$store.commit('setBusy', false);
   },
@@ -49,9 +52,6 @@ export default {
     tagOnClick (tag) {
       window.open(`/tag/${tag}`);
     }
-  },
-  asyncData ({ store, route }) {
-    return store.dispatch('fetchImages');
   }
 };
 </script>

@@ -37,13 +37,13 @@ export default {
       }
     }
   },
+  asyncData({ route, store, redirect }) {
+    return store.dispatch('fetchPageBySlug', route.params.slug);
+  },
   methods: {
     refreshReplies () {
       this.$store.dispatch('fetchPageBySlug', this.$route.params.slug);
     }
-  },
-  asyncData({ route, store, redirect }) {
-    return store.dispatch('fetchPageBySlug', route.params.slug);
   }
 };
 </script>

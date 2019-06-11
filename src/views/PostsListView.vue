@@ -64,9 +64,6 @@ export default {
       this.promise = this.$options.asyncData({store: this.$store, route: this.$route });
     }
   },
-  methods: {
-    timeToString
-  },
   asyncData ({ store, route }) {
     if (route.params.category) {
       return store.dispatch('fetchPostsByCategory', { category: route.params.category, page: route.params.page });
@@ -75,6 +72,9 @@ export default {
     } else {
       return store.dispatch('fetchLatestPosts', { page: route.params.page });
     }
+  },
+  methods: {
+    timeToString
   }
 };
 </script>

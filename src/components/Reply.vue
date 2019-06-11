@@ -55,11 +55,11 @@ export default {
       type: Array,
       required: true,
     },
-    'api-path': {
+    'apiPath': {
       type: String,
       required: true,
     },
-    'refresh-replies': {
+    'refreshReplies': {
       type: Function,
       required: true,
     }
