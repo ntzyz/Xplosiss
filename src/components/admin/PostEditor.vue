@@ -119,15 +119,6 @@ export default {
     }
   },
   watch: {
-    '$route': function () {
-      Object.assign(this.$data, this.$options.data());
-      this.tagsSet = new Set();
-      if (this.$route.params.id) {
-        this.fetchPost();
-      }
-    }
-  },
-  watch: {
     editingLanguage (val) {
       if (val) {
         return;
@@ -141,6 +132,20 @@ export default {
           default: false,
         });
         this.editingLanguage = result;
+      }
+    },
+    '$route': function () {
+      const initialData = this.$options.data();
+      for (const key of Object.keys(initialData)) {
+        if (key === 'editingLanguage') {
+          continue;
+        }
+        this[key] = initialData[key];
+      }
+
+      this.tagsSet = new Set();
+      if (this.$route.params.id) {
+        this.fetchPost(true);
       }
     }
   },
