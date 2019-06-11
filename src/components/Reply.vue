@@ -6,7 +6,7 @@
         li(v-for="reply in replyTree", v-bind:style="{ marginLeft: reply.depth * 56 + 'px' }", v-if="!reply.deleted")
           div.avatar
             div.github-avatar(v-if="reply.githubId", v-bind:style="{ backgroundImage: `url(https://github.com/${reply.githubId}.png)` }")
-            div.fallback-avatar(v-else) {{ reply.user.substr(0, 1).toUpperCase() }}
+            div.fallback-avatar {{ reply.user.trim().substr(0, 1).toUpperCase() }}
           div.reply-body
             div.name {{ reply.user }} {{ reply.site !== '' ? `from ${reply.site}` : ''}}
             div.date {{ timeToString(reply.datetime) }}
@@ -252,15 +252,23 @@ div.reply {
         overflow: hidden;
         margin-top: 5px;
         margin-right: 1em;
+        position: relative;
+      }
+
+      div.github-avatar, div.fallback-avatar {
+        position: absolute;
       }
 
       div.github-avatar {
+        z-index: 2;
         background-size: cover;
       }
 
       div.fallback-avatar {
+        z-index: 1;
+        user-select: none;
         line-height: 40px;
-        max-width: 40px;
+        width: 40px;
         text-align: center;
         font-size: 20px;
         background-color: $avatar_fallback_background_color;
