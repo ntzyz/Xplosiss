@@ -48,7 +48,7 @@ function render (posts, options) {
       }
     }
 
-    if (!options.fakeRendering) {
+    if (!options.fakeRendering && !options.titleOnly) {
       if (/^markdown$/i.test(matchedBody.format)) {
         // Markdown-it can do it cleanly.
         if (options.preview && matchedBody.content.indexOf('<!-- more -->') >= 0) {
