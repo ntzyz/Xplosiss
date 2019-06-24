@@ -119,7 +119,10 @@ function render (req, res) {
   const context = {
     url: req.url,
     title: clientConfig.title,
-    meta: clientConfig.meta,
+    meta: {
+      ...clientConfig.meta,
+      links: res.links || [],
+    },
     acceptLanguage: req.headers['accept-language'],
   };
 

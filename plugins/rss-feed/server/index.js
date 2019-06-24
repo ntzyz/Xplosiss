@@ -19,6 +19,7 @@ function installer ({ site, utils, config }) {
         description: '',
         posts: utils.render(posts, { preview: false, acceptLanguage }),
         renderedPosts: utils.render(posts, { preview: true, acceptLanguage }),
+        pubDate: (posts.length === 0 ? new Date(0) : posts[0].date).toUTCString(),
         cdata (text, options) {
           return '<![CDATA[' + text.replace(/\]\]>/g, ']]]]><![CDATA[>') + ']]>';
         }
@@ -68,6 +69,28 @@ function installer ({ site, utils, config }) {
     res.send(rssCacheContent);
   });
 
+  router.get('/category/:category', async (req, res) => {
+    const acceptLanguage = req.query.acceptLanguage || '';
+
+    try {
+      let cursor = utils.db.conn.collection('posts').find({
+        category: req.params.category
+      }, { sort: [['date', 'desc']] }).limit(config.page.size);
+      posts = await cursor.toArray();
+    } catch (e) {
+      console.error(e);
+      return res.status(500).send({
+        status: 'error',
+        message: utils.messages.ERR_MONGO_FAIL
+      });
+    }
+
+    rssCacheContent = await renderXML(posts, acceptLanguage);
+
+    res.append('Last-Modified', rssLastModifiedDate.toUTCString());
+    res.send(rssCacheContent);
+  });
+
   site.use((req, res, next) => {
     switch (req.method) {
     case 'PUT':
@@ -79,6 +102,26 @@ function installer ({ site, utils, config }) {
     }
   });
   site.use('/feeds', router);
+  site.use('/', (req, res, next) => {
+    res.links = [{
+      rel: 'alternate',
+      type: 'application/rss+xml',
+      title: `RSS Feed for ${config.url}/`,
+      href: '/feeds'
+    }];
+
+    next();
+  });
+  site.use('/category/:category', (req, res, next) => {
+    res.links = [{ 
+      rel: 'alternate',
+      type: 'application/rss+xml',
+      title: `RSS Feed for ${config.url}/category/${req.params.category}`,
+      href: `/feeds/category/${encodeURIComponent(req.params.category)}`
+    }];
+
+    next();
+  });
 }
 
 module.exports = installer;
