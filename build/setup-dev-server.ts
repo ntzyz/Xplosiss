@@ -1,9 +1,10 @@
-const fs = require('fs');
-const path = require('path');
-const MFS = require('memory-fs');
-const webpack = require('webpack');
-const clientConfig = require('./webpack.client.config');
-const serverConfig = require('./webpack.server.config');
+import * as fs from 'fs';
+import * as path from 'path';
+import * as MFS from 'memory-fs';
+import * as webpack from 'webpack';
+
+import clientConfig from './webpack.client.config';
+import serverConfig from './webpack.server.config';
 
 const readFile = (fs, file) => {
   try {
@@ -11,7 +12,7 @@ const readFile = (fs, file) => {
   } catch (e) {}
 };
 
-module.exports = function setupDevServer (app, templatePath, callback) {
+function setupDevServer (app, templatePath, callback) {
   let bundle, template, clientManifest, ready;
 
   const readyPromise = new Promise(r => { ready = r; });
@@ -25,7 +26,7 @@ module.exports = function setupDevServer (app, templatePath, callback) {
   template = fs.readFileSync(templatePath, 'utf-8');
   // TODO: Watch this file.
 
-  clientConfig.entry.app = ['webpack-hot-middleware/client', clientConfig.entry.app];
+  clientConfig.entry = ['webpack-hot-middleware/client', clientConfig.entry];
   clientConfig.output.filename = '[name].js';
   clientConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
@@ -67,3 +68,5 @@ module.exports = function setupDevServer (app, templatePath, callback) {
 
   return readyPromise;
 };
+
+export default setupDevServer;

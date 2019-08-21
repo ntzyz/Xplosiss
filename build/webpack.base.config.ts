@@ -1,9 +1,10 @@
-const path = require('path');
-const webpack = require('webpack');
-const fs = require('fs');
-const config = require('../config');
-const { VueLoaderPlugin } = require('vue-loader');
-const child_process = require('child_process');
+import * as path from 'path';
+import * as webpack from 'webpack';
+import * as fs from 'fs';
+import { VueLoaderPlugin } from 'vue-loader';
+import * as child_process from 'child_process';
+
+import config from '../config';
 
 const clientConfig = {
   title: config.title,
@@ -28,7 +29,7 @@ try {
   commit = 'unknown';
 }
 
-module.exports = {
+export default {
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/dist/',

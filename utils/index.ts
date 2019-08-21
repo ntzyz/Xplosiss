@@ -6,7 +6,7 @@ import randomString from './random-string';
 import token from './token';
 import websocket from './websocket';
 
-import * as render from './render';
+import render from './render';
 
 import './promise';
 

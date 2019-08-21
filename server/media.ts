@@ -1,9 +1,11 @@
-const express = require('express');
-const utils = require('../utils');
-const fs = require('fs');
-const mime = require('mime-types');
-const path = require('path');
-const multer = require('multer');
+import * as express from 'express';
+import * as fs from 'fs';
+import * as mime from 'mime-types';
+import * as path from 'path';
+import * as multer from 'multer';
+
+import utils from '../utils';
+
 const upload = multer({ dest: path.join(__dirname, '../uploads') });
 
 let router = express.Router();
@@ -46,10 +48,22 @@ router.get('/', (req, res) => {
   });
 });
 
+interface MulterFile {
+  key: string;
+  path: string;
+  mimetype: string;
+  originalname: string;
+  size: number;
+};
+
+interface ExpressRequestWithFile {
+  file: MulterFile
+};
+
 /**
  * Upload one new file.
  */
-router.put('/:filename', upload.single('file'), (req, res) => {
+router.put('/:filename', upload.single('file'), (req: express.Request & ExpressRequestWithFile, res) => {
   if (req.query.token !== utils.token) {
     fs.unlink(req.file.path, () => {});
     return res.status(403).send({
@@ -104,4 +118,4 @@ router.delete('/:filename', (req, res) => {
   });
 });
 
-module.exports = router;
+export default router;

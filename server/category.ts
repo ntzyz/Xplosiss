@@ -1,8 +1,8 @@
-const express = require('express');
-const utils = require('../utils');
-const config = require('../config');
+import * as express from 'express';
+import utils from '../utils';
+import config from '../config';
 
-let router = express.Router();
+const router = express.Router();
 
 /**
  * Get all categories from posts. Read only.
@@ -10,7 +10,7 @@ let router = express.Router();
 router.get('/', async (req, res) => {
   let categories;
   try {
-    categories = await utils.db.conn.collection('posts').distinct('category');
+    categories = await utils.db.conn.collection('posts').distinct('category', {});
   } catch (e) {
     /* istanbul ignore next */
     return res.status(500).send({
@@ -64,4 +64,4 @@ router.get('/:category/posts', async (req, res) => {
   });
 });
 
-module.exports = router;
+export default router;

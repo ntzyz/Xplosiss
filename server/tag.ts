@@ -1,6 +1,6 @@
-const express = require('express');
-const utils = require('../utils');
-const config = require('../config');
+import * as express from 'express';
+import utils from '../utils';
+import config from '../config';
 
 let router = express.Router();
 
@@ -70,4 +70,4 @@ router.get('/:tag/posts', async (req, res) => {
   });
 });
 
-module.exports = router;
+export default router;

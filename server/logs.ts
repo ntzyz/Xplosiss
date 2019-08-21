@@ -1,5 +1,5 @@
-const express = require('express');
-const utils = require('../utils');
+import * as express from 'express';
+import utils from '../utils';
 
 let router = express.Router();
 
@@ -20,4 +20,4 @@ router.get('/', async (req, res) => {
   });
 });
 
-module.exports = router;
+export default router;

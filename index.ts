@@ -1,12 +1,15 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
+
 import utils from './utils';
 import config from './config';
+import server from './server';
 
 import * as fs from 'fs';
 import * as path from 'path';
 
 import { createBundleRenderer } from 'vue-server-renderer';
+import setupDevServer from './build/setup-dev-server';
 
 const isProd = process.env.NODE_ENV === 'production';
 const isTest = process.env.NODE_ENV === 'test';
@@ -42,7 +45,7 @@ site.use((req, res, next) => {
     return [origin];
   }
 
-  for (origin of transformOriginType(req.headers.origin)) {
+  for (const origin of transformOriginType(req.headers.origin)) {
     if (config.allowedOrigins.indexOf(origin) >= 0) {
       res.setHeader('Access-Control-Allow-Origin', origin);
       
@@ -59,7 +62,7 @@ site.use((req, res, next) => {
 site.use(pluginRouter);
 
 // API entry
-site.use('/api', require('./server'));
+site.use('/api', server);
 
 // favicon
 site.get('/favicon.ico', (req, res) => {
@@ -97,7 +100,7 @@ if (isProd || isTest) {
   });
 } else {
   // Use webpack-dev-middleware, recreate renderer in case source is changed.
-  readyPromise = require('./build/setup-dev-server')(
+  readyPromise = setupDevServer(
     site,
     templatePath,
     (bundle, options) => {
@@ -134,7 +137,7 @@ function render (req, res) {
     title: clientConfig.title,
     meta: {
       ...clientConfig.meta,
-      links: res.links || [],
+      links: res.headLinks || [],
     },
     acceptLanguage: req.headers['accept-language'],
   };

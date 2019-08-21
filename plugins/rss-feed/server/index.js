@@ -1,7 +1,7 @@
 const pug = require('pug');
-const path = require('path');
-const fs = require('fs');
-const express = require('express');
+import * as path from 'path';
+import * as fs from 'fs';
+import * as express from 'express';
 
 const RSS_CACHE_STATUS_HEADER = 'X-RSS-From-Cache';
 
@@ -103,7 +103,7 @@ function installer ({ site, utils, config }) {
   });
   site.use('/feeds', router);
   site.use('/', (req, res, next) => {
-    res.links = [{
+    res.headLinks = [{
       rel: 'alternate',
       type: 'application/rss+xml',
       title: `RSS Feed for ${config.url}/`,
@@ -113,7 +113,7 @@ function installer ({ site, utils, config }) {
     next();
   });
   site.use('/category/:category', (req, res, next) => {
-    res.links = [{ 
+    res.headLinks = [{ 
       rel: 'alternate',
       type: 'application/rss+xml',
       title: `RSS Feed for ${config.url}/category/${req.params.category}`,

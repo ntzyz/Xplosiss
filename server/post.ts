@@ -1,7 +1,9 @@
-const express = require('express');
-const utils = require('../utils');
-const { ObjectID } = require('mongodb');
-const config = require('../config');
+import * as express from 'express';
+import { ObjectID } from 'mongodb';
+import utils from '../utils';
+import config from '../config';
+
+import { RenderOptions } from '../utils/render';
 
 const { eventBus } = utils;
 let router = express.Router();
@@ -35,7 +37,7 @@ router.get('/', async (req, res) => {
     delete post.replies;
   }
 
-  const options = {
+  const options: RenderOptions = {
     acceptLanguage: req.headers['accept-language']
   };
 
@@ -140,7 +142,7 @@ router.put('/by-slug/:slug/reply', async (req, res) => {
 router.get('/by-id/:id/raw', async (req, res) => {
   let post;
   try {
-    post = await utils.db.conn.collection('posts').findOne({ _id: ObjectID(req.params.id) });
+    post = await utils.db.conn.collection('posts').findOne({ _id: new ObjectID(req.params.id) });
   } catch (e) {
     /* istanbul ignore next */
     console.error(e);
@@ -178,9 +180,8 @@ router.post('/by-id/:id', async (req, res) => {
   }
 
   try {
-    await utils.db.conn.collection('posts').findAndModify(
-      { _id: ObjectID(req.params.id) },
-      [],
+    await utils.db.conn.collection('posts').updateOne(
+      { _id: new ObjectID(req.params.id) },
       { $set: {
         slug: req.body.slug,
         category: req.body.category,
@@ -219,7 +220,7 @@ router.delete('/by-id/:id', async (req, res) => {
 
   try {
     await utils.db.conn.collection('posts').deleteOne(
-      { _id: ObjectID(req.params.id) }
+      { _id: new ObjectID(req.params.id) }
     );
   } catch (e) {
     /* istanbul ignore next */
@@ -272,4 +273,4 @@ router.put('/', async (req, res) => {
   res.send({ status: 'ok', id: r.insertedId });
 });
 
-module.exports = router;
+export default router;

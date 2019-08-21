@@ -1,13 +1,22 @@
-const pug = require('pug');
-const hljs = require('highlight.js');
-const config = require('../config');
-const mdit = require('markdown-it');
+import * as pug from 'pug';
+import * as hljs from 'highlight.js';
+import * as mdit from 'markdown-it';
+
+import config from '../config';
 
 function addSpanEachLine (html) {
   return html.split('\n').map(l => `<span class="__line">${l}</span>`).join('\n');
 }
 
-function render (posts, options) {
+export interface RenderOptions {
+  titleOnly?: boolean;
+  acceptLanguage?: string,
+  preview?: boolean;
+  password?: string;
+  fakeRendering?: boolean;
+};
+
+function render (posts, options: RenderOptions) {
   const acceptLanguage = options.acceptLanguage || '';
 
   return posts.map(origPost => {
@@ -134,7 +143,7 @@ function render (posts, options) {
   });
 }
 
-module.exports = function () {
+export default function (posts: any, options: any) {
   try {
     return render.apply(null, arguments);
   } catch (e) {

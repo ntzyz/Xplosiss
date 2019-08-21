@@ -1,5 +1,5 @@
-const express = require('express');
-const utils = require('../utils');
+import * as express from 'express';
+import utils from '../utils';
 const { ObjectID } = require('mongodb');
 
 let router = express.Router();
@@ -59,9 +59,8 @@ router.post('/:id', async (req, res) => {
   }
 
   try {
-    await utils.db.conn.collection('widgets').findAndModify(
+    await utils.db.conn.collection('widgets').updateOne(
       { _id: ObjectID(req.params.id) },
-      [],
       { $set: { title: req.body.title, content: req.body.content, enabled: req.body.enabled }}
     );
   } catch (e) {
@@ -137,4 +136,4 @@ router.delete('/:id', async (req, res) => {
   res.send({ status: 'ok' });
 });
 
-module.exports = router;
+export default router;

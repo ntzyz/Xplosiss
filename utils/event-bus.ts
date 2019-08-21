@@ -1,22 +1,10 @@
 import * as EventEmitter from 'events';
 
-class BlogEventEmitter extends EventEmitter {};
+class BlogEventEmitter extends EventEmitter {
+  public EVENT_TOKEN_FORGOT = 'EVENT_TOKEN_FORGOT';
+  public EVENT_NEW_REPLY = 'EVENT_NEW_REPLY';
+};
 
 const eventBus = new BlogEventEmitter();
-
-Object.defineProperties(eventBus, {
-  'EVENT_TOKEN_FORGOT': {
-    value: 'EVENT_TOKEN_FORGOT',
-    writable: false,
-    configurable: false,
-    enumerable: false,
-  },
-  'EVENT_NEW_REPLY': {
-    value: 'EVENT_NEW_REPLY',
-    writable: false,
-    configurable: false,
-    enumerable: false,
-  },
-});
 
 export default eventBus;

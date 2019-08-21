@@ -1,6 +1,6 @@
-const express = require('express');
-const utils = require('../utils');
-const { ObjectID } = require('mongodb');
+import * as express from 'express';
+import utils from '../utils';
+import { ObjectID } from 'mongodb';
 
 const { eventBus } = utils;
 let router = express.Router();
@@ -77,7 +77,7 @@ router.get('/by-slug/:slug', async (req, res) => {
 router.get('/by-id/:id/raw', async (req, res) => {
   let page;
   try {
-    page = await utils.db.conn.collection('pages').findOne({ _id: ObjectID(req.params.id) });
+    page = await utils.db.conn.collection('pages').findOne({ _id: new ObjectID(req.params.id) });
   } catch (e) {
     /* istanbul ignore next */
     console.error(e);
@@ -113,9 +113,8 @@ router.post('/by-id/:id', async (req, res) => {
   }
 
   try {
-    await utils.db.conn.collection('pages').findAndModify(
-      { _id: ObjectID(req.params.id) },
-      [],
+    await utils.db.conn.collection('pages').updateOne(
+      { _id: new ObjectID(req.params.id) },
       { $set: {
         title: req.body.title,
         slug: req.body.slug,
@@ -148,7 +147,7 @@ router.delete('/by-id/:id', async (req, res) => {
 
   try {
     await utils.db.conn.collection('pages').deleteOne(
-      { _id: ObjectID(req.params.id) },
+      { _id: new ObjectID(req.params.id) },
     );
   } catch (e) {
     /* istanbul ignore next */
@@ -236,4 +235,4 @@ router.put('/by-slug/:slug/reply', async (req, res) => {
   });
 });
 
-module.exports = router;
+export default router;
