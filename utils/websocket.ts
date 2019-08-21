@@ -1,13 +1,14 @@
-const http = require('http');
-const socket = require('socket.io');
-const token = require('./token');
+import * as http from 'http';
+import * as socket from 'socket.io';
 
-let server;
-let io;
+import token from './token';
+
+let server: http.Server;
+let io: socket.Server;
 
 function attachSocketIO (site) {
   if (site) {
-    server = http.Server(site);
+    server = new http.Server(site);
     io = socket(server, { path: '/api/ws' });
     io.on('connection', socket => {
       console.log('Client connected!');
@@ -18,22 +19,22 @@ function attachSocketIO (site) {
       }
     });
   }
-  return { io, server, };
+  return { io, server };
 }
 
 Object.defineProperty(attachSocketIO, 'io', {
-  get: function () {
+  get () {
     return io;
   }
 });
 
 Object.defineProperty(attachSocketIO, 'server', {
-  get: function () {
+  get () {
     return server;
   }
 });
 
-module.exports = {
+export default {
   attach: attachSocketIO,
   get io () { return io; },
   get server () { return server; }

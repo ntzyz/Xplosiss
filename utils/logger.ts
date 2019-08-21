@@ -1,26 +1,25 @@
-const websocket = require('./websocket');
-const db = require('./db');
-const uaParser = require('ua-parser-js');
-const geoip = require('geoip-lite');
-/**
- * Activity logger middleware.
- * @param {Request} req 
- * @param {Response} res 
- * @param {Function} next 
- */
-async function logger (req, res, next) {
+import db from './db';
+import * as express from 'express';
+import websocket from './websocket';
+
+import * as uaParser from 'ua-parser-js';
+import * as geoip from 'geoip-lite';
+
+const logs: string[] = [];
+
+async function logger (req: express.Request, res: express.Response, next: express.NextFunction) {
   if (req.headers['server-side-rendering'] === 'true') {
     return next();
   }
 
-  let message = `[${new Date().toLocaleString()}] ${req.headers['x-real-ip'] || req.ip} - ${req.method} ${req.url} - ${req.headers['user-agent']}`;
+  const message = `[${new Date().toLocaleString()}] ${req.headers['x-real-ip'] || req.ip} - ${req.method} ${req.url} - ${req.headers['user-agent']}`;
 
   // Write log to stdout, and push to the log array.
-  logger.logs.push(message);
+  logs.push(message);
 
   // Keep the log array size not to big
-  while (logger.logs.length > 50) {
-    logger.logs.shift();
+  while (logs.length > 50) {
+    logs.shift();
   }
 
   // Broadcast to all those connected websocket clients.
@@ -28,6 +27,7 @@ async function logger (req, res, next) {
 
   // Write log to database
   await db.prepare();
+
   // We do NOT need to await here.
   if (!/^\/(dist|static|api\/media)/.test(req.url)) {
     const ipAddr = req.headers['x-real-ip'] || req.ip || '0.0.0.0';
@@ -49,6 +49,6 @@ async function logger (req, res, next) {
   next();
 }
 
-logger.logs = [];
+logger.logs = logs;
 
-module.exports = logger;
+export default logger;

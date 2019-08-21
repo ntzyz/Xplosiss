@@ -1,16 +1,21 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const config = require('./config');
-const utils = require('./utils');
-const fs = require('fs');
-const path = require('path');
-const { createBundleRenderer } = require('vue-server-renderer');
+import * as express from 'express';
+import * as bodyParser from 'body-parser';
+import utils from './utils';
+import config from './config';
+
+import * as fs from 'fs';
+import * as path from 'path';
+
+import { createBundleRenderer } from 'vue-server-renderer';
 
 const isProd = process.env.NODE_ENV === 'production';
 const isTest = process.env.NODE_ENV === 'test';
-const serve = (p, cache) => express.static(path.resolve(__dirname, p), {
-  maxAge: cache && isProd ? 1000 * 60 * 60 * 24 * 30 : 0
-});
+
+function serve (p: string, cache = false) {
+  return express.static(path.resolve(__dirname, p), {
+    maxAge: cache && isProd ? 1000 * 60 * 60 * 24 * 30 : 0
+  });
+}
 
 let site = express();
 let pluginRouter = express.Router();
@@ -29,14 +34,22 @@ site.use(utils.logger);
 
 // set CORS headers
 site.use((req, res, next) => {
-  const origin = req.headers.origin;
+  function transformOriginType (origin: string | string[]): string[] {
+    if (origin instanceof Array) {
+      return origin;
+    }
 
-  if (config.allowedOrigins.indexOf(origin) >= 0) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-    
-    // PUT must be allowed or nobody can post a reply when CROS.
-    res.setHeader('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    return [origin];
+  }
+
+  for (origin of transformOriginType(req.headers.origin)) {
+    if (config.allowedOrigins.indexOf(origin) >= 0) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+      
+      // PUT must be allowed or nobody can post a reply when CROS.
+      res.setHeader('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    }
   }
 
   return next();
@@ -143,7 +156,7 @@ Object.keys(config.plugins).forEach(plugin => {
   let manifest;
 
   try {
-    manifest = JSON.parse(fs.readFileSync(path.join(__dirname, './plugins/', plugin, './manifest.json')));
+    manifest = JSON.parse(fs.readFileSync(path.join(__dirname, './plugins/', plugin, './manifest.json'), 'utf-8'));
   } catch(e) {
     console.error(e);
   }

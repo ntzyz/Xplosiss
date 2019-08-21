@@ -48,6 +48,14 @@ module.exports = {
         }
       },
       {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/,
+        options: {
+          appendTsSuffixTo: [/\.vue$/],
+        }
+      },
+      {
         test: /\.scss$/,
         use: [
           'vue-style-loader',
@@ -76,7 +84,8 @@ module.exports = {
   resolve: {
     alias: {
       'vue$': 'vue/dist/vue.esm.js'
-    }
+    },
+    extensions: [ '.js', '.ts' ]
   },
   devServer: {
     historyApiFallback: true,

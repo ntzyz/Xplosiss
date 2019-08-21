@@ -1,4 +1,4 @@
-const EventEmitter = require('events');
+import * as EventEmitter from 'events';
 
 class BlogEventEmitter extends EventEmitter {};
 
@@ -19,4 +19,4 @@ Object.defineProperties(eventBus, {
   },
 });
 
-module.exports = eventBus;
+export default eventBus;
