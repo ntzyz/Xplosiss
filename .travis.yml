@@ -8,8 +8,8 @@ before_script:
   - mongo localhost/newBlog db.default.js
 script:
   - npm run lint
-  - cp config.sample.js config.js
-  - sed -i 's,https://new.ntzyz.cn,http://localhost:1234,g' config.js
+  - cp config.sample.ts config.ts
+  - sed -i 's,https://new.ntzyz.cn,http://localhost:1234,g' config.ts
   - npm run build
   - npm run test
 after_script:
