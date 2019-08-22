@@ -6,7 +6,7 @@ module.exports = {
         "browser": true,
     },
     "parserOptions": {
-        "parser": "babel-eslint",
+        "parser": "@typescript-eslint/parser",
         "ecmaVersion": 8
     },
     "extends": [

@@ -1,7 +1,7 @@
 const pug = require('pug');
-const path = require('path');
-const fs = require('fs');
-const express = require('express');
+import * as path from 'path';
+import * as fs from 'fs';
+import * as express from 'express';
 
 const template = `<html>
 <head>

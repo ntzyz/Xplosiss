@@ -15,7 +15,7 @@
         .join('\n    ')
     }}}
     {{{
-      (meta.links || [])
+      ((meta || { links: []}).links || [])
         .map(link => {
           let props = Object.keys(link).map(prop => `${prop}="${link[prop]}"`).join(' ');
           return `<link ${props}>`
