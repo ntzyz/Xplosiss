@@ -1,9 +1,10 @@
 'use strict';
 
-const supertest = require('supertest');
-const expect = require('chai').expect;
+import * as supertest from 'supertest';
+import { expect } from 'chai';
 
-let agent = supertest.agent(require('../../index'));
+import site from '../../index';
+const agent = supertest.agent(site);
 
 describe('Testing category-related APIs.', () => {
   let categories;

@@ -1,9 +1,13 @@
 'use strict';
 
-const supertest = require('supertest');
-const expect = require('chai').expect;
+import * as supertest from 'supertest';
+import { expect } from 'chai';
 
-let agent = supertest.agent(require('../../index'));
+import site from '../../index';
+import utils from '../../utils';
+
+const agent = supertest.agent(site);
+const token = utils.token;
 
 describe('Testing tag-related APIs.', () => {
   let tags;

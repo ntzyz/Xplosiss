@@ -1,10 +1,13 @@
 'use strict';
 
-const supertest = require('supertest');
-const expect = require('chai').expect;
+import * as supertest from 'supertest';
+import { expect } from 'chai';
 
-let agent = supertest.agent(require('../../index'));
-let token = require('../../utils').token;
+import site from '../../index';
+import utils from '../../utils';
+
+const agent = supertest.agent(site);
+const token = utils.token;
 
 describe('Testing post-related APIs.', () => {
   let posts, id;
@@ -19,6 +22,7 @@ describe('Testing post-related APIs.', () => {
       format: 'markdown',
       default: true,
     }],
+    hideOnIndex: false,
     cover: 'https://www.ntzyz.cn/avatar.jpg',
     replies: [],
   };
@@ -65,7 +69,7 @@ describe('Testing post-related APIs.', () => {
     expect(response.body.status).to.be.ok;
     expect(response.body.post).not.to.be.undefined;
 
-    Object.keys(postTemplate).forEach(key => {
+    Object.keys(postTemplate).forEach(key => { console.log(key);
       if (key === 'date') {
         // Date in response is a string, we need a special judge here:
         expect(new Date(response.body.post[key]).getTime()).equal(postTemplate[key].getTime());

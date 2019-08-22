@@ -1,11 +1,14 @@
 'use strict';
 
-const supertest = require('supertest');
-const expect = require('chai').expect;
-const config = require('../../config');
+import * as supertest from 'supertest';
+import { expect } from 'chai';
 
-let agent = supertest.agent(require('../../index'));
-let token = require('../../utils').token;
+import site from '../../index';
+import utils from '../../utils';
+import config from '../../config';
+
+const agent = supertest.agent(site);
+const token = utils.token;
 
 describe('Testing index-rendering with SSR', async () => {
   it('Render index', async () => {
@@ -45,17 +48,23 @@ describe('Testing index-rendering with SSR', async () => {
   });
 
   it('Render RSS feeds', async () => {
-    if (!config.plugins['rss-feed'].enabled) {
+    const rssCOnfig = config.plugins['rss-feed'];
+
+    if (!rssCOnfig || !rssCOnfig.enabled) {
       return;
     }
+
     await agent.get('/feeds').expect(200);
   });
 
   it('Render Gallery', async () => {
-    if (!config.plugins.gallery.enabled) {
+    const galleryConfig = config.plugins as any;
+
+    if (!galleryConfig || !galleryConfig.enabled) {
       return;
     }
-    await agent.get(config.plugins.gallery.mountPoint).expect(200);
+
+    await agent.get(galleryConfig.mountPoint).expect(200);
   });
 
 });

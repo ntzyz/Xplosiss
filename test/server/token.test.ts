@@ -1,10 +1,13 @@
 'use strict';
 
-const supertest = require('supertest');
-const expect = require('chai').expect;
+import * as supertest from 'supertest';
+import { expect } from 'chai';
 
-let agent = supertest.agent(require('../../index'));
-let token = require('../../utils').token;
+import site from '../../index';
+import utils from '../../utils';
+
+const agent = supertest.agent(site);
+const token = utils.token;
 
 describe('Testing token-related APIs.', () => {
   it('Emit forgot event', async () => {

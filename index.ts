@@ -188,4 +188,4 @@ utils.websocket.server.listen(config.port, /* 'localhost', */() => {
   console.log(`Server started on port ${config.port}`);
 });
 
-module.exports = site;
+export default site;
