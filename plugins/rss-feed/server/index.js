@@ -47,7 +47,8 @@ function installer ({ site, utils, config }) {
 
   router.get('/', async (req, res) => {
     const acceptLanguage = req.query.acceptLanguage || '';
-
+    let posts;
+  
     try {
       let cursor = utils.db.conn.collection('posts').find({
         hideOnIndex: {
@@ -63,7 +64,7 @@ function installer ({ site, utils, config }) {
       });
     }
 
-    rssCacheContent = await renderXML(posts, acceptLanguage);
+    const rssCacheContent = await renderXML(posts, acceptLanguage);
 
     res.append('Last-Modified', rssLastModifiedDate.toUTCString());
     res.send(rssCacheContent);
