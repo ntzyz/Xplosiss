@@ -1,6 +1,7 @@
 import { ObjectID } from 'mongodb';
+import { PluginOptions } from '../../../types/plugin';
 
-function pluginInstaller ({ site, utils }) {
+function pluginInstaller ({ site, utils }: PluginOptions) {
   site.get('/api/gallery', async (req, res) => {
     let images;
 
@@ -79,9 +80,8 @@ function pluginInstaller ({ site, utils }) {
     }
   
     try {
-      await utils.db.conn.collection('gallery').findAndModify(
+      await utils.db.conn.collection('gallery').updateOne(
         { _id: new ObjectID(req.params.id) },
-        [],
         { $set: {
           title: req.body.title,
           description: req.body.description,

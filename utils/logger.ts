@@ -2,7 +2,7 @@ import db from './db';
 import * as express from 'express';
 import websocket from './websocket';
 
-import * as uaParser from 'ua-parser-js';
+import { UAParser } from 'ua-parser-js';
 import * as geoip from 'geoip-lite';
 
 const logs: string[] = [];
@@ -35,11 +35,11 @@ async function logger (req: express.Request, res: express.Response, next: expres
       time: new Date(),
       ip: Object.assign({
         addr: ipAddr,
-      }, geoip.lookup(ipAddr) || {}),
+      }, geoip.lookup(Array.isArray(ipAddr) ? ipAddr[0] : ipAddr) || {}),
       method: req.method,
       url: req.url,
       referer: req.headers['referer'],
-      userAgent: uaParser(req.headers['user-agent']),
+      userAgent: new UAParser(req.headers['user-agent']),
     }).catch(error => {
       console.error(error);
     });

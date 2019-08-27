@@ -5,6 +5,7 @@ import { expect } from 'chai';
 
 import site from '../../index';
 import utils from '../../utils';
+import { BlogWidget } from '../../types/models';
 
 const agent = supertest.agent(site);
 const token = utils.token;
@@ -15,8 +16,8 @@ describe('Testing widget-related APIs.', () => {
     content: 'Hello World',
     enabled: true,
   };
-  let widgets;
-  let id;
+  let widgets: BlogWidget[];
+  let id: string;
 
   it('Fetch enabled widget list', async () => {
     const url = '/api/widget';

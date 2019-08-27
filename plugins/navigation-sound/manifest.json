@@ -7,6 +7,6 @@
   },
   "entry": {
     "server": null,
-    "browser": "browser/index.ts"
+    "browser": "browser/index.js"
   }
 }

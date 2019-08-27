@@ -3,7 +3,7 @@ import * as hljs from 'highlight.js';
 import * as mdit from 'markdown-it';
 
 import config from '../config';
-import { BlogPost, BlogPostBody } from '../types';
+import { BlogPost, BlogPostBody } from '../types/models';
 
 function addSpanEachLine (html: string) {
   return html.split('\n').map(l => `<span class="__line">${l}</span>`).join('\n');

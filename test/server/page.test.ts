@@ -26,8 +26,8 @@ describe('Testing page-related APIs.', () => {
     content: 'Fork you!',
     datetime: new Date().getTime(),
   };
-  let pages;
-  let id;
+  let pages: (typeof pageTemplate)[];
+  let id: string;
 
   it('Fetch a page that does not exist', async () => {
     const url = '/api/page/by-slug/this-name-should-not-be-used';

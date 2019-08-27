@@ -2,13 +2,17 @@ import * as pug from 'pug';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as express from 'express';
+import { PluginOptions } from '../../../types/plugin';
+import { BlogPost } from '../../../types/models';
 
 const RSS_CACHE_STATUS_HEADER = 'X-RSS-From-Cache';
 
-function installer ({ site, utils, config }) {
-  function renderXML (posts, acceptLanguage) {
-    let resolve, promise;
-    promise = new Promise(r => resolve = r);
+function installer ({ site, utils, config }: PluginOptions) {
+  function renderXML (posts: BlogPost[], acceptLanguage: string) {
+    let resolve: (ret: string) => void;
+    let promise: Promise<string>;
+
+    promise = new Promise((r: (ret: string) => void) => resolve = r);
 
     fs.readFile(path.resolve(__dirname, './rss2.pug'), 'utf-8', (err, template) => {
       const xml = pug.render(template, {
@@ -19,8 +23,8 @@ function installer ({ site, utils, config }) {
         description: '',
         posts: utils.render(posts, { preview: false, acceptLanguage }),
         renderedPosts: utils.render(posts, { preview: true, acceptLanguage }),
-        pubDate: (posts.length === 0 ? new Date(0) : posts[0].date).toUTCString(),
-        cdata (text, options) {
+        pubDate: (posts.length === 0 ? new Date(0) : new Date(posts[0].date)).toUTCString(),
+        cdata (text: string) {
           return '<![CDATA[' + text.replace(/\]\]>/g, ']]]]><![CDATA[>') + ']]>';
         }
       });

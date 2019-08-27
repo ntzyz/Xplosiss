@@ -29,7 +29,7 @@ try {
   commit = 'unknown';
 }
 
-export default {
+const configuration: webpack.Configuration = {
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/dist/',
@@ -88,10 +88,6 @@ export default {
     },
     extensions: [ '.js', '.ts' ]
   },
-  devServer: {
-    historyApiFallback: true,
-    noInfo: true,
-  },
   performance: {
     hints: false
   },
@@ -105,15 +101,17 @@ export default {
     new webpack.IgnorePlugin(/(server|\.md$)/, /plugins/),
     new VueLoaderPlugin(),
   ]
-};
+}
 
 if (process.env.NODE_ENV === 'production') {
   // module.exports.devtool = '#source-map';
-  module.exports.plugins = (module.exports.plugins || []).concat([
+  configuration.plugins = (configuration.plugins || []).concat([
     new webpack.LoaderOptionsPlugin({
       minimize: true
     }),
     new webpack.optimize.ModuleConcatenationPlugin()
   ]);
-  module.exports.mode = 'production';
+  configuration.mode = 'production';
 }
+
+export default configuration;

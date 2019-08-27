@@ -5,12 +5,13 @@ import { expect } from 'chai';
 
 import site from '../../index';
 import utils from '../../utils';
+import { BlogTag } from '../../types/models';
 
 const agent = supertest.agent(site);
 const token = utils.token;
 
 describe('Testing tag-related APIs.', () => {
-  let tags;
+  let tags: BlogTag[];
 
   it('Fetch tag list', async () => {
     const url = '/api/tag';

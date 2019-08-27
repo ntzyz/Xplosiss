@@ -9,11 +9,28 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as util from 'util';
 
-import { createBundleRenderer } from 'vue-server-renderer';
+import { createBundleRenderer, BundleRendererOptions, BundleRenderer } from 'vue-server-renderer';
 import setupDevServer from './build/setup-dev-server';
+import { clientPluginInstaller } from './types/plugin';
 
 const isProd = process.env.NODE_ENV === 'production';
 const isTest = process.env.NODE_ENV === 'test';
+
+// Extend Express's response with some custom fields.
+export interface HeadLink {
+  rel: string,
+  type: string,
+  title: string,
+  href: string,
+}
+
+declare global {
+  namespace Express {
+    interface Response {
+      headLinks: Array<HeadLink>
+    }
+  }
+}
 
 function serve (p: string, cache = false) {
   return express.static(path.resolve(__dirname, p), {
@@ -78,7 +95,7 @@ site.get('/favicon.ico', (req, res) => {
 utils.websocket.attach(site);
 
 // Factory for Vue renderer
-function createRenderer (bundle, options) {
+function createRenderer (bundle: string | object, options: BundleRendererOptions) {
   return createBundleRenderer(bundle, Object.assign(options, {
     basedir: path.resolve(__dirname, './dist'),
     runInNewContext: false,
@@ -86,7 +103,8 @@ function createRenderer (bundle, options) {
 }
 
 // Renderer and HTML template
-let renderer, readyPromise;
+let renderer: BundleRenderer;
+let readyPromise: Promise<void>;
 const templatePath = path.resolve(__dirname, isProd ? 'src/index.prod.html' : 'src/index.dev.html');
 
 // Setup server renderer
@@ -121,10 +139,10 @@ site.use(serve('./static'));
 let clientConfig = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'src/config.json'), 'UTF-8'));
 
 // The actual render entry.
-function render (req, res) {
+function render (req: express.Request, res: express.Response) {
   res.setHeader('Content-Type', 'text/html');
 
-  const errorHandler = err => {
+  const errorHandler = (err: any) => {
     if (err.url) {
       res.redirect(err.url);
     } else {
@@ -161,11 +179,11 @@ Promise.all(Object.keys(config.plugins).map(async plugin => {
   const readFile = util.promisify(fs.readFile);
   const manifest = JSON.parse(await readFile(path.join(__dirname, './plugins/', plugin, './manifest.json'), 'utf-8'));
 
-  if (!config.plugins[plugin].enabled || !manifest.entry.server) {
+  if (!(config.plugins as any)[plugin].enabled || !manifest.entry.server) {
     return;
   }
 
-  const installer = (await import(path.join(__dirname, './plugins/', plugin, manifest.entry.server))).default;
+  const installer = (await import(path.join(__dirname, './plugins/', plugin, manifest.entry.server))).default as clientPluginInstaller;
 
   installer({ site: pluginRouter, utils, config });
   console.log(`Loaded plugin: ${manifest.name} v${manifest.version}, written by ${manifest.author.name}.`);

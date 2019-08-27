@@ -11,7 +11,7 @@ const agent = supertest.agent(site);
 const token = utils.token;
 
 describe('Testing media-related APIs.', () => {
-  let uploaded = null;
+  let uploaded: string = null;
 
   it('Fetch media lists without token', async () => {
     const url = '/api/media/';

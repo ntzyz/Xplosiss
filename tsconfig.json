@@ -2,6 +2,7 @@
   "compilerOptions": {
       "outDir": "./.ts",
       "allowJs": true,
+      "noImplicitAny": true,
       "target": "es5"
   },
   "include": [

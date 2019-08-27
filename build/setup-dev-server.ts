@@ -1,21 +1,26 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import * as MFS from 'memory-fs';
+import MFS = require('memory-fs');
 import * as webpack from 'webpack';
+import * as express from 'express';
 
 import clientConfig from './webpack.client.config';
 import serverConfig from './webpack.server.config';
+import { BundleRenderer } from 'vue-server-renderer';
 
-const readFile = (fs, file) => {
+const readFile = (fs: MFS, file: string) => {
   try {
     return fs.readFileSync(path.join(clientConfig.output.path, file), 'utf-8');
   } catch (e) {}
 };
 
-function setupDevServer (app, templatePath, callback) {
-  let bundle, template, clientManifest, ready;
+function setupDevServer (app: express.Application, templatePath: string, callback: (bundle: BundleRenderer, options: { template: string, clientManifest: any }) => void) {
+  let bundle: BundleRenderer;
+  let template: string;
+  let clientManifest: any;
+  let ready: () => void;
 
-  const readyPromise = new Promise(r => { ready = r; });
+  const readyPromise: Promise<void> = new Promise(r => { ready = r; });
   const update = () => {
     if (bundle && clientManifest) {
       ready();
@@ -26,7 +31,10 @@ function setupDevServer (app, templatePath, callback) {
   template = fs.readFileSync(templatePath, 'utf-8');
   // TODO: Watch this file.
 
-  clientConfig.entry = ['webpack-hot-middleware/client', clientConfig.entry];
+  if (typeof clientConfig.entry === 'string') {
+    clientConfig.entry = ['webpack-hot-middleware/client', clientConfig.entry];
+  }
+
   clientConfig.output.filename = '[name].js';
   clientConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
@@ -42,8 +50,8 @@ function setupDevServer (app, templatePath, callback) {
   app.use(devMiddleware);
   clientCompiler.plugin('done', stats => {
     stats = stats.toJson();
-    stats.errors.forEach(err => console.error(err));
-    stats.warnings.forEach(err => console.warn(err));
+    stats.errors.forEach((err: Error) => console.error(err));
+    stats.warnings.forEach((err: Error) => console.warn(err));
     if (stats.errors.length) return;
     clientManifest = JSON.parse(readFile(
       devMiddleware.fileSystem,
@@ -59,8 +67,9 @@ function setupDevServer (app, templatePath, callback) {
   serverCompiler.outputFileSystem = mfs;
   serverCompiler.watch({}, (err, stats) => {
     if (err) throw err;
-    stats = stats.toJson();
-    if (stats.errors.length) return;
+    
+    const jsonStats = stats.toJson();
+    if (jsonStats.errors.length) return;
 
     bundle = JSON.parse(readFile(mfs, 'vue-ssr-server-bundle.json'));
     update();

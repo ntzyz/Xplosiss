@@ -5,26 +5,28 @@ import { expect } from 'chai';
 
 import site from '../../index';
 import utils from '../../utils';
+import { BlogPost, BlogReply } from '../../types/models';
 
 const agent = supertest.agent(site);
 const token = utils.token;
 
 describe('Testing post-related APIs.', () => {
-  let posts, id;
-  let postTemplate = {
-    slug: 'foo-bar',
-    category: 'emmmm',
+  let postTemplate: BlogPost = {
     date: new Date(),
+    category: 'emmmm',
+    slug: 'foo-bar',
     tags: ['233', '666'],
     body: [{
       title: 'foo',
       content: '{123}(666)',
       format: 'markdown',
       default: true,
+      language: 'zh'
     }],
     hideOnIndex: false,
+    insertCover: false,
     cover: 'https://www.ntzyz.cn/avatar.jpg',
-    replies: [],
+    replies: [] as BlogReply[],
   };
   const replyTemplate = {
     user: 'foo',
@@ -33,6 +35,8 @@ describe('Testing post-related APIs.', () => {
     content: 'Fork you!',
     datetime: new Date().getTime(),
   };
+  let posts: BlogPost[];
+  let id: string;
 
   it('Fetch post list', async () => {
     const url = '/api/post';
@@ -72,7 +76,7 @@ describe('Testing post-related APIs.', () => {
     Object.keys(postTemplate).forEach(key => { console.log(key);
       if (key === 'date') {
         // Date in response is a string, we need a special judge here:
-        expect(new Date(response.body.post[key]).getTime()).equal(postTemplate[key].getTime());
+        expect(new Date(response.body.post[key]).getTime()).equal(new Date(postTemplate[key]).getTime());
         return;
       } 
       else if (key === 'body') {
@@ -81,7 +85,7 @@ describe('Testing post-related APIs.', () => {
         // expect(response.body.post.content).equal(postTemplate[key][0].content);
         return;
       }
-      expect(response.body.post[key]).to.deep.equal(postTemplate[key]);
+      expect(response.body.post[key]).to.deep.equal((postTemplate as any)[key]);
     });
   });  
 
@@ -208,7 +212,7 @@ describe('Testing post-related APIs.', () => {
     expect(response.body.status).to.be.ok;
     expect(response.body.posts).not.to.be.undefined;
 
-    response.body.posts.forEach(post => expect(post._id).not.equals(id));
+    (response.body.posts as BlogPost[]).forEach(post => expect(post._id).not.equals(id));
 
     posts = response.body.posts;
   });

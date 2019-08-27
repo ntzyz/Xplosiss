@@ -1,13 +1,14 @@
 import axios from 'axios';
 import * as geoip from 'geoip-lite';
+import { PluginOptions } from '../../../types/plugin';
 
-function installer ({ site, utils, config }) {
+function installer ({ site, utils, config }: PluginOptions) {
   const eventBus = utils.eventBus;
 
   eventBus.on(eventBus.EVENT_NEW_REPLY, params => {
     const name = params.pageSlug || params.postSlug;
     const URL = config.url + (params.pageSlug ? `/${params.pageSlug}` : `/post/${params.postSlug}`);
-    const ipInfo = geoip.lookup(params.ipAddr) || {};
+    const ipInfo = geoip.lookup(params.ipAddr);
     
     let ipRegion = [];
 

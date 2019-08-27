@@ -7,7 +7,7 @@ import site from '../../index';
 const agent = supertest.agent(site);
 
 describe('Testing category-related APIs.', () => {
-  let categories;
+  let categories: string[];
 
   it('Fetch category list', async () => {
     const url = '/api/category';

@@ -2,6 +2,7 @@ import * as pug from 'pug';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as express from 'express';
+import { PluginOptions } from '../../../types/plugin';
 
 const template = `<html>
 <head>
@@ -20,7 +21,7 @@ const template = `<html>
 </body>
 </html>`;
 
-function installer ({ site, utils, config }) {
+function installer ({ site, utils, config }: PluginOptions) {
   site.use((req, res, next) => {
     if (/MicroMessenger/ig.test(req.headers['user-agent'])) {
       return res.send(template);

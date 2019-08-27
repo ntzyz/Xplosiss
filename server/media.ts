@@ -5,6 +5,7 @@ import * as path from 'path';
 import * as multer from 'multer';
 
 import utils from '../utils';
+import { BlogMedia } from '../types/models';
 
 const upload = multer({ dest: path.join(__dirname, '../uploads') });
 
@@ -34,7 +35,7 @@ router.get('/', (req, res) => {
         messagee: utils.messages.ERR_FS_FAIL
       });
     }
-    let fileWithMimes = [];
+    let fileWithMimes: BlogMedia[] = [];
     files.filter(file => file[0] !== '.').forEach(file => {
       fileWithMimes.push({
         file,
