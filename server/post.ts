@@ -4,6 +4,7 @@ import utils from '../utils';
 import config from '../config';
 
 import { RenderOptions } from '../utils/render';
+import { BlogPost } from '../types';
 
 const { eventBus } = utils;
 let router = express.Router();
@@ -14,14 +15,15 @@ let router = express.Router();
 router.get('/', async (req, res) => {
   let page = Math.max(req.query.page ? req.query.page - 1 : 0, 0);
   let pagesize = Number(req.query.pagesize) || config.page.size;
-  let posts, count;
+  let posts: BlogPost[];
+  let count: number;
   try {
     let cursor = utils.db.conn.collection('posts').find(req.query.full === 'true' ? {} : {
       hideOnIndex: {
         $ne: true,
       }
     }, { sort: [['date', 'desc']] }).skip(page * pagesize).limit(pagesize);
-    posts = await cursor.toArray();
+    posts = await cursor.toArray() as BlogPost[];
     count = await cursor.count();
   } catch (e) {
     /* istanbul ignore next */
@@ -62,7 +64,8 @@ router.get('/', async (req, res) => {
  * Get post by it's slug
  */
 router.get('/by-slug/:slug', async (req, res) => {
-  let post;
+  let post: BlogPost;
+
   try {
     post = await utils.db.conn.collection('posts').findOne({ slug: req.params.slug });
   } catch (e) {
@@ -140,7 +143,7 @@ router.put('/by-slug/:slug/reply', async (req, res) => {
  * Get one post by it's id without rendering (for jobs like editing)
  */
 router.get('/by-id/:id/raw', async (req, res) => {
-  let post;
+  let post: BlogPost;
   try {
     post = await utils.db.conn.collection('posts').findOne({ _id: new ObjectID(req.params.id) });
   } catch (e) {

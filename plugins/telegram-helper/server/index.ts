@@ -1,5 +1,5 @@
-const axios = require('axios');
-const geoip = require('geoip-lite');
+import axios from 'axios';
+import * as geoip from 'geoip-lite';
 
 function installer ({ site, utils, config }) {
   const eventBus = utils.eventBus;

@@ -6,7 +6,7 @@
     "email": "ntzyz@live.cn"
   },
   "entry": {
-    "server": "server/index.js",
+    "server": "server/index.ts",
     "browser": null
   }
 }

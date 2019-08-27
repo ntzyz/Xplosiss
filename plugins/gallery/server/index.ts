@@ -1,4 +1,4 @@
-const { ObjectID } = require('mongodb');
+import { ObjectID } from 'mongodb';
 
 function pluginInstaller ({ site, utils }) {
   site.get('/api/gallery', async (req, res) => {
@@ -57,7 +57,7 @@ function pluginInstaller ({ site, utils }) {
   
     try {
       await utils.db.conn.collection('gallery').remove(
-        { _id: ObjectID(req.params.id) }
+        { _id: new ObjectID(req.params.id) }
       );
     } catch (e) {
       console.error(e);
@@ -80,7 +80,7 @@ function pluginInstaller ({ site, utils }) {
   
     try {
       await utils.db.conn.collection('gallery').findAndModify(
-        { _id: ObjectID(req.params.id) },
+        { _id: new ObjectID(req.params.id) },
         [],
         { $set: {
           title: req.body.title,
@@ -103,4 +103,4 @@ function pluginInstaller ({ site, utils }) {
   });
 }
 
-module.exports = pluginInstaller;
+export default pluginInstaller;

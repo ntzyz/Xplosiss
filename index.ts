@@ -7,6 +7,7 @@ import server from './server';
 
 import * as fs from 'fs';
 import * as path from 'path';
+import * as util from 'util';
 
 import { createBundleRenderer } from 'vue-server-renderer';
 import setupDevServer from './build/setup-dev-server';
@@ -155,23 +156,20 @@ function render (req, res) {
 }
 
 // Install all plugins
-Object.keys(config.plugins).forEach(plugin => {
-  let manifest;
 
-  try {
-    manifest = JSON.parse(fs.readFileSync(path.join(__dirname, './plugins/', plugin, './manifest.json'), 'utf-8'));
-  } catch(e) {
-    console.error(e);
-  }
+Promise.all(Object.keys(config.plugins).map(async plugin => {
+  const readFile = util.promisify(fs.readFile);
+  const manifest = JSON.parse(await readFile(path.join(__dirname, './plugins/', plugin, './manifest.json'), 'utf-8'));
 
   if (!config.plugins[plugin].enabled || !manifest.entry.server) {
     return;
   }
 
-  const installer = require(path.join(__dirname, './plugins/', plugin, manifest.entry.server));
+  const installer = (await import(path.join(__dirname, './plugins/', plugin, manifest.entry.server))).default;
+
   installer({ site: pluginRouter, utils, config });
   console.log(`Loaded plugin: ${manifest.name} v${manifest.version}, written by ${manifest.author.name}.`);
-});
+}));
 
 // deal with all those unhandled requests here.
 site.get('*', (isProd || isTest) ?

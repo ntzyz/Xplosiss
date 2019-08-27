@@ -1,4 +1,4 @@
-const pug = require('pug');
+import * as pug from 'pug';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as express from 'express';
@@ -72,6 +72,7 @@ function installer ({ site, utils, config }) {
 
   router.get('/category/:category', async (req, res) => {
     const acceptLanguage = req.query.acceptLanguage || '';
+    let posts;
 
     try {
       let cursor = utils.db.conn.collection('posts').find({
@@ -86,7 +87,7 @@ function installer ({ site, utils, config }) {
       });
     }
 
-    rssCacheContent = await renderXML(posts, acceptLanguage);
+    const rssCacheContent = await renderXML(posts, acceptLanguage);
 
     res.append('Last-Modified', rssLastModifiedDate.toUTCString());
     res.send(rssCacheContent);
@@ -125,4 +126,4 @@ function installer ({ site, utils, config }) {
   });
 }
 
-module.exports = installer;
+export default installer;

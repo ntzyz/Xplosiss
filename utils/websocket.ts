@@ -1,12 +1,13 @@
 import * as http from 'http';
 import * as socket from 'socket.io';
+import * as express from 'express';
 
 import token from './token';
 
 let server: http.Server;
 let io: socket.Server;
 
-function attachSocketIO (site) {
+function attachSocketIO (site: express.Application) {
   if (site) {
     server = new http.Server(site);
     io = socket(server, { path: '/api/ws' });

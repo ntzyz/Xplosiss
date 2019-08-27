@@ -3,8 +3,9 @@ import * as hljs from 'highlight.js';
 import * as mdit from 'markdown-it';
 
 import config from '../config';
+import { BlogPost, BlogPostBody } from '../types';
 
-function addSpanEachLine (html) {
+function addSpanEachLine (html: string) {
   return html.split('\n').map(l => `<span class="__line">${l}</span>`).join('\n');
 }
 
@@ -16,11 +17,11 @@ export interface RenderOptions {
   fakeRendering?: boolean;
 };
 
-function render (posts, options: RenderOptions) {
+function render (posts: BlogPost[], options: RenderOptions) {
   const acceptLanguage = options.acceptLanguage || '';
 
   return posts.map(origPost => {
-    let post = JSON.parse(JSON.stringify(origPost));
+    let post = JSON.parse(JSON.stringify(origPost)) as BlogPost;
     post.date = new Date(post.date);
 
     // Get all available languages.
@@ -33,7 +34,7 @@ function render (posts, options: RenderOptions) {
       };
     }).sort((a, b) => b.priority - a.priority);
 
-    let matchedBody = null;
+    let matchedBody: BlogPostBody = null;
     if (availableLanguages[0].priority < 0) {
       // Nobody matched, use default;
       matchedBody = post.body.filter(body => body.default)[0] || post.body[0];
@@ -100,18 +101,18 @@ function render (posts, options: RenderOptions) {
   
         // Apply syntax highlighting for code blocks.
         post.content = post.content.replace(/<code lang="(.+?)">([^]+?)<\/code>/g, (match, p1, p2) => {
-          let rendered = hljs.highlight(p1, p2.replace(/(\s+$)/g, '')).value;
+          const rendered: string = hljs.highlight(p1, p2.replace(/(\s+$)/g, '')).value;
           return `<pre>${addSpanEachLine(rendered)}</pre>`;
         }).replace(/<code>([^]+?)<\/code>/g, (match, p1) => {
-          let rendered = hljs.highlightAuto(p1.replace(/(\s+$)/g, '')).value;
+          const rendered: string = hljs.highlightAuto(p1.replace(/(\s+$)/g, '')).value;
           return `<pre>${addSpanEachLine(rendered)}</pre>`;
         });
       }
   
       if (post.replies && config.reply.enableMarkdownSupport) {
-        post.replies = post.replies.map(reply => {
+        for (const reply of post.replies) {
           if (!reply.content) {
-            return {};
+            continue;;
           }
           
           reply.content = mdit({
@@ -125,9 +126,7 @@ function render (posts, options: RenderOptions) {
               return `<pre>${str}</pre>`;
             }
           }).render(reply.content);
-          reply.markdown = true;
-          return reply;
-        });
+        }
       }
     }
 
@@ -143,10 +142,11 @@ function render (posts, options: RenderOptions) {
   });
 }
 
-export default function (posts: any, options: any) {
+export default function (posts: BlogPost[], options: RenderOptions): BlogPost[] {
   try {
-    return render.apply(null, arguments);
+    return render.apply(null, [posts, options]);
   } catch (e) {
     console.log(e);
+    return [];
   }
 };
