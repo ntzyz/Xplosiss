@@ -101,7 +101,7 @@ const configuration: webpack.Configuration = {
     new webpack.IgnorePlugin(/(server|\.md$)/, /plugins/),
     new VueLoaderPlugin(),
   ]
-}
+};
 
 if (process.env.NODE_ENV === 'production') {
   // module.exports.devtool = '#source-map';

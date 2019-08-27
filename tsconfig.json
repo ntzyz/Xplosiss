@@ -3,6 +3,7 @@
       "outDir": "./.ts",
       "allowJs": true,
       "noImplicitAny": true,
+      "noImplicitThis": true,
       "target": "es5"
   },
   "include": [
