@@ -3,6 +3,7 @@ import * as webpack from 'webpack';
 import * as merge from 'webpack-merge';
 import base from './webpack.base.config';
 import * as VueSSRClientPlugin from 'vue-server-renderer/client-plugin';
+import * as MiniCssExtractPlugin  from 'mini-css-extract-plugin';
 
 const webpackClientConfig = merge(base, {
   entry: path.resolve(__dirname, '../src/entry-client'),
@@ -11,13 +12,30 @@ const webpackClientConfig = merge(base, {
       name: 'manifest'
     },
   },
+  module: {
+    rules: [
+      {
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          process.env.NODE_ENV !== 'production'
+            ? 'vue-style-loader'
+            : MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader',
+        ],
+      },
+    ]
+  },
   externals: {
     'vue': 'Vue',
     'vuex': 'Vuex',
     'vue-router': 'VueRouter',
   },
   plugins: [
-    new VueSSRClientPlugin()
+    new VueSSRClientPlugin(),
+    new MiniCssExtractPlugin({
+      filename: 'style.css'
+    })
   ]
 });
 

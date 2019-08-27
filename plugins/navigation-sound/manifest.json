@@ -7,6 +7,6 @@
   },
   "entry": {
     "server": null,
-    "browser": "browser/index.js"
+    "browser": "browser/index"
   }
 }

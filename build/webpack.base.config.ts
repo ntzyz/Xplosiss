@@ -41,12 +41,6 @@ const configuration: webpack.Configuration = {
       {
         test: /\.vue$/,
         loader: 'vue-loader',
-        options: {
-          loaders: {
-            'scss': 'vue-style-loader!css-loader!sass-loader',
-            'sass': 'vue-style-loader!css-loader!sass-loader?indentedSyntax'
-          }
-        }
       },
       {
         test: /\.tsx?$/,
@@ -55,14 +49,6 @@ const configuration: webpack.Configuration = {
         options: {
           appendTsSuffixTo: [/\.vue$/],
         }
-      },
-      {
-        test: /\.scss$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'sass-loader',
-        ],
       },
       {
         test: /\.pug$/,
@@ -79,7 +65,7 @@ const configuration: webpack.Configuration = {
         options: {
           name: '[name].[ext]?[hash]'
         }
-      }
+      },
     ]
   },
   resolve: {

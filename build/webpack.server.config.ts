@@ -14,8 +14,18 @@ const webpackServerConfig = merge(base, {
     libraryTarget: 'commonjs2'
   },
   externals: nodeExternals({
-    whitelist: /\.css$/
+    whitelist: /\.(sa|sc|c)ss$/
   }),
+  module: {
+    rules: [
+      {
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          'null-loader'
+        ],
+      },
+    ]
+  },
   plugins: [
     new VueSSRServerPlugin()
   ]
