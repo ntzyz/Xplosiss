@@ -14,6 +14,7 @@ export interface BlogReply {
   replyTo: number | null,
   githubId: string,
   datetime: number,
+  markdown?: boolean,
 };
 
 export interface BlogPost {

@@ -115,6 +115,7 @@ function render (posts: BlogPost[], options: RenderOptions) {
             continue;;
           }
           
+          reply.markdown = true;
           reply.content = mdit({
             html: false,
             highlight: function (str, lang) {
