@@ -112,7 +112,7 @@ router.put('/by-slug/:slug/reply', async (req, res) => {
   });
 
   try {
-    await utils.db.conn.collection('posts').update(
+    await utils.db.conn.collection('posts').updateOne(
       { slug: req.params.slug },
       { $push: { replies: {
         user: req.body.user,
