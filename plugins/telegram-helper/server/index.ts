@@ -40,4 +40,4 @@ function installer ({ site, utils, config }: PluginOptions) {
   });
 }
 
-module.exports = installer;
+export default installer;
