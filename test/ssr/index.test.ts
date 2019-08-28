@@ -6,6 +6,8 @@ import { expect } from 'chai';
 import site from '../../index';
 import utils from '../../utils';
 import config from '../../config';
+import { fstat, existsSync } from 'fs';
+import { join } from 'path';
 
 const agent = supertest.agent(site);
 const token = utils.token;
@@ -34,7 +36,13 @@ describe('Testing index-rendering with SSR', async () => {
 
   it('Get favicon.ico', async () => {
     const url = '/favicon.ico';
-    const response = await agent.get(url).expect(config.favicon === null ? 404 : 200);
+    let expectedHttpStatusCode: number = 404;
+
+    if (config.favicon && existsSync(join(__dirname, '../..', config.favicon))) {
+      expectedHttpStatusCode = 200;
+    }
+
+    const response = await agent.get(url).expect(expectedHttpStatusCode);
   });
 
   it('Get a page that doesnt exist', async () => {

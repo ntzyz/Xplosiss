@@ -7,7 +7,8 @@
     "build:test": "cross-env NODE_ENV=production webpack --config build/webpack.server.config.ts --progress --hide-modules && cross-env NODE_ENV=production webpack --config build/webpack.client.config.ts --progress --hide-modules",
     "lint": "eslint $(find . \\( -name \"*.js\" -o -name \"*.ts\" -o -name \"*.vue\" \\) -not \\( -path \"./node_modules/*\" -o -path \"./dist/*\" -o -name \".*\" -o -path \"./.ts/*\" \\))",
     "lint-fix": "eslint --fix $(find . \\( -name \"*.js\" -o -name \"*.vue\" \\) -not \\( -path \"./node_modules/*\" -o -path \"./dist/*\" -o -name \".*\" -o -path \"./.ts/*\" \\))",
-    "test": "npm run build:test && cross-env NODE_ENV=test nyc ts-mocha ./test/**/*.test.ts --recursive --timeout 999999 --colors --exit --require ts-node/register --require source-map-support/register --full-trace",
+    "test": "npm run build:test && npm run test:run",
+    "test:run": "cross-env NODE_ENV=test nyc ts-mocha ./test/**/*.test.ts --recursive --timeout 999999 --colors --exit --require ts-node/register --require source-map-support/register --full-trace",
     "cover": "nyc report --reporter=text-lcov | coveralls && rm -rf ./coverage && rm -rf ./.nyc_output",
     "upgrade": "node scripts/upgrade.js"
   },

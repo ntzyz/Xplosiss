@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import * as fs from 'fs';
 import * as path from 'path';
 import MFS = require('memory-fs');
