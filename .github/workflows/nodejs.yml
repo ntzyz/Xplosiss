@@ -20,7 +20,7 @@ jobs:
     - name: Launch MongoDB
       run: sudo docker run --name mongo -d -p 27017:27017 mongo
     - name: Import initial database
-      run: sudo docker container exec -it mongo localhost/newBlog db.default.js
+      run: sudo docker container exec mongo localhost/newBlog db.default.js
     - name: npm install, build, and test
       run: |
         npm run lint
