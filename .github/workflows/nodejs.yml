@@ -10,6 +10,7 @@ jobs:
     strategy:
       matrix:
         node-version: [8.x, 10.x, 12.x]
+        mongo-version: ['3.6', '4.0', '4.2']
 
     steps:
     - uses: actions/checkout@v1
@@ -18,17 +19,27 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Launch MongoDB
-      run: sudo docker run --name mongo -d -p 27017:27017 mongo
+      run: |
+        sudo docker container run --name mongo -v $PWD:/src -p 27017:27017 -d mongo:$MONGO_VERSION
+        sleep 4s
+      env:
+        MONGO_VERSION: ${{ matrix.mongo-version }}
     - name: Import initial database
-      run: sudo docker container exec mongo localhost/newBlog db.default.js
+      run: |
+        sudo docker container ls --all
+        sudo docker container exec mongo mongo localhost/newBlog /src/db.default.js
     - name: npm install, build, and test
       run: |
+        npm install
         npm run lint
         cp config.sample.ts config.ts
         sed -i 's,https://new.ntzyz.cn,http://localhost:1234,g' config.ts
         npm run build
         npm run test
+        npx nyc report --reporter=text-lcov
       env:
         CI: true
-    - name: report coverage
-      run: npm run cover
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}

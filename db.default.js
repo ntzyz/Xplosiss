@@ -9,6 +9,7 @@ db.posts.insertMany([{
   'tags': ['HelloWorld'],
   'body': [
     {
+      'title': 'Hello World',
       'content': '<p>欢迎使用 Xplosiss。这是您的第一篇文章。编辑或删除它，然后开始写作吧！</p>',
       'format': 'HTML',
       'language': 'zh',
