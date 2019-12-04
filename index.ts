@@ -44,10 +44,10 @@ let pluginRouter = express.Router();
 // disable 'x-powered-by' for security
 site.disable('x-powered-by');
 
-// parse sitelication/x-www-form-urlencoded
+// parse application/x-www-form-urlencoded
 site.use(bodyParser.urlencoded({ extended: true }));
 
-// parse sitelication/json
+// parse application/json
 site.use(bodyParser.json());
 
 // print all access logs
@@ -67,7 +67,7 @@ site.use((req, res, next) => {
     if (config.allowedOrigins.indexOf(origin) >= 0) {
       res.setHeader('Access-Control-Allow-Origin', origin);
       
-      // PUT must be allowed or nobody can post a reply when CROS.
+      // PUT must be allowed or nobody can post a reply when CORS.
       res.setHeader('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
       res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     }
