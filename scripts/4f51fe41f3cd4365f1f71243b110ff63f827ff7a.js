@@ -5,7 +5,6 @@
  */
 
 const { db } = require('../utils');
-const { ObjectID } = require('mongodb');
 
 module.exports = async function () {
   await db.prepare();

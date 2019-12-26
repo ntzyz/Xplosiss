@@ -150,8 +150,10 @@ describe('Testing post-related APIs.', () => {
     let response;
     const url = `/api/post/by-slug/${postTemplate.slug}`;
     // Update encoding to 'html'
-    postTemplate.body[0].format = 'html';
-    postTemplate.body[0].content = '<!-- more --><code lang="js">\nconsole.log("hello world");</code>';
+    Object.assign(postTemplate.body[0], {
+      format: 'html',
+      content: '<!-- more --><code lang="js">\nconsole.log("hello world");</code>',
+    });
     response = await agent.post(`/api/post/by-id/${id}?token=${token}`).set('Content-Type', 'application/json').send(postTemplate).expect(200);
 
     response = await agent.get(url).expect(200);
@@ -159,8 +161,10 @@ describe('Testing post-related APIs.', () => {
     expect(response.body.post).not.to.be.undefined;
 
     // Update encoding to 'jade'
-    postTemplate.body[0].format = 'jade';
-    postTemplate.body[0].content = '// more \ncode(lang="js").\n  console.log("hello world");\n';
+    Object.assign(postTemplate.body[0], {
+      format: 'jade',
+      content: '// more \ncode(lang="js").\n  console.log("hello world");\n',
+    });
     await agent.post(`/api/post/by-id/${id}?token=${token}`).set('Content-Type', 'application/json').send(postTemplate).expect(200);
 
     response = await agent.get(url).expect(200);
@@ -168,8 +172,10 @@ describe('Testing post-related APIs.', () => {
     expect(response.body.post).not.to.be.undefined;
 
     // Update encoding to 'markdown'
-    postTemplate.body[0].format = 'markdown';
-    postTemplate.body[0].content = '<!-- more -->\n```js\nconsole.log("hello world");</code>\n```';
+    Object.assign(postTemplate.body[0], {
+      format: 'markdown',
+      content: '<!-- more -->\n```js\nconsole.log("hello world");</code>\n```',
+    });
     await agent.post(`/api/post/by-id/${id}?token=${token}`).set('Content-Type', 'application/json').send(postTemplate).expect(200);
 
     response = await agent.get(url).expect(200);

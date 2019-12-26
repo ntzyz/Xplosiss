@@ -11,11 +11,11 @@ function addSpanEachLine (html: string) {
 
 export interface RenderOptions {
   titleOnly?: boolean;
-  acceptLanguage?: string,
+  acceptLanguage?: string;
   preview?: boolean;
   password?: string;
   fakeRendering?: boolean;
-};
+}
 
 function render (posts: BlogPost[], options: RenderOptions) {
   const acceptLanguage = options.acceptLanguage || '';
@@ -73,7 +73,9 @@ function render (posts: BlogPost[], options: RenderOptions) {
             if (lang && hljs.getLanguage(lang)) {
               try {
                 return `<pre>${addSpanEachLine(hljs.highlight(lang, str.replace(/(\s+$)/g, ''), true).value)}</pre>`;
-              } catch (__) {}
+              } catch (__) {
+                // doing nothing...
+              }
             }
             return `<pre>${str}</pre>`;
           }
@@ -112,7 +114,7 @@ function render (posts: BlogPost[], options: RenderOptions) {
       if (post.replies && config.reply.enableMarkdownSupport) {
         for (const reply of post.replies) {
           if (!reply.content) {
-            continue;;
+            continue;
           }
           
           reply.markdown = true;
@@ -122,7 +124,9 @@ function render (posts: BlogPost[], options: RenderOptions) {
               if (lang && hljs.getLanguage(lang)) {
                 try {
                   return `<pre>${addSpanEachLine(hljs.highlight(lang, str.replace(/(\s+$)/g, ''), true).value)}</pre>`;
-                } catch (__) {}
+                } catch (__) {
+                  // doing nothing...
+                }
               }
               return `<pre>${str}</pre>`;
             }
@@ -150,4 +154,4 @@ export default function (posts: BlogPost[], options: RenderOptions): BlogPost[] 
     console.log(e);
     return [];
   }
-};
+}

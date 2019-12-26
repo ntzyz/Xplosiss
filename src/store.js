@@ -23,4 +23,4 @@ export function createStore ({ Vue, Vuex }) {
     mutations
   });
   return store;
-};
+}

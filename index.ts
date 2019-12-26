@@ -18,16 +18,16 @@ const isTest = process.env.NODE_ENV === 'test';
 
 // Extend Express's response with some custom fields.
 export interface HeadLink {
-  rel: string,
-  type: string,
-  title: string,
-  href: string,
+  rel: string;
+  type: string;
+  title: string;
+  href: string;
 }
 
 declare global {
   namespace Express {
     interface Response {
-      headLinks: Array<HeadLink>
+      headLinks: Array<HeadLink>;
     }
   }
 }

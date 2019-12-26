@@ -1,5 +1,4 @@
 import * as path from 'path';
-import * as webpack from 'webpack';
 import * as merge from 'webpack-merge';
 import base from './webpack.base.config';
 import * as VueSSRServerPlugin from 'vue-server-renderer/server-plugin';

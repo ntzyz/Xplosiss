@@ -13,10 +13,12 @@ import { BundleRenderer } from 'vue-server-renderer';
 const readFile = (fs: MFS, file: string) => {
   try {
     return fs.readFileSync(path.join(clientConfig.output.path, file), 'utf-8');
-  } catch (e) {}
+  } catch (e) {
+    // doing nothing...
+  }
 };
 
-function setupDevServer (app: express.Application, templatePath: string, callback: (bundle: BundleRenderer, options: { template: string, clientManifest: any }) => void) {
+function setupDevServer (app: express.Application, templatePath: string, callback: (bundle: BundleRenderer, options: { template: string; clientManifest: any }) => void) {
   let bundle: BundleRenderer;
   let template: string;
   let clientManifest: any;
@@ -78,6 +80,6 @@ function setupDevServer (app: express.Application, templatePath: string, callbac
   });
 
   return readyPromise;
-};
+}
 
 export default setupDevServer;

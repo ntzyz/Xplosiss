@@ -2,7 +2,6 @@
 
 import * as supertest from 'supertest';
 import { expect } from 'chai';
-const fakeId = '59423e06ed4418798379a5e7';
 
 import site from '../../index';
 import utils from '../../utils';

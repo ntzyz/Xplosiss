@@ -4,7 +4,7 @@ import Vuex from 'vuex';
 
 import { createApp } from './app.js';
 import axios from 'axios';
-import regeneratorRuntime from 'regenerator-runtime';
+import 'regenerator-runtime';
 
 function axiosMiddleware (config) {
   config.headers['server-side-rendering'] = true;

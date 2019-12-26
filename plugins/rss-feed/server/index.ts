@@ -103,6 +103,7 @@ function installer ({ site, utils, config }: PluginOptions) {
     case 'POST':
     case 'DELETE':
       rssLastModifiedDate = new Date();
+      // eslint-disable-next-line no-fallthrough
     default:
       next();
     }

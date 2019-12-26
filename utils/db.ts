@@ -31,7 +31,7 @@ export default {
   /**
    * Connect to the database.
    */
-  prepare () : Promise<void> {
+  prepare (): Promise<void> {
     if (!__conn) {
       if (!promise) {
         promise = connect();

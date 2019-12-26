@@ -12,7 +12,7 @@ function checkToken (token) {
 function forgotToken () {
   return new Promise((resolve, reject) => {
     axios.get(`${config.api.url}/token/forgot`)
-      .then(response => resolve({}))
+      .then(_response => resolve({}))
       .catch(error => reject(error));
   });
 }

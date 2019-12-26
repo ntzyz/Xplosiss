@@ -25,9 +25,6 @@
 </template>
 
 <script>
-import Pagination from '../components/Pagination.vue';
-
-import config from '../config.json';
 import timeToString from '../utils/timeToString';
 import clickEventMixin from '../utils/link-injector';
 

@@ -55,11 +55,11 @@ interface MulterFile {
   mimetype: string;
   originalname: string;
   size: number;
-};
+}
 
 interface ExpressRequestWithFile {
-  file: MulterFile
-};
+  file: MulterFile;
+}
 
 /**
  * Upload one new file.

@@ -155,7 +155,7 @@ export function createRouter (extraRoutes, { Vue, VueRouter }) {
   });
 
   return router;
-};
+}
 
 export function postCreateRouter (router) {
   router.addRoutes([{
@@ -173,5 +173,5 @@ export function postCreateRouter (router) {
     },
     meta: { keepAlive: true },
   }]);
-};
+}
 

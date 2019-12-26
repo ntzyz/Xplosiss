@@ -1,7 +1,3 @@
-import * as pug from 'pug';
-import * as path from 'path';
-import * as fs from 'fs';
-import * as express from 'express';
 import { PluginOptions } from '../../../types/plugin';
 
 const template = `<html>

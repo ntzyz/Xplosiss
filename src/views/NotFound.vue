@@ -9,8 +9,6 @@
 </template>
 
 <script>
-import config from '../config.json';
-
 export default {
   name: 'NotFound',
   title () { return 'Error 404'; },

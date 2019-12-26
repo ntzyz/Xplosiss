@@ -78,7 +78,7 @@ export default {
       if (window.innerWidth <= 800) {
         document.querySelector('#left-wrapper').setAttribute('style', '');
         return;
-      };
+      }
 
       let isScrollingDown = (window.scrollY > this.lastScrollY);
       let left = document.querySelector('#left-wrapper');

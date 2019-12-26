@@ -10,7 +10,8 @@ module.exports = {
         "ecmaVersion": 8
     },
     "extends": [
-        'plugin:vue/recommended'        
+        'plugin:vue/recommended',
+        'eslint:recommended',
     ],
     "plugins": [
         "standard",
@@ -32,6 +33,7 @@ module.exports = {
         "no-console": 0,
         "comma-dangle": 0,
         "prefer-const": 0,
+        "no-unused-vars": ["warn", { "vars": "all", "args": "none", "ignoreRestSiblings": false }]
     },
     "globals": {
         "angular": false,

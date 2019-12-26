@@ -20,4 +20,4 @@ export default function copyToClipboard (text) {
   element.setSelectionRange(0, element.value.length);
   document.execCommand('copy');
   window.scrollTo(0, scrollTop);
-};
+}

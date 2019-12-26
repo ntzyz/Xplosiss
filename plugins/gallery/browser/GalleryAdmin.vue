@@ -18,7 +18,7 @@
             input.short(v-model="date.month")
             | 月
             input.short(v-model="date.day")
-            | 日　
+            | 日&nbsp;
             input.short(v-model="date.hour")
             | 时
             input.short(v-model="date.minute")
@@ -51,8 +51,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
   name: 'GalleryAdmin',
   data () {

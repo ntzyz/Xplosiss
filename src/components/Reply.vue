@@ -154,7 +154,7 @@ export default {
       api[this.$props.apiPath].putReplyBySlug({ slug: this.$route.params.slug, data })
         .then(() => {
           if (this.$store.state.forceReload) {
-            window.location.href = window.location.href;
+            window.location = window.location.href;
           } else {
             this.$props.refreshReplies();
           }

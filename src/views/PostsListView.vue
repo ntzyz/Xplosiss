@@ -10,7 +10,6 @@
 import Pagination from '../components/Pagination.vue';
 import PostsList from '../components/PostsList.vue';
 
-import config from '../config.json';
 import timeToString from '../utils/timeToString';
 import clickEventMixin from '../utils/link-injector';
 

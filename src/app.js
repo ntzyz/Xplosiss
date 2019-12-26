@@ -1,8 +1,8 @@
-import regeneratorRuntime from 'regenerator-runtime';
+import 'regenerator-runtime';
 import axios from 'axios';
 
 import App from './App.vue';
-import { createRouter, postCreateRouter, coreComponents } from './router';
+import { createRouter, coreComponents } from './router';
 import { createStore } from './store';
 import config from './config.json';
 

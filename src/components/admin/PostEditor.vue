@@ -31,7 +31,7 @@
           input.short(v-model="date.month")
           | 月
           input.short(v-model="date.day")
-          | 日　
+          | 日&nbsp;
           input.short(v-model="date.hour")
           | 时
           input.short(v-model="date.minute")
@@ -248,6 +248,7 @@ export default {
           try {
             this.editingLanguage = this.body.filter(body => body.default)[0].language;
           } catch (_) {
+            // continue regardless of error
           }
         });
 

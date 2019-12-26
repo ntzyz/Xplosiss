@@ -3,6 +3,6 @@ enum Messages {
   ERR_NOT_FOUND = 'resources can not be found.',
   ERR_ACCESS_DENIED = 'you shall not pass unless you are authorized',
   ERR_FS_FAIL = 'server-side file i/o error.'
-};
+}
 
 export default Messages;

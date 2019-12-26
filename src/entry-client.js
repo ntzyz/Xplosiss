@@ -1,5 +1,4 @@
 import { createApp } from './app.js';
-import config from './config.json';
 
 if (window.top === window.self) {
   createApp({

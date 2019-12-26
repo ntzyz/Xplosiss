@@ -59,14 +59,14 @@ export default {
     if (!img) {
       const imgs = this.post.content.match(/<img ([^>]+?)>/);
       if (imgs && imgs[1]) {
-        img = imgs[1].match(/src=\"([^"]+?)\"/);
+        img = imgs[1].match(/src="([^"]+?)"/);
         if (img && img[1]) {
           img = img[1];
         }
       }
     }
     return {
-      description: this.post.content.replace(/<(?:.|\n)*?>/gm, '').replace(/[\n\t\r]/g, '').replace(/\"/g, '&quot;').substr(0, 100) + '...',
+      description: this.post.content.replace(/<(?:.|\n)*?>/gm, '').replace(/[\n\t\r]/g, '').replace(/"/g, '&quot;').substr(0, 100) + '...',
       image: img,
     };
   },

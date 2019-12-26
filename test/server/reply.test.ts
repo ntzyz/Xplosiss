@@ -4,10 +4,8 @@ import * as supertest from 'supertest';
 import { expect } from 'chai';
 
 import site from '../../index';
-import utils from '../../utils';
 
 const agent = supertest.agent(site);
-const token = utils.token;
 
 describe('Testing reply-related APIs.', () => {
   it('Fetch latest replies', async () => {

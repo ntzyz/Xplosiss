@@ -10,4 +10,4 @@ export default function timeToString (timestamp, dateOnly) {
   } else {
     return `${date.getFullYear()} 年 ${date.getMonth() + 1} 月 ${date.getDate()} 日 ${pad(date.getHours())}:${pad(date.getMinutes())}`;
   }
-};
+}

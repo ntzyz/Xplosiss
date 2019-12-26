@@ -102,6 +102,7 @@ describe('Testing widget-related APIs.', () => {
     const response = await agent.delete(url).expect(200);
 
     expect(response.body.status).to.be.ok;
+    // eslint-disable-next-line require-atomic-updates
     id = null;
   });
 
