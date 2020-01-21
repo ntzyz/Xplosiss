@@ -49,17 +49,15 @@ function render (posts: BlogPost[], options: RenderOptions) {
         post.more = true;
         post.protected = true;
         post.replies = [];
-        post.body= [{
+        matchedBody = {
           title: matchedBody.title,
           content: 'This is a password-protected post, content preview is not available.',
           language: 'en',
           default: true,
           format: 'markdown',
-        }];
+        };
 
         delete post.password;
-
-        return post;
       }
     }
 
