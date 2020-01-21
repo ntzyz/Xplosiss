@@ -5,7 +5,7 @@ import * as mdit from 'markdown-it';
 import config from '../config';
 import { BlogPost, BlogPostBody } from '../types/models';
 
-function addSpanEachLine (html: string) {
+function addSpanEachLine(html: string) {
   return html.split('\n').map(l => `<span class="__line">${l}</span>`).join('\n');
 }
 
@@ -17,7 +17,7 @@ export interface RenderOptions {
   fakeRendering?: boolean;
 };
 
-function render (posts: BlogPost[], options: RenderOptions) {
+function render(posts: BlogPost[], options: RenderOptions) {
   const acceptLanguage = options.acceptLanguage || '';
 
   return posts.map(origPost => {
@@ -50,6 +50,7 @@ function render (posts: BlogPost[], options: RenderOptions) {
         post.protected = true;
         post.replies = [];
         post.title = matchedBody.title;
+        post.body = [];
         post.content = 'This is a password-protected post, content preview is not available.';
 
         delete post.password;
@@ -73,12 +74,12 @@ function render (posts: BlogPost[], options: RenderOptions) {
             if (lang && hljs.getLanguage(lang)) {
               try {
                 return `<pre>${addSpanEachLine(hljs.highlight(lang, str.replace(/(\s+$)/g, ''), true).value)}</pre>`;
-              } catch (__) {}
+              } catch (__) { }
             }
             return `<pre>${str}</pre>`;
           }
         }).render(post.content);
-  
+
         // Render {AAA}(b) as
         //   b
         //  AAA
@@ -92,13 +93,13 @@ function render (posts: BlogPost[], options: RenderOptions) {
         } else {
           post.content = matchedBody.content;
         }
-    
+
         // Cut the post content if we are in preview mode.
         if (options.preview && post.content.indexOf('<!-- more -->') >= 0) {
           post.content = post.content.substr(0, post.content.indexOf('<!-- more -->'));
           post.more = true;
         }
-  
+
         // Apply syntax highlighting for code blocks.
         post.content = post.content.replace(/<code lang="(.+?)">([^]+?)<\/code>/g, (match, p1, p2) => {
           const rendered: string = hljs.highlight(p1, p2.replace(/(\s+$)/g, '')).value;
@@ -108,13 +109,13 @@ function render (posts: BlogPost[], options: RenderOptions) {
           return `<pre>${addSpanEachLine(rendered)}</pre>`;
         });
       }
-  
+
       if (post.replies && config.reply.enableMarkdownSupport) {
         for (const reply of post.replies) {
           if (!reply.content) {
             continue;;
           }
-          
+
           reply.markdown = true;
           reply.content = mdit({
             html: false,
@@ -122,7 +123,7 @@ function render (posts: BlogPost[], options: RenderOptions) {
               if (lang && hljs.getLanguage(lang)) {
                 try {
                   return `<pre>${addSpanEachLine(hljs.highlight(lang, str.replace(/(\s+$)/g, ''), true).value)}</pre>`;
-                } catch (__) {}
+                } catch (__) { }
               }
               return `<pre>${str}</pre>`;
             }
