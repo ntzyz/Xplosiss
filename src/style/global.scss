@@ -194,6 +194,13 @@ div.title-card {
   font-size: 1.5rem;
 }
 
+article div.outdated-hint {
+  font-size: 14px;
+  color: #888;
+  padding-left: 1em;
+  border-left: 2px solid #888;
+}
+
 @media screen and (min-width: 800px) {
   div.title-card {
     margin-top: 15px;

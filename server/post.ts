@@ -195,6 +195,7 @@ router.post('/by-id/:id', async (req, res) => {
         hideOnIndex: req.body.hideOnIndex,
         insertCover: req.body.insertCover,
         password: req.body.password,
+        outdatedWarning: req.body.outdatedWarning,
       }}
     );
   } catch (e) {
@@ -261,6 +262,7 @@ router.put('/', async (req, res) => {
       hideOnIndex: req.body.hideOnIndex,
       insertCover: req.body.insertCover,
       password: req.body.password,
+      outdatedWarning: req.body.outdatedWarning,
       replies: [],
     });
   } catch (e) {

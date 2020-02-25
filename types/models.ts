@@ -34,6 +34,7 @@ export interface BlogPost {
   language?: string,
   body?: BlogPostBody[],
   replies?: BlogReply[],
+  outdatedWarning?: boolean,
 };
 
 export interface BlogMedia {

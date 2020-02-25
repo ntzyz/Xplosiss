@@ -42,6 +42,9 @@
         td.label 首页隐藏：
         td: input(type="checkbox" v-model="hideOnIndex")
       tr
+        td.label 过时警告：
+        td: input(type="checkbox" v-model="outdatedWarning")
+      tr
         td.label 插入封面：
         td: input(type="checkbox" v-model="insertCover")
       tr
@@ -106,6 +109,7 @@ export default {
       password: '',
       hideOnIndex: false,
       insertCover: true,
+      outdatedWarning: false,
       category: '',
       tag: '',
       cover: '',
@@ -195,6 +199,7 @@ export default {
           cover: this.cover,
           hideOnIndex: this.hideOnIndex,
           insertCover: this.insertCover,
+          outdatedWarning: this.outdatedWarning,
           password: this.password,
           body: this.body,
         },
@@ -221,6 +226,7 @@ export default {
           cover: this.cover,
           hideOnIndex: this.hideOnIndex,
           insertCover: this.insertCover,
+          outdatedWarning: this.outdatedWarning,
           password: this.password,
           body: this.body,
         },
@@ -241,6 +247,7 @@ export default {
         this.tags = [...this.tagsSet];
         this.hideOnIndex = post.hideOnIndex;
         this.insertCover = post.insertCover;
+        this.outdatedWarning = post.outdatedWarning;
         this.password = post.password;
         this.body = post.body;
 
