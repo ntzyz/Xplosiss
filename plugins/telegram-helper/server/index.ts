@@ -11,15 +11,18 @@ function installer ({ site, utils, config }: PluginOptions) {
     const ipInfo = geoip.lookup(params.ipAddr);
     
     let ipRegion = [];
-
-    if (ipInfo.country) {
-      ipRegion.push(ipInfo.country);
-    }
-    if (ipInfo.region) {
-      ipRegion.push(ipInfo.region);
-    }
-    if (ipInfo.city) {
-      ipRegion.push(ipInfo.city);
+    if (ipInfo) {
+      if (ipInfo.country) {
+        ipRegion.push(ipInfo.country);
+      }
+      if (ipInfo.region) {
+        ipRegion.push(ipInfo.region);
+      }
+      if (ipInfo.city) {
+        ipRegion.push(ipInfo.city);
+      }
+    } else {
+      ipRegion.push('unknown');
     }
 
     axios.post(`https://api.telegram.org/bot${config.plugins['telegram-helper'].telegramBotToken}/sendMessage`, {
