@@ -106,7 +106,7 @@
     "source-map-support": "^0.5.13",
     "supertest": "^4.0.2",
     "ts-loader": "^6.0.4",
-    "ts-mocha": "^6.0.0",
+    "ts-mocha": "^7.0.0",
     "typescript": "^3.5.3",
     "vue-loader": "^15.7.1",
     "vue-template-compiler": "^2.6.10",
