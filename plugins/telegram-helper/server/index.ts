@@ -30,7 +30,7 @@ function installer ({ site, utils, config }: PluginOptions) {
       parse_mode: 'HTML',
       disable_web_page_preview: true,
       text: `<b>You have a new reply!</b>\nFrom: ${params.user}\nLink: <a href="${URL}">${name}</a>\nIP Address: ${params.ipAddr} (${ipRegion.join('/')})\nContent:\n${params.content}`,
-    });
+    }).catch(_ => _);
   });
 
   eventBus.on(eventBus.EVENT_TOKEN_FORGOT, params => {
@@ -39,7 +39,7 @@ function installer ({ site, utils, config }: PluginOptions) {
       parse_mode: 'HTML',
       disable_web_page_preview: true,
       text: `Your access token is <code>${utils.token}</code>`,
-    });
+    }).catch(_ => _);
   });
 }
 
