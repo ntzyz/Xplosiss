@@ -50,7 +50,7 @@ function installer ({ site, utils, config }: PluginOptions) {
   });
 
   router.get('/', async (req, res) => {
-    const acceptLanguage = req.query.acceptLanguage || '';
+    const acceptLanguage = (req.query.acceptLanguage as string) || '';
     let posts;
   
     try {
@@ -75,7 +75,7 @@ function installer ({ site, utils, config }: PluginOptions) {
   });
 
   router.get('/category/:category', async (req, res) => {
-    const acceptLanguage = req.query.acceptLanguage || '';
+    const acceptLanguage = (req.query.acceptLanguage as string) || '';
     let posts;
 
     try {

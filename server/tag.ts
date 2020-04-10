@@ -34,7 +34,7 @@ router.get('/', async (req, res) => {
  * Get all posts with the same tag. Read only.
  */
 router.get('/:tag/posts', async (req, res) => {
-  let page = Math.max(req.query.page ? req.query.page - 1 : 0, 0);
+  let page = Math.max(req.query.page ? Number(req.query.page) - 1 : 0, 0);
   let posts, count;
   try {
     let cursor = utils.db.conn.collection('posts').find({ tags: req.params.tag }, { sort: [['date', 'desc']] }).skip(page * config.page.size).limit(config.page.size);

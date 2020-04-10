@@ -28,7 +28,7 @@ router.get('/', async (req, res) => {
  * Get all posts with the same category. Read only.
  */
 router.get('/:category/posts', async (req, res) => {
-  let page = Math.max(req.query.page ? req.query.page - 1 : 0, 0);
+  let page = Math.max(req.query.page ? Number(req.query.page) - 1 : 0, 0);
   let posts, count;
   try {
     let cursor = utils.db.conn.collection('posts').find({ category: req.params.category }, { sort: [['date', 'desc']] }).skip(page * config.page.size).limit(config.page.size);

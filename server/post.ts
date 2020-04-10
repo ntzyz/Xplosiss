@@ -13,7 +13,7 @@ let router = express.Router();
  * Get posts list.
  */
 router.get('/', async (req, res) => {
-  let page = Math.max(req.query.page ? req.query.page - 1 : 0, 0);
+  let page = Math.max(req.query.page ? Number(req.query.page) - 1 : 0, 0);
   let pagesize = Number(req.query.pagesize) || config.page.size;
   let posts: BlogPost[];
   let count: number;
@@ -92,7 +92,7 @@ router.get('/by-slug/:slug', async (req, res) => {
     post: utils.render([post], {
       preview: false,
       acceptLanguage: req.headers['accept-language'],
-      password: req.query.password,
+      password: req.query.password as string,
     })[0],
   });
 });
