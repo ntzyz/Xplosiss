@@ -7,7 +7,6 @@ config.json
 /uploads
 /static
 /dist
-package-lock.json
 /coverage
 .nyc_output
 .coveralls.yml
