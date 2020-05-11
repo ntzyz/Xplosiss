@@ -1,5 +1,6 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
+import * as cookieParser from 'cookie-parser';
 
 import utils from './utils';
 import config from './config';
@@ -49,6 +50,12 @@ site.use(bodyParser.urlencoded({ extended: true }));
 
 // parse application/json
 site.use(bodyParser.json());
+
+// enable cookie parser *only* when statistics module need it.
+if (config.statistics.enableBrowserIdentifier) {
+  console.info('Cookie parser is enabled. GDPR notice should be shown on website.');
+  site.use(cookieParser());
+}
 
 // print all access logs
 site.use(utils.logger);

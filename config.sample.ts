@@ -33,6 +33,9 @@ const config = {
     'https://example.ntzyz.cn',
     'http://example2.ntzyz.cn',
   ],
+  statistics: {
+    enableBrowserIdentifier: false,
+  },
   plugins: {
     gallery: {
       enabled: true,

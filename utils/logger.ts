@@ -1,17 +1,36 @@
 import db from './db';
 import * as express from 'express';
 import websocket from './websocket';
+import { v4 as uuid_v4 } from 'uuid';
 
 import { UAParser } from 'ua-parser-js';
 import * as geoip from 'geoip-lite';
+import config from '../config';
+import { v4String } from 'uuid/interfaces';
 
 const logs: string[] = [];
+
+function getOrMarkBrowserId (req: express.Request, res: express.Response): string {
+  if (!config.statistics.enableBrowserIdentifier) {
+    return null;
+  }
+
+  if (req.cookies.browserId) {
+    return req.cookies.browserId;
+  }
+
+  const id = uuid_v4();
+  res.cookie('browserId', id);
+
+  return id;
+}
 
 async function logger (req: express.Request, res: express.Response, next: express.NextFunction) {
   if (req.headers['server-side-rendering'] === 'true') {
     return next();
   }
 
+  const browserId = getOrMarkBrowserId(req, res);
   const message = `[${new Date().toLocaleString()}] ${req.headers['x-real-ip'] || req.ip} - ${req.method} ${req.url} - ${req.headers['user-agent']}`;
 
   // Write log to stdout, and push to the log array.
@@ -40,6 +59,7 @@ async function logger (req: express.Request, res: express.Response, next: expres
       url: req.url,
       referer: req.headers['referer'],
       userAgent: new UAParser(req.headers['user-agent']),
+      browserId,
     }).catch(error => {
       console.error(error);
     });
