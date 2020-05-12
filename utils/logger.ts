@@ -32,6 +32,7 @@ async function logger (req: express.Request, res: express.Response, next: expres
 
   const browserId = getOrMarkBrowserId(req, res);
   const message = `[${new Date().toLocaleString()}] ${req.headers['x-real-ip'] || req.ip} - ${req.method} ${req.url} - ${req.headers['user-agent']}`;
+  const userAgent = new UAParser(req.headers['user-agent']);
 
   // Write log to stdout, and push to the log array.
   logs.push(message);
@@ -58,7 +59,7 @@ async function logger (req: express.Request, res: express.Response, next: expres
       method: req.method,
       url: req.url,
       referer: req.headers['referer'],
-      userAgent: new UAParser(req.headers['user-agent']),
+      userAgent: userAgent.getResult(),
       browserId,
     }).catch(error => {
       console.error(error);
