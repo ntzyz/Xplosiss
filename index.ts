@@ -143,7 +143,7 @@ site.use('/service-worker.js', serve('./dist/service-worker.js'));
 site.use(serve('./static'));
 
 // Read client config from ./src/config.js
-let clientConfig = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'src/config.json'), 'UTF-8'));
+let clientConfig = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'src/config.json'), 'utf-8'));
 
 // The actual render entry.
 function render (req: express.Request, res: express.Response) {
