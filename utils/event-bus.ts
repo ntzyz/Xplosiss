@@ -1,4 +1,4 @@
-import * as EventEmitter from 'events';
+import { EventEmitter } from 'events';
 
 class BlogEventEmitter extends EventEmitter {
   public EVENT_TOKEN_FORGOT = 'EVENT_TOKEN_FORGOT';
