@@ -45,7 +45,7 @@
     "regenerator-runtime": "^0.13.5",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0",
-    "ts-node": "^8.9.1",
+    "ts-node": "^8.10.2",
     "ua-parser-js": "^0.7.21",
     "utf-8-validate": "^5.0.2",
     "vue": "^2.6.11",
