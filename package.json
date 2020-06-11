@@ -101,7 +101,7 @@
     "mocha": "^7.2.0",
     "node-sass": "^4.14.1",
     "null-loader": "^4.0.0",
-    "nyc": "^15.0.1",
+    "nyc": "^15.1.0",
     "sass-loader": "^8.0.2",
     "source-map-support": "^0.5.19",
     "supertest": "^4.0.2",
