@@ -48,7 +48,7 @@
     "ts-node": "^8.10.2",
     "ua-parser-js": "^0.7.21",
     "utf-8-validate": "^5.0.2",
-    "uuid": "^8.1.0",
+    "uuid": "^8.2.0",
     "vue": "^2.6.11",
     "vue-router": "^3.3.2",
     "vue-server-renderer": "^2.6.11",
