@@ -16,7 +16,7 @@ export function pluginInstaller ({ app, router, store, coreComponents, config })
     };
 
     axios.put('/api/pageview', payload).catch(_ => {});
-  }
+  };
 
   if (config.plugins.statistics.enableBrowserIdentifier) {
     browserId = localStorage.getItem('browser-id');
@@ -28,7 +28,7 @@ export function pluginInstaller ({ app, router, store, coreComponents, config })
   }
 
   if (config.plugins.statistics.respectDNT && navigator.doNotTrack) {
-    browserId = 'nil'
+    browserId = 'nil';
   }
 
   app.$on('initialized', () => {

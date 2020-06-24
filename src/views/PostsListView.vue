@@ -18,6 +18,15 @@ export default {
   name: 'PostsListView',
   components: { Pagination, PostsList },
   mixins: [clickEventMixin],
+  asyncData ({ store, route }) {
+    if (route.params.category) {
+      return store.dispatch('fetchPostsByCategory', { category: route.params.category, page: route.params.page });
+    } else if (route.params.tag) {
+      return store.dispatch('fetchPostsByTag', { tag: route.params.tag, page: route.params.page });
+    } else {
+      return store.dispatch('fetchLatestPosts', { page: route.params.page });
+    }
+  },
   data () {
     return { title: null };
   },
@@ -62,15 +71,6 @@ export default {
   watch: {
     '$route': function () {
       this.promise = this.$options.asyncData({store: this.$store, route: this.$route });
-    }
-  },
-  asyncData ({ store, route }) {
-    if (route.params.category) {
-      return store.dispatch('fetchPostsByCategory', { category: route.params.category, page: route.params.page });
-    } else if (route.params.tag) {
-      return store.dispatch('fetchPostsByTag', { tag: route.params.tag, page: route.params.page });
-    } else {
-      return store.dispatch('fetchLatestPosts', { page: route.params.page });
     }
   },
   methods: {

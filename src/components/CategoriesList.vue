@@ -8,11 +8,11 @@
 <script>
 export default {
   name: 'CategoriesList',
-  computed: {
-    categories () { return this.$store.state.categories; }
-  },
   asyncData ({ store, state }) {
     return store.dispatch('fetchCategory');
+  },
+  computed: {
+    categories () { return this.$store.state.categories; }
   }
 };
 </script>

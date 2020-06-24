@@ -8,11 +8,11 @@
 <script>
 export default {
   name: 'TagsList',
-  computed: {
-    tags: function () { return this.$store.state.tags; }
-  },
   asyncData ({store, route}) {
     return store.dispatch('fetchTags');
+  },
+  computed: {
+    tags: function () { return this.$store.state.tags; }
   }
 };
 </script>

@@ -11,11 +11,11 @@ import clickEventMixin from '../utils/link-injector';
 export default {
   name: 'Widgets',
   mixins: [clickEventMixin],
-  computed: {
-    widgets: function () { return this.$store.state.widgets; }
-  },
   asyncData ({ store, route }) {
     return store.dispatch('fetchWidget');
+  },
+  computed: {
+    widgets: function () { return this.$store.state.widgets; }
   }
 };
 </script>

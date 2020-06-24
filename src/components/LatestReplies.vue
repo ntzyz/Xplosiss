@@ -11,11 +11,11 @@
 <script>
 export default {
   name: 'LatestReplies',
-  computed: {
-    replies: function () { return this.$store.state.replies; }
-  },
   asyncData ({ store, route }) {
     return store.dispatch('fetchLatestReplies');
+  },
+  computed: {
+    replies: function () { return this.$store.state.replies; }
   }
 };
 </script>

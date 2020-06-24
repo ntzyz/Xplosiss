@@ -19,6 +19,9 @@ import timeToString from '../../../src/utils/timeToString';
 
 export default {
   name: 'Gallery',
+  asyncData ({ store, route }) {
+    return store.dispatch('fetchImages');
+  },
   data () {
     return {
       activeImage: null,
@@ -31,9 +34,6 @@ export default {
     title () {
       return this.$store.state.gallery.title;
     }
-  },
-  asyncData ({ store, route }) {
-    return store.dispatch('fetchImages');
   },
   mounted () {
     this.$store.commit('setBusy', false);

@@ -45,6 +45,9 @@ export default {
   components: { Reply },
   mixins: [titleMixin, clickEventMixin],
   title () { return this.post ? this.post.title : 'Loading...'; },
+  asyncData ({ store, route }) {
+    return store.dispatch('fetchPostBySlug', { slug: route.params.slug, preferLanguage: route.query['prefer-language'] });
+  },
   data () {
     return {
       extraDoms: [],
@@ -78,9 +81,6 @@ export default {
     '$route': function (route) {
       this.$store.dispatch('fetchPostBySlug', { slug: route.params.slug, preferLanguage: route.query['prefer-language'] });
     }
-  },
-  asyncData ({ store, route }) {
-    return store.dispatch('fetchPostBySlug', { slug: route.params.slug, preferLanguage: route.query['prefer-language'] });
   },
   beforeDestroy () {
     this.extraDoms.forEach(el => el.remove());

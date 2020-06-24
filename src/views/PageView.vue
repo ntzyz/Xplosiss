@@ -15,6 +15,9 @@ export default {
   name: 'PageView',
   components: { Reply },
   mixins: [clickEventMixin],
+  asyncData({ route, store, redirect }) {
+    return store.dispatch('fetchPageBySlug', route.params.slug);
+  },
   computed: {
     page () {
       return this.$store.state.page;
@@ -36,9 +39,6 @@ export default {
         document.title = `${page.title} - ${config.title}`;
       }
     }
-  },
-  asyncData({ route, store, redirect }) {
-    return store.dispatch('fetchPageBySlug', route.params.slug);
   },
   methods: {
     refreshReplies () {
