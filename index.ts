@@ -159,6 +159,7 @@ function render (req: express.Request, res: express.Response) {
       links: res.headLinks || [],
     },
     acceptLanguage: req.headers['accept-language'],
+    clientIP: req.headers['x-real-ip'] || req.ip
   };
 
   if (req.path === '/not-found') {

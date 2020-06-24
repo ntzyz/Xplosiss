@@ -1,0 +1,12 @@
+{
+  "name": "statistics",
+  "version": "1.0.0",
+  "author": {
+    "name": "ntzyz",
+    "email": "ntzyz@live.cn"
+  },
+  "entry": {
+    "server": "server/index",
+    "browser": "browser/index"
+  }
+}

@@ -85,6 +85,7 @@ if (window.top === window.self) {
     
       console.log(`You are using Xplosiss-git(${process.env.COMMIT || 'unknown'})${process.env.COMMIT && `\nAbout this commit: https://github.com/ntzyz/new-blog/commit/${process.env.COMMIT}`}`);
     
+      app.$emit('initialized');
       app.$mount('#app');
     });
   });

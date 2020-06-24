@@ -4,8 +4,8 @@ const config = {
     db: 'newBlog',
   },
   port: 1234,
-  favicon: './static/favicon.png',  // local file path
-  avatar: 'https://github.com/ntzyz.jpg',   // http/https url
+  favicon: './static/favicon.png', // local file path
+  avatar: 'https://github.com/ntzyz.jpg', // http/https url
   title: 'ntzyz\'s space',
   subtitle: '∠( ᐛ 」∠)_',
   footer: [
@@ -50,7 +50,12 @@ const config = {
       enabled: false,
       ownerId: 123456,
       telegramBotToken: 'your bot token here',
-    }
+    },
+    statistics: {
+      enabled: false,
+      enableBrowserIdentifier: false,
+      respectDNT: false,
+    },
   }
 };
 
