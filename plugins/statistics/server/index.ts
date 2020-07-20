@@ -58,41 +58,50 @@ function pluginInstaller ({ site, utils }: PluginOptions) {
       fetchPVUV(new Date(today.getTime() - 365 * 1000 * 60 * 60 * 24), now, statistics),
     ]);
 
-    /// 搜索引擎
-    const searchEngineRank = await statistics.aggregate([
-      { $match: { 'referrer.searchEngine': { $ne: null } } },
-      { $group: { _id: '$referrer.searchEngine', count: { $sum: 1 } } },
-      { $sort: { count: -1 } },
-      { $project: { name: '$_id', count: 1, _id: 0 } },
-    ]).toArray();
+    const [
+      searchEngineRank,
+      browser,
+      pathRank,
+      countryRank,
+      referrerRank,
+    ] = await Promise.all([
 
-    /// 浏览器
-    const browser = await statistics.aggregate([
-      { $group: { _id: '$userAgent.browser.name', count: { $sum: 1 } } },
-      { $sort: { count: -1 } },
-      { $project: { name: '$_id', count: 1, _id: 0 } },
-    ]).toArray();
+      /// 搜索引擎
+      statistics.aggregate([
+        { $match: { 'referrer.searchEngine': { $ne: null } } },
+        { $group: { _id: '$referrer.searchEngine', count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        { $project: { name: '$_id', count: 1, _id: 0 } },
+      ]).toArray(),
+      
+      /// 浏览器
+      statistics.aggregate([
+        { $group: { _id: '$userAgent.browser.name', count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        { $project: { name: '$_id', count: 1, _id: 0 } },
+      ]).toArray(),
 
-    /// 页面排名
-    const pathRank = await statistics.aggregate([
-      { $group: { _id: '$path', count: { $sum: 1 } } },
-      { $sort: { count: -1 } },
-      { $project: { name: '$_id', count: 1, _id: 0 } },
-    ]).toArray();
+      /// 页面排名
+      statistics.aggregate([
+        { $group: { _id: '$path', count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        { $project: { name: '$_id', count: 1, _id: 0 } },
+      ]).toArray(),
 
-    /// 国家/地区
-    const countryRank = await statistics.aggregate([
-      { $group: { _id: '$ip.country', count: { $sum: 1 } } },
-      { $sort: { count: -1 } },
-      { $project: { country: '$_id', count: 1, _id: 0 } },
-    ]).toArray();
+      /// 国家/地区
+      statistics.aggregate([
+        { $group: { _id: '$ip.country', count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        { $project: { country: '$_id', count: 1, _id: 0 } },
+      ]).toArray(),
 
-    /// 引用
-    const referrerRank = await statistics.aggregate([
-      { $group: { _id: '$referrer.origin', count: { $sum: 1 } } },
-      { $sort: { count: -1 } },
-      { $project: { origin: '$_id', count: 1, _id: 0 } },
-    ]).toArray();
+      /// 引用
+      statistics.aggregate([
+        { $group: { _id: '$referrer.origin', count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        { $project: { origin: '$_id', count: 1, _id: 0 } },
+      ]).toArray()
+    ]);
 
     res.send({
       status: 'ok',

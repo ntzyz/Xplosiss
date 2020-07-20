@@ -53,6 +53,10 @@ export function pluginInstaller ({ app, router, store, coreComponents, config })
       path: location.pathname,
     };
 
+    if (payload.path.indexOf('/admin') === 0) {
+      return;
+    }
+
     try {
       const url = new URL(document.referrer);
       const origin = payload.referrer.origin = url.origin;
