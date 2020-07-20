@@ -3,7 +3,6 @@
 简单的自用博客框架，使用 `Vue.js`, `Express` 和 `MongoDB` 完成。
 
 [![Actions Status](https://github.com/ntzyz/new-blog/workflows/Continuous%20integration/badge.svg)](https://github.com/ntzyz/new-blog/actions)
-[![Build Status](https://travis-ci.org/ntzyz/new-blog.svg?branch=master)](https://travis-ci.org/ntzyz/new-blog)
 [![Coverage Status](https://coveralls.io/repos/github/ntzyz/new-blog/badge.svg?branch=master)](https://coveralls.io/github/ntzyz/new-blog?branch=master)
 [![Dependencies](https://david-dm.org/ntzyz/new-blog.svg?branch=master)](https://david-dm.org/ntzyz/new-blog?branch=master)
 
