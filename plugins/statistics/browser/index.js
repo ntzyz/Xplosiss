@@ -1,8 +1,43 @@
 import axios from 'axios';
 import Vue from 'vue';
+import StatisticsView from './StatisticsView.vue';
 import { v4 as uuidv4 } from 'uuid';
 
 export function pluginInstaller ({ app, router, store, coreComponents, config }) {
+  router.addRoutes([
+    {
+      path: '/admin/statistics',
+      components: {
+        default: StatisticsView,
+        sidebar: coreComponents.AdminSideBar
+      }
+    }
+  ]);
+
+  store.commit('addAdminUnit', {
+    name: '统计数据',
+    href: '/admin/statistics',
+  });
+
+  store.registerModule('statistics', {
+    state: {
+      data: {}
+    },
+    actions: {
+      fetchStatistics: state => {
+        return axios.get(`${config.api.url}/statistics?token=${store.state.token}`).then(response => {
+          if (response.data.status === 'ok') {
+            delete response.data.status;
+            state.commit('setData', response.data);
+          }
+        });
+      },
+    },
+    mutations: {
+      setData: (store, data) => store.data = data,
+    }
+  });
+
   if (process.env.VUE_ENV === 'server') {
     return Promise.resolve();
   }
@@ -10,10 +45,38 @@ export function pluginInstaller ({ app, router, store, coreComponents, config })
   let browserId = 'nil';
   const reportPageView = () => {
     const payload = {
-      referrer: document.referrer,
+      referrer: {
+        url: document.referrer,
+        origin: null,
+      },
       browserId,
       path: location.pathname,
     };
+
+    try {
+      const url = new URL(document.referrer);
+      const origin = payload.referrer.origin = url.origin;
+
+      const searchEngines = {
+        ask: /ask\.com/i,
+        baidu: /baidu\.com/i,
+        bing: /bing\.com/i,
+        clearch: /clearch\.org/i,
+        duckduckgo: /(duckduckgo\.com)|(ddg\.gg)/i,
+        google: /google\./i,
+        yahoo: /yahoo\.com/i,
+        yandex: /yandex\.ru/i,
+        qwant: /qwant\.com/i
+      };
+  
+      for (engine of Object.keys(searchEngines)) {
+        if (searchEngines[engine].test(origin)) {
+          payload.referrer.searchEngine = engine;
+        }
+      }
+    } catch (ex) {
+      // doing nothing...
+    }
 
     axios.put('/api/pageview', payload).catch(_ => {});
   };
