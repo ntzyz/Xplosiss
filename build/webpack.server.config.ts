@@ -14,7 +14,7 @@ const webpackServerConfig = merge(base, {
     libraryTarget: 'commonjs2'
   },
   externals: nodeExternals({
-     // @ts-ignore 
+    // @ts-ignore 
     allowlist: /\.(sa|sc|c)ss$/
   }),
   module: {
