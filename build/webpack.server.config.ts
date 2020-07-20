@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as webpack from 'webpack';
-import * as merge from 'webpack-merge';
+import { merge } from 'webpack-merge';
 import base from './webpack.base.config';
 import * as VueSSRServerPlugin from 'vue-server-renderer/server-plugin';
 import * as nodeExternals from 'webpack-node-externals';
@@ -14,7 +14,8 @@ const webpackServerConfig = merge(base, {
     libraryTarget: 'commonjs2'
   },
   externals: nodeExternals({
-    whitelist: /\.(sa|sc|c)ss$/
+     // @ts-ignore 
+    allowlist: /\.(sa|sc|c)ss$/
   }),
   module: {
     rules: [
