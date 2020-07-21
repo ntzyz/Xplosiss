@@ -103,7 +103,7 @@ router.delete('/:filename', (req, res) => {
   }
 
   fs.unlink(path.join(__dirname, '../uploads', req.params.filename), err => {
-    if (err) {
+    if (err && err.code != 'ENOENT') {
       /* istanbul ignore next */
       console.error(err);
       /* istanbul ignore next */
