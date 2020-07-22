@@ -42,7 +42,7 @@
     "multer": "^1.4.2",
     "pug": "^3.0.0",
     "pug-plain-loader": "^1.0.0",
-    "regenerator-runtime": "^0.13.5",
+    "regenerator-runtime": "^0.13.6",
     "socket.io": "^2.3.0",
     "socket.io-client": "^2.3.0",
     "ts-node": "^8.10.2",
