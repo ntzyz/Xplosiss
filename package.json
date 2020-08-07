@@ -50,7 +50,7 @@
     "utf-8-validate": "^5.0.2",
     "uuid": "^8.3.0",
     "vue": "^2.6.11",
-    "vue-router": "^3.3.4",
+    "vue-router": "^3.4.2",
     "vue-server-renderer": "^2.6.11",
     "vuex": "^3.5.1",
     "webpack-merge": "^5.1.1",
