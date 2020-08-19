@@ -106,7 +106,7 @@
     "sass-loader": "^9.0.2",
     "source-map-support": "^0.5.19",
     "supertest": "^4.0.2",
-    "ts-loader": "^8.0.1",
+    "ts-loader": "^8.0.2",
     "ts-mocha": "^7.0.0",
     "typescript": "^3.9.7",
     "vue-loader": "^15.9.3",
