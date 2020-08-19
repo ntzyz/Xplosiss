@@ -103,7 +103,7 @@
     "node-sass": "^4.14.1",
     "null-loader": "^4.0.0",
     "nyc": "^15.1.0",
-    "sass-loader": "^9.0.2",
+    "sass-loader": "^9.0.3",
     "source-map-support": "^0.5.19",
     "supertest": "^4.0.2",
     "ts-loader": "^8.0.2",
