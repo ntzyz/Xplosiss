@@ -17,9 +17,12 @@ const webpackClientConfig = merge(base, {
       {
         test: /\.(sa|sc|c)ss$/,
         use: [
-          process.env.NODE_ENV !== 'production'
-            ? 'vue-style-loader'
-            : MiniCssExtractPlugin.loader,
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: process.env.NODE_ENV !== 'production',
+            }
+          },
           'css-loader',
           'sass-loader',
         ],
@@ -34,7 +37,8 @@ const webpackClientConfig = merge(base, {
   plugins: [
     new VueSSRClientPlugin(),
     new MiniCssExtractPlugin({
-      filename: 'style.css'
+      filename: process.env.NODE_ENV !== 'production' ? '[name].css' : '[name].[hash].css',
+      chunkFilename: process.env.NODE_ENV !== 'production' ? '[id].css' : '[id].[hash].css',
     })
   ]
 });
