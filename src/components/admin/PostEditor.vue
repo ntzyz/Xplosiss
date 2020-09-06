@@ -45,6 +45,9 @@
         td.label 过时警告：
         td: input(type="checkbox" v-model="outdatedWarning")
       tr
+        td.label NSFW：
+        td: input(type="checkbox" v-model="notSafeForWork")
+      tr
         td.label 插入封面：
         td: input(type="checkbox" v-model="insertCover")
       tr
@@ -110,6 +113,7 @@ export default {
       hideOnIndex: false,
       insertCover: true,
       outdatedWarning: false,
+      notSafeForWork: false,
       category: '',
       tag: '',
       cover: '',
@@ -200,6 +204,7 @@ export default {
           hideOnIndex: this.hideOnIndex,
           insertCover: this.insertCover,
           outdatedWarning: this.outdatedWarning,
+          notSafeForWork: this.notSafeForWork,
           password: this.password,
           body: this.body,
         },
@@ -227,6 +232,7 @@ export default {
           hideOnIndex: this.hideOnIndex,
           insertCover: this.insertCover,
           outdatedWarning: this.outdatedWarning,
+          notSafeForWork: this.notSafeForWork,
           password: this.password,
           body: this.body,
         },
@@ -248,6 +254,7 @@ export default {
         this.hideOnIndex = post.hideOnIndex;
         this.insertCover = post.insertCover;
         this.outdatedWarning = post.outdatedWarning;
+        this.notSafeForWork = post.notSafeForWork;
         this.password = post.password;
         this.body = post.body;
 

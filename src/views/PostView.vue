@@ -18,13 +18,17 @@
             span 分类：{{ post.category }}
             span(v-for="tag in post.tags")
               router-link(:to="'/tag/' + tag") \#{{ tag }}
-        article.protect-article.post-content(v-if="post.protected")
-          div 这是一个受密码保护的文章。要查看该文章，请提供密码：
-          div(v-if="wrongPassword" style="color: #a00") 提供的密码不正确。
-          div(style="display: inline-block;")
-            input(type="password" v-model="password")
-            br
-            button(@click="refreshWithPassword()" style="float: right") 提交
+        template(v-if="post.protected || post.notSafeForWork")
+          article.protect-article.post-content(v-if="post.protected")
+            div 这是一个受密码保护的文章。要查看该文章，请提供密码：
+            div(v-if="wrongPassword" style="color: #a00") 提供的密码不正确。
+            div(style="display: inline-block;")
+              input(type="password" v-model="password")
+              br
+              button(@click="refreshWithPassword()" style="float: right") 提交
+          article.post-content(v-if="post.notSafeForWork")
+            div(style="color: darkred; padding-bottom: 5px;") 警告：此文章被标记为不宜在工作/学校等公开场合阅读。点击下方按钮来查看详情
+            button(@click="post.notSafeForWork = false") 继续查看
         article.post-content(v-else @click="linkEventHandler")
           img(v-if="post.cover && post.insertCover" :src="post.cover" style="width: 100%;")
           div.outdated-hint(v-if="post.outdatedWarning") 提示：在继续阅读之前，请注意此文章最后更新于 {{ Math.floor((new Date().getTime() - new Date(post.date)) / (1000 * 60 * 60 * 24)) }} 天前，其中的部分内容可能已经无效或过时。

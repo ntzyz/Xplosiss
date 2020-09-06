@@ -18,11 +18,13 @@
             span 分类：{{ post.category }}
             span(v-for="tag in post.tags") #
               router-link(:to="'/tag/' + tag") {{ tag }}
-        article.post-preview(v-if="post.protected") 这是一个受密码保护的文章，请点击下放的更多按钮，并提供密码。
+        template(v-if="post.protected || post.notSafeForWork")
+          article.post-preview(v-if="post.protected") 这是一个受密码保护的文章，请点击下放的更多按钮，并提供密码。
+          article.post-content(v-if="post.notSafeForWork" style="color: darkred") 此文章被标记为不宜在工作/学校等公开场合阅读，请点击「更多」按钮来查看。
         article.post-preview(v-else @click="linkEventHandler")
           div.outdated-hint(v-if="post.outdatedWarning") 提示：在继续阅读之前，请注意此文章最后更新于 {{ Math.floor((new Date().getTime() - new Date(post.date)) / (1000 * 60 * 60 * 24)) }} 天前，其中的部分内容可能已经无效或过时。
           div(v-html="post.content")
-        footer(v-if="post.more")
+        footer(v-if="post.more || post.protected || post.notSafeForWork")
           router-link(:to="'/post/' + post.slug").button.more MORE
 </template>
 
