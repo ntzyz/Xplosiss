@@ -58,7 +58,7 @@ function installer ({ site, utils, config }: PluginOptions) {
         hideOnIndex: {
           $ne: true,
         }
-      }, { sort: { data: -1 } }).limit(config.page.size);
+      }, { sort: { date: -1 } }).limit(config.page.size);
       posts = await cursor.toArray();
     } catch (e) {
       console.error(e);
@@ -81,7 +81,7 @@ function installer ({ site, utils, config }: PluginOptions) {
     try {
       let cursor = utils.db.conn.collection('posts').find({
         category: req.params.category
-      }, { sort: { data: -1 } }).limit(config.page.size);
+      }, { sort: { date: -1 } }).limit(config.page.size);
       posts = await cursor.toArray();
     } catch (e) {
       console.error(e);
