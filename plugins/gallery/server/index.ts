@@ -6,7 +6,7 @@ function pluginInstaller ({ site, utils }: PluginOptions) {
     let images;
 
     try {
-      images = await utils.db.conn.collection('gallery').find({}, { sort: [['date', 'desc']] }).toArray();
+      images = await utils.db.conn.collection('gallery').find({}, { sort: { data: -1 } }).toArray();
     } catch (e) {
       return res.status(500).send({
         status: 'error',

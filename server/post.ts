@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
       hideOnIndex: {
         $ne: true,
       }
-    }, { sort: [['date', 'desc']] }).skip(page * pagesize).limit(pagesize);
+    }, { sort: { data: -1 } }).skip(page * pagesize).limit(pagesize);
     posts = await cursor.toArray() as BlogPost[];
     count = await cursor.count();
   } catch (e) {
