@@ -30,7 +30,12 @@ function uploadFile (params = {}) {
   let fd = new FormData();
   fd.append('file', params.file);
 
-  return axios.put(`${config.api.url}/media/${encodeURIComponent(params.file.name)}?token=${params.token}`, fd);
+  return axios.put(`${config.api.url}/media/${encodeURIComponent(params.file.name)}`, fd, {
+    params: {
+      token: params.token,
+      convert: params.convert ? 'true' : 'false',
+    }
+  });
 }
 
 function deleteFile (params = {}) {

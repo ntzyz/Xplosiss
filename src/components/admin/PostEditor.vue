@@ -318,11 +318,23 @@ export default {
         const response = await api.media.uploadFile({
           file,
           token: this.$store.state.token,
+          convert: /\.(jpg|jpeg|png|webp|bmp)$/.test(filename),
         });
         const filename = response.data.filename;
 
         if (/\.(jpg|jpeg|png|webp|bmp|svg)$/.test(filename)) {
-          html = `<img src="/api/media/${encodeURIComponent(filename)}">`;
+          const alt = response.data.alternative;
+          
+          if (alt.jpeg || alt.webp) {
+            const sources = [];
+            
+            alt.webp && sources.push(`  <source srcset="/api/media/${encodeURIComponent(alt.webp)}" type="image/webp">`);
+            alt.jpeg && sources.push(`  <source srcset="/api/media/${encodeURIComponent(alt.jpeg)}" type="image/jpeg">`);
+
+            html = `<picture>\n${sources.join('\n')}\n  <img src="/api/media/${encodeURIComponent(filename)}">\n</picture>`;
+          } else {
+            html = `<img src="/api/media/${encodeURIComponent(filename)}">`;
+          }
         } else {
           html = `<a href="/api/media/${encodeURIComponent(filename)}">${file.name}</a>`;
         }
@@ -332,8 +344,16 @@ export default {
 
       const begin = textarea.value.indexOf(comment);
       const end = begin + comment.length;
+      
       textarea.setRangeText(html, begin, end);
       textarea.setSelectionRange(begin + html.length, begin + html.length);
+
+      const event = document.createEvent('HTMLEvents');
+      event.initEvent('input', false, true);
+
+      this.$refs.textarea.forEach(el => {
+        el.dispatchEvent(event);
+      });
     }
   },
 };
