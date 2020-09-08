@@ -77,7 +77,7 @@
         tr
           td.label 文章内容：
           td
-            textarea.content(v-model="item.content")
+            textarea.content(v-model="item.content" @paste="onPasteFile($event)" @drop="onDropFile($event)" ref="textarea")
       tr
         td
         td
@@ -88,6 +88,7 @@
 </template>
 
 <script>
+import { text } from 'body-parser';
 import api from '../../api';
 import preventLeaveMixin from '../../mixins/prevent-leave';
 
@@ -119,6 +120,7 @@ export default {
       cover: '',
       body: [],
       editingLanguage: '',
+      uploadId: 0,
     };
   },
   computed: {
@@ -291,6 +293,47 @@ export default {
       }).catch(e => {
         alert('会话过期，请手动刷新');
       });
+    },
+    onPasteFile (event) {
+      const pastedItems = [...event.clipboardData.items];
+      console.log(event.clipboardData.files);
+
+      for (const item of pastedItems) {
+        const file = item.getAsFile();
+        this.uploadFile(file, event.target);
+      }
+    },
+    onDropFile (event) {
+      event.preventDefault();
+      const files = [...event.dataTransfer.files];
+
+      files.forEach(file => this.uploadFile(file, event.target));
+    },
+    async uploadFile (file, textarea) {
+      const comment = `<!-- UPLOAD PLACEHOLDER ID ${this.uploadId++} -->`;
+      let html = '';
+      textarea.setRangeText(comment);
+
+      try {
+        const response = await api.media.uploadFile({
+          file,
+          token: this.$store.state.token,
+        });
+        const filename = response.data.filename;
+
+        if (/\.(jpg|jpeg|png|webp|bmp|svg)$/.test(filename)) {
+          html = `<img src="/api/media/${encodeURIComponent(filename)}">`;
+        } else {
+          html = `<a href="/api/media/${encodeURIComponent(filename)}">${file.name}</a>`;
+        }
+      } catch (ex) {
+        console.error(ex);
+      }
+
+      const begin = textarea.value.indexOf(comment);
+      const end = begin + comment.length;
+      textarea.setRangeText(html, begin, end);
+      textarea.setSelectionRange(begin + html.length, begin + html.length);
     }
   },
 };
