@@ -32,6 +32,12 @@
         article.post-content(v-else @click="linkEventHandler")
           img(v-if="post.cover && post.insertCover" :src="post.cover" style="width: 100%;")
           div.outdated-hint(v-if="post.outdatedWarning") 提示：在继续阅读之前，请注意此文章最后更新于 {{ Math.floor((new Date().getTime() - new Date(post.date)) / (1000 * 60 * 60 * 24)) }} 天前，其中的部分内容可能已经无效或过时。
+          div.more-language-available-hint(v-if="post.languages.length > 1")
+            | Hint: this post is also available in&nbsp;
+            template(v-for="(lang, index) in post.languages" v-if="lang.code !== post.language")
+              router-link( :to="'/post/' + post.slug + '?prefer-language=' + lang.code") {{ lang.name }}
+              template(v-if="index < post.languages.length - 1") , 
+            |.
           div(v-html="post.content")
     reply(:replies="post.replies || []", api-path="post", :refresh-replies="refreshReplies")
 </template>

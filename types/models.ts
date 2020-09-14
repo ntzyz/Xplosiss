@@ -26,6 +26,10 @@ export interface BlogPost {
   cover: string,
   hideOnIndex: null | boolean,
   insertCover: null | boolean,
+  languages: Array<{
+    name: string,
+    code: string,
+  }>,
   password?: string,
   more?: boolean,
   protected?: boolean,

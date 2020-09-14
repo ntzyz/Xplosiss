@@ -1,6 +1,7 @@
 import * as pug from 'pug';
 import * as hljs from 'highlight.js';
 import * as mdit from 'markdown-it';
+import ISO639Map from './iso-639-map';
 
 import config from '../config';
 import { BlogPost, BlogPostBody } from '../types/models';
@@ -33,6 +34,10 @@ function render (posts: BlogPost[], options: RenderOptions) {
         priority,
       };
     }).sort((a, b) => b.priority - a.priority);
+    post.languages = availableLanguages.map(el => ({
+      name: ISO639Map[el.name] || el.name,
+      code: el.name,
+    }));
 
     let matchedBody: BlogPostBody = null;
     if (availableLanguages[0].priority < 0) {
