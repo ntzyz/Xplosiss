@@ -60,7 +60,7 @@ function setupDevServer (app: express.Application, templatePath: string, callbac
       'vue-ssr-client-manifest.json'
     ));
     update();
-  })
+  });
 
   app.use(require('webpack-hot-middleware')(clientCompiler, { heartbeat: 5000 }));
 

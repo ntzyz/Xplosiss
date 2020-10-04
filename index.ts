@@ -101,7 +101,7 @@ function createRenderer (bundle: string | object, options: BundleRendererOptions
     basedir: path.resolve(__dirname, './dist'),
     runInNewContext: false,
     shouldPrefetch (file) {
-      return /main/.test(file)
+      return /main/.test(file);
     }
   });
 }

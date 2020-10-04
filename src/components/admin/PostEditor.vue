@@ -160,9 +160,9 @@ export default {
         'jade': 'pug',
         'HTML': 'html',
         'markdown': 'markdown'
-      }
+      };
       if (this.monaco) {
-        window.monaco.editor.setModelLanguage(this.monaco.getModel(), formatLUT[val])
+        window.monaco.editor.setModelLanguage(this.monaco.getModel(), formatLUT[val]);
       }
     },
     '$route': function () {
@@ -212,7 +212,7 @@ export default {
       });
 
       window.monacoEditor = this.monaco; 
-    })
+    });
   },
   beforeDestroy () {
     // document.querySelector('#app').style.maxWidth = '';
@@ -321,8 +321,8 @@ export default {
             this.editingLanguage = this.body.filter(body => body.default)[0].language;
             if (this.monaco) {
               this.$nextTick(() => {
-                this.monaco.setValue(this.currentEditingBody.content)
-              })
+                this.monaco.setValue(this.currentEditingBody.content);
+              });
             }
           } catch (_) {
           }
@@ -388,9 +388,9 @@ export default {
         const model = editor.getModel();
 
         editor.executeEdits('update-value', [{
-            range: selection,
-            text: comment,
-            forceMoveMarkers: true
+          range: selection,
+          text: comment,
+          forceMoveMarkers: true
         }]);
 
         editor.setSelection(new window.monaco.Selection(selection.startLineNumber, selection.startColumn, selection.endLineNumber, selection.endColumn + comment.length));
@@ -440,11 +440,11 @@ export default {
       } else {
         const editor = this.monaco;
         const value = editor.getValue();
-        const position = editor.getModel().getPositionAt(value.indexOf(comment))
+        const position = editor.getModel().getPositionAt(value.indexOf(comment));
         editor.executeEdits('update-value', [{
-            range: new window.monaco.Selection(position.lineNumber, position.column, position.lineNumber, position.column + comment.length),
-            text: html,
-            forceMoveMarkers: true
+          range: new window.monaco.Selection(position.lineNumber, position.column, position.lineNumber, position.column + comment.length),
+          text: html,
+          forceMoveMarkers: true
         }]);
       }
     }
