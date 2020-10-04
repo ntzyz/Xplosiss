@@ -1,8 +1,9 @@
-import * as path from 'path';
-import * as webpack from 'webpack';
-import * as fs from 'fs';
+import webpack from 'webpack';
 import { VueLoaderPlugin } from 'vue-loader';
-import * as child_process from 'child_process';
+
+import path from 'path';
+import child_process from 'child_process';
+import fs from 'fs';
 
 import config from '../config';
 
@@ -60,7 +61,7 @@ const configuration: webpack.Configuration = {
         exclude: /node_modules/
       },
       {
-        test: /\.(png|jpg|gif|svg)$/,
+        test: /\.(png|jpg|gif|svg|ttf)$/,
         loader: 'file-loader',
         options: {
           name: '[name].[ext]?[hash]'
@@ -85,8 +86,12 @@ const configuration: webpack.Configuration = {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
     }),
     new webpack.IgnorePlugin(/(server|\.md$)/, /plugins/),
-    new VueLoaderPlugin(),
-  ]
+    new VueLoaderPlugin()
+  ],
+  optimization: {
+    concatenateModules: true,
+    sideEffects: true,
+  }
 };
 
 if (process.env.NODE_ENV === 'production') {
@@ -95,7 +100,6 @@ if (process.env.NODE_ENV === 'production') {
     new webpack.LoaderOptionsPlugin({
       minimize: true
     }),
-    new webpack.optimize.ModuleConcatenationPlugin()
   ]);
   configuration.mode = 'production';
 }

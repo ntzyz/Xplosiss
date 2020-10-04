@@ -1,6 +1,6 @@
 'use strict';
 
-import * as supertest from 'supertest';
+import supertest from 'supertest';
 import { expect } from 'chai';
 
 import site from '../../index';

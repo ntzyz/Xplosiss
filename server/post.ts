@@ -1,4 +1,4 @@
-import * as express from 'express';
+import express from 'express';
 import { ObjectID } from 'mongodb';
 import utils from '../utils';
 import config from '../config';

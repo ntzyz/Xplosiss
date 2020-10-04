@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as geoip from 'geoip-lite';
+import geoip from 'geoip-lite';
 import { PluginOptions } from '../../../types/plugin';
 
 function installer ({ site, utils, config }: PluginOptions) {

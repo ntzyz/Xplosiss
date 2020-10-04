@@ -1,9 +1,9 @@
 import db from './db';
-import * as express from 'express';
+import express from 'express';
 import websocket from './websocket';
 
 import { UAParser } from 'ua-parser-js';
-import * as geoip from 'geoip-lite';
+import geoip from 'geoip-lite';
 
 const logs: string[] = [];
 

@@ -1,6 +1,6 @@
-import * as http from 'http';
-import * as socket from 'socket.io';
-import * as express from 'express';
+import http from 'http';
+import socket from 'socket.io';
+import express from 'express';
 
 import token from './token';
 

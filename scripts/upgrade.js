@@ -1,6 +1,6 @@
 const child_process = require('child_process');
-import * as fs from 'fs';
-import * as path from 'path';
+import fs from 'fs';
+import path from 'path';
 
 function getCurrentCommitHash () {
   return new Promise((resolve) => {

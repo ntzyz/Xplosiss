@@ -1,6 +1,6 @@
 import randomString from './random-string';
-import * as fs from 'fs';
-import * as os from 'os';
+import fs from 'fs';
+import os from 'os';
 
 const accessToken = (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') ? '1' : randomString(15);
 const savePath = os.platform() === 'win32' ? null : `/var/run/user/${process.getuid()}/blog-access-token`;

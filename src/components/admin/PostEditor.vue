@@ -58,26 +58,27 @@
         td: select(v-model="editingLanguage")
           option(v-for="item of body" :key="item.language" :value="item.language") {{ item.language }}
           option(:value="null") 新增语言
-      template(v-for="item of body" v-if="editingLanguage === item.language")
+      template(v-if="editingLanguage")
         tr
           td.label 标题：
           td
-            input.full(v-model="item.title")
+            input.full(v-model="currentEditingBody.title")
         tr
           td.label 文章语法：
           td
-            select(v-model="item.format")
+            select(v-model="currentEditingBody.format")
               option(value="markdown") Markdown
               option(value="jade") Jade/Pug
               option(value="HTML") HTML
         tr
           td.label 默认语言：
           td
-            input(type="checkbox" v-model="item.default")
+            input(type="checkbox" v-model="currentEditingBody.default")
         tr
           td.label 文章内容：
-          td
-            textarea.content(v-model="item.content" @paste="onPasteFile($event)" @drop="onDropFile($event)" ref="textarea")
+          td: div.monaco-inject(ref="monaco" @paste="onPasteFile($event)" @drop="onDropFile($event)" @dragover="$event.preventDefault()")
+            //- monaco-editor
+            //- textarea.content(v-model="item.content"  @drop="onDropFile($event)" ref="textarea")
       tr
         td
         td
@@ -88,7 +89,6 @@
 </template>
 
 <script>
-import { text } from 'body-parser';
 import api from '../../api';
 import preventLeaveMixin from '../../mixins/prevent-leave';
 
@@ -121,6 +121,8 @@ export default {
       body: [],
       editingLanguage: '',
       uploadId: 0,
+      currentEditingBody: {},
+      monaco: null,
     };
   },
   computed: {
@@ -131,6 +133,15 @@ export default {
   watch: {
     editingLanguage (val) {
       if (val) {
+        if (this.monaco) {
+          this.currentEditingBody.content = this.monaco.getValue();
+        }
+
+        this.currentEditingBody = this.body.filter(el => el.language === val)[0];
+
+        if (this.monaco) {
+          this.monaco.setValue(this.currentEditingBody.content);
+        }
         return;
       }
       const result = window.prompt('叫啥呢？');
@@ -142,6 +153,16 @@ export default {
           default: false,
         });
         this.editingLanguage = result;
+      }
+    },
+    'currentEditingBody.format': function (val) {
+      const formatLUT = {
+        'jade': 'pug',
+        'HTML': 'html',
+        'markdown': 'markdown'
+      }
+      if (this.monaco) {
+        window.monaco.editor.setModelLanguage(this.monaco.getModel(), formatLUT[val])
       }
     },
     '$route': function () {
@@ -170,9 +191,35 @@ export default {
     this.fetchTags();
     this.fetchCategories();
     // document.querySelector('#app').style.maxWidth = 'initial';
+
+    import('monaco-editor').then(monaco => {
+      if (window.monacoEditor) {
+        window.monacoEditor.dispose();
+      }
+
+      this.monaco = monaco.editor.create(this.$refs.monaco, {
+        fontSize: '12px',
+        language: this.currentEditingBody.format,
+        folding: true,
+        foldingStrategy: 'indentation',
+        automaticLayout: true,
+        overviewRulerBorder: true,
+        scrollBeyondLastLine: true,
+        minimap: {
+          enabled: false
+        },
+        value: this.currentEditingBody.content
+      });
+
+      window.monacoEditor = this.monaco; 
+    })
   },
   beforeDestroy () {
     // document.querySelector('#app').style.maxWidth = '';
+    if (this.monaco) {
+      this.monaco.displse();
+      window.monacoEditor = null;
+    }
   },
   methods: {
     prompt (string) {
@@ -194,6 +241,10 @@ export default {
       this.tags = [...this.tagsSet];
     },
     updatePost () {
+      if (this.monaco) {
+        this.currentEditingBody.content = this.monaco.getValue();
+      }
+
       api.post.updatePostById({
         token: this.$store.state.token,
         id: this.id,
@@ -223,6 +274,11 @@ export default {
         alert('URL 名称是必须的！');
         return;
       }
+
+      if (this.monaco) {
+        this.currentEditingBody.content = this.monaco.getValue();
+      }
+
       api.post.createPost({
         token: this.$store.state.token,
         post: {
@@ -263,6 +319,11 @@ export default {
         (!keepSelectedLanguage) && this.$nextTick(() => {
           try {
             this.editingLanguage = this.body.filter(body => body.default)[0].language;
+            if (this.monaco) {
+              this.$nextTick(() => {
+                this.monaco.setValue(this.currentEditingBody.content)
+              })
+            }
           } catch (_) {
           }
         });
@@ -305,20 +366,41 @@ export default {
     },
     onDropFile (event) {
       event.preventDefault();
+      event.stopPropagation();
       const files = [...event.dataTransfer.files];
 
       files.forEach(file => this.uploadFile(file, event.target));
     },
-    async uploadFile (file, textarea) {
+    async uploadFile (file, target) {
+      if (!file) {
+        return;
+      }
+
       const comment = `<!-- UPLOAD PLACEHOLDER ID ${this.uploadId++} -->`;
+      const editorBackendIsTextArea = !this.monaco;
       let html = '';
-      textarea.setRangeText(comment);
+
+      if (editorBackendIsTextArea) {
+        target.setRangeText(comment);
+      } else {
+        const editor = this.monaco;
+        const selection = editor.getSelection();
+        const model = editor.getModel();
+
+        editor.executeEdits('update-value', [{
+            range: selection,
+            text: comment,
+            forceMoveMarkers: true
+        }]);
+
+        editor.setSelection(new window.monaco.Selection(selection.startLineNumber, selection.startColumn, selection.endLineNumber, selection.endColumn + comment.length));
+      }
 
       try {
         const response = await api.media.uploadFile({
           file,
           token: this.$store.state.token,
-          convert: /\.(jpg|jpeg|png|webp|bmp)$/.test(filename),
+          convert: /\.(jpg|jpeg|png|webp|bmp)$/.test(file.name),
         });
         const filename = response.data.filename;
 
@@ -342,18 +424,29 @@ export default {
         console.error(ex);
       }
 
-      const begin = textarea.value.indexOf(comment);
-      const end = begin + comment.length;
-      
-      textarea.setRangeText(html, begin, end);
-      textarea.setSelectionRange(begin + html.length, begin + html.length);
+      if (editorBackendIsTextArea) {
+        const begin = target.value.indexOf(comment);
+        const end = begin + comment.length;
+        
+        target.setRangeText(html, begin, end);
+        target.setSelectionRange(begin + html.length, begin + html.length);
 
-      const event = document.createEvent('HTMLEvents');
-      event.initEvent('input', false, true);
+        const event = document.createEvent('HTMLEvents');
+        event.initEvent('input', false, true);
 
-      this.$refs.textarea.forEach(el => {
-        el.dispatchEvent(event);
-      });
+        this.$refs.textarea.forEach(el => {
+          el.dispatchEvent(event);
+        });
+      } else {
+        const editor = this.monaco;
+        const value = editor.getValue();
+        const position = editor.getModel().getPositionAt(value.indexOf(comment))
+        editor.executeEdits('update-value', [{
+            range: new window.monaco.Selection(position.lineNumber, position.column, position.lineNumber, position.column + comment.length),
+            text: html,
+            forceMoveMarkers: true
+        }]);
+      }
     }
   },
 };
@@ -373,6 +466,10 @@ div.post-editor {
   button.tag {
     margin-right: 4px;
     margin-bottom: 4px;
+  }
+  div.monaco-inject {
+    border: 1px solid #ccc;
+    height: 600px;
   }
   button {
     font-size: 12px;

@@ -4,6 +4,7 @@
       "allowJs": true,
       "noImplicitAny": true,
       "noImplicitThis": true,
+      "esModuleInterop": true,
       "target": "es5"
   },
   "include": [

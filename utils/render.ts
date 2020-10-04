@@ -1,6 +1,6 @@
-import * as pug from 'pug';
-import * as hljs from 'highlight.js';
-import * as mdit from 'markdown-it';
+import pug from 'pug';
+import hljs from 'highlight.js';
+import mdit from 'markdown-it';
 import ISO639Map from './iso-639-map';
 
 import config from '../config';

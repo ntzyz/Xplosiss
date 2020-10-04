@@ -1,5 +1,5 @@
 import { ObjectID, Collection } from 'mongodb';
-import * as geoip from 'geoip-lite';
+import geoip from 'geoip-lite';
 import { UAParser } from 'ua-parser-js';
 
 import { PluginOptions } from '../../../types/plugin';

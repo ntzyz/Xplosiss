@@ -202,6 +202,14 @@ article div.more-language-available-hint {
   border-left: 2px solid #888;
 }
 
+article blockquote {
+  font-size: 14px;
+  padding: 0 1em;
+  overflow: hidden;
+  margin: 0;
+  border-left: 2px solid #CCC;
+}
+
 @media screen and (min-width: 800px) {
   div.title-card {
     margin-top: 15px;

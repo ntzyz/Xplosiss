@@ -1,10 +1,10 @@
 /* istanbul ignore file */
 
-import * as fs from 'fs';
-import * as path from 'path';
-import MFS = require('memory-fs');
-import * as webpack from 'webpack';
-import * as express from 'express';
+import fs from 'fs';
+import path from 'path';
+import MFS from 'memory-fs';
+import webpack from 'webpack';
+import express from 'express';
 
 import clientConfig from './webpack.client.config';
 import serverConfig from './webpack.server.config';
@@ -40,8 +40,8 @@ function setupDevServer (app: express.Application, templatePath: string, callbac
   clientConfig.output.filename = '[name].js';
   clientConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
   );
+  clientConfig.optimization.noEmitOnErrors = true;
 
   const clientCompiler = webpack(clientConfig);
   const devMiddleware = require('webpack-dev-middleware')(clientCompiler, {
@@ -50,17 +50,17 @@ function setupDevServer (app: express.Application, templatePath: string, callbac
   });
 
   app.use(devMiddleware);
-  clientCompiler.plugin('done', stats => {
-    stats = stats.toJson();
-    stats.errors.forEach((err: Error) => console.error(err));
-    stats.warnings.forEach((err: Error) => console.warn(err));
+  clientCompiler.hooks['done'].tap('server', webpackStats => {
+    const stats = webpackStats.toJson();
+    stats.errors.forEach((err: string) => console.error(err));
+    stats.warnings.forEach((err: string) => console.warn(err));
     if (stats.errors.length) return;
     clientManifest = JSON.parse(readFile(
       devMiddleware.fileSystem,
       'vue-ssr-client-manifest.json'
     ));
     update();
-  });
+  })
 
   app.use(require('webpack-hot-middleware')(clientCompiler, { heartbeat: 5000 }));
 

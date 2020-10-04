@@ -1,4 +1,4 @@
-import * as mongodb from 'mongodb';
+import mongodb from 'mongodb';
 import config from '../config';
 
 const MongoClient = mongodb.MongoClient;
@@ -11,7 +11,7 @@ let promise: Promise<void> = null;
  */
 async function connect () {
   try {
-    const server = await MongoClient.connect(config.database.address, { useNewUrlParser: true });
+    const server = await MongoClient.connect(config.database.address, { useNewUrlParser: true, useUnifiedTopology: true });
     __conn = server.db(config.database.db);
 
     console.log('Database connected.');

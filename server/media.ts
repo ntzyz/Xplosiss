@@ -1,9 +1,9 @@
-import * as express from 'express';
-import * as fs from 'fs';
-import * as mime from 'mime-types';
-import * as path from 'path';
-import * as multer from 'multer';
-import * as child_process from 'child_process';
+import express from 'express';
+import fs from 'fs';
+import mime from 'mime-types';
+import path from 'path';
+import multer from 'multer';
+import child_process from 'child_process';
 import { promisify } from 'util';
 
 import utils from '../utils';

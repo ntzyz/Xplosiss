@@ -1,7 +1,7 @@
-import * as pug from 'pug';
-import * as path from 'path';
-import * as fs from 'fs';
-import * as express from 'express';
+import pug from 'pug';
+import path from 'path';
+import fs from 'fs';
+import express from 'express';
 import { PluginOptions } from '../../../types/plugin';
 import { BlogPost } from '../../../types/models';
 

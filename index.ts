@@ -1,13 +1,13 @@
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
+import express from 'express';
+import bodyParser from 'body-parser';
 
 import utils from './utils';
 import config from './config';
 import server from './server';
 
-import * as fs from 'fs';
-import * as path from 'path';
-import * as util from 'util';
+import fs from 'fs';
+import path from 'path';
+import util from 'util';
 
 import { createBundleRenderer, BundleRendererOptions, BundleRenderer } from 'vue-server-renderer';
 import setupDevServer from './build/setup-dev-server';
@@ -96,10 +96,14 @@ utils.websocket.attach(site);
 
 // Factory for Vue renderer
 function createRenderer (bundle: string | object, options: BundleRendererOptions) {
-  return createBundleRenderer(bundle, Object.assign(options, {
+  return createBundleRenderer(bundle, {
+    ...options,
     basedir: path.resolve(__dirname, './dist'),
     runInNewContext: false,
-  }));
+    shouldPrefetch (file) {
+      return /main/.test(file)
+    }
+  });
 }
 
 // Renderer and HTML template
