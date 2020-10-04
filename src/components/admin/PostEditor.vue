@@ -202,6 +202,7 @@ export default {
         language: this.currentEditingBody.format,
         folding: true,
         foldingStrategy: 'indentation',
+        wordWrap: 'on',
         automaticLayout: true,
         overviewRulerBorder: true,
         scrollBeyondLastLine: true,
