@@ -218,7 +218,7 @@ export default {
   beforeDestroy () {
     // document.querySelector('#app').style.maxWidth = '';
     if (this.monaco) {
-      this.monaco.displse();
+      this.monaco.dispose();
       window.monacoEditor = null;
     }
   },
