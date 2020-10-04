@@ -74,11 +74,9 @@
           td.label 默认语言：
           td
             input(type="checkbox" v-model="currentEditingBody.default")
-        tr
-          td.label 文章内容：
-          td: div.monaco-inject(ref="monaco" @paste="onPasteFile($event)" @drop="onDropFile($event)" @dragover="$event.preventDefault()")
-            //- monaco-editor
-            //- textarea.content(v-model="item.content"  @drop="onDropFile($event)" ref="textarea")
+      tr
+        td.label 文章内容：
+        td: div.monaco-inject(ref="monaco" @paste="onPasteFile($event)" @drop="onDropFile($event)" @dragover="$event.preventDefault()")
       tr
         td
         td
@@ -192,28 +190,30 @@ export default {
     this.fetchCategories();
     // document.querySelector('#app').style.maxWidth = 'initial';
 
-    import('monaco-editor').then(monaco => {
-      if (window.monacoEditor) {
-        window.monacoEditor.dispose();
-      }
+    this.$nextTick(() => {
+      import('monaco-editor').then(monaco => {
+        if (window.monacoEditor) {
+          window.monacoEditor.dispose();
+        }
 
-      this.monaco = monaco.editor.create(this.$refs.monaco, {
-        fontSize: '12px',
-        language: this.currentEditingBody.format,
-        folding: true,
-        foldingStrategy: 'indentation',
-        wordWrap: 'on',
-        automaticLayout: true,
-        overviewRulerBorder: true,
-        scrollBeyondLastLine: true,
-        minimap: {
-          enabled: false
-        },
-        value: this.currentEditingBody.content
+        this.monaco = monaco.editor.create(this.$refs.monaco, {
+          fontSize: '12px',
+          language: this.currentEditingBody.format,
+          folding: true,
+          foldingStrategy: 'indentation',
+          wordWrap: 'on',
+          automaticLayout: true,
+          overviewRulerBorder: true,
+          scrollBeyondLastLine: true,
+          minimap: {
+            enabled: false
+          },
+          value: this.currentEditingBody.content
+        });
+
+        window.monacoEditor = this.monaco; 
       });
-
-      window.monacoEditor = this.monaco; 
-    });
+    })
   },
   beforeDestroy () {
     // document.querySelector('#app').style.maxWidth = '';
