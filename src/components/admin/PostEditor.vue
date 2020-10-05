@@ -213,7 +213,7 @@ export default {
 
         window.monacoEditor = this.monaco; 
       });
-    })
+    });
   },
   beforeDestroy () {
     // document.querySelector('#app').style.maxWidth = '';
