@@ -1,3 +1,5 @@
+import './types';
+
 const config: BlogConfig = {
   database: { 
     address: 'mongodb://localhost:27017/',
