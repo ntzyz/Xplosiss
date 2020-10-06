@@ -1,6 +1,5 @@
 import axios from 'axios';
 import geoip from 'geoip-lite';
-import { PluginOptions } from '../../../types/plugin';
 
 function installer ({ site, utils, config }: PluginOptions) {
   const eventBus = utils.eventBus;

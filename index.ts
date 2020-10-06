@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 
+import './types';
 import utils from './utils';
 import config from './config';
 import server from './server';
@@ -11,7 +12,6 @@ import util from 'util';
 
 import { createBundleRenderer, BundleRendererOptions, BundleRenderer } from 'vue-server-renderer';
 import setupDevServer from './build/setup-dev-server';
-import { clientPluginInstaller } from './types/plugin';
 
 const isProd = process.env.NODE_ENV === 'production';
 const isTest = process.env.NODE_ENV === 'test';

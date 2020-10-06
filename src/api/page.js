@@ -1,9 +1,8 @@
 import axios from 'axios';
-import config from '../config.json';
 
 function fetchPages (params = {}) {
   return new Promise((resolve, reject) => {
-    axios.get(`${config.api.url}/page?page=${params.page || 1}`)
+    axios.get(`/api/page?page=${params.page || 1}`)
       .then(response => resolve(response.data.pages))
       .catch(error => reject(error));
   });
@@ -17,7 +16,7 @@ function fetchPageBySlug (params = {}) {
   }
 
   return new Promise((resolve, reject) => {
-    axios.get(`${config.api.url}/page/by-slug/${encodeURIComponent(params.slug)}${params.raw ? '/raw' : ''}`)
+    axios.get(`/api/page/by-slug/${encodeURIComponent(params.slug)}${params.raw ? '/raw' : ''}`)
       .then(response => resolve(response.data.page))
       .catch(error => reject(error));
   });
@@ -31,7 +30,7 @@ function fetchPageById (params = {}) {
   }
 
   return new Promise((resolve, reject) => {
-    axios.get(`${config.api.url}/page/by-id/${params.id}${params.raw ? '/raw' : ''}`)
+    axios.get(`/api/page/by-id/${params.id}${params.raw ? '/raw' : ''}`)
       .then(response => resolve(response.data.page))
       .catch(error => reject(error));
   });
@@ -47,7 +46,7 @@ function createPage (params = {}) {
   }
 
   return new Promise((resolve, reject) => {
-    axios.put(`${config.api.url}/page?token=${params.token}`, params.page)
+    axios.put(`/api/page?token=${params.token}`, params.page)
       .then(res => resolve(res.data))
       .catch(error => reject(error));
   });
@@ -65,7 +64,7 @@ function updatePageById (params = {}) {
   }
 
   return new Promise((resolve, reject) => {
-    axios.post(`${config.api.url}/page/by-id/${params.id}?token=${params.token}`, params.page)
+    axios.post(`/api/page/by-id/${params.id}?token=${params.token}`, params.page)
       .then(res => resolve(res.data))
       .catch(error => reject(error));
   });
@@ -81,7 +80,7 @@ function deletePageById (params = {}) {
   }
 
   return new Promise((resolve, reject) => {
-    axios.delete(`${config.api.url}/page/by-id/${params.id}?token=${params.token}`, params.page)
+    axios.delete(`/api/page/by-id/${params.id}?token=${params.token}`, params.page)
       .then(res => resolve(res.data))
       .catch(error => reject(error));
   });
@@ -89,7 +88,7 @@ function deletePageById (params = {}) {
 
 function putReplyBySlug (params = {}) {
   return new Promise((resolve, reject) => {
-    axios.put(`${config.api.url}/page/by-slug/${params.slug}/reply`, params.data)
+    axios.put(`/api/page/by-slug/${params.slug}/reply`, params.data)
       .then(response => resolve(response.dat))
       .catch(error => reject(error));
   });

@@ -4,7 +4,7 @@ import Vuex from 'vuex';
 
 import { createApp } from './app.js';
 import axios from 'axios';
-import regeneratorRuntime from 'regenerator-runtime';
+import config from './config.json';
 
 function axiosMiddleware (config) {
   config.headers['server-side-rendering'] = true;
@@ -25,10 +25,16 @@ export default context => new Promise((resolve, reject) => {
     }
   };
 
+  // Setup baseURL for axios
+  axios.defaults.baseURL = `http://127.0.0.1:${config.port}/`;
+  axios.defaults.port = config.port;
+
   createApp({
     Vue,
     VueRouter,
     Vuex
+  }, {
+    quiet: true
   }).then(({ app, store, router }) => {
     router.push(context.url);
 

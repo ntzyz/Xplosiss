@@ -26,18 +26,18 @@ export function pluginInstaller ({ app, router, store, coreComponents, config })
     },
     actions: {
       fetchImages: state => {
-        return axios.get(`${config.api.url}/gallery`).then(response => {
+        return axios.get('/api/gallery').then(response => {
           state.commit('setImages', response.data.images);
         });
       },
       createImage: (state, image) => {
-        return axios.put(`${config.api.url}/gallery?token=${store.state.token}`, image);
+        return axios.put(`/api/gallery?token=${store.state.token}`, image);
       },
       removeImage: (state, id) => {
-        return axios.delete(`${config.api.url}/gallery/${id}?token=${store.state.token}`);
+        return axios.delete(`/api/gallery/${id}?token=${store.state.token}`);
       },
       updateImage: (state, image) => {
-        return axios.post(`${config.api.url}/gallery/${image._id}?token=${store.state.token}`, image);
+        return axios.post(`/api/gallery/${image._id}?token=${store.state.token}`, image);
       }
     },
     mutations: {

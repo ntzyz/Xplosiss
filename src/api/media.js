@@ -1,5 +1,4 @@
 import axios from 'axios';
-import config from '../config.json';
 
 function fetchFiles (params = {}) {
   if (process.env.NODE_ENV === 'development') {
@@ -8,14 +7,14 @@ function fetchFiles (params = {}) {
     }
   }
   return new Promise((resolve, reject) => {
-    axios.get(`${config.api.url}/media?token=${params.token}`)
+    axios.get(`/api/media?token=${params.token}`)
       .then(response => resolve(response.data.files))
       .catch(error => reject(error));
   });
 }
 
 function getFileURL (file) {
-  return `${config.api.url}/media/${file}`;
+  return `/api/media/${file}`;
 }
 
 function uploadFile (params = {}) {
@@ -30,7 +29,7 @@ function uploadFile (params = {}) {
   let fd = new FormData();
   fd.append('file', params.file);
 
-  return axios.put(`${config.api.url}/media/${encodeURIComponent(params.file.name)}`, fd, {
+  return axios.put(`/api/media/${encodeURIComponent(params.file.name)}`, fd, {
     params: {
       token: params.token,
       convert: params.convert ? 'true' : 'false',
@@ -47,7 +46,7 @@ function deleteFile (params = {}) {
     }
   }
 
-  return axios.delete(`${config.api.url}/media/${encodeURIComponent(params.file)}?token=${params.token}`);
+  return axios.delete(`/api/media/${encodeURIComponent(params.file)}?token=${params.token}`);
 }
 
 export default {

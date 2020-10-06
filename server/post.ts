@@ -4,7 +4,6 @@ import utils from '../utils';
 import config from '../config';
 
 import { RenderOptions } from '../utils/render';
-import { BlogPost } from '../types/models';
 
 const { eventBus } = utils;
 let router = express.Router();

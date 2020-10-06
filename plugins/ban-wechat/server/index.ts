@@ -1,5 +1,3 @@
-import { PluginOptions } from '../../../types/plugin';
-
 const template = `<html>
 <head>
   <title>抱歉，出错了</title>

@@ -11,12 +11,13 @@ echo "Running 'tsc' ..."
 tsc
 
 # Copy other files (frontend codes, assets, blabla)
-find . -type f -not -path './node_modules/*' \
-               -not -path './.git/*' \
-               -not -path './.ts/*' \
-               -not -path './static/*' \
-               -not -path './uploads/*' \
-               -not -name '*.ts' -exec cp --parents \{\} .ts \;
+rsync -rqad --exclude "node_modules" \
+            --exclude ".git" \
+            --exclude ".ts" \
+            --exclude "static" \
+            --exclude "uploads" \
+            --exclude "*.ts" \
+            . .ts/
 
 # Create some symlinks for directories like static files
 ln -s $(pwd)/static .ts/static

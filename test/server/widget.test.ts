@@ -5,7 +5,6 @@ import { expect } from 'chai';
 
 import site from '../../index';
 import utils from '../../utils';
-import { BlogWidget } from '../../types/models';
 
 const agent = supertest.agent(site);
 const token = utils.token;

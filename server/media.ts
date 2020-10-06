@@ -7,7 +7,6 @@ import child_process from 'child_process';
 import { promisify } from 'util';
 
 import utils from '../utils';
-import { BlogMedia } from '../types/models';
 
 const rename = promisify(fs.rename);
 const unlink = promisify(fs.unlink);

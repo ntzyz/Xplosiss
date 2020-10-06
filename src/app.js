@@ -20,7 +20,7 @@ axios.interceptors.response.use(response => {
   return Promise.reject(error);
 });
 
-export async function createApp (libs) {
+export async function createApp (libs, { quiet } = { quiet: false }) {
   const { Vue, Vuex } = libs;
 
   Vue.use(Vuex);
@@ -42,7 +42,7 @@ export async function createApp (libs) {
     }
     const pluginEntity = await import(`../plugins/${plugin}/${pluginManifest.entry.browser}`);
     await pluginEntity.pluginInstaller({ app, router, store, coreComponents, config });
-    console.log(`Loaded plugin: ${pluginManifest.name} v${pluginManifest.version}, written by ${pluginManifest.author.name}.`);
+    !quiet && console.log(`Loaded plugin: ${pluginManifest.name} v${pluginManifest.version}, written by ${pluginManifest.author.name}.`);
   }));
 
   router.addRoutes([{

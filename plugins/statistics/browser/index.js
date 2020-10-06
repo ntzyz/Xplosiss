@@ -25,7 +25,7 @@ export function pluginInstaller ({ app, router, store, coreComponents, config })
     },
     actions: {
       fetchStatistics: state => {
-        return axios.get(`${config.api.url}/statistics?token=${store.state.token}`).then(response => {
+        return axios.get(`/api/statistics?token=${store.state.token}`).then(response => {
           if (response.data.status === 'ok') {
             delete response.data.status;
             state.commit('setData', response.data);

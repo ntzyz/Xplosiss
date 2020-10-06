@@ -14,10 +14,11 @@ const clientConfig = {
   url: config.url,
   footer: config.footer,
   api: {
-    url: config.url + '/api'
+    url: config.url + '/api',
   },
   components: config.components,
   meta: config.meta,
+  port: config.port,
   plugins: config.plugins,
 };
 

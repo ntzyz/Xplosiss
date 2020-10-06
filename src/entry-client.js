@@ -84,12 +84,7 @@ if (window.top === window.self) {
       });
     
       console.log(`You are using Xplosiss-git(${process.env.COMMIT || 'unknown'})${process.env.COMMIT && `\nAbout this commit: https://github.com/ntzyz/new-blog/commit/${process.env.COMMIT}`}`);
-
-      if (process.env.HAS_SOURCEMAP) {
-        console.log('Source map is enabled by default for convenience (since you opened this debug console), not by mistake.');
-      } else {
-        console.info('Source map is not available because it\'s explicitly disabled in configuration.');
-      }
+      console.log('Source map is enabled by default for convenience (since you opened this debug console), not by mistake.');
     
       app.$emit('initialized');
       app.$mount('#app');

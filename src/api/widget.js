@@ -1,9 +1,8 @@
 import axios from 'axios';
-import config from '../config.json';
 
 function fetchWidgetList (params = {}) {
   return new Promise((resolve, reject) => {
-    axios.get(`${config.api.url}/widget${params.all ? '/all' : ''}`)
+    axios.get(`/api/widget${params.all ? '/all' : ''}`)
       .then(response => resolve(response.data.widgets))
       .catch(error => reject(error));
   });
@@ -20,7 +19,7 @@ function updateWidget (params = {}) {
     }
   }
   return new Promise((resolve, reject) => {
-    axios.post(`${config.api.url}/widget/${params.id}?token=${params.token}`, params.widget)
+    axios.post(`/api/widget/${params.id}?token=${params.token}`, params.widget)
       .then(res => resolve(res.data))
       .catch(error => reject(error));
   });
@@ -35,7 +34,7 @@ function createWidget (params = {}) {
     }
   }
   return new Promise((resolve, reject) => {
-    axios.put(`${config.api.url}/widget?token=${params.token}`, params.widget)
+    axios.put(`/api/widget?token=${params.token}`, params.widget)
       .then(res => resolve(res.data))
       .catch(error => reject(error));
   });
@@ -50,7 +49,7 @@ function deleteWidget (params = {}) {
     }
   }
   return new Promise((resolve, reject) => {
-    axios.delete(`${config.api.url}/widget/${params.id}?token=${params.token}`)
+    axios.delete(`/api/widget/${params.id}?token=${params.token}`)
       .then(res => resolve(res.data))
       .catch(error => reject(error));
   });

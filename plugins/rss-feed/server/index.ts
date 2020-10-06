@@ -2,8 +2,6 @@ import pug from 'pug';
 import path from 'path';
 import fs from 'fs';
 import express from 'express';
-import { PluginOptions } from '../../../types/plugin';
-import { BlogPost } from '../../../types/models';
 
 const RSS_CACHE_STATUS_HEADER = 'X-RSS-From-Cache';
 

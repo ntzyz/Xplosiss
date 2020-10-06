@@ -1,5 +1,4 @@
 import axios from 'axios';
-import config from '../config.json';
 
 function fetchLogs (params = {}) {
   if (process.env.NODE_ENV === 'development') {
@@ -8,7 +7,7 @@ function fetchLogs (params = {}) {
     }
   }
   return new Promise((resolve, reject) => {
-    axios.get(`${config.api.url}/logs?token=${params.token}`)
+    axios.get(`/api/logs?token=${params.token}`)
       .then(response => resolve(response.data.logs))
       .catch(error => reject(error));
   });

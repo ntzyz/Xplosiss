@@ -2,9 +2,6 @@ import { ObjectID, Collection } from 'mongodb';
 import geoip from 'geoip-lite';
 import { UAParser } from 'ua-parser-js';
 
-import { PluginOptions } from '../../../types/plugin';
-
-
 function pluginInstaller ({ site, utils }: PluginOptions) {
   const { db } = utils;
 

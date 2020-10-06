@@ -4,7 +4,6 @@ import mdit from 'markdown-it';
 import ISO639Map from './iso-639-map';
 
 import config from '../config';
-import { BlogPost, BlogPostBody } from '../types/models';
 
 function addSpanEachLine (html: string) {
   return html.split('\n').map(l => `<span class="__line">${l}</span>`).join('\n');

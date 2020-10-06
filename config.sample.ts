@@ -1,4 +1,4 @@
-const config = {
+const config: BlogConfig = {
   database: { 
     address: 'mongodb://localhost:27017/',
     db: 'newBlog',

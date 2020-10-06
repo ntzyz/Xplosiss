@@ -1,9 +1,8 @@
 import axios from 'axios';
-import config from '../config.json';
 
 function fetchCategoryList (params) {
   return new Promise((resolve, reject) => {
-    axios.get(`${config.api.url}/category`)
+    axios.get('/api/category')
       .then(response => resolve(response.data.categories))
       .catch(error => reject(error));
   });
@@ -16,7 +15,7 @@ function fetchPostsByCategory (params) {
     }
   }
   return new Promise((resolve, reject) => {
-    axios.get(`${config.api.url}/category/${encodeURIComponent(params.category)}/posts?page=${params.page || 1}`)
+    axios.get(`/api/category/${encodeURIComponent(params.category)}/posts?page=${params.page || 1}`)
       .then(response => resolve(response.data))
       .catch(error => reject(error));
   });

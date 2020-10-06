@@ -1,5 +1,4 @@
 import { ObjectID } from 'mongodb';
-import { PluginOptions } from '../../../types/plugin';
 
 function pluginInstaller ({ site, utils }: PluginOptions) {
   site.get('/api/gallery', async (req, res) => {

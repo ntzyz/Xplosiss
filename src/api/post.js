@@ -1,9 +1,8 @@
 import axios from 'axios';
-import config from '../config.json';
 
 function fetchPosts (params = {}) {
   return new Promise((resolve, reject) => {
-    axios.get(`${config.api.url}/post?page=${params.page || 1}${ params.full ? '&full=true' : ''}${ params.titleOnly ? '&title-only=true' : '' }${ params.pagesize ? `&pagesize=${params.pagesize}` : ''}`)
+    axios.get(`/api/post?page=${params.page || 1}${ params.full ? '&full=true' : ''}${ params.titleOnly ? '&title-only=true' : '' }${ params.pagesize ? `&pagesize=${params.pagesize}` : ''}`)
       .then(response => resolve(response.data))
       .catch(error => reject(error));
   });
@@ -24,7 +23,7 @@ function fetchPostBySlug (params) {
   }
 
   return new Promise((resolve, reject) => {
-    axios.get(`${config.api.url}/post/by-slug/${encodeURIComponent(params.slug)}${params.password ? `?password=${encodeURIComponent(params.password)}` : ''}`, options)
+    axios.get(`/api/post/by-slug/${encodeURIComponent(params.slug)}${params.password ? `?password=${encodeURIComponent(params.password)}` : ''}`, options)
       .then(response => resolve(response.data.post))
       .catch(error => reject(error));
   });
@@ -37,7 +36,7 @@ function fetchPostById (params) {
     }
   }
   return new Promise((resolve, reject) => {
-    axios.get(`${config.api.url}/post/by-id/${params.id}/raw`)
+    axios.get(`/api/post/by-id/${params.id}/raw`)
       .then(response => resolve(response.data.post))
       .catch(error => reject(error));
   });
@@ -54,7 +53,7 @@ function updatePostById (params) {
     }
   }
   return new Promise((resolve, reject) => {
-    axios.post(`${config.api.url}/post/by-id/${params.id}?token=${params.token}`, params.post)
+    axios.post(`/api/post/by-id/${params.id}?token=${params.token}`, params.post)
       .then(response => resolve(response.data.post))
       .catch(error => reject(error));
   });
@@ -69,7 +68,7 @@ function deletePostById (params) {
     }
   }
   return new Promise((resolve, reject) => {
-    axios.delete(`${config.api.url}/post/by-id/${params.id}?token=${params.token}`)
+    axios.delete(`/api/post/by-id/${params.id}?token=${params.token}`)
       .then(response => resolve(response.data.post))
       .catch(error => reject(error));
   });
@@ -84,7 +83,7 @@ function createPost (params) {
     }
   }
   return new Promise((resolve, reject) => {
-    axios.put(`${config.api.url}/post?token=${params.token}`, params.post)
+    axios.put(`/api/post?token=${params.token}`, params.post)
       .then(response => resolve(response.data))
       .catch(error => reject(error));
   });
@@ -92,7 +91,7 @@ function createPost (params) {
 
 function putReplyBySlug (params) {
   return new Promise((resolve, reject) => {
-    axios.put(`${config.api.url}/post/by-slug/${encodeURIComponent(params.slug)}/reply`, params.data)
+    axios.put(`/api/post/by-slug/${encodeURIComponent(params.slug)}/reply`, params.data)
       .then(response => resolve(response.dat))
       .catch(error => reject(error));
   });

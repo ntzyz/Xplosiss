@@ -1,9 +1,8 @@
 import axios from 'axios';
-import config from '../config.json';
 
 function fetchTagsList (params) {
   return new Promise((resolve, reject) => {
-    axios.get(`${config.api.url}/tag`)
+    axios.get('/api/tag')
       .then(response => resolve(response.data.tags))
       .catch(error => reject(error));
   });
@@ -16,7 +15,7 @@ function fetchPostsByTag (params) {
     }
   }
   return new Promise((resolve, reject) => {
-    axios.get(`${config.api.url}/tag/${encodeURIComponent(params.tag)}/posts?page=${params.page || 1}`)
+    axios.get(`/api/tag/${encodeURIComponent(params.tag)}/posts?page=${params.page || 1}`)
       .then(response => resolve(response.data))
       .catch(error => reject(error));
   });
