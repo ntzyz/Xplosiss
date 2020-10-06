@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -ex
 
 # Clean up old directory
 rm -rf .ts
@@ -11,13 +11,22 @@ echo "Running 'tsc' ..."
 tsc
 
 # Copy other files (frontend codes, assets, blabla)
-rsync -rqad --exclude "node_modules" \
-            --exclude ".git" \
-            --exclude ".ts" \
-            --exclude "static" \
-            --exclude "uploads" \
-            --exclude "*.ts" \
-            . .ts/
+if [ "$(uname)" = "Linux" ]; then 
+    find . -type f -not -path './node_modules/*' \
+                   -not -path './.git/*' \
+                   -not -path './.ts/*' \
+                   -not -path './static/*' \
+                   -not -path './uploads/*' \
+                   -not -name '*.ts' -exec cp --parents \{\} .ts \;
+else
+    rsync -rqad --exclude "node_modules" \
+                --exclude ".git" \
+                --exclude ".ts" \
+                --exclude "static" \
+                --exclude "uploads" \
+                --exclude "*.ts" \
+                . .ts/
+fi
 
 # Create some symlinks for directories like static files
 ln -s $(pwd)/static .ts/static
