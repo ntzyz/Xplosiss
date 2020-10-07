@@ -20,6 +20,7 @@ export default {
   data () {
     return {
       monaco: null,
+      uploadId: 0,
     };
   },
   watch: {
