@@ -20,7 +20,7 @@ export default {
   data () {
     return {
       monaco: null,
-    }
+    };
   },
   watch: {
     value (newValue) {
@@ -60,8 +60,8 @@ export default {
       });
 
       this.monaco.onDidBlurEditorText((e) => {
-        this.$emit('input', this.monaco.getValue())
-      })
+        this.$emit('input', this.monaco.getValue());
+      });
     });
   },
   beforeDestroy () {
@@ -161,6 +161,7 @@ export default {
           text: html,
           forceMoveMarkers: true
         }]);
+        this.$emit('input', this.monaco.getValue());
       }
     }
 
