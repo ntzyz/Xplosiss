@@ -38,7 +38,7 @@ For Unix-like environment:
 
 For Windows:
 ```
-> npm run bulid-win32
+> npm run build-win32
 ```
 
 Note: you should **always** rebuild it after editing `config.js` or merging from upstream.
