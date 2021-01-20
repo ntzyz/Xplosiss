@@ -45,7 +45,7 @@
     "pug": "^3.0.0",
     "pug-plain-loader": "^1.0.0",
     "regenerator-runtime": "^0.13.7",
-    "socket.io": "^2.3.0",
+    "socket.io": "^3.1.0",
     "socket.io-client": "^2.3.1",
     "ts-node": "^9.0.0",
     "ua-parser-js": "^0.7.22",
