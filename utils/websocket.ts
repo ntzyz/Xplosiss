@@ -7,10 +7,10 @@ import token from './token';
 let server: http.Server;
 let io: socket.Server;
 
-function attachSocketIO (site: express.Application) {
+function attachSocketIO(site: express.Application) {
   if (site) {
     server = new http.Server(site);
-    io = socket(server, { path: '/api/ws' });
+    io = new socket.Server(server, { path: '/api/ws' });
     io.on('connection', socket => {
       console.log('Client connected!');
       if (socket.handshake.query.token !== token) {
@@ -24,19 +24,19 @@ function attachSocketIO (site: express.Application) {
 }
 
 Object.defineProperty(attachSocketIO, 'io', {
-  get () {
+  get() {
     return io;
   }
 });
 
 Object.defineProperty(attachSocketIO, 'server', {
-  get () {
+  get() {
     return server;
   }
 });
 
 export default {
   attach: attachSocketIO,
-  get io () { return io; },
-  get server () { return server; }
+  get io() { return io; },
+  get server() { return server; }
 };
