@@ -105,7 +105,7 @@ router.put('/by-slug/:slug/reply', async (req, res) => {
     userAgent: req.headers['user-agent'],
     postSlug: req.params.slug,
     user: req.body.user,
-    email: '*hidden*',
+    email: req.body.email,
     site: req.body.site,
     content: req.body.content,
   });

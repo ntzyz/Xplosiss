@@ -28,7 +28,14 @@ function installer ({ site, utils, config }: PluginOptions) {
       chat_id: config.plugins['telegram-helper'].ownerId,
       parse_mode: 'HTML',
       disable_web_page_preview: true,
-      text: `<b>You have a new reply!</b>\nFrom: ${params.user}\nLink: <a href="${URL}">${name}</a>\nIP Address: ${params.ipAddr} (${ipRegion.join('/')})\nContent:\n${params.content}`,
+      text: [
+        '<b>You have a new reply!</b>',
+        `From: ${params.user}${params.email ? ` (${params.email})` : ''}`,
+        `Link: <a href="${URL}">${name}</a>`,
+        `IP Address: ${params.ipAddr} (${ipRegion.join('/')})`,
+        'Content:',
+        `${params.content}`,
+      ].join('\n'),
     }).catch(_ => _);
   });
 
