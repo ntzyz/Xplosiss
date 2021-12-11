@@ -164,8 +164,19 @@ export default {
         }]);
         this.$emit('input', this.monaco.getValue());
       }
-    }
+    },
+    flushValue () {
+      if (!this.monaco) {
+        console.warning('Monaco editor not initialized. Ignore flush request.')
+        return null
+      }
 
+      const value = this.monaco.getValue()
+
+      this.$emit('input', this.monaco.getValue());
+
+      return value
+    }
   }
 };
 </script>

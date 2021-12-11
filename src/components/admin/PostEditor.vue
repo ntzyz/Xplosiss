@@ -77,7 +77,7 @@
       tr(v-show="editingLanguage")
         td.label 文章内容：
         td
-          monaco(v-model="currentEditingBody.content" :language="currentEditingBody.format")
+          monaco(v-model="currentEditingBody.content" :language="currentEditingBody.format" ref="monacoEditor")
       tr
         td
         td
@@ -177,9 +177,12 @@ export default {
     this.fetchTags();
     this.fetchCategories();
     // document.querySelector('#app').style.maxWidth = 'initial';
+
+    document.addEventListener('keydown', this.onKeyDown);
   },
   beforeDestroy () {
     // document.querySelector('#app').style.maxWidth = '';
+    document.removeEventListener('keydown', this.onKeyDown);
   },
   methods: {
     prompt (string) {
@@ -200,7 +203,7 @@ export default {
       this.tagsSet.delete(tag);
       this.tags = [...this.tagsSet];
     },
-    updatePost () {
+    updatePost (options = { quiet: false }) {
       api.post.updatePostById({
         token: this.$store.state.token,
         id: this.id,
@@ -218,8 +221,10 @@ export default {
           body: this.body,
         },
       }).then(() => {
-        alert('文章已更新');
-        this.fetchPost(true);
+        if (!options.quiet) {
+          alert('文章已更新');
+          this.fetchPost(true);
+        }
       }).catch(e => {
         console.log(e);
         alert('会话过期，请手动刷新');
@@ -299,6 +304,17 @@ export default {
         alert('会话过期，请手动刷新');
       });
     },
+    onKeyDown (event) {
+      if ((event.ctrlKey || event.metaKey) && event.key === 's') {
+        event.preventDefault();
+        event.stopPropagation();
+        if (this.id) {
+          this.updatePost({ quiet: true });
+        } else {
+          this.createPost();
+        }
+      }
+    }
   },
 };
 
