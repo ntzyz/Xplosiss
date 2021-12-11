@@ -167,15 +167,15 @@ export default {
     },
     flushValue () {
       if (!this.monaco) {
-        console.warning('Monaco editor not initialized. Ignore flush request.')
-        return null
+        console.warning('Monaco editor not initialized. Ignore flush request.');
+        return null;
       }
 
-      const value = this.monaco.getValue()
+      const value = this.monaco.getValue();
 
       this.$emit('input', this.monaco.getValue());
 
-      return value
+      return value;
     }
   }
 };
